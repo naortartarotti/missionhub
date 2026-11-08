@@ -1,0 +1,274 @@
+import { normalizeSkills } from "./skills";
+
+export const MODEL_VERSION = "deterministic-v1";
+
+export const SENIORITY_LADDER = ["intern", "junior", "mid", "senior", "lead", "principal", "executive"] as const;
+export type Seniority = (typeof SENIORITY_LADDER)[number];
+export type WorkArrangement = "remote" | "hybrid" | "onsite";
+
+/**
+ * The ONLY candidate attributes the engine may see. Identity, contact details, photos, names,
+ * gender, age, nationality, religion, disability and other protected characteristics are
+ * structurally excluded: they are not part of this type and `toMatchCandidate` drops them.
+ */
+export type MatchCandidate = {
+  skills: string[];
+  seniority: Seniority | null;
+  yearsExperience: number | null;
+  workArrangements: WorkArrangement[];
+  country: string | null;
+  region: string | null;
+  openToRelocation: boolean;
+  languages: string[];
+  salaryMin: number | null;
+  salaryCurrency: string | null;
+  isActive: boolean;
+  hasProcessingAuthorization: boolean;
+};
+
+export type MatchJob = {
+  requiredSkills: string[];
+  preferredSkills: string[];
+  seniority: Seniority | null;
+  minYearsExperience: number | null;
+  workArrangement: WorkArrangement;
+  country: string | null;
+  region: string | null;
+  languages: string[];
+  salaryMax: number | null;
+  salaryCurrency: string | null;
+  isOpenForReferrals: boolean;
+};
+
+export type Evidence = { factor: Factor; label: string };
+export type Factor = "skills" | "preferred_skills" | "seniority" | "experience" | "location" | "languages" | "compensation" | "status";
+export type Band = "strong" | "potential" | "not_eligible";
+
+export type MatchResult = {
+  score: number;
+  band: Band;
+  eligible: boolean;
+  reasons: Evidence[];
+  gaps: Evidence[];
+  blockers: Evidence[];
+  factorScores: Record<Exclude<Factor, "status">, number>;
+  modelVersion: string;
+};
+
+export const WEIGHTS = {
+  skills: 40,
+  preferred_skills: 10,
+  seniority: 15,
+  experience: 10,
+  location: 10,
+  languages: 10,
+  compensation: 5,
+} as const;
+
+export const STRONG_THRESHOLD = 75;
+export const POTENTIAL_THRESHOLD = 45;
+
+type CandidateRow = {
+  status: string;
+  skills: string[] | null;
+  seniority: string | null;
+  years_experience: number | string | null;
+  work_arrangements: string[] | null;
+  location_country: string | null;
+  location_region: string | null;
+  open_to_relocation: boolean | null;
+  languages: string[] | null;
+  salary_expectation_min: number | null;
+  salary_currency: string | null;
+  // Anything else on the row (full_name, email, phone, notes, …) is intentionally ignored.
+  [key: string]: unknown;
+};
+
+export function toMatchCandidate(row: CandidateRow, hasProcessingAuthorization: boolean): MatchCandidate {
+  return {
+    skills: normalizeSkills(row.skills ?? []),
+    seniority: (row.seniority as Seniority | null) ?? null,
+    yearsExperience: row.years_experience === null || row.years_experience === undefined ? null : Number(row.years_experience),
+    workArrangements: (row.work_arrangements ?? []) as WorkArrangement[],
+    country: row.location_country ?? null,
+    region: row.location_region ?? null,
+    openToRelocation: Boolean(row.open_to_relocation),
+    languages: normalizeSkills(row.languages ?? []),
+    salaryMin: row.salary_expectation_min ?? null,
+    salaryCurrency: row.salary_currency ?? null,
+    isActive: row.status === "active_for_matching",
+    hasProcessingAuthorization,
+  };
+}
+
+type JobRow = {
+  status: string;
+  accepts_external_referrals: boolean;
+  required_skills: string[] | null;
+  preferred_skills: string[] | null;
+  seniority: string | null;
+  min_years_experience: number | string | null;
+  work_arrangement: string;
+  location_country: string | null;
+  location_region: string | null;
+  languages: string[] | null;
+  salary_max: number | null;
+  salary_currency: string | null;
+  [key: string]: unknown;
+};
+
+export function toMatchJob(row: JobRow): MatchJob {
+  return {
+    requiredSkills: normalizeSkills(row.required_skills ?? []),
+    preferredSkills: normalizeSkills(row.preferred_skills ?? []),
+    seniority: (row.seniority as Seniority | null) ?? null,
+    minYearsExperience:
+      row.min_years_experience === null || row.min_years_experience === undefined ? null : Number(row.min_years_experience),
+    workArrangement: row.work_arrangement as WorkArrangement,
+    country: row.location_country ?? null,
+    region: row.location_region ?? null,
+    languages: normalizeSkills(row.languages ?? []),
+    salaryMax: row.salary_max ?? null,
+    salaryCurrency: row.salary_currency ?? null,
+    isOpenForReferrals: row.status === "active" && row.accepts_external_referrals,
+  };
+}
+
+const list = (xs: string[], max = 4) =>
+  xs.length <= max ? xs.join(", ") : `${xs.slice(0, max).join(", ")} +${xs.length - max} more`;
+
+/** Two-stage evaluation: hard eligibility filters, then weighted deterministic ranking. */
+export function evaluateMatch(c: MatchCandidate, j: MatchJob): MatchResult {
+  const reasons: Evidence[] = [];
+  const gaps: Evidence[] = [];
+  const blockers: Evidence[] = [];
+
+  // ---- Stage 1: eligibility ----
+  if (!c.isActive) blockers.push({ factor: "status", label: "Candidate is not active for matching" });
+  if (!c.hasProcessingAuthorization)
+    blockers.push({ factor: "status", label: "No recorded processing authorization for this candidate" });
+  if (!j.isOpenForReferrals) blockers.push({ factor: "status", label: "Job is not open to external referrals" });
+
+  if (c.workArrangements.length > 0 && j.workArrangement !== "remote" && !c.workArrangements.includes(j.workArrangement)) {
+    blockers.push({
+      factor: "location",
+      label: `Job is ${j.workArrangement}; candidate prefers ${c.workArrangements.join("/")}`,
+    });
+  }
+  if (j.workArrangement !== "remote" && j.country && c.country && j.country !== c.country && !c.openToRelocation) {
+    blockers.push({ factor: "location", label: `Job requires presence in ${j.country}; candidate is not open to relocation` });
+  }
+
+  // ---- Stage 2: ranking ----
+  const required = j.requiredSkills;
+  const matchedRequired = required.filter((s) => c.skills.includes(s));
+  const missingRequired = required.filter((s) => !c.skills.includes(s));
+  const skillsScore = required.length === 0 ? 0.5 : matchedRequired.length / required.length;
+  if (matchedRequired.length) reasons.push({ factor: "skills", label: `Matches required skills: ${list(matchedRequired)}` });
+  if (missingRequired.length) gaps.push({ factor: "skills", label: `Missing required skills: ${list(missingRequired)}` });
+  if (required.length === 0) gaps.push({ factor: "skills", label: "Job lists no required skills; relevance is approximate" });
+  if (required.length > 0 && matchedRequired.length === 0) {
+    blockers.push({ factor: "skills", label: "None of the job's required skills are present" });
+  }
+
+  const preferred = j.preferredSkills;
+  const matchedPreferred = preferred.filter((s) => c.skills.includes(s));
+  const preferredScore = preferred.length === 0 ? 1 : matchedPreferred.length / preferred.length;
+  if (matchedPreferred.length) reasons.push({ factor: "preferred_skills", label: `Also has: ${list(matchedPreferred)}` });
+
+  let seniorityScore = 0.5;
+  if (j.seniority && c.seniority) {
+    const diff = SENIORITY_LADDER.indexOf(c.seniority) - SENIORITY_LADDER.indexOf(j.seniority);
+    if (diff === 0) {
+      seniorityScore = 1;
+      reasons.push({ factor: "seniority", label: `Seniority aligns (${j.seniority})` });
+    } else if (Math.abs(diff) === 1) {
+      seniorityScore = 0.6;
+      gaps.push({ factor: "seniority", label: `Seniority is one level ${diff > 0 ? "above" : "below"} the role (${c.seniority} vs ${j.seniority})` });
+    } else {
+      seniorityScore = 0;
+      gaps.push({ factor: "seniority", label: `Seniority differs significantly (${c.seniority} vs ${j.seniority})` });
+    }
+  } else if (j.seniority) {
+    gaps.push({ factor: "seniority", label: "Candidate seniority not recorded" });
+  }
+
+  let experienceScore = 0.5;
+  if (j.minYearsExperience !== null && c.yearsExperience !== null) {
+    if (c.yearsExperience >= j.minYearsExperience) {
+      experienceScore = 1;
+      reasons.push({ factor: "experience", label: `${c.yearsExperience} years of experience (role asks ${j.minYearsExperience}+)` });
+    } else {
+      experienceScore = Math.max(0, c.yearsExperience / j.minYearsExperience);
+      gaps.push({ factor: "experience", label: `${c.yearsExperience} years of experience; role asks ${j.minYearsExperience}+` });
+    }
+  } else if (j.minYearsExperience !== null) {
+    gaps.push({ factor: "experience", label: "Years of experience not recorded" });
+  }
+
+  let locationScore = 0.5;
+  if (j.workArrangement === "remote") {
+    locationScore = c.workArrangements.length === 0 || c.workArrangements.includes("remote") ? 1 : 0.7;
+    if (locationScore === 1) reasons.push({ factor: "location", label: "Remote role compatible with candidate preferences" });
+  } else if (j.country && c.country) {
+    if (j.country === c.country) {
+      locationScore = j.region && c.region && j.region === c.region ? 1 : 0.8;
+      reasons.push({ factor: "location", label: `Based in ${[c.region, c.country].filter(Boolean).join(", ")}` });
+    } else if (c.openToRelocation) {
+      locationScore = 0.5;
+      gaps.push({ factor: "location", label: "Would require relocation (candidate is open to it)" });
+    } else {
+      locationScore = 0;
+    }
+  } else {
+    gaps.push({ factor: "location", label: "Location information incomplete" });
+  }
+
+  let languagesScore = 1;
+  if (j.languages.length > 0) {
+    const have = j.languages.filter((l) => c.languages.includes(l));
+    languagesScore = have.length / j.languages.length;
+    const missing = j.languages.filter((l) => !c.languages.includes(l));
+    if (have.length) reasons.push({ factor: "languages", label: `Speaks ${list(have)}` });
+    if (missing.length) gaps.push({ factor: "languages", label: `Language requirement not confirmed: ${list(missing)}` });
+  }
+
+  let compensationScore = 0.5;
+  if (c.salaryMin !== null && j.salaryMax !== null && c.salaryCurrency && c.salaryCurrency === j.salaryCurrency) {
+    if (c.salaryMin <= j.salaryMax) {
+      compensationScore = 1;
+      reasons.push({ factor: "compensation", label: "Salary expectation fits the compensation band" });
+    } else {
+      const over = (c.salaryMin - j.salaryMax) / j.salaryMax;
+      compensationScore = Math.max(0, 1 - over * 4);
+      gaps.push({ factor: "compensation", label: `Salary expectation is ~${Math.round(over * 100)}% above the band` });
+    }
+  } else if (c.salaryCurrency && j.salaryCurrency && c.salaryCurrency !== j.salaryCurrency) {
+    gaps.push({ factor: "compensation", label: "Compensation in different currencies; not compared" });
+  }
+
+  const factorScores = {
+    skills: skillsScore,
+    preferred_skills: preferredScore,
+    seniority: seniorityScore,
+    experience: experienceScore,
+    location: locationScore,
+    languages: languagesScore,
+    compensation: compensationScore,
+  };
+  const raw = (Object.keys(WEIGHTS) as (keyof typeof WEIGHTS)[]).reduce((sum, k) => sum + WEIGHTS[k] * factorScores[k], 0);
+  const score = Math.max(0, Math.min(100, Math.round(raw)));
+
+  const eligible = blockers.length === 0;
+  const band: Band = !eligible ? "not_eligible" : score >= STRONG_THRESHOLD ? "strong" : score >= POTENTIAL_THRESHOLD ? "potential" : "not_eligible";
+  if (eligible && band === "not_eligible") {
+    gaps.push({ factor: "skills", label: `Overall relevance below the ${POTENTIAL_THRESHOLD}/100 threshold` });
+  }
+
+  return { score, band, eligible, reasons, gaps, blockers, factorScores, modelVersion: MODEL_VERSION };
+}
+
+/** Stable fingerprint of engine inputs so unchanged pairs are not rewritten. */
+export function inputFingerprint(c: MatchCandidate, j: MatchJob): string {
+  return JSON.stringify([MODEL_VERSION, c, j]);
+}
