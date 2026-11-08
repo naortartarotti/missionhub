@@ -67,6 +67,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "audit_events_actor_profile_fk"
+            columns: ["actor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "audit_events_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
@@ -1960,6 +1967,18 @@ export type Database = {
         Args: { p_placement: string; p_reason: string }
         Returns: string
       }
+      platform_metrics: {
+        Args: never
+        Returns: {
+          active_candidates: number
+          active_jobs: number
+          open_disputes: number
+          organizations: number
+          pending_evidence: number
+          placements: number
+          referrals: number
+        }[]
+      }
       publish_commission_rule: {
         Args: {
           p_job_owner: number
@@ -2010,6 +2029,10 @@ export type Database = {
       }
       review_payment_evidence: {
         Args: { p_approve: boolean; p_evidence: string; p_note: string }
+        Returns: undefined
+      }
+      set_organization_suspension: {
+        Args: { p_org: string; p_reason: string; p_suspend: boolean }
         Returns: undefined
       }
       submit_referral: {

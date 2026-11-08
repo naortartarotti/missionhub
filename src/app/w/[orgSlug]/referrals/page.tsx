@@ -16,7 +16,13 @@ export default async function ReferralsPage({ params, searchParams }: PageProps<
   const { orgSlug } = await params;
   const sp = await searchParams;
   const ctx = await getRequestContext(orgSlug);
-  const tab = sp.tab === "received" ? "received" : "sent";
+  let tab: "sent" | "received" = sp.tab === "received" ? "received" : "sent";
+  if (!sp.tab) {
+    // Land on "Received" when submissions are waiting for review (matches the sidebar badge).
+    const { count } = await ctx.db.from("referrals").select("id", { count: "exact", head: true })
+      .eq("target_org_id", ctx.organizationId).in("status", ["submitted", "under_review"]);
+    if (count) tab = "received";
+  }
   const rows = await listReferrals(ctx, tab);
   const base = `/w/${orgSlug}/referrals`;
   return (

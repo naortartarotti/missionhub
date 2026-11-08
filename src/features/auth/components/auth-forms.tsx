@@ -1,5 +1,7 @@
 "use client";
 
+import { ActionForm } from "@/components/shared/action-form";
+
 import { useActionState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
@@ -12,7 +14,7 @@ export function SignInForm({ next }: { next?: string }) {
   const [state, action] = useActionState(signIn, null);
   const fe = state && !state.ok ? state.fieldErrors : undefined;
   return (
-    <form action={action} className="grid gap-4" noValidate>
+    <ActionForm action={action} className="grid gap-4" noValidate>
       <input type="hidden" name="next" value={next ?? ""} />
       <FormField id="email" label="Work email" error={fe?.email}>
         <Input id="email" name="email" type="email" autoComplete="email" required aria-invalid={!!fe?.email} />
@@ -27,7 +29,7 @@ export function SignInForm({ next }: { next?: string }) {
       </div>
       <FormMessage state={state} />
       <SubmitButton size="lg" className="mt-1 w-full" pendingLabel="Signing in…">Sign in</SubmitButton>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -36,7 +38,7 @@ export function SignUpForm({ next }: { next?: string }) {
   const fe = state && !state.ok ? state.fieldErrors : undefined;
   if (state?.ok) return <FormMessage state={state} />;
   return (
-    <form action={action} className="grid gap-4" noValidate>
+    <ActionForm action={action} className="grid gap-4" noValidate>
       <input type="hidden" name="next" value={next ?? ""} />
       <FormField id="fullName" label="Full name" error={fe?.fullName}>
         <Input id="fullName" name="fullName" autoComplete="name" required aria-invalid={!!fe?.fullName} />
@@ -52,7 +54,7 @@ export function SignUpForm({ next }: { next?: string }) {
       <p className="text-center text-xs text-muted-foreground">
         By continuing you agree to the draft Terms and Privacy Policy (legal review pending).
       </p>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -60,13 +62,13 @@ export function ForgotPasswordForm() {
   const [state, action] = useActionState(requestPasswordReset, null);
   const fe = state && !state.ok ? state.fieldErrors : undefined;
   return (
-    <form action={action} className="grid gap-4" noValidate>
+    <ActionForm action={action} className="grid gap-4" noValidate>
       <FormField id="email" label="Work email" error={fe?.email}>
         <Input id="email" name="email" type="email" autoComplete="email" required />
       </FormField>
       <FormMessage state={state} />
       <SubmitButton size="lg" className="w-full" pendingLabel="Sending…">Send reset link</SubmitButton>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -74,7 +76,7 @@ export function ResetPasswordForm() {
   const [state, action] = useActionState(resetPassword, null);
   const fe = state && !state.ok ? state.fieldErrors : undefined;
   return (
-    <form action={action} className="grid gap-4" noValidate>
+    <ActionForm action={action} className="grid gap-4" noValidate>
       <FormField id="password" label="New password" error={fe?.password} hint="At least 10 characters, including a letter and a number.">
         <Input id="password" name="password" type="password" autoComplete="new-password" required />
       </FormField>
@@ -83,6 +85,6 @@ export function ResetPasswordForm() {
       </FormField>
       <FormMessage state={state} />
       <SubmitButton size="lg" className="w-full">Update password</SubmitButton>
-    </form>
+    </ActionForm>
   );
 }

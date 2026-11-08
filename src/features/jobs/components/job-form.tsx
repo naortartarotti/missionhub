@@ -1,5 +1,7 @@
 "use client";
 
+import { ActionForm } from "@/components/shared/action-form";
+
 import { useActionState, useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import { Wand2 } from "lucide-react";
@@ -90,7 +92,7 @@ export function JobForm({
     });
 
   return (
-    <form action={formAction} className="grid gap-5" noValidate>
+    <ActionForm action={formAction} className="grid gap-5" noValidate>
       <Panel className="grid gap-5 p-6">
         <h2 className="text-base font-semibold">Role</h2>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -210,6 +212,6 @@ export function JobForm({
           <SubmitButton>Save changes</SubmitButton>
         )}
       </div>
-    </form>
+    </ActionForm>
   );
 }

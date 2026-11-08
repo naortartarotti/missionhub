@@ -14,6 +14,12 @@ const CANDIDATE_FIELDS =
 const JOB_FIELDS =
   "id, organization_id, status, accepts_external_referrals, required_skills, preferred_skills, seniority, min_years_experience, work_arrangement, location_country, location_region, languages, salary_max, salary_currency";
 
+async function orgFlags(db: AdminClient, orgId: string) {
+  const { data, error } = await db.from("organizations").select("is_demo, suspended_at").eq("id", orgId).single();
+  if (error) throw error;
+  return data;
+}
+
 const hash = (s: string) => createHash("sha256").update(s).digest("hex").slice(0, 32);
 const PAGE = 500;
 
@@ -89,6 +95,8 @@ export async function recomputeForCandidate(db: AdminClient, candidateId: string
     await db.from("matches").update({ expired_at: new Date().toISOString() }).eq("candidate_id", candidateId).is("expired_at", null);
     return { written: 0 };
   }
+  const flags = await orgFlags(db, candidate.organization_id);
+  if (flags.suspended_at) return { written: 0 };
   const authorized = await hasProcessingAuthorization(db, [candidateId]);
   const mc = toMatchCandidate(candidate, authorized.has(candidateId));
 
@@ -97,7 +105,9 @@ export async function recomputeForCandidate(db: AdminClient, candidateId: string
   for (let from = 0; ; from += PAGE) {
     let q = db
       .from("jobs")
-      .select(JOB_FIELDS)
+      .select(`${JOB_FIELDS}, organizations!inner(is_demo, suspended_at)`)
+      .eq("organizations.is_demo", flags.is_demo)
+      .is("organizations.suspended_at", null)
       .eq("status", "active")
       .eq("accepts_external_referrals", true)
       .neq("organization_id", candidate.organization_id)
@@ -123,12 +133,16 @@ export async function recomputeForJob(db: AdminClient, jobId: string) {
     await db.from("matches").update({ expired_at: new Date().toISOString() }).eq("job_id", jobId).is("expired_at", null);
     return { written: 0 };
   }
+  const flags = await orgFlags(db, job.organization_id);
+  if (flags.suspended_at) return { written: 0 };
   const required = toMatchJob(job).requiredSkills;
   let written = 0;
   for (let from = 0; ; from += PAGE) {
     let q = db
       .from("candidates")
-      .select(CANDIDATE_FIELDS)
+      .select(`${CANDIDATE_FIELDS}, organizations!inner(is_demo, suspended_at)`)
+      .eq("organizations.is_demo", flags.is_demo)
+      .is("organizations.suspended_at", null)
       .eq("status", "active_for_matching")
       .neq("organization_id", job.organization_id)
       .order("id")

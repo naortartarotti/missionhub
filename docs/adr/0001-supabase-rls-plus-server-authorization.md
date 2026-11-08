@@ -1,0 +1,3 @@
+# ADR 0001 — Supabase with RLS *and* server-side authorization
+**Decision:** Use Supabase Postgres/Auth/Storage directly (supabase-js, generated types), no ORM. Every query runs as the user so RLS applies; server code still derives tenant context and checks permissions. Multi-step use cases are SECURITY DEFINER RPCs for atomicity.
+**Why:** RLS gives defense in depth and makes isolation testable at the database. An ORM with a privileged connection would bypass RLS. **Trade-off:** business logic split between SQL and TS; mitigated by keeping SQL to invariants/state machines and testing via integration tests.

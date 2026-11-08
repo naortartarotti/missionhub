@@ -1,5 +1,7 @@
 "use client";
 
+import { ActionForm } from "@/components/shared/action-form";
+
 import { useActionState, useTransition } from "react";
 import { toast } from "sonner";
 import { Download, FileText, ShieldCheck, ShieldOff, Trash2, Upload } from "lucide-react";
@@ -123,7 +125,7 @@ export function ConsentPanel({ orgSlug, candidateId, consents, canWrite }: { org
       {canWrite ? (
         <details className="group rounded-2xl border border-dashed border-border p-4">
           <summary className="cursor-pointer text-sm font-medium">Record processing authorization</summary>
-          <form action={action} className="mt-4 grid gap-4">
+          <ActionForm action={action} className="mt-4 grid gap-4">
             <input type="hidden" name="candidateId" value={candidateId} />
             <input type="hidden" name="kind" value="processing" />
             <FormField id="legalBasis" label="Legal basis" hint="Draft list — confirm with Canadian privacy counsel.">
@@ -144,7 +146,7 @@ export function ConsentPanel({ orgSlug, candidateId, consents, canWrite }: { org
             </FormField>
             <FormMessage state={state} />
             <SubmitButton className="justify-self-start">Record authorization</SubmitButton>
-          </form>
+          </ActionForm>
         </details>
       ) : null}
     </div>
@@ -202,7 +204,7 @@ export function DocumentsPanel({ orgSlug, candidateId, documents, canWrite }: { 
         <p className="text-sm text-muted-foreground">No documents yet.</p>
       )}
       {canWrite ? (
-        <form action={action} className="grid gap-3 rounded-2xl border border-dashed border-border p-4">
+        <ActionForm action={action} className="grid gap-3 rounded-2xl border border-dashed border-border p-4">
           <label htmlFor="file" className="text-sm font-medium">Upload resume (PDF or DOCX, max 10 MB)</label>
           <Input id="file" name="file" type="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required />
           <p className="text-xs text-muted-foreground">Stored privately. Uploading does not authorize sharing with any other recruiter.</p>
@@ -210,7 +212,7 @@ export function DocumentsPanel({ orgSlug, candidateId, documents, canWrite }: { 
           <SubmitButton variant="secondary" className="justify-self-start" pendingLabel="Uploading…">
             <Upload className="size-4" aria-hidden /> Upload
           </SubmitButton>
-        </form>
+        </ActionForm>
       ) : null}
     </div>
   );

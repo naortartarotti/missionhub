@@ -107,3 +107,7 @@ export function formatDate(iso: string | null | undefined): string {
   if (!iso) return "—";
   return new Intl.DateTimeFormat("en-CA", { dateStyle: "medium" }).format(new Date(iso));
 }
+
+export function isPast(iso: string | null | undefined): boolean {
+  return Boolean(iso) && Date.parse(iso!) < Date.now();
+}

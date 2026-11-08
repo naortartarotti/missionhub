@@ -1,5 +1,7 @@
 "use client";
 
+import { ActionForm } from "@/components/shared/action-form";
+
 import { useActionState, useRef, useState } from "react";
 import Link from "next/link";
 import { CheckCircle2, CircleAlert } from "lucide-react";
@@ -43,7 +45,7 @@ export function ImportWizard({ orgSlug }: { orgSlug: string }) {
             );
           })}
         </ol>
-        <form action={previewAction} className="grid gap-3">
+        <ActionForm action={previewAction} className="grid gap-3">
           <label htmlFor="file" className="text-sm font-medium">CSV file (max 500 rows, 2 MB)</label>
           <Input ref={fileRef} id="file" name="file" type="file" accept=".csv,text/csv" required onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)} />
           <p className="text-xs text-muted-foreground">
@@ -51,7 +53,7 @@ export function ImportWizard({ orgSlug }: { orgSlug: string }) {
           </p>
           {preview && !preview.ok ? <FormMessage state={preview} /> : null}
           <SubmitButton variant="secondary" className="justify-self-start" pendingLabel="Validating…">Preview import</SubmitButton>
-        </form>
+        </ActionForm>
       </Panel>
 
       {data ? (
@@ -90,7 +92,7 @@ export function ImportWizard({ orgSlug }: { orgSlug: string }) {
               </tbody>
             </table>
           </div>
-          <form
+          <ActionForm
             action={(fd) => {
               const f = fileRef.current?.files?.[0];
               if (f) fd.set("file", f);
@@ -104,7 +106,7 @@ export function ImportWizard({ orgSlug }: { orgSlug: string }) {
             </p>
             {commit && !commit.ok ? <FormMessage state={commit} /> : null}
             <SubmitButton disabled={data.valid === 0} pendingLabel="Importing…">Import {data.valid} candidates</SubmitButton>
-          </form>
+          </ActionForm>
         </Panel>
       ) : null}
     </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { ActionForm } from "@/components/shared/action-form";
+
 import { useActionState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
@@ -58,7 +60,7 @@ export function CandidateForm({
   const d = defaults;
 
   return (
-    <form action={formAction} className="grid gap-5" noValidate>
+    <ActionForm action={formAction} className="grid gap-5" noValidate>
       <Panel className="grid gap-5 p-6">
         <h2 className="text-base font-semibold">Identity & contact</h2>
         <p className="-mt-3 text-sm text-muted-foreground">
@@ -195,6 +197,6 @@ export function CandidateForm({
         </Button>
         <SubmitButton>{submitLabel}</SubmitButton>
       </div>
-    </form>
+    </ActionForm>
   );
 }

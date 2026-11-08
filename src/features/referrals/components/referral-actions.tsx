@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useTransition } from "react";
+import { ActionForm } from "@/components/shared/action-form";
+
+import { useActionState, useEffect, useRef, useTransition } from "react";
 import { toast } from "sonner";
 import { Download, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -106,7 +108,7 @@ export function ReportHireDialog({ orgSlug, referralId, version, defaultFee, cur
           <DialogTitle>Report a successful hire</DialogTitle>
           <DialogDescription>Creates the placement using the frozen agreement. Commission stays projected until the client payment is verified.</DialogDescription>
         </DialogHeader>
-        <form action={action} className="grid gap-4">
+        <ActionForm action={action} className="grid gap-4">
           <input type="hidden" name="referralId" value={referralId} />
           <input type="hidden" name="version" value={version} />
           <div className="grid grid-cols-[1fr_110px] gap-3">
@@ -119,7 +121,7 @@ export function ReportHireDialog({ orgSlug, referralId, version, defaultFee, cur
           <FormField id="guaranteeDays" label="Replacement guarantee (days)"><Input id="guaranteeDays" name="guaranteeDays" type="number" min={0} max={365} defaultValue={90} /></FormField>
           <FormMessage state={state} />
           <SubmitButton pendingLabel="Recording…">Record hire</SubmitButton>
-        </form>
+        </ActionForm>
       </DialogContent>
     </Dialog>
   );
@@ -127,13 +129,17 @@ export function ReportHireDialog({ orgSlug, referralId, version, defaultFee, cur
 
 export function MessageForm({ orgSlug, referralId }: { orgSlug: string; referralId: string }) {
   const [state, action] = useActionState(sendReferralMessage.bind(null, orgSlug, referralId), null);
+  const formRef = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (state?.ok) formRef.current?.reset();
+  }, [state]);
   return (
-    <form action={action} className="grid gap-2" key={state?.ok ? Date.now() : "form"}>
+    <ActionForm ref={formRef} action={action} className="grid gap-2">
       <label htmlFor="body" className="sr-only">Message</label>
       <Textarea id="body" name="body" rows={3} placeholder="Professional, job-related messages only. Visible to both recruiters." required />
       {state && !state.ok ? <FormMessage state={state} /> : null}
       <SubmitButton variant="secondary" className="justify-self-end" pendingLabel="Sending…">Send message</SubmitButton>
-    </form>
+    </ActionForm>
   );
 }
 

@@ -18,7 +18,9 @@
     "db:reset": "supabase db reset",
     "db:types": "supabase gen types typescript --local > src/server/db/database.types.ts",
     "db:seed:demo": "tsx --conditions=react-server scripts/seed-demo.mts",
-    "check": "npm run lint && npm run typecheck && npm run test && npm run build"
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "test:e2e": "playwright test",
+    "test:all": "npm run test && npm run test:integration && npm run test:e2e"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.3",
@@ -42,6 +44,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.0",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^24.19.2",
     "@types/react": "^19",

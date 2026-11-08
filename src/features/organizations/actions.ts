@@ -23,7 +23,7 @@ export async function createOrganization(_: ActionResult | null, formData: FormD
     })
     .eq("id", user.id);
   if (pErr) return toActionError(pErr);
-  const { error } = await supabase.rpc("create_organization", {
+  const { data: orgId, error } = await supabase.rpc("create_organization", {
     p_name: parsed.data.name,
     p_slug: parsed.data.slug,
     p_kind: parsed.data.kind,
@@ -31,8 +31,13 @@ export async function createOrganization(_: ActionResult | null, formData: FormD
   if (error) {
     const r = toActionError(error);
     return error.message.includes("slug_taken") || error.message.includes("duplicate")
-      ? { ok: false, error: "That workspace URL is taken.", fieldErrors: { slug: ["That workspace URL is taken."] } }
+      ? { ok: false, error: "That workspace URL is taken.", fieldErrors: { slug: ["That workspace URL is taken. Try another."] } }
       : r;
+  }
+  if (parsed.data.currency !== "CAD") {
+    // The creator is org_admin now, so RLS allows this column update.
+    const { error: cErr } = await supabase.from("organizations").update({ default_currency: parsed.data.currency }).eq("id", orgId as string);
+    if (cErr) return toActionError(cErr);
   }
   redirect(`/w/${parsed.data.slug}/overview`);
 }

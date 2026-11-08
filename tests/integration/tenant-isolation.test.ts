@@ -102,3 +102,16 @@ describe("tenant isolation (RLS)", () => {
     expect(error).not.toBeNull();
   });
 });
+
+describe("demo boundary", () => {
+  it("never pairs demo organizations with real ones", async () => {
+    const d = await createUser("demo-boundary");
+    const demoOrg = await createOrg(d, "Demo Boundary Org");
+    await admin().from("organizations").update({ is_demo: true }).eq("id", demoOrg.id);
+    const { error } = await admin().from("matches").insert({
+      candidate_id: candidateA, job_id: jobB, candidate_org_id: orgA.id, job_org_id: demoOrg.id,
+      score: 50, band: "potential", model_version: "test", input_hash: "x",
+    });
+    expect(error?.message).toMatch(/demo_boundary/);
+  });
+});

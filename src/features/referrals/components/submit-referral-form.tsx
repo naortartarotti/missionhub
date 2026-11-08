@@ -1,5 +1,7 @@
 "use client";
 
+import { ActionForm } from "@/components/shared/action-form";
+
 import { useActionState, useMemo, useState } from "react";
 import { Eye, Lock, ShieldCheck } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -39,7 +41,7 @@ export function SubmitReferralForm({
   const identifying = DISCLOSURE_FIELDS.filter((f) => f.identifying && selected.includes(f.key));
 
   return (
-    <form action={action} className="grid gap-6 lg:grid-cols-[1fr_340px]">
+    <ActionForm action={action} className="grid gap-6 lg:grid-cols-[1fr_340px]">
       <input type="hidden" name="matchId" value={matchId} />
       <input type="hidden" name="idempotencyKey" value={idempotencyKey} />
       <div className="grid gap-6">
@@ -137,6 +139,6 @@ export function SubmitReferralForm({
           <SubmitButton size="lg" className="w-full" pendingLabel="Submitting…">Submit candidate</SubmitButton>
         </Panel>
       </aside>
-    </form>
+    </ActionForm>
   );
 }

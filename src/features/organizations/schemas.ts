@@ -9,14 +9,20 @@ export const slugify = (s: string) =>
     .replace(/^-+|-+$/g, "")
     .slice(0, 48);
 
-export const createOrganizationSchema = z.object({
+export const ONBOARDING_CURRENCIES = ["CAD", "USD", "EUR", "GBP", "BRL"] as const;
+
+export const workspaceStepSchema = z.object({
   name: z.string().trim().min(2, "Enter your organization name").max(120),
   slug: z
     .string()
     .trim()
     .toLowerCase()
     .regex(/^[a-z0-9](?:[a-z0-9-]{1,46}[a-z0-9])$/, "3–48 characters: lowercase letters, numbers and dashes"),
+});
+
+export const createOrganizationSchema = workspaceStepSchema.extend({
   kind: z.enum(["agency", "independent"]),
+  currency: z.enum(ONBOARDING_CURRENCIES).default("CAD"),
   headline: z.string().trim().max(160).optional(),
   specialties: z.string().trim().max(500).optional(),
   regions: z.string().trim().max(500).optional(),
