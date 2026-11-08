@@ -1897,6 +1897,10 @@ export type Database = {
       }
       complete_background_job: { Args: { p_id: string }; Returns: undefined }
       confirm_agreement: { Args: { p_referral: string }; Returns: undefined }
+      consume_rate_limit: {
+        Args: { p_bucket: string; p_limit: number; p_window_seconds: number }
+        Returns: boolean
+      }
       create_invitation: {
         Args: {
           p_email: string

@@ -39,10 +39,8 @@ export default async function NotificationsPage({ params }: PageProps<"/w/[orgSl
       ) : (
         <Panel className="divide-y divide-border/60 p-0">
           {rows.map((n) => {
-            const slug = n.organizations?.slug ?? orgSlug;
-            const href = n.link ? `/w/${slug}${n.link}` : `/w/${slug}/notifications`;
             return (
-              <form key={n.id} action={openNotification.bind(null, orgSlug, n.id, href)}>
+              <form key={n.id} action={openNotification.bind(null, orgSlug, n.id)}>
                 <button type="submit" className="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-muted/40 focus-visible:outline-2">
                   <span className={`mt-1.5 size-2 shrink-0 rounded-full ${n.read_at ? "bg-transparent" : "bg-danger"}`} aria-hidden />
                   <span className="min-w-0 flex-1">

@@ -1,5 +1,9 @@
 "use server";
 
+import { z } from "zod";
+
+import { guard, id, parse, rateLimit } from "@/server/actions/guard";
+
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { assertCan, getRequestContext } from "@/server/auth/context";
@@ -39,51 +43,59 @@ function toRow(v: JobFormValues) {
 }
 
 export async function createJob(orgSlug: string, _: ActionResult | null, formData: FormData): Promise<ActionResult> {
-  const ctx = await getRequestContext(orgSlug);
-  assertCan(ctx, "jobs:write");
-  const parsed = jobFormSchema.safeParse(formToObject(formData));
-  if (!parsed.success) return fromZodError(parsed.error);
-  const { data, error } = await ctx.db
-    .from("jobs")
-    .insert({ ...toRow(parsed.data), status: parsed.data.status, organization_id: ctx.organizationId, owner_id: ctx.userId, created_by: ctx.userId })
-    .select("id")
-    .single();
-  if (error) return toActionError(error);
-  revalidatePath(`/w/${orgSlug}/jobs`);
-  redirect(`/w/${orgSlug}/jobs/${data.id}?created=1`);
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "jobs:write");
+    await rateLimit(ctx.db, "job.create", 60, 3600);
+    const parsed = jobFormSchema.safeParse(formToObject(formData));
+    if (!parsed.success) return fromZodError(parsed.error);
+    const { data, error } = await ctx.db
+      .from("jobs")
+      .insert({ ...toRow(parsed.data), status: parsed.data.status, organization_id: ctx.organizationId, owner_id: ctx.userId, created_by: ctx.userId })
+      .select("id")
+      .single();
+    if (error) return toActionError(error);
+    revalidatePath(`/w/${orgSlug}/jobs`);
+    redirect(`/w/${orgSlug}/jobs/${data.id}?created=1`);
+  });
 }
 
 export async function updateJob(orgSlug: string, jobId: string, _: ActionResult | null, formData: FormData): Promise<ActionResult> {
-  const ctx = await getRequestContext(orgSlug);
-  assertCan(ctx, "jobs:write");
-  const parsed = jobFormSchema.safeParse(formToObject(formData));
-  if (!parsed.success) return fromZodError(parsed.error);
-  const { data, error } = await ctx.db.from("jobs").update(toRow(parsed.data)).eq("id", jobId).eq("organization_id", ctx.organizationId).select("id");
-  if (error) return toActionError(error);
-  if (!data?.length) return { ok: false, error: "Job not found." };
-  revalidatePath(`/w/${orgSlug}/jobs/${jobId}`);
-  redirect(`/w/${orgSlug}/jobs/${jobId}?updated=1`);
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "jobs:write");
+    parse(id, jobId);
+    const parsed = jobFormSchema.safeParse(formToObject(formData));
+    if (!parsed.success) return fromZodError(parsed.error);
+    const { data, error } = await ctx.db.from("jobs").update(toRow(parsed.data)).eq("id", jobId).eq("organization_id", ctx.organizationId).select("id");
+    if (error) return toActionError(error);
+    if (!data?.length) return { ok: false, error: "Job not found." };
+    revalidatePath(`/w/${orgSlug}/jobs/${jobId}`);
+    redirect(`/w/${orgSlug}/jobs/${jobId}?updated=1`);
+  });
 }
 
 export async function setJobStatus(orgSlug: string, input: { jobId: string; status: string }): Promise<ActionResult> {
-  const ctx = await getRequestContext(orgSlug);
-  assertCan(ctx, "jobs:write");
-  const parsed = jobStatusSchema.safeParse(input);
-  if (!parsed.success) return fromZodError(parsed.error);
-  const { data, error } = await ctx.db
-    .from("jobs")
-    .update({ status: parsed.data.status })
-    .eq("id", parsed.data.jobId)
-    .eq("organization_id", ctx.organizationId)
-    .select("id");
-  if (error) return toActionError(error);
-  if (!data?.length) return { ok: false, error: "Job not found." };
-  revalidatePath(`/w/${orgSlug}/jobs/${parsed.data.jobId}`);
-  revalidatePath(`/w/${orgSlug}/jobs`);
-  return {
-    ok: true,
-    message: parsed.data.status === "active" ? "Job is active. Matching runs in the background." : "Status updated. Matches for inactive jobs expire immediately.",
-  };
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "jobs:write");
+    const parsed = jobStatusSchema.safeParse(input);
+    if (!parsed.success) return fromZodError(parsed.error);
+    const { data, error } = await ctx.db
+      .from("jobs")
+      .update({ status: parsed.data.status })
+      .eq("id", parsed.data.jobId)
+      .eq("organization_id", ctx.organizationId)
+      .select("id");
+    if (error) return toActionError(error);
+    if (!data?.length) return { ok: false, error: "Job not found." };
+    revalidatePath(`/w/${orgSlug}/jobs/${parsed.data.jobId}`);
+    revalidatePath(`/w/${orgSlug}/jobs`);
+    return {
+      ok: true,
+      message: parsed.data.status === "active" ? "Job is active. Matching runs in the background." : "Status updated. Matches for inactive jobs expire immediately.",
+    };
+  });
 }
 
 /**
@@ -91,19 +103,22 @@ export async function setJobStatus(orgSlug: string, input: { jobId: string; stat
  * Only suggests skills that literally appear in the text — never invents requirements.
  */
 export async function suggestFromDescription(orgSlug: string, description: string): Promise<ActionResult<{ skills: string[]; seniority: string | null; years: number | null; arrangement: string | null }>> {
-  const ctx = await getRequestContext(orgSlug);
-  assertCan(ctx, "jobs:write");
-  const text = description.slice(0, 20000).toLowerCase();
-  const VOCAB = [
-    "typescript", "javascript", "react", "next.js", "node.js", "python", "django", "java", "kotlin", "go", "rust", "c#", ".net",
-    "ruby", "rails", "php", "sql", "postgresql", "mysql", "mongodb", "redis", "aws", "azure", "google cloud", "docker", "kubernetes",
-    "terraform", "graphql", "rest", "machine learning", "data engineering", "spark", "airflow", "dbt", "tableau", "power bi",
-    "figma", "ux design", "product management", "agile", "scrum", "salesforce", "sap", "accounting", "cpa", "sales", "marketing",
-    "seo", "excel", "project management", "ci-cd", "linux", "security", "swift", "ios", "android", "flutter",
-  ];
-  const skills = VOCAB.filter((s) => new RegExp(`(^|[^a-z0-9])${s.replace(/[.+#]/g, (c) => `\\${c}`)}([^a-z0-9]|$)`).test(text));
-  const seniority = (["principal", "lead", "senior", "junior", "intern"] as const).find((s) => text.includes(s)) ?? (text.includes("intermediate") ? "mid" : null);
-  const yrs = text.match(/(\d{1,2})\+?\s*(?:years|yrs)/);
-  const arrangement = text.includes("remote") ? (text.includes("hybrid") ? "hybrid" : "remote") : text.includes("hybrid") ? "hybrid" : text.includes("on-site") || text.includes("onsite") ? "onsite" : null;
-  return { ok: true, data: { skills, seniority, years: yrs ? Number(yrs[1]) : null, arrangement } };
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "jobs:write");
+    await rateLimit(ctx.db, "job.suggest", 60, 3600);
+    const text = parse(z.string().max(50000, "Description is too long."), description).slice(0, 20000).toLowerCase();
+    const VOCAB = [
+      "typescript", "javascript", "react", "next.js", "node.js", "python", "django", "java", "kotlin", "go", "rust", "c#", ".net",
+      "ruby", "rails", "php", "sql", "postgresql", "mysql", "mongodb", "redis", "aws", "azure", "google cloud", "docker", "kubernetes",
+      "terraform", "graphql", "rest", "machine learning", "data engineering", "spark", "airflow", "dbt", "tableau", "power bi",
+      "figma", "ux design", "product management", "agile", "scrum", "salesforce", "sap", "accounting", "cpa", "sales", "marketing",
+      "seo", "excel", "project management", "ci-cd", "linux", "security", "swift", "ios", "android", "flutter",
+    ];
+    const skills = VOCAB.filter((s) => new RegExp(`(^|[^a-z0-9])${s.replace(/[.+#]/g, (c) => `\\${c}`)}([^a-z0-9]|$)`).test(text));
+    const seniority = (["principal", "lead", "senior", "junior", "intern"] as const).find((s) => text.includes(s)) ?? (text.includes("intermediate") ? "mid" : null);
+    const yrs = text.match(/(\d{1,2})\+?\s*(?:years|yrs)/);
+    const arrangement = text.includes("remote") ? (text.includes("hybrid") ? "hybrid" : "remote") : text.includes("hybrid") ? "hybrid" : text.includes("on-site") || text.includes("onsite") ? "onsite" : null;
+    return { ok: true, data: { skills, seniority, years: yrs ? Number(yrs[1]) : null, arrangement } };
+  });
 }

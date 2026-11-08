@@ -6,6 +6,12 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   serverExternalPackages: ["postgres"],
   poweredByHeader: false,
+  experimental: {
+    serverActions: {
+      // Resume uploads are capped at 10 MB in the action itself; leave headroom for multipart overhead.
+      bodySizeLimit: "12mb",
+    },
+  },
   turbopack: {
     rules: {
       "*.css": {
@@ -23,6 +29,8 @@ const nextConfig: NextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
         ],
       },
     ];

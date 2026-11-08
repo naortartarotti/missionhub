@@ -41,7 +41,9 @@ jobs:
           cache: npm
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          # Pinned to the version used locally. `latest` pulled CLI 3.0, whose config
+          # schema renamed [inbucket] to [local_smtp] and broke `supabase start`.
+          version: 2.104.0
       - run: npm ci
 
       - name: Start local Supabase (applies all migrations)

@@ -1,40 +1,66 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { createClient } from "@/server/supabase/server";
 import { getSessionUser } from "@/server/auth/context";
+import { AuthorizationError } from "@/server/auth/errors";
+import { guard, id, parse, text } from "@/server/actions/guard";
 import { toActionError, type ActionResult } from "@/lib/actions/result";
 
+/** Platform-admin gate. The RPCs re-check app.is_platform_admin() in the database. */
 async function adminDb() {
   const user = await getSessionUser();
-  if (!user?.isPlatformAdmin) throw new Error("forbidden");
+  if (!user?.isPlatformAdmin) throw new AuthorizationError();
   return createClient();
 }
 
+const suspensionSchema = z.object({ orgId: id, suspend: z.boolean(), reason: z.string().trim().max(500) }).refine((v) => !v.suspend || v.reason.length >= 5, {
+  message: "Give a reason (at least 5 characters).",
+  path: ["reason"],
+});
+
 export async function setSuspension(input: { orgId: string; suspend: boolean; reason: string }): Promise<ActionResult> {
-  const db = await adminDb();
-  const { error } = await db.rpc("set_organization_suspension", { p_org: input.orgId, p_suspend: input.suspend, p_reason: input.reason });
-  if (error) return toActionError(error);
-  revalidatePath("/admin");
-  return { ok: true, message: input.suspend ? "Organization suspended." : "Organization reinstated." };
+  return guard(async () => {
+    const db = await adminDb();
+    const v = parse(suspensionSchema, input);
+    const { error } = await db.rpc("set_organization_suspension", { p_org: v.orgId, p_suspend: v.suspend, p_reason: v.reason });
+    if (error) return toActionError(error);
+    revalidatePath("/admin");
+    return { ok: true, message: v.suspend ? "Organization suspended." : "Organization reinstated." };
+  });
 }
+
+const disputeSchema = z.object({ disputeId: id, upheld: z.boolean(), resolution: text(5, 2000, "Describe the resolution (5–2000 characters).") });
 
 export async function resolveDispute(input: { disputeId: string; upheld: boolean; resolution: string }): Promise<ActionResult> {
-  const db = await adminDb();
-  if (input.resolution.trim().length < 5) return { ok: false, error: "Describe the resolution." };
-  const { error } = await db.rpc("resolve_dispute", { p_dispute: input.disputeId, p_resolution: input.resolution, p_upheld: input.upheld });
-  if (error) return toActionError(error);
-  revalidatePath("/admin");
-  return { ok: true, message: "Dispute closed." };
+  return guard(async () => {
+    const db = await adminDb();
+    const v = parse(disputeSchema, input);
+    const { error } = await db.rpc("resolve_dispute", { p_dispute: v.disputeId, p_resolution: v.resolution, p_upheld: v.upheld });
+    if (error) return toActionError(error);
+    revalidatePath("/admin");
+    return { ok: true, message: "Dispute closed." };
+  });
 }
 
+const percent = z.coerce.number().min(0).max(100).transform((n) => Math.round(n * 100));
+const ruleSchema = z
+  .object({ name: z.string().trim().max(120).optional(), sourcing: percent, jobOwner: percent, platform: percent })
+  .refine((v) => v.sourcing + v.jobOwner + v.platform === 10000, { message: "Percentages must total exactly 100%.", path: ["platform"] });
+
 export async function publishRule(_: ActionResult | null, formData: FormData): Promise<ActionResult> {
-  const db = await adminDb();
-  const n = (k: string) => Math.round(Number(formData.get(k)) * 100);
-  const [s, j, p] = [n("sourcing"), n("jobOwner"), n("platform")];
-  if ([s, j, p].some((x) => !Number.isInteger(x) || x < 0) || s + j + p !== 10000) return { ok: false, error: "Percentages must be non-negative and total exactly 100%." };
-  const { error } = await db.rpc("publish_commission_rule", { p_name: String(formData.get("name") || "Standard marketplace split"), p_sourcing: s, p_job_owner: j, p_platform: p });
-  if (error) return toActionError(error);
-  revalidatePath("/admin");
-  return { ok: true, message: "New rule version published. Existing agreements keep their frozen snapshot." };
+  return guard(async () => {
+    const db = await adminDb();
+    const v = parse(ruleSchema, Object.fromEntries(formData));
+    const { error } = await db.rpc("publish_commission_rule", {
+      p_name: v.name || "Standard marketplace split",
+      p_sourcing: v.sourcing,
+      p_job_owner: v.jobOwner,
+      p_platform: v.platform,
+    });
+    if (error) return toActionError(error);
+    revalidatePath("/admin");
+    return { ok: true, message: "New rule version published. Existing agreements keep their frozen snapshot." };
+  });
 }
