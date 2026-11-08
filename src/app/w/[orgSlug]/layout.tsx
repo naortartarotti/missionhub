@@ -46,12 +46,12 @@ export default async function WorkspaceLayout({ children, params }: LayoutProps<
   );
 
   return (
-    <div className="min-h-dvh lg:p-4">
+    <div className="min-h-dvh bg-background">
       <a href="#main" className="sr-only z-50 rounded-full bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3">
         Skip to content
       </a>
-      <div className="mx-auto flex min-h-dvh max-w-[1600px] overflow-hidden bg-background lg:min-h-[calc(100dvh-2rem)] lg:rounded-[2.25rem] lg:shadow-[0_30px_80px_-40px_rgb(0_0_0/0.35)]">
-        <aside className="hidden w-[260px] shrink-0 border-r border-sidebar-border bg-sidebar px-5 py-8 lg:block">{sidebar}</aside>
+      <div className="flex min-h-dvh">
+        <aside className="sticky top-0 hidden h-dvh w-[260px] shrink-0 overflow-y-auto border-r border-sidebar-border bg-sidebar px-5 py-8 lg:block">{sidebar}</aside>
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="flex items-center justify-between gap-3 px-4 pt-4 sm:px-8 lg:px-10 lg:pt-8">
             <div className="flex items-center gap-3 lg:hidden">
