@@ -1,20 +1,25 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { EyeOff, Pencil, Sparkles, Users } from "lucide-react";
+import { Eye, EyeOff, Inbox, Pencil } from "lucide-react";
 import { can, getRequestContext } from "@/server/auth/context";
 import { getJob, listJobReferrals } from "@/features/jobs/queries";
 import { getJobMatchSummary } from "@/features/matching/queries";
 import { JobStatusActions } from "@/features/jobs/components/job-status-actions";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/shared/card";
-import { SectionTitle } from "@/components/shared/page-header";
+import { PageHeader, SectionTitle } from "@/components/shared/page-header";
 import { StatusPill } from "@/components/shared/status-pill";
-import { KpiTile } from "@/components/shared/kpi-tile";
+import { StatTile } from "@/components/shared/stat-tile";
+import { SkillChips } from "@/components/shared/skill-chips";
+import { Disclosure } from "@/components/shared/disclosure";
+import { InitialsAvatar } from "@/components/shared/initials-avatar";
 import { Flash } from "@/components/shared/flash";
-import { ARRANGEMENT, CONTRACT, JOB_STATUS, REFERRAL_STATUS, SENIORITY, relativeTime } from "@/lib/labels";
-import { formatMoney } from "@/lib/money/format";
+import { JOB_STATUS, REFERRAL_STATUS } from "@/lib/labels";
+import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 
-export const metadata = { title: "Job" };
+export async function generateMetadata() {
+  return { title: (await getT("jobs"))("detail.metaTitle") };
+}
 
 export default async function JobPage({ params, searchParams }: PageProps<"/w/[orgSlug]/jobs/[jobId]">) {
   const { orgSlug, jobId } = await params;
@@ -22,88 +27,112 @@ export default async function JobPage({ params, searchParams }: PageProps<"/w/[o
   const ctx = await getRequestContext(orgSlug);
   const job = await getJob(ctx, jobId);
   if (!job) notFound();
-  const [summary, referrals] = await Promise.all([getJobMatchSummary(ctx, jobId), listJobReferrals(ctx, jobId)]);
+  const [summary, referrals, t, tg, f] = await Promise.all([getJobMatchSummary(ctx, jobId), listJobReferrals(ctx, jobId), getT("jobs"), getGlobalT(), getFormatter()]);
   const st = JOB_STATUS[job.status];
+  const matching = job.accepts_external_referrals && job.status === "active";
+  const location = [job.location_city, job.location_region, job.location_country].filter(Boolean).join(", ");
   const visible = [
-    "Title, seniority, arrangement & skills",
-    job.share_description && "Description",
-    job.share_location && "Location",
-    job.share_salary && "Compensation",
-    job.share_fee && "Expected fee",
-    !job.client_confidential && "Client name",
+    t("detail.visible.always"),
+    job.share_description && t("detail.visible.description"),
+    job.share_location && t("detail.visible.location"),
+    job.share_salary && t("detail.visible.compensation"),
+    job.share_fee && t("detail.visible.placementFee"),
+    !job.client_confidential && t("detail.visible.clientName"),
   ].filter(Boolean) as string[];
 
   return (
     <div className="grid gap-6">
-      {sp.created ? <Flash message={job.status === "active" ? "Job published. Matching runs in the background." : "Draft saved. Publish when you're ready."} /> : null}
-      {sp.updated ? <Flash message="Changes saved." /> : null}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="min-w-0">
-          <h1 className="text-2xl font-semibold tracking-tight">{job.title}</h1>
-          <p className="mt-1 text-muted-foreground">
-            {[job.client_name ? `${job.client_name}${job.client_confidential ? " · confidential to partners" : ""}` : "Client not set", ARRANGEMENT[job.work_arrangement], CONTRACT[job.contract_type]].join(" · ")}
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <StatusPill tone={st.tone} label={st.label} />
-          {can(ctx, "jobs:write") ? (
-            <>
-              <Button variant="outline" asChild><Link href={`/w/${orgSlug}/jobs/${jobId}/edit`}><Pencil className="size-4" aria-hidden /> Edit</Link></Button>
-              <JobStatusActions orgSlug={orgSlug} jobId={jobId} status={job.status} />
-            </>
-          ) : null}
-        </div>
-      </div>
+      <PageHeader
+        title={job.title}
+        description={[job.client_name ? (job.client_confidential ? t("detail.clientConfidential", { client: job.client_name }) : job.client_name) : t("detail.clientNotSet"), tg(`labels.arrangement.${job.work_arrangement}`), tg(`labels.contract.${job.contract_type}`), location].filter(Boolean).join(" · ")}
+        actions={
+          <>
+            <StatusPill tone={st.tone} label={tg(`labels.jobStatus.${job.status}`)} />
+            {can(ctx, "jobs:write") ? (
+              <>
+                <Button variant="outline" asChild><Link href={`/w/${orgSlug}/jobs/${jobId}/edit`}><Pencil className="size-4" aria-hidden /> {t("detail.edit")}</Link></Button>
+                <JobStatusActions orgSlug={orgSlug} jobId={jobId} status={job.status} />
+              </>
+            ) : null}
+          </>
+        }
+      />
+      {sp.created ? <Flash message={job.status === "active" ? t("detail.flashPublished") : t("detail.flashDraft")} /> : null}
+      {sp.updated ? <Flash message={t("detail.flashUpdated")} /> : null}
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        <KpiTile label="Strong partner matches" hint="Anonymized count" value={job.accepts_external_referrals && job.status === "active" ? String(summary.strong_count) : "—"} tone="green" icon={Sparkles} />
-        <KpiTile label="Potential matches" hint="Anonymized count" value={job.accepts_external_referrals && job.status === "active" ? String(summary.potential_count) : "—"} tone="blue" icon={Users} />
-        <KpiTile label="Submissions received" value={String(referrals.length)} tone="lilac" icon={Users} href={`/w/${orgSlug}/referrals?tab=received`} />
-      </div>
-      <p className="-mt-2 flex items-start gap-2 text-sm text-muted-foreground">
-        <EyeOff className="mt-0.5 size-4 shrink-0" aria-hidden />
-        {job.accepts_external_referrals
-          ? `Partner candidates are never identified to you before a referral. Counts refresh as profiles change${summary.last_refreshed_at ? ` (last ${relativeTime(summary.last_refreshed_at)})` : ""}.`
-          : "Partner referrals are off for this job. Turn them on to be matched with candidates from partner recruiters."}
-      </p>
+      {/* Key numbers (same tiles as the match panel) + one line on privacy/matching state */}
+      <section className="grid gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <StatTile label={t("detail.kpiStrong")} value={matching ? String(summary.strong_count) : "—"} hint={t("detail.kpiPartnerHint")} />
+          <StatTile label={t("detail.kpiPartial")} value={matching ? String(summary.potential_count) : "—"} hint={t("detail.kpiPartnerHint")} />
+          <StatTile label={t("detail.statSubmitted")} value={String(referrals.length)} />
+          <StatTile label={t("detail.placementFee")} value={job.expected_fee_minor ? f.money(job.expected_fee_minor, job.fee_currency, { whole: true }) : "—"} tone={job.expected_fee_minor ? "success" : undefined} />
+        </div>
+        <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <EyeOff className="size-3.5 shrink-0" aria-hidden />
+          {!job.accepts_external_referrals
+            ? t("detail.privacyNotOpen")
+            : job.status !== "active"
+              ? t("detail.privacyNotPublished")
+              : summary.last_refreshed_at
+                ? t("detail.privacyShortRefreshed", { when: f.relative(summary.last_refreshed_at) })
+                : t("detail.privacyShort")}
+        </p>
+      </section>
 
-      <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
-        <Panel>
-          <SectionTitle>Received submissions</SectionTitle>
+      <div className="grid items-start gap-6 xl:grid-cols-[1.4fr_1fr]">
+        {/* Who partners sent you */}
+        <Panel className="content-start">
+          <SectionTitle>{t("detail.submittedTitle")}</SectionTitle>
           {referrals.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No submissions yet. Partner recruiters decide whether to submit their matching candidates.</p>
+            <div className="flex items-center gap-3 rounded-2xl bg-muted/50 px-4 py-5 text-sm text-muted-foreground">
+              <Inbox className="size-5 shrink-0" aria-hidden />
+              {t("detail.submittedEmptyShort")}
+            </div>
           ) : (
-            <ul className="divide-y divide-border/60">
+            <ul className="-mx-2 grid gap-0.5">
               {referrals.map((r) => (
-                <li key={r.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
-                  <Link href={`/w/${orgSlug}/referrals/${r.id}`} className="font-medium underline-offset-4 hover:underline">{r.candidate_label}</Link>
-                  <span className="flex items-center gap-3 text-sm text-muted-foreground">
-                    {relativeTime(r.submitted_at)}
-                    <StatusPill tone={REFERRAL_STATUS[r.status].tone} label={REFERRAL_STATUS[r.status].label} />
-                  </span>
+                <li key={r.id}>
+                  <Link href={`/w/${orgSlug}/referrals/${r.id}`} className="flex items-center gap-3 rounded-2xl px-2 py-2.5 transition-colors hover:bg-muted/60">
+                    <InitialsAvatar name={r.candidate_label} className="size-9 text-xs" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate font-medium">{r.candidate_label}</span>
+                      <span className="block text-xs text-muted-foreground">{f.relative(r.submitted_at)}</span>
+                    </span>
+                    <StatusPill tone={REFERRAL_STATUS[r.status].tone} label={tg(`labels.referralStatus.${r.status}`)} />
+                  </Link>
                 </li>
               ))}
             </ul>
           )}
         </Panel>
-        <Panel className="grid content-start gap-4">
-          <SectionTitle>Requirements</SectionTitle>
-          <dl className="grid grid-cols-[130px_1fr] gap-x-3 gap-y-2 text-sm">
-            <dt className="text-muted-foreground">Required</dt><dd>{job.required_skills.join(", ") || "—"}</dd>
-            <dt className="text-muted-foreground">Nice to have</dt><dd>{job.preferred_skills.join(", ") || "—"}</dd>
-            <dt className="text-muted-foreground">Seniority</dt><dd>{job.seniority ? SENIORITY[job.seniority] : "—"}{job.min_years_experience !== null ? ` · ${job.min_years_experience}+ yrs` : ""}</dd>
-            <dt className="text-muted-foreground">Languages</dt><dd>{job.languages.join(", ") || "—"}</dd>
-            <dt className="text-muted-foreground">Location</dt><dd>{[job.location_city, job.location_region, job.location_country].filter(Boolean).join(", ") || "—"}</dd>
-            <dt className="text-muted-foreground">Compensation</dt><dd>{job.salary_min || job.salary_max ? `${formatMoney(job.salary_min, job.salary_currency)} – ${formatMoney(job.salary_max, job.salary_currency)}` : "—"}</dd>
-            <dt className="text-muted-foreground">Expected fee</dt><dd>{formatMoney(job.expected_fee_minor, job.fee_currency)}</dd>
+
+        {/* The role, in the same blocks as the match panel */}
+        <Panel className="grid content-start gap-5">
+          <SectionTitle>{t("detail.role")}</SectionTitle>
+          <div className="grid gap-2.5">
+            <h3 className="text-xs font-medium text-muted-foreground">{t("detail.required")}</h3>
+            <SkillChips skills={job.required_skills} />
+            {job.preferred_skills.length ? (
+              <>
+                <h3 className="mt-1 text-xs font-medium text-muted-foreground">{t("detail.niceToHave")}</h3>
+                <SkillChips skills={job.preferred_skills} />
+              </>
+            ) : null}
+          </div>
+          <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+            <div><dt className="text-xs text-muted-foreground">{t("detail.seniority")}</dt><dd className="mt-0.5 font-medium">{job.seniority ? tg(`labels.seniority.${job.seniority}`) : "—"}{job.min_years_experience !== null ? ` · ${t("detail.years", { years: job.min_years_experience })}` : ""}</dd></div>
+            <div><dt className="text-xs text-muted-foreground">{t("detail.location")}</dt><dd className="mt-0.5 font-medium">{location || "—"}</dd></div>
+            <div><dt className="text-xs text-muted-foreground">{t("detail.compensation")}</dt><dd className="mt-0.5 font-medium">{job.salary_min || job.salary_max ? `${f.money(job.salary_min, job.salary_currency, { whole: true })} – ${f.money(job.salary_max, job.salary_currency, { whole: true })}` : "—"}</dd></div>
+            <div><dt className="text-xs text-muted-foreground">{t("detail.languages")}</dt><dd className="mt-0.5 font-medium">{job.languages.join(", ") || "—"}</dd></div>
           </dl>
           {job.accepts_external_referrals ? (
-            <div className="rounded-2xl bg-muted p-4 text-sm">
-              <p className="font-medium">Partners see before a referral</p>
-              <p className="mt-1 text-muted-foreground">{visible.join(" · ")}</p>
+            <div className="grid gap-2">
+              <h3 className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><Eye className="size-3.5" aria-hidden />{t("detail.visibleShort")}</h3>
+              <SkillChips skills={visible} />
             </div>
           ) : null}
-          {job.description ? <p className="text-sm whitespace-pre-line text-muted-foreground">{job.description}</p> : null}
+          {job.description ? <Disclosure summary={t("detail.description")}>{job.description}</Disclosure> : null}
         </Panel>
       </div>
     </div>

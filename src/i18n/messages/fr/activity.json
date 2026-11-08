@@ -1,0 +1,13 @@
+{
+  "title": "Activité",
+  "description": "Tout ce qui a changé : nouvelles correspondances, soumissions, étapes d'embauche et paiements.",
+  "unreadCount": { "one": "{count} non lue", "other": "{count} non lues" },
+  "caughtUp": "Vous êtes à jour",
+  "markAllRead": "Tout marquer comme lu",
+  "emptyShort": "Rien pour l'instant. Les nouvelles correspondances, soumissions et mises à jour de paiement apparaîtront ici.",
+  "emptyTitle": "Aucune activité pour l'instant",
+  "emptyBody": "Vous verrez ici les nouvelles correspondances, soumissions et mises à jour de paiement au fur et à mesure.",
+  "viewAll": "Voir toute l'activité",
+  "unread": "non lue",
+  "emailOff": "L'envoi de courriels n'est pas configuré (définissez EMAIL_PROVIDER). Les notifications sont uniquement dans l'application; aucun courriel n'a été envoyé."
+}

@@ -1,0 +1,53 @@
+{
+  "appName": "MissionHub",
+  "actions": {
+    "save": "Salvar",
+    "saving": "Salvando…",
+    "working": "Processando…",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "viewAll": "Ver tudo",
+    "showAll": "Mostrar tudo",
+    "undo": "Desfazer",
+    "tryAgain": "Tentar de novo",
+    "continue": "Continuar",
+    "search": "Buscar"
+  },
+  "pagination": {
+    "label": "Paginação",
+    "summary": "Página {page} de {pages} · {total} no total"
+  },
+  "theme": {
+    "toggle": "Alternar modo escuro"
+  },
+  "language": {
+    "label": "Idioma",
+    "changed": "Idioma atualizado"
+  },
+  "account": {
+    "switch": "Trocar de organização ou conta",
+    "organizations": "Organizações",
+    "current": "Atual",
+    "demo": "DEMO",
+    "yourAccount": "Sua conta",
+    "signOut": "Sair",
+    "createOrganization": "Criar uma organização",
+    "platformAdmin": "Administração da plataforma",
+    "newOrganization": "Nova organização"
+  },
+  "skipToContent": "Pular para o conteúdo",
+  "demo": {
+    "title": "Espaço de demonstração",
+    "body": "Todos os dados aqui são fictícios. Nunca misture com candidatos reais."
+  },
+  "none": "—",
+  "notShared": "Não compartilhado",
+  "yes": "Sim",
+  "no": "Não"
+}

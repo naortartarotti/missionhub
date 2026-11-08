@@ -5,8 +5,11 @@ import { updateCandidate } from "@/features/candidates/actions";
 import { CandidateForm } from "@/features/candidates/components/candidate-form";
 import { PageHeader } from "@/components/shared/page-header";
 import { minorToMajorString } from "@/lib/money/format";
+import { getT } from "@/i18n/server";
 
-export const metadata = { title: "Edit candidate" };
+export async function generateMetadata() {
+  return { title: (await getT("candidates"))("edit.metaTitle") };
+}
 
 export default async function EditCandidatePage({ params }: PageProps<"/w/[orgSlug]/candidates/[candidateId]/edit">) {
   const { orgSlug, candidateId } = await params;
@@ -15,13 +18,15 @@ export default async function EditCandidatePage({ params }: PageProps<"/w/[orgSl
   const c = await getCandidate(ctx, candidateId);
   if (!c || c.status === "deleted") notFound();
   const cur = c.salary_currency ?? ctx.currency;
+  const t = await getT("candidates");
   return (
-    <div className="mx-auto grid max-w-4xl gap-6">
-      <PageHeader title={`Edit ${c.full_name}`} description="Changes to matching attributes trigger a background re-match." />
+    <div className="grid gap-6">
+      <PageHeader title={t("edit.title", { name: c.full_name })} description={t("edit.description")} />
+      <div className="mx-auto grid w-full max-w-4xl gap-6">
       <CandidateForm
         action={updateCandidate.bind(null, orgSlug, candidateId)}
         cancelHref={`/w/${orgSlug}/candidates/${candidateId}`}
-        submitLabel="Save changes"
+        submitLabel={t("edit.submit")}
         defaults={{
           fullName: c.full_name,
           email: c.email ?? "",
@@ -49,6 +54,7 @@ export default async function EditCandidatePage({ params }: PageProps<"/w/[orgSl
           privacyNoticeGiven: Boolean(c.privacy_notice_given_at),
         }}
       />
+    </div>
     </div>
   );
 }

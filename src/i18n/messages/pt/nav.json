@@ -1,0 +1,15 @@
+{
+  "main": "Principal",
+  "openNavigation": "Abrir navegação",
+  "navigation": "Navegação",
+  "overview": "Visão geral",
+  "opportunities": "Oportunidades",
+  "candidates": "Candidatos",
+  "jobs": "Vagas",
+  "referrals": "Indicações",
+  "commissions": "Comissões",
+  "activity": "Atividade",
+  "settings": "Configurações",
+  "badgeNew": "novos",
+  "badgePending": "pendentes"
+}

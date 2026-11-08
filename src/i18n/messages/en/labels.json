@@ -1,0 +1,90 @@
+{
+  "candidateStatus": {
+    "draft": "Not matching",
+    "active_for_matching": "Matching",
+    "unavailable": "Unavailable",
+    "archived": "Archived",
+    "deleted": "Deleted"
+  },
+  "jobStatus": {
+    "draft": "Draft",
+    "active": "Active",
+    "paused": "Paused",
+    "closed": "Closed",
+    "filled": "Filled",
+    "cancelled": "Cancelled"
+  },
+  "referralStatus": {
+    "submitted": "Submitted",
+    "under_review": "Under review",
+    "info_requested": "Info requested",
+    "accepted": "Accepted",
+    "declined": "Declined",
+    "withdrawn": "Withdrawn",
+    "interviewing": "Interviewing",
+    "offer": "Offer",
+    "hired": "Hired",
+    "rejected": "Not selected",
+    "cancelled": "Cancelled"
+  },
+  "placementStatus": {
+    "hire_reported": "Hire reported",
+    "invoiced": "Invoiced",
+    "payment_partially_verified": "Partially paid",
+    "commission_payable": "Commission payable",
+    "settled": "Settled",
+    "disputed": "Disputed",
+    "cancelled": "Cancelled"
+  },
+  "placementStatusDescription": {
+    "hire_reported": "Projected commission — not yet invoiced.",
+    "invoiced": "Client invoiced; payment not yet verified.",
+    "payment_partially_verified": "Part of the client payment is verified.",
+    "commission_payable": "Client payment verified; shares are owed.",
+    "settled": "All obligations verified as paid.",
+    "disputed": "Frozen pending platform review.",
+    "cancelled": "Placement cancelled."
+  },
+  "evidenceKind": {
+    "client_payment": "Client payment received",
+    "sourcing_payout": "Payout to sourcing recruiter",
+    "platform_remittance": "Platform share remittance",
+    "client_refund": "Refund to client"
+  },
+  "band": {
+    "strong": "Strong match",
+    "potential": "Partial match",
+    "not_eligible": "Not eligible"
+  },
+  "seniority": {
+    "intern": "Intern",
+    "junior": "Junior",
+    "mid": "Mid-level",
+    "senior": "Senior",
+    "lead": "Lead",
+    "principal": "Principal",
+    "executive": "Executive"
+  },
+  "arrangement": {
+    "remote": "Remote",
+    "hybrid": "Hybrid",
+    "onsite": "On-site"
+  },
+  "contract": {
+    "permanent": "Permanent",
+    "contract": "Contract",
+    "temporary": "Temporary",
+    "contract_to_hire": "Contract to hire"
+  },
+  "legalBasis": {
+    "consent": "Consent",
+    "contract": "Contract / pre-contract",
+    "legitimate_interest": "Legitimate business purpose",
+    "other_documented": "Other (documented)"
+  },
+  "role": {
+    "org_admin": "Organization admin",
+    "recruiter_manager": "Recruiter manager",
+    "recruiter": "Recruiter"
+  }
+}

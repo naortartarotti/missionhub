@@ -8,15 +8,17 @@ import { KpiTile } from "@/components/shared/kpi-tile";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Panel } from "@/components/shared/card";
 import { StatusPill } from "@/components/shared/status-pill";
-import { PLACEMENT_STATUS, formatDate } from "@/lib/labels";
-import { formatMoney } from "@/lib/money/format";
+import { PLACEMENT_STATUS } from "@/lib/labels";
+import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 
-export const metadata = { title: "Commissions" };
+export async function generateMetadata() {
+  return { title: (await getT("commissions"))("title") };
+}
 
 export default async function CommissionsPage({ params }: PageProps<"/w/[orgSlug]/commissions">) {
   const { orgSlug } = await params;
   const ctx = await getRequestContext(orgSlug);
-  const placements = await listPlacements(ctx);
+  const [placements, t, tg, f] = await Promise.all([listPlacements(ctx), getT("commissions"), getGlobalT(), getFormatter()]);
   const cur = ctx.currency;
 
   const { projected, payable, paid, owed } = summarizeForOrg(placements as never, ctx.organizationId, cur);
@@ -30,31 +32,31 @@ export default async function CommissionsPage({ params }: PageProps<"/w/[orgSlug
   return (
     <div className="grid gap-6">
       <PageHeader
-        title="Commissions"
-        description="Projected amounts are estimates. Money becomes payable only after the client payment is verified, and paid only after the payout is verified. No funds move through MissionHub."
+        title={t("title")}
+        description={t("description")}
       />
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <KpiTile label="Projected" hint="Hires not yet paid by client" value={formatMoney(projected, cur)} tone="lilac" icon={Hourglass} />
-        <KpiTile label="Payable to you" hint="Verified, awaiting payout" value={formatMoney(payable, cur)} tone="yellow" icon={Clock} />
-        <KpiTile label="Paid to you" hint="Verified payouts" value={formatMoney(paid, cur)} tone="green" icon={CircleDollarSign} />
-        <KpiTile label="You owe partners" hint="Verified shares to remit" value={formatMoney(owed, cur)} tone="blue" icon={Wallet} />
+        <KpiTile label={t("kpi.projected")} hint={t("kpi.projectedHint")} value={f.money(projected, cur)} tone="lilac" icon={Hourglass} />
+        <KpiTile label={t("kpi.payable")} hint={t("kpi.payableHint")} value={f.money(payable, cur)} tone="yellow" icon={Clock} />
+        <KpiTile label={t("kpi.paid")} hint={t("kpi.paidHint")} value={f.money(paid, cur)} tone="green" icon={CircleDollarSign} />
+        <KpiTile label={t("kpi.owed")} hint={t("kpi.owedHint")} value={f.money(owed, cur)} tone="blue" icon={Wallet} />
       </div>
-      {placements.some((p) => p.currency !== cur) ? <p className="text-xs text-muted-foreground">Totals include only {cur} placements; other currencies are listed below and never converted.</p> : null}
+      {placements.some((p) => p.currency !== cur) ? <p className="text-xs text-muted-foreground">{t("otherCurrencies", { currency: cur })}</p> : null}
       {rows.length === 0 ? (
-        <EmptyState icon={Wallet} title="No placements yet" description="When a referral results in a hire, the placement and its commission ledger appear here." />
+        <EmptyState icon={Wallet} title={t("empty.title")} description={t("empty.description")} />
       ) : (
         <Panel className="overflow-hidden p-0">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-sm">
-              <caption className="sr-only">Placements</caption>
+              <caption className="sr-only">{t("table.caption")}</caption>
               <thead>
                 <tr className="border-b border-border text-left text-muted-foreground">
-                  <th scope="col" className="px-5 py-3 font-medium">Placement</th>
-                  <th scope="col" className="px-5 py-3 font-medium">Your role</th>
-                  <th scope="col" className="px-5 py-3 text-right font-medium">Fee</th>
-                  <th scope="col" className="px-5 py-3 text-right font-medium">Your share</th>
-                  <th scope="col" className="px-5 py-3 font-medium">Start</th>
-                  <th scope="col" className="px-5 py-3 text-right font-medium">Status</th>
+                  <th scope="col" className="px-5 py-3 font-medium">{t("table.placement")}</th>
+                  <th scope="col" className="px-5 py-3 font-medium">{t("table.role")}</th>
+                  <th scope="col" className="px-5 py-3 text-right font-medium">{t("table.fee")}</th>
+                  <th scope="col" className="px-5 py-3 text-right font-medium">{t("table.share")}</th>
+                  <th scope="col" className="px-5 py-3 font-medium">{t("table.start")}</th>
+                  <th scope="col" className="px-5 py-3 text-right font-medium">{t("table.status")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -67,14 +69,14 @@ export default async function CommissionsPage({ params }: PageProps<"/w/[orgSlug
                         <Link href={`/w/${orgSlug}/commissions/${p.id}`} className="font-medium underline-offset-4 hover:underline">{p.referral?.job_title_snapshot}</Link>
                         <p className="text-xs text-muted-foreground">{p.referral?.candidate_label}</p>
                       </td>
-                      <td className="px-5 py-3.5">{side === "source" ? "Sourcing recruiter" : "Job owner"}</td>
-                      <td className="px-5 py-3.5 text-right tabular-nums">{formatMoney(p.contracted_fee_minor, p.currency)}</td>
+                      <td className="px-5 py-3.5">{side === "source" ? t("party.sourcing") : t("party.job_owner")}</td>
+                      <td className="px-5 py-3.5 text-right tabular-nums">{f.money(p.contracted_fee_minor, p.currency)}</td>
                       <td className="px-5 py-3.5 text-right tabular-nums">
-                        {formatMoney(share ?? null, p.currency)}
-                        {!b.received ? <span className="block text-xs text-muted-foreground">projected</span> : null}
+                        {f.money(share ?? null, p.currency)}
+                        {!b.received ? <span className="block text-xs text-muted-foreground">{t("table.projected")}</span> : null}
                       </td>
-                      <td className="px-5 py-3.5 text-muted-foreground">{formatDate(p.start_date)}</td>
-                      <td className="px-5 py-3.5 text-right"><StatusPill tone={st.tone} label={st.label} /></td>
+                      <td className="px-5 py-3.5 text-muted-foreground">{f.date(p.start_date)}</td>
+                      <td className="px-5 py-3.5 text-right"><StatusPill tone={st.tone} label={tg(`labels.placementStatus.${p.status}`)} /></td>
                     </tr>
                   );
                 })}

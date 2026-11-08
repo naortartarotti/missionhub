@@ -12,6 +12,9 @@ import { FormMessage } from "@/components/shared/form-message";
 import { SubmitButton } from "@/components/shared/submit-button";
 import { CSV_COLUMNS } from "../csv";
 import { commitImport, previewImport } from "../import-actions";
+import { useT } from "@/i18n/client";
+
+const STEPS = ["upload", "review", "confirm"] as const;
 
 export function ImportWizard({ orgSlug }: { orgSlug: string }) {
   const [preview, previewAction] = useActionState(previewImport.bind(null, orgSlug), null);
@@ -19,14 +22,21 @@ export function ImportWizard({ orgSlug }: { orgSlug: string }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const data = preview?.ok ? preview.data : undefined;
+  const t = useT("candidates");
+  // Split the hint around its {example}/{required} slots so they can render as <code>.
+  const columnsHint = t("import.columnsHint", { columns: CSV_COLUMNS.join(", ") })
+    .split(/(\{example\}|\{required\})/)
+    .map((part, i) =>
+      part === "{example}" ? <code key={i}>TypeScript;React</code> : part === "{required}" ? <code key={i}>full_name</code> : part,
+    );
 
   if (commit?.ok) {
     return (
       <Panel className="grid gap-4 p-6">
         <FormMessage state={commit} />
         <div className="flex gap-2">
-          <Button asChild><Link href={`/w/${orgSlug}/candidates?status=draft`}>Review drafts</Link></Button>
-          <Button variant="outline" onClick={() => window.location.reload()}>Import another file</Button>
+          <Button asChild><Link href={`/w/${orgSlug}/candidates?status=draft`}>{t("import.reviewDrafts")}</Link></Button>
+          <Button variant="outline" onClick={() => window.location.reload()}>{t("import.another")}</Button>
         </div>
       </Panel>
     );
@@ -35,43 +45,43 @@ export function ImportWizard({ orgSlug }: { orgSlug: string }) {
   return (
     <div className="grid gap-6">
       <Panel className="grid gap-4 p-6">
-        <ol className="flex flex-wrap gap-2 text-sm" aria-label="Import steps">
-          {["Upload", "Review rows", "Confirm"].map((s, i) => {
+        <ol className="flex flex-wrap gap-2 text-sm" aria-label={t("import.stepsLabel")}>
+          {STEPS.map((s, i) => {
             const step = commit ? 2 : data ? 1 : 0;
             return (
               <li key={s} aria-current={i === step ? "step" : undefined} className={`rounded-full px-3 py-1 ${i === step ? "bg-foreground text-background" : "bg-muted text-muted-foreground"}`}>
-                {i + 1}. {s}
+                {i + 1}. {t(`import.steps.${s}`)}
               </li>
             );
           })}
         </ol>
         <ActionForm action={previewAction} className="grid gap-3">
-          <label htmlFor="file" className="text-sm font-medium">CSV file (max 500 rows, 2 MB)</label>
+          <label htmlFor="file" className="text-sm font-medium">{t("import.fileLabel")}</label>
           <Input ref={fileRef} id="file" name="file" type="file" accept=".csv,text/csv" required onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)} />
           <p className="text-xs text-muted-foreground">
-            Columns: {CSV_COLUMNS.join(", ")}. Use semicolons inside a cell for lists (e.g. <code>TypeScript;React</code>). Only <code>full_name</code> is required.
+            {columnsHint}
           </p>
           {preview && !preview.ok ? <FormMessage state={preview} /> : null}
-          <SubmitButton variant="secondary" className="justify-self-start" pendingLabel="Validating…">Preview import</SubmitButton>
+          <SubmitButton variant="secondary" className="justify-self-start" pendingLabel={t("import.validating")}>{t("import.preview")}</SubmitButton>
         </ActionForm>
       </Panel>
 
       {data ? (
         <Panel className="grid gap-4 p-6">
           <div className="flex flex-wrap gap-3 text-sm">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-3 py-1 text-success"><CheckCircle2 className="size-4" aria-hidden /> {data.valid} ready</span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-danger-soft px-3 py-1 text-danger"><CircleAlert className="size-4" aria-hidden /> {data.invalid} need attention</span>
-            {data.duplicates ? <span className="rounded-full bg-warning-soft px-3 py-1 text-warning">{data.duplicates} possible duplicates (skipped)</span> : null}
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-3 py-1 text-success"><CheckCircle2 className="size-4" aria-hidden /> {t("import.ready", { count: data.valid })}</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-danger-soft px-3 py-1 text-danger"><CircleAlert className="size-4" aria-hidden /> {t("import.needAttention", { count: data.invalid })}</span>
+            {data.duplicates ? <span className="rounded-full bg-warning-soft px-3 py-1 text-warning">{t("import.duplicates", { count: data.duplicates })}</span> : null}
           </div>
           <div className="max-h-[420px] overflow-auto rounded-2xl border border-border">
             <table className="w-full min-w-[640px] text-sm">
-              <caption className="sr-only">Row validation results</caption>
+              <caption className="sr-only">{t("import.caption")}</caption>
               <thead className="sticky top-0 bg-card">
                 <tr className="border-b border-border text-left text-muted-foreground">
-                  <th scope="col" className="px-4 py-2 font-medium">Line</th>
-                  <th scope="col" className="px-4 py-2 font-medium">Name</th>
-                  <th scope="col" className="px-4 py-2 font-medium">Headline</th>
-                  <th scope="col" className="px-4 py-2 font-medium">Result</th>
+                  <th scope="col" className="px-4 py-2 font-medium">{t("import.columns.line")}</th>
+                  <th scope="col" className="px-4 py-2 font-medium">{t("import.columns.name")}</th>
+                  <th scope="col" className="px-4 py-2 font-medium">{t("import.columns.headline")}</th>
+                  <th scope="col" className="px-4 py-2 font-medium">{t("import.columns.result")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,7 +94,7 @@ export function ImportWizard({ orgSlug }: { orgSlug: string }) {
                       {r.errors.length ? (
                         <ul className="grid gap-0.5 text-danger">{r.errors.map((e) => <li key={e}>{e}</li>)}</ul>
                       ) : (
-                        <span className="text-success">Ready</span>
+                        <span className="text-success">{t("import.rowReady")}</span>
                       )}
                     </td>
                   </tr>
@@ -102,10 +112,11 @@ export function ImportWizard({ orgSlug }: { orgSlug: string }) {
           >
             <input type="hidden" name="checksum" value={data.checksum} />
             <p className="text-sm text-muted-foreground">
-              {fileName ? `${fileName}: ` : ""}Rows with errors are skipped. Fix them in the file and import again. Imported candidates start as drafts.
+              {fileName ? t("import.fileNamePrefix", { name: fileName }) : ""}
+              {t("import.skipNote")}
             </p>
             {commit && !commit.ok ? <FormMessage state={commit} /> : null}
-            <SubmitButton disabled={data.valid === 0} pendingLabel="Importing…">Import {data.valid} candidates</SubmitButton>
+            <SubmitButton disabled={data.valid === 0} pendingLabel={t("import.importing")}>{t("import.submit", { count: data.valid })}</SubmitButton>
           </ActionForm>
         </Panel>
       ) : null}

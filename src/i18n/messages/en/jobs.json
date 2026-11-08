@@ -1,0 +1,143 @@
+{
+  "title": "Jobs",
+  "description": "Your open roles. Open a job to partners and recruiters with matching candidates can refer them to you. You won't see anyone's identity until they submit.",
+  "newJob": "New job",
+  "searchPlaceholder": "Search by title or client",
+  "searchLabel": "Search jobs",
+  "filterLabel": "Filter by status",
+  "allStatuses": "All statuses",
+  "apply": "Apply",
+  "empty": {
+    "filteredTitle": "No jobs match these filters",
+    "filteredDescription": "Try a different search or clear the filters.",
+    "firstTitle": "Publish your first job",
+    "firstDescription": "Add a role you're hiring for. Open it to partners and we'll tell you how many of their candidates fit, without revealing who they are."
+  },
+  "clientConfidential": "{client} (confidential)",
+  "openToPartners": "Open to partners",
+  "new": {
+    "title": "New job",
+    "description": "Paste a description to get suggested requirements, then review every field before publishing."
+  },
+  "edit": {
+    "metaTitle": "Edit job",
+    "title": "Edit {title}",
+    "description": "Requirement changes re-run matching in the background."
+  },
+  "detail": {
+    "metaTitle": "Job",
+    "flashPublished": "Job published. Match counts will appear in a minute.",
+    "flashDraft": "Draft saved. Partners can't see it until you publish.",
+    "flashUpdated": "Changes saved.",
+    "clientConfidential": "{client} · confidential to partners",
+    "clientNotSet": "Client not set",
+    "edit": "Edit",
+    "kpiStrong": "Strong matches",
+    "kpiPartial": "Partial matches",
+    "kpiPartnerHint": "Partner candidates · anonymous",
+    "submittedTitle": "Candidates submitted to you",
+    "privacyNotPublished": "This job isn't published, so it isn't being matched. Publish it to see how many partner candidates fit.",
+    "privacyNotOpen": "This job isn't open to partners. Edit it and turn on partner referrals to be matched with their candidates.",
+    "required": "Required",
+    "niceToHave": "Nice to have",
+    "seniority": "Seniority",
+    "years": "{years}+ yrs",
+    "languages": "Languages",
+    "location": "Location",
+    "compensation": "Compensation",
+    "placementFee": "Placement fee",
+    "visible": {
+      "always": "Title, seniority, work arrangement & skills",
+      "description": "Description",
+      "location": "Location",
+      "compensation": "Compensation",
+      "placementFee": "Placement fee",
+      "clientName": "Client name"
+    },
+    "statSubmitted": "Submitted",
+    "privacyShort": "Partner candidates stay anonymous until they're submitted.",
+    "privacyShortRefreshed": "Partner candidates stay anonymous until they're submitted · updated {when}",
+    "submittedEmptyShort": "No one yet. You'll be notified when a partner submits someone.",
+    "role": "Role",
+    "visibleShort": "Visible to partners",
+    "description": "Job description"
+  },
+  "status": {
+    "publish": "Publish",
+    "pause": "Pause",
+    "markFilled": "Mark filled",
+    "close": "Close",
+    "resume": "Resume",
+    "reopen": "Reopen",
+    "updated": "Updated",
+    "more": "More actions"
+  },
+  "form": {
+    "role": "Role",
+    "title": "Job title",
+    "contractType": "Contract type",
+    "client": "Hiring client",
+    "hideClient": "Hide the client's name from partner recruiters",
+    "description": "Job description",
+    "descriptionHint": "Paste the full job post. We can suggest skills and seniority from it. Suggestions only use words in your text, and you review them before saving.",
+    "analyzing": "Analyzing…",
+    "suggest": "Suggest requirements from description",
+    "suggestTooShort": "Paste a fuller job description first.",
+    "suggested": {
+      "one": "Suggested {count} skill from the text. Review before saving.",
+      "other": "Suggested {count} skills from the text. Review before saving."
+    },
+    "requirements": "Requirements",
+    "requiredSkills": "Required skills",
+    "requiredSkillsHint": "Genuinely mandatory skills only, comma-separated",
+    "niceToHave": "Nice to have",
+    "seniority": "Seniority",
+    "notSpecified": "Not specified",
+    "minYears": "Minimum years of experience",
+    "languages": "Required working languages",
+    "languagesHint": "Only list languages the role genuinely requires",
+    "workArrangement": "Work arrangement",
+    "city": "City",
+    "region": "Province / state",
+    "country": "Country",
+    "salaryMin": "Salary min",
+    "salaryMax": "Salary max",
+    "currency": "Currency",
+    "partnerReferrals": "Partner referrals",
+    "openToPartners": "Open this job to partner recruiters",
+    "openToPartnersHint": "Recruiters with candidates who fit will see this job and can submit them. You'll see how many fit, but not who, until someone is submitted.",
+    "visibleTitle": "What partners can see before submitting",
+    "visibleHint": "Title, seniority, work arrangement and skills are always shown. The client's name follows the setting above.",
+    "shareDescription": "Job description",
+    "shareLocation": "Location",
+    "shareSalary": "Compensation band",
+    "shareFee": "Expected placement fee",
+    "expectedFee": "Expected placement fee",
+    "expectedFeeHint": "The total fee you expect to invoice the client",
+    "feeCurrency": "Fee currency",
+    "cancel": "Cancel",
+    "saveDraft": "Save as draft",
+    "publish": "Publish job",
+    "saveChanges": "Save changes"
+  },
+  "messages": {
+    "activated": "Job is active. Matching runs in the background.",
+    "statusUpdated": "Status updated. Matches for inactive jobs expire immediately.",
+    "statusUpdatedReleased": {
+      "one": "Status updated. {count} pending referral was declined as \"Position filled\".",
+      "other": "Status updated. {count} pending referrals were declined as \"Position filled\"."
+    }
+  },
+  "errors": {
+    "notFound": "Job not found."
+  },
+  "validation": {
+    "positiveAmount": "Enter a positive amount",
+    "titleRequired": "Enter a job title",
+    "maxYears": "Must be 70 or less",
+    "countryCode": "Use a 2-letter country code",
+    "salaryRange": "Maximum must be at least the minimum",
+    "clientRequired": "Enter the client name or keep it confidential",
+    "descriptionTooLong": "Description is too long."
+  }
+}

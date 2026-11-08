@@ -2,13 +2,15 @@
 
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/i18n/client";
 
-export function ThemeToggle() {
+export function ThemeToggle({ variant = "outline" }: { variant?: "outline" | "ghost" }) {
+  const t = useT("common");
   return (
     <Button
-      variant="outline"
+      variant={variant}
       size="icon"
-      aria-label="Toggle dark mode"
+      aria-label={t("theme.toggle")}
       onClick={() => {
         const dark = !document.documentElement.classList.contains("dark");
         document.documentElement.classList.toggle("dark", dark);

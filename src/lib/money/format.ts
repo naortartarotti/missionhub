@@ -1,10 +1,11 @@
 import { currencyExponent } from "./currency";
 
-export function formatMoney(minor: number | bigint | null | undefined, currency: string, locale = "en-CA"): string {
+export function formatMoney(minor: number | bigint | null | undefined, currency: string, locale = "en-CA", opts: { whole?: boolean } = {}): string {
   if (minor === null || minor === undefined) return "—";
   const exp = currencyExponent(currency);
   const value = Number(minor) / 10 ** exp;
-  return new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: exp }).format(value);
+  const digits = opts.whole ? 0 : exp;
+  return new Intl.NumberFormat(locale, { style: "currency", currency, minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value);
 }
 
 /** Parses a user-entered major-unit amount ("20,000.50") to integer minor units without float error. */

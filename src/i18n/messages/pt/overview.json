@@ -1,0 +1,93 @@
+{
+  "title": "Visão geral",
+  "welcome": "Bem-vindo de volta, {name}!",
+  "welcomeFallbackName": "você",
+  "subtitle": "Veja o que está acontecendo na {org} hoje.",
+  "gettingStarted": {
+    "title": "Primeiros passos",
+    "intro": "Seus candidatos ficam privados. O MissionHub encontra vagas de recrutadores parceiros para eles, você decide quem enviar, e a comissão é acompanhada quando alguém é contratado.",
+    "progress": "{done} de {total} concluídas",
+    "stepSr": "Etapa {n}",
+    "doneSr": "concluída",
+    "candidate": {
+      "title": "Cadastre seu primeiro candidato",
+      "description": "Cadastre alguém que você representa ou importe uma lista de um CSV. Só você pode vê-los.",
+      "cta": "Cadastrar candidato"
+    },
+    "matching": {
+      "title": "Ligue o matching de um candidato",
+      "description": "Registre a permissão dele e ligue o matching para o MissionHub procurar vagas de parceiros que combinem.",
+      "cta": "Ir para candidatos"
+    },
+    "job": {
+      "title": "Publique uma vaga aberta a parceiros",
+      "description": "Tem uma vaga aberta? Publique para que recrutadores parceiros possam indicar candidatos para você.",
+      "cta": "Nova vaga"
+    },
+    "referral": {
+      "title": "Envie um candidato para uma vaga de parceiro",
+      "description": "Analise um match, confira se combina e envie quando o candidato concordar.",
+      "cta": "Ver oportunidades"
+    }
+  },
+  "attention": {
+    "title": "Precisa da sua atenção",
+    "empty": "Tudo em dia. Novos envios e etapas de pagamento vão aparecer aqui.",
+    "confirmSplit": "Confirmar a divisão da comissão: {job}",
+    "payable": {
+      "one": "{count} colocação com comissão a pagar",
+      "other": "{count} colocações com comissão a pagar"
+    },
+    "payableSub": "Confirme cada repasse quando o dinheiro chegar"
+  },
+  "best": {
+    "noneInactive": "Nenhum match ainda.",
+    "noneInactiveLink": "Ligue o matching de um candidato",
+    "noneInactiveTail": "e as vagas de parceiros que combinarem vão aparecer aqui."
+  },
+  "stats": {
+    "matching": "Candidatos em matching",
+    "toDecide": "Matches para decidir",
+    "toReview": "Indicações para analisar",
+    "owed": "Comissão a receber"
+  },
+  "partnerJobs": {
+    "badge": "Para seus candidatos",
+    "title": "Vagas de parceiros para seus candidatos",
+    "subtitle": "Decida quem enviar. Você ganha uma parte se a pessoa for contratada.",
+    "empty": "Nenhum match em aberto agora. As vagas de parceiros aparecem aqui assim que uma combinar.",
+    "matches": {
+      "one": "{count} candidato combina",
+      "other": "{count} candidatos combinam"
+    },
+    "strong": {
+      "one": "{count} forte",
+      "other": "{count} fortes"
+    },
+    "share": "~{amount} para você",
+    "new": {
+      "one": "{count} match novo",
+      "other": "{count} matches novos"
+    }
+  },
+  "myJobs": {
+    "badge": "Para suas vagas",
+    "title": "Suas vagas",
+    "subtitle": "Candidatos que parceiros enviaram, e quantos podem combinar.",
+    "empty": "Nenhuma vaga aberta ainda.",
+    "received": {
+      "one": "{count} indicação",
+      "other": "{count} indicações"
+    },
+    "toReview": {
+      "one": "{count} para analisar",
+      "other": "{count} para analisar"
+    },
+    "noneWaiting": "Nada aguardando",
+    "partnerMatches": {
+      "one": "{count} candidato de parceiro combina",
+      "other": "{count} candidatos de parceiros combinam"
+    },
+    "notOpen": "Não aberta a parceiros"
+  }
+}

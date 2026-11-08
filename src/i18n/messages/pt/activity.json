@@ -1,0 +1,13 @@
+{
+  "title": "Atividade",
+  "description": "Tudo o que mudou: novos matches, envios, etapas de contratação e pagamentos.",
+  "unreadCount": { "one": "{count} não lida", "other": "{count} não lidas" },
+  "caughtUp": "Tudo em dia",
+  "markAllRead": "Marcar tudo como lido",
+  "emptyShort": "Nada ainda. Novos matches, envios e atualizações de pagamento vão aparecer aqui.",
+  "emptyTitle": "Nenhuma atividade ainda",
+  "emptyBody": "Você vai ver aqui novos matches, envios e atualizações de pagamento conforme acontecem.",
+  "viewAll": "Ver toda a atividade",
+  "unread": "não lida",
+  "emailOff": "O envio de e-mails não está configurado (defina EMAIL_PROVIDER). As notificações são só no app; nenhum e-mail foi enviado."
+}

@@ -6,10 +6,11 @@ import { assertCan, getRequestContext } from "@/server/auth/context";
 import { guard, id, parse } from "@/server/actions/guard";
 import { fromZodError, toActionError, type ActionResult } from "@/lib/actions/result";
 import { formToObject } from "@/lib/validation/form-data";
+import { msg } from "@/i18n/translate";
 
 const requestSchema = z.object({
   kind: z.enum(["access", "correction", "withdrawal", "deletion"]),
-  requesterContact: z.string().trim().min(3, "How can we reach the requester?").max(200),
+  requesterContact: z.string().trim().min(3, msg("settings.privacy.validation.contact")).max(200, msg("settings.privacy.validation.contactTooLong")),
   candidateId: z.union([z.literal(""), z.uuid()]).optional().transform((v) => v || null),
   details: z.string().trim().max(2000).optional(),
 });
@@ -30,7 +31,7 @@ export async function logPrivacyRequest(orgSlug: string, _: ActionResult | null,
   });
   if (error) return toActionError(error);
   revalidatePath(`/w/${orgSlug}/settings/privacy`);
-  return { ok: true, message: "Request logged. Respond within the statutory timeline (PIPEDA: generally 30 days)." };
+  return { ok: true, message: msg("settings.privacy.messages.logged") };
   });
 }
 
@@ -52,8 +53,8 @@ export async function updatePrivacyRequest(orgSlug: string, input: { id: string;
       .eq("organization_id", ctx.organizationId)
       .select("id");
     if (error) return toActionError(error);
-    if (!data?.length) return { ok: false, error: "Request not found." };
+    if (!data?.length) return { ok: false, error: msg("settings.privacy.errors.notFound") };
     revalidatePath(`/w/${orgSlug}/settings/privacy`);
-    return { ok: true, message: "Request updated." };
+    return { ok: true, message: msg("settings.privacy.messages.updated") };
   });
 }

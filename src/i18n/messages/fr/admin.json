@@ -1,0 +1,86 @@
+{
+  "title": "Administration de la plateforme",
+  "backToWorkspace": "Retour à l'espace de travail",
+  "page": {
+    "title": "Opérations de la plateforme",
+    "description": "Indicateurs agrégés et files de traitement. Les administrateurs de la plateforme n'ont aucun accès aux dossiers des candidats."
+  },
+  "kpi": {
+    "organizations": "Organisations",
+    "excludingDemo": "Hors démo",
+    "placements": "Placements",
+    "evidence": "Preuves à vérifier",
+    "disputes": "Litiges ouverts"
+  },
+  "evidence": {
+    "title": "File des preuves de paiement",
+    "empty": "Rien en attente de vérification.",
+    "ref": "réf. {reference}",
+    "fees": "frais {amount}",
+    "ownRecord": "Vous avez consigné cette preuve; un autre administrateur doit la vérifier."
+  },
+  "disputes": {
+    "title": "Litiges",
+    "empty": "Aucun litige ouvert.",
+    "openedBy": "Ouvert par {org} · {date}"
+  },
+  "revenue": {
+    "title": "Revenus de la plateforme (registre vérifié)",
+    "empty": "Aucun revenu vérifié pour l'instant.",
+    "line": "{earned} gagnés · {outstanding} en attente de remise"
+  },
+  "rules": {
+    "title": "Règles de commission",
+    "current": "Règle par défaut actuelle : v{version} — {sourcing} / {jobOwner} / {platform}. Les recommandations acceptées conservent leur instantané figé.",
+    "currentTag": "(actuelle)",
+    "sourcing": "Recrutement %",
+    "jobOwner": "Titulaire du poste %",
+    "platform": "Plateforme %",
+    "publish": "Publier une nouvelle version"
+  },
+  "orgs": {
+    "title": "Organisations",
+    "name": "Nom",
+    "type": "Type",
+    "created": "Créée le",
+    "status": "Statut",
+    "actions": "Actions",
+    "demo": "DÉMO",
+    "suspended": "Suspendue",
+    "active": "Active",
+    "kind": {
+      "agency": "agence",
+      "independent": "indépendant"
+    }
+  },
+  "suspension": {
+    "reinstate": "Rétablir",
+    "reinstateTitle": "Rétablir l'organisation?",
+    "reinstateDescription": "Les membres retrouvent l'accès. La correspondance reprend à la prochaine modification.",
+    "suspend": "Suspendre",
+    "suspendTitle": "Suspendre l'organisation?",
+    "suspendDescription": "Les membres perdent immédiatement l'accès. Ses postes et ses candidats cessent d'être mis en correspondance; les recommandations et les dossiers financiers existants sont conservés et restent visibles pour les partenaires; les partenaires ne peuvent plus soumettre de candidats à ses postes.",
+    "reason": "Motif"
+  },
+  "dispute": {
+    "resolve": "Résoudre",
+    "resolveTitle": "Résoudre le litige",
+    "resolveDescription": "Le placement revient à son statut précédent. Consignez toute correction sous forme de preuve compensatoire.",
+    "resolution": "Résolution",
+    "reject": "Rejeter",
+    "rejectTitle": "Rejeter le litige",
+    "rejectDescription": "Le placement revient à son statut précédent.",
+    "reason": "Motif"
+  },
+  "validation": {
+    "reason": "Indiquez un motif (au moins 5 caractères).",
+    "resolution": "Décrivez la résolution (5 à 2000 caractères).",
+    "total": "Le total des pourcentages doit être exactement de 100 %."
+  },
+  "messages": {
+    "suspended": "Organisation suspendue.",
+    "reinstated": "Organisation rétablie.",
+    "disputeClosed": "Litige clos.",
+    "rulePublished": "Nouvelle version de la règle publiée. Les ententes existantes conservent leur instantané figé."
+  }
+}

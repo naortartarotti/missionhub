@@ -1,0 +1,200 @@
+{
+  "title": "Oportunidades",
+  "description": "Vagas de parceiros que combinam com seus candidatos. Ganhe parte da taxa quando alguém que você enviou for contratado.",
+  "filteredByCandidate": "Mostrando matches de um candidato.",
+  "statusNav": "Status dos matches",
+  "newCount": {
+    "one": ", {count} novo",
+    "other": ", {count} novos"
+  },
+  "views": {
+    "review": {
+      "label": "Para analisar",
+      "hint": "Matches novos e sem decisão. Envie, salve para depois ou marque como não adequado."
+    },
+    "saved": {
+      "label": "Salvos",
+      "hint": "Sua lista curta. Matches aos quais você quer voltar."
+    },
+    "submitted": {
+      "label": "Enviados",
+      "hint": "Candidatos que você já enviou. Abra um para acompanhar a indicação."
+    },
+    "dismissed": {
+      "label": "Descartados",
+      "hint": "Matches que você marcou como não adequados. Restaure um se algo mudar."
+    },
+    "not_eligible": {
+      "label": "Não elegíveis",
+      "hint": "Um requisito obrigatório não é atendido, como um idioma ou local exigido. Mostrados para você saber o motivo."
+    }
+  },
+  "controls": {
+    "sort": "Ordenar"
+  },
+  "sorts": {
+    "fit": "Melhor aderência",
+    "earnings": "Maiores ganhos"
+  },
+  "jobGroup": {
+    "candidates": {
+      "one": "{count} candidato",
+      "other": "{count} candidatos"
+    },
+    "share": "sua parte estimada"
+  },
+  "empty": {
+    "inactive": {
+      "title": "Ative o matching para ver oportunidades",
+      "description": "Nenhum dos seus candidatos está em matching ainda. Abra um candidato, registre a permissão dele e ative o matching. As vagas de parceiros que combinarem aparecerão aqui.",
+      "action": "Ir para candidatos"
+    },
+    "caughtUp": {
+      "title": "Tudo em dia",
+      "description": "Todos os matches têm uma decisão. Verificamos automaticamente sempre que um parceiro publica uma vaga ou você atualiza um candidato, e mostraremos novos matches aqui."
+    },
+    "none": {
+      "title": "Nenhum match ainda",
+      "description": "Verificamos automaticamente sempre que um parceiro publica uma vaga ou você atualiza um candidato. Novos matches aparecerão aqui."
+    },
+    "saved": {
+      "title": "Nada salvo",
+      "description": "Use Salvar em um match para montar uma lista curta à qual voltar."
+    },
+    "submitted": {
+      "title": "Nenhum candidato enviado ainda",
+      "description": "Quando você envia um candidato para uma vaga de parceiro, pode acompanhá-lo por aqui."
+    },
+    "dismissed": {
+      "title": "Nada descartado",
+      "description": "Os matches que você marca como não adequados ficam aqui, para que possa restaurá-los depois."
+    },
+    "not_eligible": {
+      "title": "Nada bloqueado",
+      "description": "Nenhum dos seus matches é excluído por um requisito obrigatório."
+    },
+    "reviewCount": {
+      "one": "Analisar {count} match",
+      "other": "Analisar {count} matches"
+    },
+    "openSaved": {
+      "one": "Abrir seu {count} salvo",
+      "other": "Abrir seus {count} salvos"
+    }
+  },
+  "card": {
+    "via": "{client} · via {org}",
+    "noHeadline": "Sem título",
+    "gapsToCheck": {
+      "one": "{count} lacuna a verificar",
+      "other": "{count} lacunas a verificar"
+    },
+    "noGaps": "Nenhuma lacuna relevante",
+    "yourCandidate": "Seu candidato:",
+    "dismissedReason": "Descartado: {reason}",
+    "new": "Novo",
+    "reviewSubmit": "Analisar e enviar",
+    "confidentialClient": "Cliente confidencial"
+  },
+  "share": {
+    "title": "Sua parte estimada da taxa de colocação se este candidato for contratado",
+    "chip": "~{amount} para você"
+  },
+  "score": {
+    "label": "Compatibilidade indicativa de {score} em 100"
+  },
+  "sheet": {
+    "trigger": "Por que este match",
+    "description": "{client} · compartilhada por {org} · para {candidate}",
+    "whyMatches": "Por que combina",
+    "noGaps": "Nenhuma lacuna relevante.",
+    "seniority": "Senioridade",
+    "contract": "Contrato",
+    "compensation": "Remuneração",
+    "descriptionHidden": "A descrição completa é compartilhada quando você envia um candidato."
+  },
+  "triage": {
+    "restore": "Restaurar",
+    "restored": "Movido de volta para Para analisar.",
+    "saved": "Salvo",
+    "unsaved": "Removido dos Salvos.",
+    "unsaveAria": "Remover {name} para {job} dos Salvos",
+    "save": "Salvar",
+    "savedToast": "Salvo. Encontre-o em Salvos quando estiver pronto para enviar {name}.",
+    "saveAria": "Salvar {name} para {job}",
+    "notFit": "Não combina",
+    "notFitAria": "Marcar {name} para {job} como não adequado",
+    "why": "Por quê? Isso ajuda a melhorar seus matches.",
+    "dismissedToast": "Descartado. Você o encontrará em Descartados se mudar de ideia."
+  },
+  "dismissReasons": {
+    "salary": "Remuneração não combina",
+    "location": "Local ou modelo de trabalho",
+    "seniority": "Senioridade errada",
+    "skills": "Habilidades não combinam",
+    "candidate_not_interested": "Candidato sem interesse",
+    "other": "Outro"
+  },
+  "review": {
+    "title": "Analisar match",
+    "heading": "Analisar match e enviar",
+    "description": "{candidate} → {job} ({client}, compartilhada por {org})",
+    "gapsToDiscuss": "Lacunas a conversar com o candidato"
+  },
+  "evidence": {
+    "matchingOff": "O matching está desligado para este candidato",
+    "permissionMissing": "A permissão do candidato não foi registrada",
+    "jobClosed": "A vaga não aceita indicações externas",
+    "arrangementMismatch": "A vaga é {jobArrangement}; o candidato prefere {candidateArrangements}",
+    "relocationRequired": "A vaga exige presença em {country}; o candidato não aceita mudança",
+    "requiredSkillsMatched": "Tem as skills obrigatórias: {skills}",
+    "requiredSkillsMissing": "Faltam skills obrigatórias: {skills}",
+    "noRequiredSkills": "A vaga não lista skills obrigatórias; a relevância é aproximada",
+    "noRequiredSkillsPresent": "Nenhuma das skills obrigatórias da vaga está presente",
+    "preferredSkills": "Também tem: {skills}",
+    "seniorityAligns": "Senioridade compatível ({jobSeniority})",
+    "seniorityOneAbove": "Senioridade um nível acima da vaga ({candidateSeniority} vs {jobSeniority})",
+    "seniorityOneBelow": "Senioridade um nível abaixo da vaga ({candidateSeniority} vs {jobSeniority})",
+    "seniorityFar": "Senioridade muito diferente ({candidateSeniority} vs {jobSeniority})",
+    "seniorityUnknown": "Senioridade do candidato não informada",
+    "experienceMeets": "{years} anos de experiência (a vaga pede {min}+)",
+    "experienceBelow": "{years} anos de experiência; a vaga pede {min}+",
+    "experienceUnknown": "Anos de experiência não informados",
+    "remoteCompatible": "Vaga remota compatível com as preferências do candidato",
+    "basedIn": "Mora em {place}",
+    "relocationOpen": "Exigiria mudança (o candidato está aberto a isso)",
+    "locationUnknown": "Informações de localização incompletas",
+    "speaks": "Fala {languages}",
+    "languagesMissing": "Requisito de idioma não confirmado: {languages}",
+    "salaryFits": "A pretensão salarial cabe na faixa da vaga",
+    "salaryAbove": "A pretensão salarial está ~{percent}% acima da faixa",
+    "currencyMismatch": "Remuneração em moedas diferentes; não comparada",
+    "belowThreshold": "Relevância geral abaixo do mínimo de {threshold}/100"
+  },
+  "panel": {
+    "close": "Fechar detalhes",
+    "share": "Sua parte",
+    "fee": "Taxa",
+    "posted": "Publicada",
+    "skills": "Skills obrigatórias",
+    "niceToHave": "Desejáveis",
+    "strengths": "Pontos fortes",
+    "gaps": "Lacunas",
+    "noGaps": "Nenhuma",
+    "details": "Vaga",
+    "workSetup": "Modelo de trabalho",
+    "description": "Descrição da vaga",
+    "private": "Oculto para o recrutador da vaga até você enviar.",
+    "scoreInfo": "Nota de aderência por skills, senioridade, local e remuneração. Não é uma previsão de contratação. Atualizado {time}."
+  },
+  "row": {
+    "submit": "Enviar",
+    "submitAria": "Analisar e enviar {name}",
+    "details": "Ver detalhes do match de {name}",
+    "gaps": {
+      "one": "{count} lacuna",
+      "other": "{count} lacunas"
+    }
+  },
+  "filteredByJob": "Mostrando uma vaga de parceiro."
+}

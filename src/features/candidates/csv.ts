@@ -1,3 +1,4 @@
+import { msg, translateMarked, type GlobalTranslator } from "@/i18n/translate";
 import { candidateFormSchema } from "./schemas";
 
 /** Minimal RFC 4180 CSV parser (quotes, escaped quotes, CRLF). */
@@ -55,12 +56,13 @@ export type CsvRowResult = { line: number; values: Record<string, string>; error
 // Spreadsheet formula injection guard for any value that might be re-exported.
 const stripFormula = (v: string) => (/^[=+\-@\t\r]/.test(v) ? `'${v}` : v);
 
-export function validateCsv(text: string, maxRows = 500): { header: string[]; rows: CsvRowResult[]; fatal?: string } {
+/** Pass `t` to get row errors in the user's language (fatal errors are `msg()` markers for guard()). */
+export function validateCsv(text: string, maxRows = 500, t?: GlobalTranslator): { header: string[]; rows: CsvRowResult[]; fatal?: string } {
   const all = parseCsv(text.replace(/^﻿/, ""));
-  if (all.length === 0) return { header: [], rows: [], fatal: "The file is empty." };
+  if (all.length === 0) return { header: [], rows: [], fatal: msg("candidates.errors.csvEmpty") };
   const header = all[0].map((h) => h.trim().toLowerCase().replace(/\s+/g, "_"));
-  if (!header.includes("full_name")) return { header, rows: [], fatal: "A 'full_name' column is required." };
-  if (all.length - 1 > maxRows) return { header, rows: [], fatal: `Import up to ${maxRows} rows at a time.` };
+  if (!header.includes("full_name")) return { header, rows: [], fatal: msg("candidates.errors.csvFullName") };
+  if (all.length - 1 > maxRows) return { header, rows: [], fatal: msg("candidates.errors.csvTooMany", { max: maxRows }) };
   const rows = all.slice(1).map((cells, idx) => {
     const values: Record<string, string> = {};
     header.forEach((h, i) => (values[h] = stripFormula((cells[i] ?? "").trim())));
@@ -90,7 +92,13 @@ export function validateCsv(text: string, maxRows = 500): { header: string[]; ro
     return {
       line: idx + 2,
       values,
-      errors: parsed.success ? [] : parsed.error.issues.map((i) => `${String(i.path[0] ?? "row")}: ${i.message}`),
+      errors: parsed.success
+        ? []
+        : parsed.error.issues.map((i) =>
+            t
+              ? t("candidates.import.rowError", { field: String(i.path[0] ?? t("candidates.import.row")), message: translateMarked(t, i.message) })
+              : `${String(i.path[0] ?? "row")}: ${i.message}`,
+          ),
       parsed: parsed.success ? parsed.data : undefined,
     };
   });

@@ -1,0 +1,53 @@
+{
+  "appName": "MissionHub",
+  "actions": {
+    "save": "Save",
+    "saving": "Saving…",
+    "working": "Working…",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "edit": "Edit",
+    "delete": "Delete",
+    "viewAll": "View all",
+    "showAll": "Show all",
+    "undo": "Undo",
+    "tryAgain": "Try again",
+    "continue": "Continue",
+    "search": "Search"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "summary": "Page {page} of {pages} · {total} total"
+  },
+  "theme": {
+    "toggle": "Toggle dark mode"
+  },
+  "language": {
+    "label": "Language",
+    "changed": "Language updated"
+  },
+  "account": {
+    "switch": "Switch organization or account",
+    "organizations": "Organizations",
+    "current": "Current",
+    "demo": "DEMO",
+    "yourAccount": "Your account",
+    "signOut": "Sign out",
+    "createOrganization": "Create an organization",
+    "platformAdmin": "Platform admin",
+    "newOrganization": "New organization"
+  },
+  "skipToContent": "Skip to content",
+  "demo": {
+    "title": "Demo workspace",
+    "body": "All data here is synthetic. Never mix it with real candidates."
+  },
+  "none": "—",
+  "notShared": "Not shared",
+  "yes": "Yes",
+  "no": "No"
+}

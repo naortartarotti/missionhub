@@ -11,6 +11,7 @@ import { assertCan, getRequestContext, requireUser } from "@/server/auth/context
 import { env } from "@/server/env";
 import { fromZodError, toActionError, type ActionResult } from "@/lib/actions/result";
 import { createOrganizationSchema, inviteSchema, memberUpdateSchema, splitList } from "./schemas";
+import { msg } from "@/i18n/translate";
 
 export async function createOrganization(_: ActionResult | null, formData: FormData): Promise<ActionResult> {
   return guard(async () => {
@@ -37,7 +38,7 @@ export async function createOrganization(_: ActionResult | null, formData: FormD
     if (error) {
       const r = toActionError(error);
       return error.message.includes("slug_taken") || error.message.includes("duplicate")
-        ? { ok: false, error: "That workspace URL is taken.", fieldErrors: { slug: ["That workspace URL is taken. Try another."] } }
+        ? { ok: false, error: msg("onboarding.errors.slugTaken"), fieldErrors: { slug: [msg("onboarding.errors.slugTakenField")] } }
         : r;
     }
     if (parsed.data.currency !== "CAD") {
@@ -68,7 +69,7 @@ export async function inviteMember(orgSlug: string, _: ActionResult<{ link: stri
     return {
       ok: true,
       data: { link },
-      message: "Invitation created. Email delivery isn't configured, so share this one-time link securely.",
+      message: msg("onboarding.messages.invitationCreated"),
     };
   });
 }
@@ -86,7 +87,7 @@ export async function revokeInvitation(orgSlug: string, invitationId: string): P
       .eq("status", "pending");
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/settings/team`);
-    return { ok: true, message: "Invitation revoked." };
+    return { ok: true, message: msg("onboarding.messages.invitationRevoked") };
   });
 }
 
@@ -102,15 +103,15 @@ export async function updateMember(orgSlug: string, input: { membershipId: strin
       .eq("id", parsed.data.membershipId)
       .eq("organization_id", ctx.organizationId)
       .single();
-    if (!target) return { ok: false, error: "Member not found." };
-    if (target.user_id === ctx.userId) return { ok: false, error: "You can't change your own role or status." };
+    if (!target) return { ok: false, error: msg("onboarding.errors.memberNotFound") };
+    if (target.user_id === ctx.userId) return { ok: false, error: msg("onboarding.errors.selfChange") };
     const patch: { role?: typeof parsed.data.role; status?: typeof parsed.data.status } = {};
     if (parsed.data.role) patch.role = parsed.data.role;
     if (parsed.data.status) patch.status = parsed.data.status;
     const { error } = await ctx.db.from("organization_memberships").update(patch).eq("id", parsed.data.membershipId).eq("organization_id", ctx.organizationId);
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/settings/team`);
-    return { ok: true, message: "Member updated." };
+    return { ok: true, message: msg("onboarding.messages.memberUpdated") };
   });
 }
 
@@ -118,7 +119,7 @@ export async function acceptInvitation(token: string): Promise<ActionResult> {
   return guard(async () => {
     await requireUser();
     const supabase = await createClient();
-    const t = parse(z.string().regex(/^[a-f0-9]{48}$/, "This invitation link is invalid."), token);
+    const t = parse(z.string().regex(/^[a-f0-9]{48}$/, msg("onboarding.errors.invitationInvalid")), token);
     await rateLimit(supabase, "org.accept_invitation", 10, 600);
     const { data: slug, error } = await supabase.rpc("accept_invitation", { p_token: t });
     if (error) return toActionError(error);
@@ -132,11 +133,11 @@ export async function updateOrganization(orgSlug: string, _: ActionResult | null
     assertCan(ctx, "team:manage");
     const name = String(formData.get("name") ?? "").trim();
     const currency = String(formData.get("currency") ?? "CAD");
-    if (name.length < 2 || name.length > 120) return { ok: false, error: "Enter a valid name.", fieldErrors: { name: ["Enter a valid name."] } };
-    if (!/^[A-Z]{3}$/.test(currency)) return { ok: false, error: "Invalid currency." };
+    if (name.length < 2 || name.length > 120) return { ok: false, error: msg("onboarding.errors.nameInvalid"), fieldErrors: { name: [msg("onboarding.errors.nameInvalid")] } };
+    if (!/^[A-Z]{3}$/.test(currency)) return { ok: false, error: msg("onboarding.errors.currencyInvalid") };
     const { error } = await ctx.db.from("organizations").update({ name, default_currency: currency }).eq("id", ctx.organizationId);
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}`, "layout");
-    return { ok: true, message: "Organization updated." };
+    return { ok: true, message: msg("onboarding.messages.organizationUpdated") };
   });
 }

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { useT } from "@/i18n/client";
 import type { ActionResult } from "@/lib/actions/result";
 
 /** Confirmation dialog with optional required reason. Used for consequential / irreversible actions. */
@@ -28,6 +29,7 @@ export function ConfirmDialog({
   reasonRequired?: boolean;
   onConfirm: (reason: string) => Promise<ActionResult<unknown> | void>;
 }) {
+  const t = useT("common");
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -67,7 +69,7 @@ export function ConfirmDialog({
         ) : null}
         <DialogFooter className="gap-2">
           <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
+            {t("actions.cancel")}
           </Button>
           <Button
             variant={destructive ? "destructive" : "default"}
@@ -84,7 +86,7 @@ export function ConfirmDialog({
               })
             }
           >
-            {pending ? "Working…" : confirmLabel}
+            {pending ? t("actions.working") : confirmLabel}
           </Button>
         </DialogFooter>
       </DialogContent>

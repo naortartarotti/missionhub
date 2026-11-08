@@ -7,9 +7,10 @@ import { headers } from "next/headers";
 import { createClient } from "@/server/supabase/server";
 import { env } from "@/server/env";
 import { fromZodError, type ActionResult } from "@/lib/actions/result";
+import { msg } from "@/i18n/translate";
 import { forgotSchema, resetSchema, safeNext, signInSchema, signUpSchema } from "./schemas";
 
-const GENERIC_AUTH_ERROR = "Email or password is incorrect.";
+const GENERIC_AUTH_ERROR = msg("auth.errors.invalidCredentials");
 
 export async function signIn(_: ActionResult | null, formData: FormData): Promise<ActionResult> {
   return guard(async () => {
@@ -17,7 +18,7 @@ export async function signIn(_: ActionResult | null, formData: FormData): Promis
     if (!parsed.success) return fromZodError(parsed.error);
     const supabase = await createClient();
     const { error } = await supabase.auth.signInWithPassword({ email: parsed.data.email, password: parsed.data.password });
-    if (error) return { ok: false, error: error.code === "email_not_confirmed" ? "Confirm your email before signing in." : GENERIC_AUTH_ERROR };
+    if (error) return { ok: false, error: error.code === "email_not_confirmed" ? msg("auth.errors.emailNotConfirmed") : GENERIC_AUTH_ERROR };
     redirect(safeNext(parsed.data.next, "/"));
   });
 }
@@ -38,11 +39,11 @@ export async function signUp(_: ActionResult | null, formData: FormData): Promis
     });
     if (error) {
       // Do not reveal whether an account exists.
-      if (error.code === "weak_password") return { ok: false, error: "Choose a stronger password." };
-      return { ok: false, error: "We couldn't create your account. Please try again." };
+      if (error.code === "weak_password") return { ok: false, error: msg("auth.errors.weakPassword") };
+      return { ok: false, error: msg("auth.errors.signUpFailed") };
     }
     if (!data.session) {
-      return { ok: true, message: "Check your inbox to confirm your email, then sign in." };
+      return { ok: true, message: msg("auth.messages.checkInbox") };
     }
     redirect(safeNext(parsed.data.next, "/onboarding"));
   });
@@ -58,8 +59,7 @@ export async function requestPasswordReset(_: ActionResult | null, formData: For
     // Same response whether or not the account exists.
     return {
       ok: true,
-      message:
-        "If an account exists for that email, a reset link is on its way. In local development, open Mailpit at http://127.0.0.1:55324.",
+      message: msg("auth.messages.resetSent"),
     };
   });
 }
@@ -70,7 +70,7 @@ export async function resetPassword(_: ActionResult | null, formData: FormData):
     if (!parsed.success) return fromZodError(parsed.error);
     const supabase = await createClient();
     const { error } = await supabase.auth.updateUser({ password: parsed.data.password });
-    if (error) return { ok: false, error: "Your reset link has expired. Request a new one." };
+    if (error) return { ok: false, error: msg("auth.errors.resetExpired") };
     redirect("/");
   });
 }

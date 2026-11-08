@@ -7,6 +7,8 @@ import { revalidatePath } from "next/cache";
 import { assertCan, getRequestContext } from "@/server/auth/context";
 import { toActionError, type ActionResult } from "@/lib/actions/result";
 import { parseMajorToMinor } from "@/lib/money/format";
+import { msg } from "@/i18n/translate";
+import { getGlobalT } from "@/i18n/server";
 import { validateCsv, type CsvRowResult } from "./csv";
 
 export type ImportPreview = { rows: Omit<CsvRowResult, "parsed">[]; valid: number; invalid: number; duplicates: number; checksum: string };
@@ -24,23 +26,27 @@ export async function previewImport(orgSlug: string, _: ActionResult<ImportPrevi
     assertCan(ctx, "candidates:write");
     await rateLimit(ctx.db, "candidate.import_preview", 30, 3600);
     const file = formData.get("file");
-    if (!(file instanceof File) || file.size === 0) return { ok: false, error: "Choose a CSV file." };
-    if (file.size > 2 * 1024 * 1024) return { ok: false, error: "CSV files must be 2 MB or smaller." };
+    if (!(file instanceof File) || file.size === 0) return { ok: false, error: msg("candidates.errors.csvChoose") };
+    if (file.size > 2 * 1024 * 1024) return { ok: false, error: msg("candidates.errors.csvSize") };
     const text = await file.text();
-    const result = validateCsv(text);
+    const t = await getGlobalT();
+    const result = validateCsv(text, undefined, t);
     if (result.fatal) return { ok: false, error: result.fatal };
     const dupes = await findDuplicates(ctx, result.rows.map((r) => r.parsed?.email).filter((e): e is string => Boolean(e)));
-    const rows = result.rows.map(({ parsed, ...r }) => ({
-      ...r,
-      errors: parsed?.email && dupes.has(parsed.email) ? [...r.errors, "Possible duplicate: a candidate with this email already exists in your organization"] : r.errors,
-    }));
+    // Row errors travel in `data`, which guard() doesn't localize, so they're translated here.
+    let duplicates = 0;
+    const rows = result.rows.map(({ parsed, ...r }) => {
+      const duplicate = Boolean(parsed?.email && dupes.has(parsed.email));
+      if (duplicate) duplicates++;
+      return { ...r, errors: duplicate ? [...r.errors, t("candidates.errors.csvDuplicate")] : r.errors };
+    });
     return {
       ok: true,
       data: {
         rows,
         valid: rows.filter((r) => r.errors.length === 0).length,
         invalid: rows.filter((r) => r.errors.length > 0).length,
-        duplicates: rows.filter((r) => r.errors.some((e) => e.startsWith("Possible duplicate"))).length,
+        duplicates,
         checksum: createHash("sha256").update(text).digest("hex"),
       },
     };
@@ -54,10 +60,10 @@ export async function commitImport(orgSlug: string, _: ActionResult<{ inserted: 
     assertCan(ctx, "candidates:write");
     await rateLimit(ctx.db, "candidate.import", 10, 3600);
     const file = formData.get("file");
-    if (!(file instanceof File) || file.size === 0) return { ok: false, error: "Choose the CSV file again to confirm." };
+    if (!(file instanceof File) || file.size === 0) return { ok: false, error: msg("candidates.errors.csvChooseAgain") };
     const text = await file.text();
     if (createHash("sha256").update(text).digest("hex") !== formData.get("checksum")) {
-      return { ok: false, error: "The file changed since the preview. Preview it again." };
+      return { ok: false, error: msg("candidates.errors.csvChanged") };
     }
     const result = validateCsv(text);
     if (result.fatal) return { ok: false, error: result.fatal };
@@ -91,10 +97,10 @@ export async function commitImport(orgSlug: string, _: ActionResult<{ inserted: 
           source_detail: v.sourceDetail ?? file.name.slice(0, 120),
         };
       });
-    if (!rows.length) return { ok: false, error: "No valid, non-duplicate rows to import." };
+    if (!rows.length) return { ok: false, error: msg("candidates.errors.csvNothing") };
     const { error } = await ctx.db.from("candidates").insert(rows);
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/candidates`);
-    return { ok: true, data: { inserted: rows.length }, message: `${rows.length} candidates imported as drafts. Review each and record authorizations before activating.` };
+    return { ok: true, data: { inserted: rows.length }, message: msg("candidates.success.imported", { count: rows.length }) };
   });
 }

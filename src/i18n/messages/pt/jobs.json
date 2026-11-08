@@ -1,0 +1,143 @@
+{
+  "title": "Vagas",
+  "description": "Suas vagas abertas. Abra uma vaga para parceiros e recrutadores com candidatos compatíveis poderão indicá-los a você. Você não verá a identidade de ninguém até que seja enviado.",
+  "newJob": "Nova vaga",
+  "searchPlaceholder": "Buscar por título ou cliente",
+  "searchLabel": "Buscar vagas",
+  "filterLabel": "Filtrar por status",
+  "allStatuses": "Todos os status",
+  "apply": "Aplicar",
+  "empty": {
+    "filteredTitle": "Nenhuma vaga corresponde a esses filtros",
+    "filteredDescription": "Tente outra busca ou limpe os filtros.",
+    "firstTitle": "Publique sua primeira vaga",
+    "firstDescription": "Adicione uma vaga para a qual você está contratando. Abra-a para parceiros e diremos quantos dos candidatos deles se encaixam, sem revelar quem são."
+  },
+  "clientConfidential": "{client} (confidencial)",
+  "openToPartners": "Aberta a parceiros",
+  "new": {
+    "title": "Nova vaga",
+    "description": "Cole uma descrição para receber requisitos sugeridos e revise cada campo antes de publicar."
+  },
+  "edit": {
+    "metaTitle": "Editar vaga",
+    "title": "Editar {title}",
+    "description": "Alterações nos requisitos reexecutam a correspondência em segundo plano."
+  },
+  "detail": {
+    "metaTitle": "Vaga",
+    "flashPublished": "Vaga publicada. As contagens de correspondências aparecerão em um minuto.",
+    "flashDraft": "Rascunho salvo. Os parceiros não podem vê-lo até você publicar.",
+    "flashUpdated": "Alterações salvas.",
+    "clientConfidential": "{client} · confidencial para parceiros",
+    "clientNotSet": "Cliente não definido",
+    "edit": "Editar",
+    "kpiStrong": "Correspondências fortes",
+    "kpiPartial": "Correspondências parciais",
+    "kpiPartnerHint": "Candidatos de parceiros · anônimos",
+    "submittedTitle": "Candidatos enviados a você",
+    "privacyNotPublished": "Esta vaga não está publicada, então não está sendo correspondida. Publique-a para ver quantos candidatos de parceiros se encaixam.",
+    "privacyNotOpen": "Esta vaga não está aberta a parceiros. Edite-a e ative as indicações de parceiros para receber correspondências com os candidatos deles.",
+    "required": "Obrigatórios",
+    "niceToHave": "Desejáveis",
+    "seniority": "Senioridade",
+    "years": "{years}+ anos",
+    "languages": "Idiomas",
+    "location": "Localização",
+    "compensation": "Remuneração",
+    "placementFee": "Taxa de colocação",
+    "visible": {
+      "always": "Título, senioridade, modelo de trabalho e habilidades",
+      "description": "Descrição",
+      "location": "Localização",
+      "compensation": "Remuneração",
+      "placementFee": "Taxa de colocação",
+      "clientName": "Nome do cliente"
+    },
+    "statSubmitted": "Enviados",
+    "privacyShort": "Os candidatos dos parceiros ficam anônimos até serem enviados.",
+    "privacyShortRefreshed": "Os candidatos dos parceiros ficam anônimos até serem enviados · atualizado {when}",
+    "submittedEmptyShort": "Ninguém ainda. Você será avisado quando um parceiro enviar alguém.",
+    "role": "Vaga",
+    "visibleShort": "Visível para parceiros",
+    "description": "Descrição da vaga"
+  },
+  "status": {
+    "publish": "Publicar",
+    "pause": "Pausar",
+    "markFilled": "Marcar como preenchida",
+    "close": "Encerrar",
+    "resume": "Retomar",
+    "reopen": "Reabrir",
+    "updated": "Atualizado",
+    "more": "Mais ações"
+  },
+  "form": {
+    "role": "Vaga",
+    "title": "Título da vaga",
+    "contractType": "Tipo de contrato",
+    "client": "Cliente contratante",
+    "hideClient": "Ocultar o nome do cliente dos recrutadores parceiros",
+    "description": "Descrição da vaga",
+    "descriptionHint": "Cole o anúncio completo da vaga. Podemos sugerir habilidades e senioridade a partir dele. As sugestões usam apenas palavras do seu texto, e você as revisa antes de salvar.",
+    "analyzing": "Analisando…",
+    "suggest": "Sugerir requisitos a partir da descrição",
+    "suggestTooShort": "Cole primeiro uma descrição de vaga mais completa.",
+    "suggested": {
+      "one": "{count} habilidade sugerida a partir do texto. Revise antes de salvar.",
+      "other": "{count} habilidades sugeridas a partir do texto. Revise antes de salvar."
+    },
+    "requirements": "Requisitos",
+    "requiredSkills": "Habilidades obrigatórias",
+    "requiredSkillsHint": "Apenas habilidades realmente obrigatórias, separadas por vírgula",
+    "niceToHave": "Desejáveis",
+    "seniority": "Senioridade",
+    "notSpecified": "Não especificado",
+    "minYears": "Mínimo de anos de experiência",
+    "languages": "Idiomas de trabalho exigidos",
+    "languagesHint": "Liste apenas os idiomas que a vaga realmente exige",
+    "workArrangement": "Modelo de trabalho",
+    "city": "Cidade",
+    "region": "Província / estado",
+    "country": "País",
+    "salaryMin": "Salário mín.",
+    "salaryMax": "Salário máx.",
+    "currency": "Moeda",
+    "partnerReferrals": "Indicações de parceiros",
+    "openToPartners": "Abrir esta vaga a recrutadores parceiros",
+    "openToPartnersHint": "Recrutadores com candidatos compatíveis verão esta vaga e poderão enviá-los. Você verá quantos se encaixam, mas não quem, até que alguém seja enviado.",
+    "visibleTitle": "O que os parceiros veem antes de enviar",
+    "visibleHint": "Título, senioridade, modelo de trabalho e habilidades são sempre exibidos. O nome do cliente segue a configuração acima.",
+    "shareDescription": "Descrição da vaga",
+    "shareLocation": "Localização",
+    "shareSalary": "Faixa de remuneração",
+    "shareFee": "Taxa de colocação prevista",
+    "expectedFee": "Taxa de colocação prevista",
+    "expectedFeeHint": "O valor total que você prevê faturar ao cliente",
+    "feeCurrency": "Moeda da taxa",
+    "cancel": "Cancelar",
+    "saveDraft": "Salvar como rascunho",
+    "publish": "Publicar vaga",
+    "saveChanges": "Salvar alterações"
+  },
+  "messages": {
+    "activated": "A vaga está ativa. A correspondência é executada em segundo plano.",
+    "statusUpdated": "Status atualizado. As correspondências de vagas inativas expiram imediatamente.",
+    "statusUpdatedReleased": {
+      "one": "Status atualizado. {count} indicação pendente foi recusada como \"Vaga preenchida\".",
+      "other": "Status atualizado. {count} indicações pendentes foram recusadas como \"Vaga preenchida\"."
+    }
+  },
+  "errors": {
+    "notFound": "Vaga não encontrada."
+  },
+  "validation": {
+    "positiveAmount": "Informe um valor positivo",
+    "titleRequired": "Informe o título da vaga",
+    "maxYears": "Deve ser 70 ou menos",
+    "countryCode": "Use um código de país de 2 letras",
+    "salaryRange": "O máximo deve ser pelo menos igual ao mínimo",
+    "clientRequired": "Informe o nome do cliente ou mantenha-o confidencial",
+    "descriptionTooLong": "A descrição é muito longa."
+  }
+}

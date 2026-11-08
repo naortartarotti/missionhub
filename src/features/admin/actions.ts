@@ -7,6 +7,7 @@ import { getSessionUser } from "@/server/auth/context";
 import { AuthorizationError } from "@/server/auth/errors";
 import { guard, id, parse, text } from "@/server/actions/guard";
 import { toActionError, type ActionResult } from "@/lib/actions/result";
+import { msg } from "@/i18n/translate";
 
 /** Platform-admin gate. The RPCs re-check app.is_platform_admin() in the database. */
 async function adminDb() {
@@ -16,7 +17,7 @@ async function adminDb() {
 }
 
 const suspensionSchema = z.object({ orgId: id, suspend: z.boolean(), reason: z.string().trim().max(500) }).refine((v) => !v.suspend || v.reason.length >= 5, {
-  message: "Give a reason (at least 5 characters).",
+  message: msg("admin.validation.reason"),
   path: ["reason"],
 });
 
@@ -27,11 +28,11 @@ export async function setSuspension(input: { orgId: string; suspend: boolean; re
     const { error } = await db.rpc("set_organization_suspension", { p_org: v.orgId, p_suspend: v.suspend, p_reason: v.reason });
     if (error) return toActionError(error);
     revalidatePath("/admin");
-    return { ok: true, message: v.suspend ? "Organization suspended." : "Organization reinstated." };
+    return { ok: true, message: v.suspend ? msg("admin.messages.suspended") : msg("admin.messages.reinstated") };
   });
 }
 
-const disputeSchema = z.object({ disputeId: id, upheld: z.boolean(), resolution: text(5, 2000, "Describe the resolution (5–2000 characters).") });
+const disputeSchema = z.object({ disputeId: id, upheld: z.boolean(), resolution: text(5, 2000, msg("admin.validation.resolution")) });
 
 export async function resolveDispute(input: { disputeId: string; upheld: boolean; resolution: string }): Promise<ActionResult> {
   return guard(async () => {
@@ -40,14 +41,14 @@ export async function resolveDispute(input: { disputeId: string; upheld: boolean
     const { error } = await db.rpc("resolve_dispute", { p_dispute: v.disputeId, p_resolution: v.resolution, p_upheld: v.upheld });
     if (error) return toActionError(error);
     revalidatePath("/admin");
-    return { ok: true, message: "Dispute closed." };
+    return { ok: true, message: msg("admin.messages.disputeClosed") };
   });
 }
 
 const percent = z.coerce.number().min(0).max(100).transform((n) => Math.round(n * 100));
 const ruleSchema = z
   .object({ name: z.string().trim().max(120).optional(), sourcing: percent, jobOwner: percent, platform: percent })
-  .refine((v) => v.sourcing + v.jobOwner + v.platform === 10000, { message: "Percentages must total exactly 100%.", path: ["platform"] });
+  .refine((v) => v.sourcing + v.jobOwner + v.platform === 10000, { message: msg("admin.validation.total"), path: ["platform"] });
 
 export async function publishRule(_: ActionResult | null, formData: FormData): Promise<ActionResult> {
   return guard(async () => {
@@ -61,6 +62,6 @@ export async function publishRule(_: ActionResult | null, formData: FormData): P
     });
     if (error) return toActionError(error);
     revalidatePath("/admin");
-    return { ok: true, message: "New rule version published. Existing agreements keep their frozen snapshot." };
+    return { ok: true, message: msg("admin.messages.rulePublished") };
   });
 }

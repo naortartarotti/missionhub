@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Logo } from "@/components/layout/logo";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
 export function AuthShell({ title, subtitle, children, footer, wide }: { title?: string; subtitle?: string; children: ReactNode; footer?: ReactNode; wide?: boolean }) {
   return (
@@ -14,6 +15,9 @@ export function AuthShell({ title, subtitle, children, footer, wide }: { title?:
           <div className={title || subtitle ? "mt-7" : undefined}>{children}</div>
         </div>
         {footer ? <div className="mt-6 text-center text-sm text-muted-foreground">{footer}</div> : null}
+        <div className="mt-4 flex justify-center">
+          <LanguageSwitcher variant="full" />
+        </div>
       </div>
     </main>
   );

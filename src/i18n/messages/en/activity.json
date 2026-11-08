@@ -1,0 +1,13 @@
+{
+  "title": "Activity",
+  "description": "Everything that changed: new matches, submissions, hiring stages and payments.",
+  "unreadCount": { "one": "{count} unread", "other": "{count} unread" },
+  "caughtUp": "You're all caught up",
+  "markAllRead": "Mark all as read",
+  "emptyShort": "Nothing yet. New matches, submissions and payment updates will show up here.",
+  "emptyTitle": "No activity yet",
+  "emptyBody": "You'll see new matches, submissions and payment updates here as they happen.",
+  "viewAll": "View all activity",
+  "unread": "unread",
+  "emailOff": "Email delivery isn't configured (set EMAIL_PROVIDER). Notifications are in-app only; no emails have been sent."
+}

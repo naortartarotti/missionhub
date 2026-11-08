@@ -3,6 +3,7 @@
 import { useId, useState, type KeyboardEvent } from "react";
 import { Plus, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/i18n/client";
 
 /** Chip input: Enter or comma adds, Backspace on empty removes the last chip. */
 export function TagInput({
@@ -22,6 +23,7 @@ export function TagInput({
   max?: number;
   describedBy?: string;
 }) {
+  const t = useT("onboarding");
   const [draft, setDraft] = useState("");
   const listId = useId();
   const has = (t: string) => value.some((v) => v.toLowerCase() === t.toLowerCase());
@@ -45,11 +47,11 @@ export function TagInput({
   return (
     <div className="grid gap-3">
       <div className="flex min-h-11 flex-wrap items-center gap-1.5 rounded-xl border border-input bg-background px-2 py-1.5 focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50">
-        <ul className="contents" aria-label="Selected" id={listId}>
-          {value.map((t) => (
-            <li key={t} className="inline-flex items-center gap-1 rounded-full bg-muted py-1 pr-1 pl-3 text-sm">
-              {t}
-              <button type="button" onClick={() => onChange(value.filter((v) => v !== t))} className="grid size-5 place-items-center rounded-full hover:bg-background" aria-label={`Remove ${t}`}>
+        <ul className="contents" aria-label={t("tags.selected")} id={listId}>
+          {value.map((tag) => (
+            <li key={tag} className="inline-flex items-center gap-1 rounded-full bg-muted py-1 pr-1 pl-3 text-sm">
+              {tag}
+              <button type="button" onClick={() => onChange(value.filter((v) => v !== tag))} className="grid size-5 place-items-center rounded-full hover:bg-background" aria-label={t("tags.remove", { tag })}>
                 <X className="size-3" aria-hidden />
               </button>
             </li>
@@ -67,7 +69,7 @@ export function TagInput({
         />
       </div>
       {open.length ? (
-        <div className="flex flex-wrap gap-1.5" aria-label="Suggestions">
+        <div className="flex flex-wrap gap-1.5" aria-label={t("tags.suggestions")}>
           {open.slice(0, 8).map((s) => (
             <button
               key={s}

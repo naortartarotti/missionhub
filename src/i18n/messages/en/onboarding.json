@@ -1,0 +1,123 @@
+{
+  "metaTitle": "Set up your workspace",
+  "footer": "Joining an existing team? Open the invitation link your admin sent you.",
+  "steps": {
+    "kind": "How you work",
+    "workspace": "Workspace",
+    "profile": "Your profile",
+    "review": "Review"
+  },
+  "progress": "Onboarding progress",
+  "stepCompleted": "{label} (completed, go back)",
+  "stepCurrent": "{label} (current)",
+  "stepStatus": "Step {current} of {total}: {label}",
+  "titles": {
+    "kind": "Welcome! How do you work?",
+    "kindNamed": "Welcome, {name}! How do you work?",
+    "kindDescription": "This tailors your workspace. You can invite teammates later either way.",
+    "workspace": "Name your workspace",
+    "workspaceDescription": "Candidates and jobs belong to this workspace and are never visible to other organizations.",
+    "profile": "Your recruiter profile",
+    "profileDescription": "Partners see this when you collaborate on a referral. It's optional; you can fill it in later.",
+    "review": "Ready to go?",
+    "reviewDescription": "Check the details below, then create your workspace."
+  },
+  "kind": {
+    "label": "Organization type",
+    "agency": "Agency",
+    "agencyDescription": "A team of recruiters sharing one candidate inventory.",
+    "independent": "Independent",
+    "independentDescription": "A solo recruiter. Bring in collaborators when you grow."
+  },
+  "workspace": {
+    "agencyName": "Agency name",
+    "displayName": "Business or display name",
+    "agencyPlaceholder": "e.g. Northbound Talent",
+    "displayPlaceholder": "e.g. Sam Rivera Recruiting",
+    "url": "Workspace URL",
+    "urlHint": "Lowercase letters, numbers and dashes. You can't change it later.",
+    "currency": "Default currency",
+    "currencyHint": "Used for fees and commissions. Each placement can still use its own currency."
+  },
+  "profile": {
+    "headline": "Headline",
+    "headlineHint": "One line partners will recognize you by.",
+    "headlinePlaceholder": "e.g. Tech recruiter for Canadian scale-ups",
+    "specialties": "Specialties",
+    "regions": "Regions you recruit in",
+    "tagPlaceholder": "Type and press Enter",
+    "skip": "Skip for now"
+  },
+  "suggestions": {
+    "specialties": {
+      "software": "Software engineering",
+      "data": "Data & AI",
+      "product": "Product",
+      "design": "Design",
+      "sales": "Sales",
+      "finance": "Finance",
+      "healthcare": "Healthcare",
+      "executive": "Executive search"
+    },
+    "regions": {
+      "ontario": "Ontario",
+      "quebec": "Quebec",
+      "bc": "British Columbia",
+      "alberta": "Alberta",
+      "remoteCanada": "Remote Canada",
+      "us": "United States",
+      "remoteWorld": "Remote worldwide"
+    }
+  },
+  "review": {
+    "organization": "Organization",
+    "workspace": "Workspace",
+    "profile": "Profile",
+    "editOrganization": "Edit organization",
+    "editWorkspace": "Edit workspace",
+    "editProfile": "Edit profile",
+    "agency": "Agency",
+    "independent": "Independent recruiter",
+    "noTags": "No specialties or regions yet",
+    "notFilled": "Not filled in yet",
+    "protectionTitle": "How your data is protected",
+    "protectionPrivate": "Your candidates and jobs stay private to this workspace.",
+    "protectionAnonymized": "Partners never browse your inventory. They see anonymized match counts only.",
+    "protectionConsent": "You choose exactly what to share, per referral, with the candidate's authorization.",
+    "creating": "Creating workspace…",
+    "create": "Create workspace"
+  },
+  "tags": {
+    "selected": "Selected",
+    "suggestions": "Suggestions",
+    "remove": "Remove {tag}"
+  },
+  "validation": {
+    "nameRequired": "Enter your organization name",
+    "nameTooLong": "Use at most 120 characters",
+    "slugFormat": "3–48 characters: lowercase letters, numbers and dashes",
+    "email": "Enter a valid email"
+  },
+  "errors": {
+    "slugTaken": "That workspace URL is taken.",
+    "slugTakenField": "That workspace URL is taken. Try another.",
+    "invitationInvalid": "This invitation link is invalid.",
+    "memberNotFound": "Member not found.",
+    "selfChange": "You can't change your own role or status.",
+    "nameInvalid": "Enter a valid name.",
+    "currencyInvalid": "Invalid currency."
+  },
+  "messages": {
+    "invitationCreated": "Invitation created. Email delivery isn't configured, so share this one-time link securely.",
+    "invitationRevoked": "Invitation revoked.",
+    "memberUpdated": "Member updated.",
+    "organizationUpdated": "Organization updated."
+  },
+  "invite": {
+    "metaTitle": "Join organization",
+    "title": "Join your team",
+    "subtitle": "You're signed in as {email}. The invitation must match this email address.",
+    "joining": "Joining…",
+    "accept": "Accept invitation"
+  }
+}

@@ -41,8 +41,3 @@ export function permissionsFor(role: MembershipRole): Permission[] {
   return [...ROLE_PERMISSIONS[role]];
 }
 
-export const ROLE_LABELS: Record<MembershipRole, string> = {
-  org_admin: "Organization admin",
-  recruiter_manager: "Recruiter manager",
-  recruiter: "Recruiter",
-};

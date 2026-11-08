@@ -1,20 +1,26 @@
 import { assertCan, getRequestContext } from "@/server/auth/context";
 import { PageHeader } from "@/components/shared/page-header";
 import { ImportWizard } from "@/features/candidates/components/import-wizard";
+import { getT } from "@/i18n/server";
 
-export const metadata = { title: "Import candidates" };
+export async function generateMetadata() {
+  return { title: (await getT("candidates"))("import.title") };
+}
 
 export default async function ImportPage({ params }: PageProps<"/w/[orgSlug]/candidates/import">) {
   const { orgSlug } = await params;
   const ctx = await getRequestContext(orgSlug);
   assertCan(ctx, "candidates:write");
+  const t = await getT("candidates");
   return (
-    <div className="mx-auto grid max-w-5xl gap-6">
+    <div className="grid gap-6">
       <PageHeader
-        title="Import candidates"
-        description="Upload a CSV, review every row, then confirm. Duplicate checks run only within your organization."
+        title={t("import.title")}
+        description={t("import.description")}
       />
+      <div className="mx-auto grid w-full max-w-5xl gap-6">
       <ImportWizard orgSlug={orgSlug} />
+    </div>
     </div>
   );
 }

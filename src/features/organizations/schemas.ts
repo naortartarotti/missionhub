@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { msg } from "@/i18n/translate";
 
 export const slugify = (s: string) =>
   s
@@ -12,12 +13,12 @@ export const slugify = (s: string) =>
 export const ONBOARDING_CURRENCIES = ["CAD", "USD", "EUR", "GBP", "BRL"] as const;
 
 export const workspaceStepSchema = z.object({
-  name: z.string().trim().min(2, "Enter your organization name").max(120),
+  name: z.string().trim().min(2, msg("onboarding.validation.nameRequired")).max(120, msg("onboarding.validation.nameTooLong")),
   slug: z
     .string()
     .trim()
     .toLowerCase()
-    .regex(/^[a-z0-9](?:[a-z0-9-]{1,46}[a-z0-9])$/, "3–48 characters: lowercase letters, numbers and dashes"),
+    .regex(/^[a-z0-9](?:[a-z0-9-]{1,46}[a-z0-9])$/, msg("onboarding.validation.slugFormat")),
 });
 
 export const createOrganizationSchema = workspaceStepSchema.extend({
@@ -29,7 +30,7 @@ export const createOrganizationSchema = workspaceStepSchema.extend({
 });
 
 export const inviteSchema = z.object({
-  email: z.email("Enter a valid email").trim().toLowerCase(),
+  email: z.email(msg("onboarding.validation.email")).trim().toLowerCase(),
   role: z.enum(["org_admin", "recruiter_manager", "recruiter"]),
 });
 

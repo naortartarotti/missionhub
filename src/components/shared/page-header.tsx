@@ -1,14 +1,42 @@
 import type { ReactNode } from "react";
+import { StickyHeader } from "@/components/layout/sticky-header";
+import { HeaderBell } from "@/features/notifications/components/activity-context";
 
-export function PageHeader({ title, description, actions }: { title: string; description?: ReactNode; actions?: ReactNode }) {
+/**
+ * The page's header bar: title + description on the left, page actions and the notifications bell
+ * on the right. Sticky on every screen. Render it as the FIRST child of the page.
+ */
+export function PageHeader({
+  title,
+  description,
+  actions,
+  eyebrow,
+  leading,
+}: {
+  title: ReactNode;
+  description?: ReactNode;
+  actions?: ReactNode;
+  /** Small line above the title (e.g. "Sent to Acme · Nov 8"). */
+  eyebrow?: ReactNode;
+  /** Element before the title, e.g. an avatar. */
+  leading?: ReactNode;
+}) {
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-      <div className="min-w-0">
-        <h1 className="text-2xl font-semibold tracking-tight text-balance sm:text-[1.75rem]">{title}</h1>
-        {description ? <p className="mt-1 text-[15px] text-muted-foreground text-pretty">{description}</p> : null}
+    <StickyHeader>
+      <div className="flex items-center gap-4">
+        {leading}
+        <div className="min-w-0 flex-1">
+          {eyebrow ? <p className="truncate text-sm text-muted-foreground">{eyebrow}</p> : null}
+          <h1 className="truncate text-xl font-semibold tracking-tight sm:text-2xl">{title}</h1>
+          {description ? <p className="mt-0.5 line-clamp-2 text-sm text-muted-foreground text-pretty sm:text-[15px]">{description}</p> : null}
+        </div>
+        {actions ? <div className="hidden shrink-0 flex-wrap items-center justify-end gap-2 sm:flex">{actions}</div> : null}
+        <div className="hidden shrink-0 lg:block">
+          <HeaderBell />
+        </div>
       </div>
-      {actions ? <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div> : null}
-    </div>
+      {actions ? <div className="mt-3 flex flex-wrap items-center gap-2 sm:hidden">{actions}</div> : null}
+    </StickyHeader>
   );
 }
 

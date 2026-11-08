@@ -1,0 +1,47 @@
+{
+  "candidateStatus": { "draft": "Jumelage inactif", "active_for_matching": "Jumelage actif", "unavailable": "Indisponible", "archived": "Archivé", "deleted": "Supprimé" },
+  "jobStatus": { "draft": "Brouillon", "active": "Actif", "paused": "En pause", "closed": "Fermé", "filled": "Pourvu", "cancelled": "Annulé" },
+  "referralStatus": {
+    "submitted": "Soumis",
+    "under_review": "En examen",
+    "info_requested": "Infos demandées",
+    "accepted": "Accepté",
+    "declined": "Refusé",
+    "withdrawn": "Retiré",
+    "interviewing": "En entrevue",
+    "offer": "Offre",
+    "hired": "Embauché",
+    "rejected": "Non retenu",
+    "cancelled": "Annulé"
+  },
+  "placementStatus": {
+    "hire_reported": "Embauche déclarée",
+    "invoiced": "Facturé",
+    "payment_partially_verified": "Partiellement payé",
+    "commission_payable": "Commission à verser",
+    "settled": "Réglé",
+    "disputed": "En litige",
+    "cancelled": "Annulé"
+  },
+  "placementStatusDescription": {
+    "hire_reported": "Commission prévue — pas encore facturée.",
+    "invoiced": "Client facturé; paiement pas encore vérifié.",
+    "payment_partially_verified": "Une partie du paiement du client est vérifiée.",
+    "commission_payable": "Paiement du client vérifié; les parts sont dues.",
+    "settled": "Toutes les obligations sont vérifiées comme payées.",
+    "disputed": "Gelé en attendant l'examen de la plateforme.",
+    "cancelled": "Placement annulé."
+  },
+  "evidenceKind": {
+    "client_payment": "Paiement du client reçu",
+    "sourcing_payout": "Versement au recruteur d'origine",
+    "platform_remittance": "Remise de la part de la plateforme",
+    "client_refund": "Remboursement au client"
+  },
+  "band": { "strong": "Forte correspondance", "potential": "Correspondance partielle", "not_eligible": "Non admissible" },
+  "seniority": { "intern": "Stagiaire", "junior": "Junior", "mid": "Intermédiaire", "senior": "Sénior", "lead": "Responsable", "principal": "Principal", "executive": "Direction" },
+  "arrangement": { "remote": "À distance", "hybrid": "Hybride", "onsite": "Sur place" },
+  "contract": { "permanent": "Permanent", "contract": "Contrat", "temporary": "Temporaire", "contract_to_hire": "Contrat menant à l'embauche" },
+  "legalBasis": { "consent": "Consentement", "contract": "Contrat / précontractuel", "legitimate_interest": "Intérêt commercial légitime", "other_documented": "Autre (documenté)" },
+  "role": { "org_admin": "Administrateur de l'organisation", "recruiter_manager": "Gestionnaire de recrutement", "recruiter": "Recruteur" }
+}

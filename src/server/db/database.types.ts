@@ -897,6 +897,51 @@ export type Database = {
           },
         ]
       }
+      match_triage: {
+        Row: {
+          dismiss_reason: string | null
+          match_id: string
+          organization_id: string
+          seen_at: string | null
+          state: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          dismiss_reason?: string | null
+          match_id: string
+          organization_id: string
+          seen_at?: string | null
+          state?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          dismiss_reason?: string | null
+          match_id?: string
+          organization_id?: string
+          seen_at?: string | null
+          state?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_triage_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "match_triage_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       matches: {
         Row: {
           band: Database["public"]["Enums"]["match_band"]
@@ -1779,6 +1824,9 @@ export type Database = {
           candidate_label: string
           created_at: string
           decided_at: string | null
+          decline_reason: string | null
+          fit_evidence: Json
+          fit_score: number | null
           id: string
           idempotency_key: string
           job_id: string
@@ -1797,6 +1845,9 @@ export type Database = {
           candidate_label: string
           created_at?: string
           decided_at?: string | null
+          decline_reason?: string | null
+          fit_evidence?: Json
+          fit_score?: number | null
           id?: string
           idempotency_key: string
           job_id: string
@@ -1815,6 +1866,9 @@ export type Database = {
           candidate_label?: string
           created_at?: string
           decided_at?: string | null
+          decline_reason?: string | null
+          fit_evidence?: Json
+          fit_score?: number | null
           id?: string
           idempotency_key?: string
           job_id?: string
@@ -1917,6 +1971,11 @@ export type Database = {
         }
         Returns: string
       }
+      decline_pending_for_job: { Args: { p_job: string }; Returns: number }
+      decline_referrals: {
+        Args: { p_ids: string[]; p_note?: string; p_reason_code: string }
+        Returns: number
+      }
       fail_background_job: {
         Args: { p_error: string; p_id: string }
         Returns: undefined
@@ -1940,14 +1999,18 @@ export type Database = {
           client_label: string
           contract_type: Database["public"]["Enums"]["contract_type"]
           description: string
+          dismiss_reason: string
           expected_fee_minor: number
           fee_currency: string
           gaps: Json
+          is_new: boolean
           job_id: string
           job_org_name: string
+          job_posted_at: string
           job_title: string
           location: string
           match_id: string
+          matched_at: string
           model_version: string
           preferred_skills: string[]
           reasons: Json
@@ -1960,11 +2023,17 @@ export type Database = {
           salary_min: number
           score: number
           seniority: Database["public"]["Enums"]["seniority_level"]
+          triage_state: string
           work_arrangement: Database["public"]["Enums"]["work_arrangement"]
+          your_share_minor: number
         }[]
       }
       mark_grant_copied: {
         Args: { p_grant: string; p_ok: boolean; p_path: string }
+        Returns: undefined
+      }
+      mark_matches_seen: {
+        Args: { p_matches: string[]; p_org: string }
         Returns: undefined
       }
       open_dispute: {
@@ -2033,6 +2102,25 @@ export type Database = {
       }
       review_payment_evidence: {
         Args: { p_approve: boolean; p_evidence: string; p_note: string }
+        Returns: undefined
+      }
+      review_referral: {
+        Args: {
+          p_expected_version: number
+          p_note: string
+          p_reason_code: string
+          p_referral: string
+          p_to: Database["public"]["Enums"]["referral_status"]
+        }
+        Returns: number
+      }
+      set_match_triage: {
+        Args: {
+          p_match: string
+          p_org: string
+          p_reason?: string
+          p_state: string
+        }
         Returns: undefined
       }
       set_organization_suspension: {

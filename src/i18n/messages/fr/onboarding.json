@@ -1,0 +1,123 @@
+{
+  "metaTitle": "Configurer votre espace de travail",
+  "footer": "Vous rejoignez une équipe existante? Ouvrez le lien d'invitation envoyé par votre administrateur.",
+  "steps": {
+    "kind": "Votre façon de travailler",
+    "workspace": "Espace de travail",
+    "profile": "Votre profil",
+    "review": "Vérification"
+  },
+  "progress": "Progression de la configuration",
+  "stepCompleted": "{label} (terminé, revenir)",
+  "stepCurrent": "{label} (étape actuelle)",
+  "stepStatus": "Étape {current} sur {total} : {label}",
+  "titles": {
+    "kind": "Bienvenue! Comment travaillez-vous?",
+    "kindNamed": "Bienvenue, {name}! Comment travaillez-vous?",
+    "kindDescription": "Cela adapte votre espace de travail. Vous pourrez inviter des collègues plus tard dans les deux cas.",
+    "workspace": "Nommez votre espace de travail",
+    "workspaceDescription": "Les candidats et les postes appartiennent à cet espace de travail et ne sont jamais visibles par d'autres organisations.",
+    "profile": "Votre profil de recruteur",
+    "profileDescription": "Vos partenaires le voient lorsque vous collaborez sur une recommandation. C'est facultatif; vous pourrez le remplir plus tard.",
+    "review": "Prêt à commencer?",
+    "reviewDescription": "Vérifiez les détails ci-dessous, puis créez votre espace de travail."
+  },
+  "kind": {
+    "label": "Type d'organisation",
+    "agency": "Agence",
+    "agencyDescription": "Une équipe de recruteurs qui partagent un même bassin de candidats.",
+    "independent": "Indépendant",
+    "independentDescription": "Un recruteur autonome. Ajoutez des collaborateurs à mesure que vous grandissez."
+  },
+  "workspace": {
+    "agencyName": "Nom de l'agence",
+    "displayName": "Nom d'entreprise ou nom affiché",
+    "agencyPlaceholder": "p. ex. Northbound Talent",
+    "displayPlaceholder": "p. ex. Sam Rivera Recrutement",
+    "url": "URL de l'espace de travail",
+    "urlHint": "Lettres minuscules, chiffres et tirets. Vous ne pourrez pas la modifier plus tard.",
+    "currency": "Devise par défaut",
+    "currencyHint": "Utilisée pour les honoraires et les commissions. Chaque placement peut quand même utiliser sa propre devise."
+  },
+  "profile": {
+    "headline": "Titre",
+    "headlineHint": "Une ligne qui permettra à vos partenaires de vous reconnaître.",
+    "headlinePlaceholder": "p. ex. Recruteur techno pour les entreprises canadiennes en croissance",
+    "specialties": "Spécialités",
+    "regions": "Régions où vous recrutez",
+    "tagPlaceholder": "Tapez puis appuyez sur Entrée",
+    "skip": "Passer pour l'instant"
+  },
+  "suggestions": {
+    "specialties": {
+      "software": "Génie logiciel",
+      "data": "Données et IA",
+      "product": "Produit",
+      "design": "Design",
+      "sales": "Ventes",
+      "finance": "Finance",
+      "healthcare": "Santé",
+      "executive": "Recrutement de cadres"
+    },
+    "regions": {
+      "ontario": "Ontario",
+      "quebec": "Québec",
+      "bc": "Colombie-Britannique",
+      "alberta": "Alberta",
+      "remoteCanada": "Télétravail au Canada",
+      "us": "États-Unis",
+      "remoteWorld": "Télétravail partout dans le monde"
+    }
+  },
+  "review": {
+    "organization": "Organisation",
+    "workspace": "Espace de travail",
+    "profile": "Profil",
+    "editOrganization": "Modifier l'organisation",
+    "editWorkspace": "Modifier l'espace de travail",
+    "editProfile": "Modifier le profil",
+    "agency": "Agence",
+    "independent": "Recruteur indépendant",
+    "noTags": "Aucune spécialité ni région pour l'instant",
+    "notFilled": "Pas encore rempli",
+    "protectionTitle": "Comment vos données sont protégées",
+    "protectionPrivate": "Vos candidats et vos postes restent privés à cet espace de travail.",
+    "protectionAnonymized": "Vos partenaires ne parcourent jamais votre bassin. Ils ne voient que des nombres de correspondances anonymisés.",
+    "protectionConsent": "Vous choisissez exactement ce que vous partagez, pour chaque recommandation, avec l'autorisation du candidat.",
+    "creating": "Création de l'espace de travail…",
+    "create": "Créer l'espace de travail"
+  },
+  "tags": {
+    "selected": "Sélectionnés",
+    "suggestions": "Suggestions",
+    "remove": "Retirer {tag}"
+  },
+  "validation": {
+    "nameRequired": "Entrez le nom de votre organisation",
+    "nameTooLong": "Utilisez au plus 120 caractères",
+    "slugFormat": "3 à 48 caractères : lettres minuscules, chiffres et tirets",
+    "email": "Entrez un courriel valide"
+  },
+  "errors": {
+    "slugTaken": "Cette URL d'espace de travail est déjà prise.",
+    "slugTakenField": "Cette URL d'espace de travail est déjà prise. Essayez-en une autre.",
+    "invitationInvalid": "Ce lien d'invitation est invalide.",
+    "memberNotFound": "Membre introuvable.",
+    "selfChange": "Vous ne pouvez pas modifier votre propre rôle ou statut.",
+    "nameInvalid": "Entrez un nom valide.",
+    "currencyInvalid": "Devise invalide."
+  },
+  "messages": {
+    "invitationCreated": "Invitation créée. L'envoi de courriels n'est pas configuré; partagez ce lien à usage unique de façon sécurisée.",
+    "invitationRevoked": "Invitation révoquée.",
+    "memberUpdated": "Membre mis à jour.",
+    "organizationUpdated": "Organisation mise à jour."
+  },
+  "invite": {
+    "metaTitle": "Rejoindre l'organisation",
+    "title": "Rejoignez votre équipe",
+    "subtitle": "Vous êtes connecté en tant que {email}. L'invitation doit correspondre à cette adresse courriel.",
+    "joining": "Connexion à l'équipe…",
+    "accept": "Accepter l'invitation"
+  }
+}

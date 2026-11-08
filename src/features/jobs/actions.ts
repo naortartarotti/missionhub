@@ -10,6 +10,7 @@ import { assertCan, getRequestContext } from "@/server/auth/context";
 import { fromZodError, toActionError, type ActionResult } from "@/lib/actions/result";
 import { formToObject } from "@/lib/validation/form-data";
 import { parseMajorToMinor } from "@/lib/money/format";
+import { msg } from "@/i18n/translate";
 import { jobFormSchema, jobStatusSchema, type JobFormValues } from "./schemas";
 
 function toRow(v: JobFormValues) {
@@ -69,7 +70,7 @@ export async function updateJob(orgSlug: string, jobId: string, _: ActionResult 
     if (!parsed.success) return fromZodError(parsed.error);
     const { data, error } = await ctx.db.from("jobs").update(toRow(parsed.data)).eq("id", jobId).eq("organization_id", ctx.organizationId).select("id");
     if (error) return toActionError(error);
-    if (!data?.length) return { ok: false, error: "Job not found." };
+    if (!data?.length) return { ok: false, error: msg("jobs.errors.notFound") };
     revalidatePath(`/w/${orgSlug}/jobs/${jobId}`);
     redirect(`/w/${orgSlug}/jobs/${jobId}?updated=1`);
   });
@@ -88,12 +89,25 @@ export async function setJobStatus(orgSlug: string, input: { jobId: string; stat
       .eq("organization_id", ctx.organizationId)
       .select("id");
     if (error) return toActionError(error);
-    if (!data?.length) return { ok: false, error: "Job not found." };
+    if (!data?.length) return { ok: false, error: msg("jobs.errors.notFound") };
+    // A filled / closed job releases every partner still waiting on a decision ("Position filled").
+    let released = 0;
+    if (["filled", "closed", "cancelled"].includes(parsed.data.status)) {
+      const { data: n, error: dErr } = await ctx.db.rpc("decline_pending_for_job", { p_job: parsed.data.jobId });
+      if (dErr) return toActionError(dErr);
+      released = n ?? 0;
+      if (released) revalidatePath(`/w/${orgSlug}/referrals`);
+    }
     revalidatePath(`/w/${orgSlug}/jobs/${parsed.data.jobId}`);
     revalidatePath(`/w/${orgSlug}/jobs`);
     return {
       ok: true,
-      message: parsed.data.status === "active" ? "Job is active. Matching runs in the background." : "Status updated. Matches for inactive jobs expire immediately.",
+      message:
+        parsed.data.status === "active"
+          ? msg("jobs.messages.activated")
+          : released
+            ? msg("jobs.messages.statusUpdatedReleased", { count: released })
+            : msg("jobs.messages.statusUpdated"),
     };
   });
 }
@@ -107,7 +121,7 @@ export async function suggestFromDescription(orgSlug: string, description: strin
     const ctx = await getRequestContext(orgSlug);
     assertCan(ctx, "jobs:write");
     await rateLimit(ctx.db, "job.suggest", 60, 3600);
-    const text = parse(z.string().max(50000, "Description is too long."), description).slice(0, 20000).toLowerCase();
+    const text = parse(z.string().max(50000, msg("jobs.validation.descriptionTooLong")), description).slice(0, 20000).toLowerCase();
     const VOCAB = [
       "typescript", "javascript", "react", "next.js", "node.js", "python", "django", "java", "kotlin", "go", "rust", "c#", ".net",
       "ruby", "rails", "php", "sql", "postgresql", "mysql", "mongodb", "redis", "aws", "azure", "google cloud", "docker", "kubernetes",

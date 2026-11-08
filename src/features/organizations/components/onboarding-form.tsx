@@ -14,15 +14,19 @@ import { cn } from "@/lib/utils";
 import { createOrganization } from "../actions";
 import { ONBOARDING_CURRENCIES, slugify, workspaceStepSchema } from "../schemas";
 import { TagInput } from "./tag-input";
+import { useGlobalT, useT } from "@/i18n/client";
+import { translateMarked } from "@/i18n/translate";
 
 type Kind = "agency" | "independent";
 type Data = { kind: Kind; name: string; slug: string; currency: string; headline: string; specialties: string[]; regions: string[] };
 
-const STEPS = ["How you work", "Workspace", "Your profile", "Review"] as const;
-const SPECIALTIES = ["Software engineering", "Data & AI", "Product", "Design", "Sales", "Finance", "Healthcare", "Executive search"];
-const REGIONS = ["Ontario", "Quebec", "British Columbia", "Alberta", "Remote Canada", "United States", "Remote worldwide"];
+const STEPS = ["kind", "workspace", "profile", "review"] as const;
+const SPECIALTIES = ["software", "data", "product", "design", "sales", "finance", "healthcare", "executive"] as const;
+const REGIONS = ["ontario", "quebec", "bc", "alberta", "remoteCanada", "us", "remoteWorld"] as const;
 
 export function OnboardingForm({ firstName }: { firstName?: string }) {
+  const t = useT("onboarding");
+  const tg = useGlobalT();
   const [state, action] = useActionState(createOrganization, null);
   const [step, setStep] = useState(0);
   const [data, setData] = useState<Data>({ kind: "agency", name: "", slug: "", currency: "CAD", headline: "", specialties: [], regions: [] });
@@ -53,7 +57,7 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
     if (step === 1) {
       const r = workspaceStepSchema.safeParse(data);
       if (!r.success) {
-        setErrors(Object.fromEntries(r.error.issues.map((i) => [String(i.path[0]), [i.message]])));
+        setErrors(Object.fromEntries(r.error.issues.map((i) => [String(i.path[0]), [translateMarked(tg, i.message)]])));
         return;
       }
     }
@@ -64,10 +68,10 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
   const isAgency = data.kind === "agency";
 
   const titles: [string, string][] = [
-    [`Welcome${firstName ? `, ${firstName}` : ""}! How do you work?`, "This tailors your workspace. You can invite teammates later either way."],
-    ["Name your workspace", "Candidates and jobs belong to this workspace and are never visible to other organizations."],
-    ["Your recruiter profile", "Partners see this when you collaborate on a referral. It's optional; you can fill it in later."],
-    ["Ready to go?", "Check the details below, then create your workspace."],
+    [firstName ? t("titles.kindNamed", { name: firstName }) : t("titles.kind"), t("titles.kindDescription")],
+    [t("titles.workspace"), t("titles.workspaceDescription")],
+    [t("titles.profile"), t("titles.profileDescription")],
+    [t("titles.review"), t("titles.reviewDescription")],
   ];
 
   return (
@@ -77,16 +81,16 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
       <div className="grid gap-1.5">
         <h1 ref={headingRef} tabIndex={-1} className="text-2xl font-semibold tracking-tight outline-none">{titles[step][0]}</h1>
         <p className="text-[15px] text-muted-foreground">{titles[step][1]}</p>
-        <p className="sr-only" aria-live="polite">Step {step + 1} of {STEPS.length}: {STEPS[step]}</p>
+        <p className="sr-only" aria-live="polite">{t("stepStatus", { current: step + 1, total: STEPS.length, label: t(`steps.${STEPS[step]}`) })}</p>
       </div>
 
       {step < 3 ? (
         <form onSubmit={next} className="grid gap-6" noValidate>
           {step === 0 ? (
-            <div role="radiogroup" aria-label="Organization type" className="grid gap-3 sm:grid-cols-2">
+            <div role="radiogroup" aria-label={t("kind.label")} className="grid gap-3 sm:grid-cols-2">
               {([
-                { v: "agency", icon: Building2, t: "Agency", d: "A team of recruiters sharing one candidate inventory.", tone: "bg-tile-blue" },
-                { v: "independent", icon: UserRound, t: "Independent", d: "A solo recruiter. Bring in collaborators when you grow.", tone: "bg-tile-yellow" },
+                { v: "agency", icon: Building2, t: t("kind.agency"), d: t("kind.agencyDescription"), tone: "bg-tile-blue" },
+                { v: "independent", icon: UserRound, t: t("kind.independent"), d: t("kind.independentDescription"), tone: "bg-tile-yellow" },
               ] as const).map((o) => {
                 const checked = data.kind === o.v;
                 return (
@@ -115,17 +119,17 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
 
           {step === 1 ? (
             <div className="grid gap-4">
-              <FormField id="name" label={isAgency ? "Agency name" : "Business or display name"} error={errors.name} required>
+              <FormField id="name" label={isAgency ? t("workspace.agencyName") : t("workspace.displayName")} error={errors.name} required>
                 <Input
                   id="name"
                   autoFocus
                   value={data.name}
-                  placeholder={isAgency ? "e.g. Northbound Talent" : "e.g. Sam Rivera Recruiting"}
+                  placeholder={isAgency ? t("workspace.agencyPlaceholder") : t("workspace.displayPlaceholder")}
                   onChange={(e) => setData((d) => ({ ...d, name: e.target.value, slug: slugTouched ? d.slug : slugify(e.target.value) }))}
                   aria-invalid={!!errors.name}
                 />
               </FormField>
-              <FormField id="slug" label="Workspace URL" error={errors.slug} hint="Lowercase letters, numbers and dashes. You can't change it later." required>
+              <FormField id="slug" label={t("workspace.url")} error={errors.slug} hint={t("workspace.urlHint")} required>
                 <div className={cn("flex h-10 items-center overflow-hidden rounded-xl border border-input bg-background focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50", errors.slug && "border-danger")}>
                   <span className="shrink-0 border-r border-input bg-muted px-3 text-sm leading-10 text-muted-foreground">missionhub.app/w/</span>
                   <input
@@ -137,7 +141,7 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
                   />
                 </div>
               </FormField>
-              <FormField id="currency" label="Default currency" hint="Used for fees and commissions. Each placement can still use its own currency.">
+              <FormField id="currency" label={t("workspace.currency")} hint={t("workspace.currencyHint")}>
                 <NativeSelect id="currency" value={data.currency} onChange={(e) => set("currency", e.target.value)}>
                   {ONBOARDING_CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}
                 </NativeSelect>
@@ -147,25 +151,25 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
 
           {step === 2 ? (
             <div className="grid gap-5">
-              <FormField id="headline" label="Headline" hint="One line partners will recognize you by.">
-                <Input id="headline" autoFocus maxLength={160} value={data.headline} placeholder="e.g. Tech recruiter for Canadian scale-ups" onChange={(e) => set("headline", e.target.value)} />
+              <FormField id="headline" label={t("profile.headline")} hint={t("profile.headlineHint")}>
+                <Input id="headline" autoFocus maxLength={160} value={data.headline} placeholder={t("profile.headlinePlaceholder")} onChange={(e) => set("headline", e.target.value)} />
               </FormField>
               <div className="grid gap-2">
-                <label htmlFor="specialties" className="text-sm font-medium">Specialties</label>
-                <TagInput id="specialties" value={data.specialties} onChange={(v) => set("specialties", v)} suggestions={SPECIALTIES} placeholder="Type and press Enter" />
+                <label htmlFor="specialties" className="text-sm font-medium">{t("profile.specialties")}</label>
+                <TagInput id="specialties" value={data.specialties} onChange={(v) => set("specialties", v)} suggestions={SPECIALTIES.map((k) => t(`suggestions.specialties.${k}`))} placeholder={t("profile.tagPlaceholder")} />
               </div>
               <div className="grid gap-2">
-                <label htmlFor="regions" className="text-sm font-medium">Regions you recruit in</label>
-                <TagInput id="regions" value={data.regions} onChange={(v) => set("regions", v)} suggestions={REGIONS} placeholder="Type and press Enter" />
+                <label htmlFor="regions" className="text-sm font-medium">{t("profile.regions")}</label>
+                <TagInput id="regions" value={data.regions} onChange={(v) => set("regions", v)} suggestions={REGIONS.map((k) => t(`suggestions.regions.${k}`))} placeholder={t("profile.tagPlaceholder")} />
               </div>
             </div>
           ) : null}
 
           <Nav step={step} onBack={back}>
             {step === 2 ? (
-              <Button type="button" variant="ghost" onClick={() => next()}>Skip for now</Button>
+              <Button type="button" variant="ghost" onClick={() => next()}>{t("profile.skip")}</Button>
             ) : null}
-            <Button type="submit" size="lg">Continue <ArrowRight className="size-4" aria-hidden /></Button>
+            <Button type="submit" size="lg">{tg("common.actions.continue")} <ArrowRight className="size-4" aria-hidden /></Button>
           </Nav>
         </form>
       ) : (
@@ -175,27 +179,27 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
           <input type="hidden" name="regions" value={data.regions.join(", ")} />
 
           <div className="grid gap-3">
-            <Summary label="Organization" onEdit={() => setStep(0)}>{isAgency ? "Agency" : "Independent recruiter"}</Summary>
-            <Summary label="Workspace" onEdit={() => setStep(1)}>
+            <Summary label={t("review.organization")} editLabel={t("review.editOrganization")} onEdit={() => setStep(0)}>{isAgency ? t("review.agency") : t("review.independent")}</Summary>
+            <Summary label={t("review.workspace")} editLabel={t("review.editWorkspace")} onEdit={() => setStep(1)}>
               <span className="block font-medium">{data.name}</span>
               <span className="block text-muted-foreground">missionhub.app/w/{data.slug} · {data.currency}</span>
             </Summary>
-            <Summary label="Profile" onEdit={() => setStep(2)}>
+            <Summary label={t("review.profile")} editLabel={t("review.editProfile")} onEdit={() => setStep(2)}>
               {data.headline || data.specialties.length || data.regions.length ? (
                 <>
                   {data.headline ? <span className="block font-medium">{data.headline}</span> : null}
-                  <span className="block text-muted-foreground">{[...data.specialties, ...data.regions].join(" · ") || "No specialties or regions yet"}</span>
+                  <span className="block text-muted-foreground">{[...data.specialties, ...data.regions].join(" · ") || t("review.noTags")}</span>
                 </>
-              ) : <span className="text-muted-foreground">Not filled in yet</span>}
+              ) : <span className="text-muted-foreground">{t("review.notFilled")}</span>}
             </Summary>
           </div>
 
           <div className="grid gap-3 rounded-3xl bg-muted/70 p-5">
-            <p className="text-sm font-semibold">How your data is protected</p>
+            <p className="text-sm font-semibold">{t("review.protectionTitle")}</p>
             {[
-              { icon: ShieldCheck, t: "Your candidates and jobs stay private to this workspace." },
-              { icon: EyeOff, t: "Partners never browse your inventory. They see anonymized match counts only." },
-              { icon: Handshake, t: "You choose exactly what to share, per referral, with the candidate's authorization." },
+              { icon: ShieldCheck, t: t("review.protectionPrivate") },
+              { icon: EyeOff, t: t("review.protectionAnonymized") },
+              { icon: Handshake, t: t("review.protectionConsent") },
             ].map((x) => (
               <p key={x.t} className="flex items-start gap-3 text-sm text-muted-foreground">
                 <x.icon className="mt-0.5 size-4 shrink-0 text-foreground" aria-hidden /> {x.t}
@@ -205,7 +209,7 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
 
           {state && !state.ok && !state.fieldErrors?.slug && !state.fieldErrors?.name ? <FormMessage state={state} /> : null}
           <Nav step={step} onBack={back}>
-            <SubmitButton size="lg" pendingLabel="Creating workspace…">Create workspace <ArrowRight className="size-4" aria-hidden /></SubmitButton>
+            <SubmitButton size="lg" pendingLabel={t("review.creating")}>{t("review.create")} <ArrowRight className="size-4" aria-hidden /></SubmitButton>
           </Nav>
         </ActionForm>
       )}
@@ -214,20 +218,22 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
 }
 
 function Stepper({ step, onJump }: { step: number; onJump: (i: number) => void }) {
+  const t = useT("onboarding");
   return (
-    <nav aria-label="Onboarding progress">
+    <nav aria-label={t("progress")}>
       <ol className="flex items-center gap-2">
-        {STEPS.map((label, i) => {
+        {STEPS.map((key, i) => {
+          const label = t(`steps.${key}`);
           const done = i < step;
           const current = i === step;
           return (
-            <li key={label} className="flex flex-1 items-center gap-2">
+            <li key={key} className="flex flex-1 items-center gap-2">
               <button
                 type="button"
                 onClick={() => onJump(i)}
                 disabled={!done && !current}
                 aria-current={current ? "step" : undefined}
-                aria-label={`${label}${done ? " (completed, go back)" : current ? " (current)" : ""}`}
+                aria-label={done ? t("stepCompleted", { label }) : current ? t("stepCurrent", { label }) : label}
                 className={cn(
                   "grid size-8 shrink-0 place-items-center rounded-full text-xs font-semibold transition-colors",
                   done && "bg-foreground text-background hover:opacity-80",
@@ -248,22 +254,24 @@ function Stepper({ step, onJump }: { step: number; onJump: (i: number) => void }
 }
 
 function Nav({ step, onBack, children }: { step: number; onBack: () => void; children: ReactNode }) {
+  const tg = useGlobalT();
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-5">
       {step > 0 ? (
-        <Button type="button" variant="outline" onClick={onBack}><ArrowLeft className="size-4" aria-hidden /> Back</Button>
+        <Button type="button" variant="outline" onClick={onBack}><ArrowLeft className="size-4" aria-hidden /> {tg("common.actions.back")}</Button>
       ) : <span />}
       <div className="flex flex-wrap items-center gap-2">{children}</div>
     </div>
   );
 }
 
-function Summary({ label, onEdit, children }: { label: string; onEdit: () => void; children: ReactNode }) {
+function Summary({ label, editLabel, onEdit, children }: { label: string; editLabel: string; onEdit: () => void; children: ReactNode }) {
+  const tg = useGlobalT();
   return (
     <div className="flex items-start gap-4 rounded-2xl border border-border p-4 text-sm">
       <span className="w-24 shrink-0 text-muted-foreground">{label}</span>
       <span className="min-w-0 flex-1 break-words">{children}</span>
-      <Button type="button" variant="ghost" size="sm" onClick={onEdit} aria-label={`Edit ${label.toLowerCase()}`}><Pencil className="size-3.5" aria-hidden /> Edit</Button>
+      <Button type="button" variant="ghost" size="sm" onClick={onEdit} aria-label={editLabel}><Pencil className="size-3.5" aria-hidden /> {tg("common.actions.edit")}</Button>
     </div>
   );
 }

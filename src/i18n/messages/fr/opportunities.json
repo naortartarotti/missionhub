@@ -1,0 +1,200 @@
+{
+  "title": "Occasions",
+  "description": "Postes partenaires qui conviennent à vos candidats. Touchez une part des honoraires quand une personne que vous soumettez est embauchée.",
+  "filteredByCandidate": "Correspondances affichées pour un seul candidat.",
+  "statusNav": "Statut des correspondances",
+  "newCount": {
+    "one": ", {count} nouvelle",
+    "other": ", {count} nouvelles"
+  },
+  "views": {
+    "review": {
+      "label": "À examiner",
+      "hint": "Correspondances nouvelles ou sans décision. Soumettez, gardez pour plus tard ou indiquez qu'elles ne conviennent pas."
+    },
+    "saved": {
+      "label": "Gardées",
+      "hint": "Votre présélection. Les correspondances auxquelles vous voulez revenir."
+    },
+    "submitted": {
+      "label": "Soumises",
+      "hint": "Les candidats déjà envoyés. Ouvrez-en un pour suivre la recommandation."
+    },
+    "dismissed": {
+      "label": "Écartées",
+      "hint": "Les correspondances marquées comme ne convenant pas. Restaurez-en une si la situation change."
+    },
+    "not_eligible": {
+      "label": "Non admissibles",
+      "hint": "Une exigence essentielle n'est pas remplie, comme une langue ou un lieu requis. Affichées pour que vous sachiez pourquoi."
+    }
+  },
+  "controls": {
+    "sort": "Trier"
+  },
+  "sorts": {
+    "fit": "Meilleure adéquation",
+    "earnings": "Gains les plus élevés"
+  },
+  "jobGroup": {
+    "candidates": {
+      "one": "{count} candidat",
+      "other": "{count} candidats"
+    },
+    "share": "votre part estimée"
+  },
+  "empty": {
+    "inactive": {
+      "title": "Activez le jumelage pour voir des occasions",
+      "description": "Aucun de vos candidats n'est encore en jumelage. Ouvrez un candidat, consignez son autorisation et activez le jumelage. Les postes partenaires qui conviennent s'afficheront ici.",
+      "action": "Aller aux candidats"
+    },
+    "caughtUp": {
+      "title": "Vous êtes à jour",
+      "description": "Chaque correspondance a une décision. Nous vérifions automatiquement chaque fois qu'un partenaire publie un poste ou que vous modifiez un candidat, et les nouvelles correspondances s'afficheront ici."
+    },
+    "none": {
+      "title": "Aucune correspondance pour l'instant",
+      "description": "Nous vérifions automatiquement chaque fois qu'un partenaire publie un poste ou que vous modifiez un candidat. Les nouvelles correspondances s'afficheront ici."
+    },
+    "saved": {
+      "title": "Rien de gardé",
+      "description": "Utilisez Garder sur une correspondance pour bâtir une présélection à laquelle revenir."
+    },
+    "submitted": {
+      "title": "Aucun candidat soumis pour l'instant",
+      "description": "Quand vous soumettez un candidat à un poste partenaire, vous pouvez le suivre d'ici."
+    },
+    "dismissed": {
+      "title": "Rien d'écarté",
+      "description": "Les correspondances marquées comme ne convenant pas se retrouvent ici; vous pourrez les restaurer plus tard."
+    },
+    "not_eligible": {
+      "title": "Rien de bloqué",
+      "description": "Aucune de vos correspondances n'est exclue par une exigence essentielle."
+    },
+    "reviewCount": {
+      "one": "Examiner {count} correspondance",
+      "other": "Examiner {count} correspondances"
+    },
+    "openSaved": {
+      "one": "Ouvrir votre correspondance gardée",
+      "other": "Ouvrir vos {count} correspondances gardées"
+    }
+  },
+  "card": {
+    "via": "{client} · via {org}",
+    "noHeadline": "Aucun titre",
+    "gapsToCheck": {
+      "one": "{count} écart à vérifier",
+      "other": "{count} écarts à vérifier"
+    },
+    "noGaps": "Aucun écart notable",
+    "yourCandidate": "Votre candidat :",
+    "dismissedReason": "Écartée : {reason}",
+    "new": "Nouveau",
+    "reviewSubmit": "Examiner et soumettre",
+    "confidentialClient": "Client confidentiel"
+  },
+  "share": {
+    "title": "Votre part estimée des honoraires de placement si ce candidat est embauché",
+    "chip": "~{amount} pour vous"
+  },
+  "score": {
+    "label": "Compatibilité indicative de {score} sur 100"
+  },
+  "sheet": {
+    "trigger": "Pourquoi cette correspondance",
+    "description": "{client} · partagé par {org} · pour {candidate}",
+    "whyMatches": "Pourquoi ça correspond",
+    "noGaps": "Aucun écart notable.",
+    "seniority": "Niveau",
+    "contract": "Contrat",
+    "compensation": "Rémunération",
+    "descriptionHidden": "La description complète est partagée une fois que vous soumettez un candidat."
+  },
+  "triage": {
+    "restore": "Restaurer",
+    "restored": "Remise dans À examiner.",
+    "saved": "Gardée",
+    "unsaved": "Retirée des correspondances gardées.",
+    "unsaveAria": "Retirer {name} pour {job} des correspondances gardées",
+    "save": "Garder",
+    "savedToast": "Gardée. Retrouvez-la sous Gardées quand vous serez prêt à soumettre {name}.",
+    "saveAria": "Garder {name} pour {job}",
+    "notFit": "Ne convient pas",
+    "notFitAria": "Indiquer que {name} ne convient pas pour {job}",
+    "why": "Pourquoi? Cela aide à améliorer vos correspondances.",
+    "dismissedToast": "Écartée. Vous la retrouverez sous Écartées si vous changez d'avis."
+  },
+  "dismissReasons": {
+    "salary": "Rémunération inadéquate",
+    "location": "Lieu ou mode de travail",
+    "seniority": "Mauvais niveau",
+    "skills": "Compétences inadéquates",
+    "candidate_not_interested": "Candidat pas intéressé",
+    "other": "Autre"
+  },
+  "review": {
+    "title": "Examiner la correspondance",
+    "heading": "Examiner la correspondance et soumettre",
+    "description": "{candidate} → {job} ({client}, partagé par {org})",
+    "gapsToDiscuss": "Écarts à discuter avec le candidat"
+  },
+  "evidence": {
+    "matchingOff": "Le jumelage est désactivé pour ce candidat",
+    "permissionMissing": "La permission du candidat n'a pas été enregistrée",
+    "jobClosed": "Le poste n'accepte pas de recommandations externes",
+    "arrangementMismatch": "Le poste est {jobArrangement}; le candidat préfère {candidateArrangements}",
+    "relocationRequired": "Le poste exige une présence en {country}; le candidat n'est pas ouvert à la relocalisation",
+    "requiredSkillsMatched": "Possède les compétences requises : {skills}",
+    "requiredSkillsMissing": "Compétences requises manquantes : {skills}",
+    "noRequiredSkills": "Le poste n'indique aucune compétence requise; la pertinence est approximative",
+    "noRequiredSkillsPresent": "Aucune des compétences requises pour le poste n'est présente",
+    "preferredSkills": "Possède aussi : {skills}",
+    "seniorityAligns": "Le niveau correspond ({jobSeniority})",
+    "seniorityOneAbove": "Niveau supérieur d'un cran au poste ({candidateSeniority} c. {jobSeniority})",
+    "seniorityOneBelow": "Niveau inférieur d'un cran au poste ({candidateSeniority} c. {jobSeniority})",
+    "seniorityFar": "Niveau très différent ({candidateSeniority} c. {jobSeniority})",
+    "seniorityUnknown": "Niveau du candidat non indiqué",
+    "experienceMeets": "{years} ans d'expérience (le poste demande {min}+)",
+    "experienceBelow": "{years} ans d'expérience; le poste demande {min}+",
+    "experienceUnknown": "Années d'expérience non indiquées",
+    "remoteCompatible": "Poste à distance compatible avec les préférences du candidat",
+    "basedIn": "Situé à {place}",
+    "relocationOpen": "Exigerait une relocalisation (le candidat y est ouvert)",
+    "locationUnknown": "Informations de localisation incomplètes",
+    "speaks": "Parle {languages}",
+    "languagesMissing": "Exigence linguistique non confirmée : {languages}",
+    "salaryFits": "Les attentes salariales correspondent à la fourchette",
+    "salaryAbove": "Les attentes salariales dépassent la fourchette d'environ {percent} %",
+    "currencyMismatch": "Rémunérations en devises différentes; non comparées",
+    "belowThreshold": "Pertinence globale sous le seuil de {threshold}/100"
+  },
+  "panel": {
+    "close": "Fermer les détails",
+    "share": "Votre part",
+    "fee": "Honoraires",
+    "posted": "Publié",
+    "skills": "Compétences requises",
+    "niceToHave": "Atouts",
+    "strengths": "Points forts",
+    "gaps": "Écarts",
+    "noGaps": "Aucun",
+    "details": "Poste",
+    "workSetup": "Mode de travail",
+    "description": "Description du poste",
+    "private": "Masqué au recruteur du poste jusqu'à votre soumission.",
+    "scoreInfo": "Score d'adéquation basé sur les compétences, le niveau, le lieu et la rémunération. Pas une prédiction d'embauche. Mis à jour {time}."
+  },
+  "row": {
+    "submit": "Soumettre",
+    "submitAria": "Examiner et soumettre {name}",
+    "details": "Voir les détails de la correspondance pour {name}",
+    "gaps": {
+      "one": "{count} écart",
+      "other": "{count} écarts"
+    }
+  },
+  "filteredByJob": "Un seul poste partenaire affiché."
+}

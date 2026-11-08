@@ -12,6 +12,7 @@ import { createAdminClient } from "@/server/supabase/admin";
 import { fromZodError, toActionError, type ActionResult } from "@/lib/actions/result";
 import { formToObject } from "@/lib/validation/form-data";
 import { parseMajorToMinor } from "@/lib/money/format";
+import { msg } from "@/i18n/translate";
 import { ALLOWED_DOC_TYPES, MAX_DOC_BYTES, candidateFormSchema, consentSchema, statusSchema, type CandidateFormValues } from "./schemas";
 
 function toRow(v: CandidateFormValues) {
@@ -83,7 +84,7 @@ export async function updateCandidate(orgSlug: string, candidateId: string, _: A
       .eq("organization_id", ctx.organizationId)
       .select("id");
     if (error) return toActionError(error);
-    if (!data?.length) return { ok: false, error: "Candidate not found." };
+    if (!data?.length) return { ok: false, error: msg("candidates.errors.notFound") };
     revalidatePath(`/w/${orgSlug}/candidates/${candidateId}`);
     redirect(`/w/${orgSlug}/candidates/${candidateId}?updated=1`);
   });
@@ -104,7 +105,7 @@ export async function setCandidateStatus(orgSlug: string, input: { candidateId: 
         .eq("kind", "processing")
         .is("revoked_at", null);
       if (!count) {
-        return { ok: false, error: "Record a processing authorization before activating this candidate for matching." };
+        return { ok: false, error: msg("candidates.errors.permissionRequired") };
       }
     }
     const { data, error } = await ctx.db
@@ -114,12 +115,12 @@ export async function setCandidateStatus(orgSlug: string, input: { candidateId: 
       .eq("organization_id", ctx.organizationId)
       .select("id");
     if (error) return toActionError(error);
-    if (!data?.length) return { ok: false, error: "Candidate not found." };
+    if (!data?.length) return { ok: false, error: msg("candidates.errors.notFound") };
     revalidatePath(`/w/${orgSlug}/candidates/${parsed.data.candidateId}`);
     revalidatePath(`/w/${orgSlug}/candidates`);
     return {
       ok: true,
-      message: parsed.data.status === "active_for_matching" ? "Candidate activated. Matching runs in the background." : "Status updated.",
+      message: parsed.data.status === "active_for_matching" ? msg("candidates.success.activated") : msg("candidates.success.statusUpdated"),
     };
   });
 }
@@ -130,7 +131,7 @@ export async function recordConsent(orgSlug: string, _: ActionResult | null, for
     assertCan(ctx, "candidates:write");
     const parsed = consentSchema.safeParse(formToObject(formData));
     if (!parsed.success) return fromZodError(parsed.error);
-    if (parsed.data.kind === "job_sharing" && !parsed.data.jobId) return { ok: false, error: "Select the job this authorization covers." };
+    if (parsed.data.kind === "job_sharing" && !parsed.data.jobId) return { ok: false, error: msg("candidates.errors.selectJob") };
     const { error } = await ctx.db.from("candidate_consents").insert({
       organization_id: ctx.organizationId,
       candidate_id: parsed.data.candidateId,
@@ -145,7 +146,7 @@ export async function recordConsent(orgSlug: string, _: ActionResult | null, for
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/candidates/${parsed.data.candidateId}`);
     revalidatePath(`/w/${orgSlug}/opportunities`, "layout");
-    return { ok: true, message: "Authorization recorded." };
+    return { ok: true, message: msg("candidates.success.consentRecorded") };
   });
 }
 
@@ -153,7 +154,7 @@ export async function revokeConsent(orgSlug: string, input: { consentId: string;
   return guard(async () => {
     const ctx = await getRequestContext(orgSlug);
     assertCan(ctx, "candidates:write");
-    const { consentId, reason } = parse(z.object({ consentId: id, reason: text(3, 500, "Provide a reason for the revocation.") }), input);
+    const { consentId, reason } = parse(z.object({ consentId: id, reason: text(3, 500, msg("candidates.errors.revokeReason")) }), input);
     const { data, error } = await ctx.db
       .from("candidate_consents")
       .update({ revoked_at: new Date().toISOString(), revoked_reason: reason })
@@ -162,9 +163,9 @@ export async function revokeConsent(orgSlug: string, input: { consentId: string;
       .is("revoked_at", null)
       .select("candidate_id");
     if (error) return toActionError(error);
-    if (!data?.length) return { ok: false, error: "Authorization not found or already revoked." };
+    if (!data?.length) return { ok: false, error: msg("candidates.errors.consentNotFound") };
     revalidatePath(`/w/${orgSlug}/candidates/${data[0].candidate_id}`);
-    return { ok: true, message: "Authorization revoked. Any partner access based on it has been removed." };
+    return { ok: true, message: msg("candidates.success.consentRevoked") };
   });
 }
 
@@ -175,14 +176,14 @@ export async function uploadDocument(orgSlug: string, candidateId: string, _: Ac
     parse(id, candidateId);
     await rateLimit(ctx.db, "candidate.upload", 30, 3600);
     const file = formData.get("file");
-    if (!(file instanceof File) || file.size === 0) return { ok: false, error: "Choose a PDF or DOCX file." };
+    if (!(file instanceof File) || file.size === 0) return { ok: false, error: msg("candidates.errors.chooseFile") };
     const ext = ALLOWED_DOC_TYPES[file.type as keyof typeof ALLOWED_DOC_TYPES];
-    if (!ext) return { ok: false, error: "Only PDF and DOCX files are accepted." };
-    if (file.size > MAX_DOC_BYTES) return { ok: false, error: "Files must be 10 MB or smaller." };
+    if (!ext) return { ok: false, error: msg("candidates.errors.fileType") };
+    if (file.size > MAX_DOC_BYTES) return { ok: false, error: msg("candidates.errors.fileSize") };
 
     // Confirm the candidate belongs to this tenant (RLS also enforces this).
     const { data: cand } = await ctx.db.from("candidates").select("id").eq("id", candidateId).eq("organization_id", ctx.organizationId).maybeSingle();
-    if (!cand) return { ok: false, error: "Candidate not found." };
+    if (!cand) return { ok: false, error: msg("candidates.errors.notFound") };
 
     const bytes = new Uint8Array(await file.arrayBuffer());
     const sha256 = createHash("sha256").update(bytes).digest("hex");
@@ -202,7 +203,7 @@ export async function uploadDocument(orgSlug: string, candidateId: string, _: Ac
     });
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/candidates/${candidateId}`);
-    return { ok: true, message: "Uploaded. The file is being scanned and can be shared once it passes." };
+    return { ok: true, message: msg("candidates.success.uploaded") };
   });
 }
 
@@ -219,8 +220,8 @@ export async function getDocumentUrl(orgSlug: string, documentId: string): Promi
       .eq("id", documentId)
       .eq("organization_id", ctx.organizationId)
       .maybeSingle();
-    if (!doc) return { ok: false, error: "Document not found." };
-    if (doc.scan_status === "rejected") return { ok: false, error: "This file failed the security scan and can't be opened." };
+    if (!doc) return { ok: false, error: msg("candidates.errors.documentNotFound") };
+    if (doc.scan_status === "rejected") return { ok: false, error: msg("candidates.errors.scanRejected") };
     const { error: auditErr } = await ctx.db.rpc("audit_document_access", { p_document: doc.id });
     if (auditErr) return toActionError(auditErr);
     const { data, error } = await ctx.db.storage.from("candidate-documents").createSignedUrl(doc.storage_path, 60, { download: true });
@@ -241,11 +242,11 @@ export async function deleteDocument(orgSlug: string, documentId: string): Promi
       .eq("organization_id", ctx.organizationId)
       .select("candidate_id, storage_path");
     if (error) return toActionError(error);
-    if (!data?.length) return { ok: false, error: "Document not found." };
+    if (!data?.length) return { ok: false, error: msg("candidates.errors.documentNotFound") };
     // Physically remove the object (service role; tenant ownership verified above).
     await createAdminClient().storage.from("candidate-documents").remove([data[0].storage_path]);
     revalidatePath(`/w/${orgSlug}/candidates/${data[0].candidate_id}`);
-    return { ok: true, message: "Document deleted." };
+    return { ok: true, message: msg("candidates.success.documentDeleted") };
   });
 }
 
@@ -253,7 +254,7 @@ export async function anonymizeCandidate(orgSlug: string, input: { candidateId: 
   return guard(async () => {
     const ctx = await getRequestContext(orgSlug);
     assertCan(ctx, "candidates:anonymize");
-    const v = parse(z.object({ candidateId: id, reason: text(5, 500, "Provide a reason (e.g. deletion request reference).") }), input);
+    const v = parse(z.object({ candidateId: id, reason: text(5, 500, msg("candidates.errors.anonymizeReason")) }), input);
     const { error } = await ctx.db.rpc("anonymize_candidate", { p_candidate: v.candidateId, p_reason: v.reason });
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/candidates`);

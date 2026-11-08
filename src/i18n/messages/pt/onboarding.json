@@ -1,0 +1,123 @@
+{
+  "metaTitle": "Configure seu workspace",
+  "footer": "Vai entrar em uma equipe existente? Abra o link de convite que seu administrador enviou.",
+  "steps": {
+    "kind": "Como você trabalha",
+    "workspace": "Workspace",
+    "profile": "Seu perfil",
+    "review": "Revisão"
+  },
+  "progress": "Progresso da configuração",
+  "stepCompleted": "{label} (concluída, voltar)",
+  "stepCurrent": "{label} (atual)",
+  "stepStatus": "Etapa {current} de {total}: {label}",
+  "titles": {
+    "kind": "Boas-vindas! Como você trabalha?",
+    "kindNamed": "Boas-vindas, {name}! Como você trabalha?",
+    "kindDescription": "Isso personaliza seu workspace. Em qualquer caso, você pode convidar colegas depois.",
+    "workspace": "Dê um nome ao seu workspace",
+    "workspaceDescription": "Candidatos e vagas pertencem a este workspace e nunca ficam visíveis para outras organizações.",
+    "profile": "Seu perfil de recrutador",
+    "profileDescription": "Os parceiros veem isto quando vocês colaboram em uma indicação. É opcional; você pode preencher depois.",
+    "review": "Tudo pronto?",
+    "reviewDescription": "Confira os detalhes abaixo e depois crie seu workspace."
+  },
+  "kind": {
+    "label": "Tipo de organização",
+    "agency": "Agência",
+    "agencyDescription": "Uma equipe de recrutadores que compartilha um único banco de candidatos.",
+    "independent": "Independente",
+    "independentDescription": "Um recrutador autônomo. Traga colaboradores quando crescer."
+  },
+  "workspace": {
+    "agencyName": "Nome da agência",
+    "displayName": "Nome da empresa ou de exibição",
+    "agencyPlaceholder": "ex.: Northbound Talent",
+    "displayPlaceholder": "ex.: Sam Rivera Recrutamento",
+    "url": "URL do workspace",
+    "urlHint": "Letras minúsculas, números e hifens. Não é possível alterá-la depois.",
+    "currency": "Moeda padrão",
+    "currencyHint": "Usada para honorários e comissões. Cada contratação ainda pode usar sua própria moeda."
+  },
+  "profile": {
+    "headline": "Título",
+    "headlineHint": "Uma linha pela qual os parceiros vão reconhecer você.",
+    "headlinePlaceholder": "ex.: Recrutador de tecnologia para scale-ups canadenses",
+    "specialties": "Especialidades",
+    "regions": "Regiões em que você recruta",
+    "tagPlaceholder": "Digite e pressione Enter",
+    "skip": "Pular por enquanto"
+  },
+  "suggestions": {
+    "specialties": {
+      "software": "Engenharia de software",
+      "data": "Dados e IA",
+      "product": "Produto",
+      "design": "Design",
+      "sales": "Vendas",
+      "finance": "Finanças",
+      "healthcare": "Saúde",
+      "executive": "Busca de executivos"
+    },
+    "regions": {
+      "ontario": "Ontário",
+      "quebec": "Quebec",
+      "bc": "Colúmbia Britânica",
+      "alberta": "Alberta",
+      "remoteCanada": "Remoto no Canadá",
+      "us": "Estados Unidos",
+      "remoteWorld": "Remoto no mundo todo"
+    }
+  },
+  "review": {
+    "organization": "Organização",
+    "workspace": "Workspace",
+    "profile": "Perfil",
+    "editOrganization": "Editar organização",
+    "editWorkspace": "Editar workspace",
+    "editProfile": "Editar perfil",
+    "agency": "Agência",
+    "independent": "Recrutador independente",
+    "noTags": "Nenhuma especialidade ou região ainda",
+    "notFilled": "Ainda não preenchido",
+    "protectionTitle": "Como seus dados são protegidos",
+    "protectionPrivate": "Seus candidatos e vagas permanecem privados neste workspace.",
+    "protectionAnonymized": "Os parceiros nunca navegam pelo seu banco de candidatos. Eles veem apenas contagens anonimizadas de correspondências.",
+    "protectionConsent": "Você escolhe exatamente o que compartilhar, em cada indicação, com a autorização do candidato.",
+    "creating": "Criando workspace…",
+    "create": "Criar workspace"
+  },
+  "tags": {
+    "selected": "Selecionados",
+    "suggestions": "Sugestões",
+    "remove": "Remover {tag}"
+  },
+  "validation": {
+    "nameRequired": "Informe o nome da sua organização",
+    "nameTooLong": "Use no máximo 120 caracteres",
+    "slugFormat": "3 a 48 caracteres: letras minúsculas, números e hifens",
+    "email": "Informe um e-mail válido"
+  },
+  "errors": {
+    "slugTaken": "Essa URL de workspace já está em uso.",
+    "slugTakenField": "Essa URL de workspace já está em uso. Tente outra.",
+    "invitationInvalid": "Este link de convite é inválido.",
+    "memberNotFound": "Membro não encontrado.",
+    "selfChange": "Você não pode alterar sua própria função ou status.",
+    "nameInvalid": "Informe um nome válido.",
+    "currencyInvalid": "Moeda inválida."
+  },
+  "messages": {
+    "invitationCreated": "Convite criado. O envio de e-mails não está configurado; compartilhe este link de uso único com segurança.",
+    "invitationRevoked": "Convite revogado.",
+    "memberUpdated": "Membro atualizado.",
+    "organizationUpdated": "Organização atualizada."
+  },
+  "invite": {
+    "metaTitle": "Entrar na organização",
+    "title": "Entre na sua equipe",
+    "subtitle": "Você está conectado como {email}. O convite precisa corresponder a este endereço de e-mail.",
+    "joining": "Entrando…",
+    "accept": "Aceitar convite"
+  }
+}

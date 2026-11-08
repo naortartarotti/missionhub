@@ -1,0 +1,86 @@
+{
+  "title": "Admin da plataforma",
+  "backToWorkspace": "Voltar ao workspace",
+  "page": {
+    "title": "Operações da plataforma",
+    "description": "Métricas agregadas e filas operacionais. Administradores da plataforma não têm acesso aos registros de candidatos."
+  },
+  "kpi": {
+    "organizations": "Organizações",
+    "excludingDemo": "Excluindo demo",
+    "placements": "Contratações",
+    "evidence": "Comprovantes a verificar",
+    "disputes": "Disputas abertas"
+  },
+  "evidence": {
+    "title": "Fila de comprovantes de pagamento",
+    "empty": "Nada aguardando verificação.",
+    "ref": "ref. {reference}",
+    "fees": "taxas {amount}",
+    "ownRecord": "Você registrou este comprovante; outro administrador precisa verificá-lo."
+  },
+  "disputes": {
+    "title": "Disputas",
+    "empty": "Nenhuma disputa aberta.",
+    "openedBy": "Aberta por {org} · {date}"
+  },
+  "revenue": {
+    "title": "Receita da plataforma (livro-razão verificado)",
+    "empty": "Nenhuma receita verificada ainda.",
+    "line": "{earned} recebidos · {outstanding} aguardando repasse"
+  },
+  "rules": {
+    "title": "Regras de comissão",
+    "current": "Padrão atual: v{version} — {sourcing} / {jobOwner} / {platform}. Indicações aceitas mantêm seu snapshot congelado.",
+    "currentTag": "(atual)",
+    "sourcing": "Captação %",
+    "jobOwner": "Dono da vaga %",
+    "platform": "Plataforma %",
+    "publish": "Publicar nova versão"
+  },
+  "orgs": {
+    "title": "Organizações",
+    "name": "Nome",
+    "type": "Tipo",
+    "created": "Criada em",
+    "status": "Status",
+    "actions": "Ações",
+    "demo": "DEMO",
+    "suspended": "Suspensa",
+    "active": "Ativa",
+    "kind": {
+      "agency": "agência",
+      "independent": "independente"
+    }
+  },
+  "suspension": {
+    "reinstate": "Reativar",
+    "reinstateTitle": "Reativar organização?",
+    "reinstateDescription": "Os membros recuperam o acesso. A correspondência é retomada na próxima alteração.",
+    "suspend": "Suspender",
+    "suspendTitle": "Suspender organização?",
+    "suspendDescription": "Os membros perdem o acesso imediatamente. Suas vagas e candidatos deixam de gerar correspondências; indicações e registros financeiros existentes são preservados e continuam visíveis para os parceiros; os parceiros não podem enviar candidatos às suas vagas.",
+    "reason": "Motivo"
+  },
+  "dispute": {
+    "resolve": "Resolver",
+    "resolveTitle": "Resolver disputa",
+    "resolveDescription": "A contratação volta ao status anterior. Registre quaisquer correções como comprovantes compensatórios.",
+    "resolution": "Resolução",
+    "reject": "Rejeitar",
+    "rejectTitle": "Rejeitar disputa",
+    "rejectDescription": "A contratação volta ao status anterior.",
+    "reason": "Motivo"
+  },
+  "validation": {
+    "reason": "Informe um motivo (pelo menos 5 caracteres).",
+    "resolution": "Descreva a resolução (5 a 2000 caracteres).",
+    "total": "Os percentuais devem somar exatamente 100%."
+  },
+  "messages": {
+    "suspended": "Organização suspensa.",
+    "reinstated": "Organização reativada.",
+    "disputeClosed": "Disputa encerrada.",
+    "rulePublished": "Nova versão da regra publicada. Os acordos existentes mantêm seu snapshot congelado."
+  }
+}

@@ -12,27 +12,31 @@ import { FormMessage } from "@/components/shared/form-message";
 import { SubmitButton } from "@/components/shared/submit-button";
 import { NativeSelect } from "@/components/shared/native-select";
 import { inviteMember, revokeInvitation, updateMember } from "../actions";
+import { useGlobalT, useT } from "@/i18n/client";
 
-const ROLES = { org_admin: "Organization admin", recruiter_manager: "Recruiter manager", recruiter: "Recruiter" } as const;
+const ROLES = ["org_admin", "recruiter_manager", "recruiter"] as const;
+type Role = (typeof ROLES)[number];
 
 export function InviteForm({ orgSlug }: { orgSlug: string }) {
   const [state, action] = useActionState(inviteMember.bind(null, orgSlug), null);
   const fe = state && !state.ok ? state.fieldErrors : undefined;
+  const t = useT("settings");
+  const tg = useGlobalT();
   return (
     <ActionForm action={action} className="grid gap-4">
       <div className="grid gap-3 sm:grid-cols-[1fr_200px_auto] sm:items-end">
-        <FormField id="email" label="Email" error={fe?.email}><Input id="email" name="email" type="email" required /></FormField>
-        <FormField id="role" label="Role">
-          <NativeSelect id="role" name="role" defaultValue="recruiter">{Object.entries(ROLES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}</NativeSelect>
+        <FormField id="email" label={t("team.email")} error={fe?.email}><Input id="email" name="email" type="email" required /></FormField>
+        <FormField id="role" label={t("team.role")}>
+          <NativeSelect id="role" name="role" defaultValue="recruiter">{ROLES.map((v) => <option key={v} value={v}>{tg(`labels.role.${v}`)}</option>)}</NativeSelect>
         </FormField>
-        <SubmitButton pendingLabel="Inviting…">Invite</SubmitButton>
+        <SubmitButton pendingLabel={t("team.inviting")}>{t("team.invite")}</SubmitButton>
       </div>
       <FormMessage state={state} />
       {state?.ok && state.data ? (
         <div className="flex items-center gap-2 rounded-2xl border border-border p-2 pl-4">
           <code className="flex-1 truncate text-xs">{state.data.link}</code>
-          <Button type="button" variant="outline" size="sm" onClick={() => navigator.clipboard.writeText(state.data!.link).then(() => toast.success("Link copied"))}>
-            <Copy className="size-3.5" aria-hidden /> Copy
+          <Button type="button" variant="outline" size="sm" onClick={() => navigator.clipboard.writeText(state.data!.link).then(() => toast.success(t("team.linkCopied")))}>
+            <Copy className="size-3.5" aria-hidden /> {t("team.copy")}
           </Button>
         </div>
       ) : null}
@@ -40,34 +44,37 @@ export function InviteForm({ orgSlug }: { orgSlug: string }) {
   );
 }
 
-export function MemberControls({ orgSlug, membershipId, role, status, isSelf }: { orgSlug: string; membershipId: string; role: keyof typeof ROLES; status: "active" | "suspended"; isSelf: boolean }) {
+export function MemberControls({ orgSlug, membershipId, role, status, isSelf }: { orgSlug: string; membershipId: string; role: Role; status: "active" | "suspended"; isSelf: boolean }) {
+  const t = useT("settings");
+  const tg = useGlobalT();
   const [pending, start] = useTransition();
-  if (isSelf) return <span className="text-sm text-muted-foreground">You</span>;
+  if (isSelf) return <span className="text-sm text-muted-foreground">{t("team.you")}</span>;
   const run = (patch: { role?: string; status?: string }) =>
     start(async () => {
       const r = await updateMember(orgSlug, { membershipId, ...patch });
-      if (r.ok) toast.success(r.message ?? "Updated");
+      if (r.ok) toast.success(r.message ?? t("team.updated"));
       else toast.error(r.error);
     });
   return (
     <div className="flex flex-wrap items-center gap-2">
       <div className="w-48">
-        <NativeSelect aria-label="Role" defaultValue={role} disabled={pending} onChange={(e) => run({ role: e.target.value })}>
-          {Object.entries(ROLES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+        <NativeSelect aria-label={t("team.role")} defaultValue={role} disabled={pending} onChange={(e) => run({ role: e.target.value })}>
+          {ROLES.map((v) => <option key={v} value={v}>{tg(`labels.role.${v}`)}</option>)}
         </NativeSelect>
       </div>
       <Button variant="outline" size="sm" disabled={pending} onClick={() => run({ status: status === "active" ? "suspended" : "active" })}>
-        {status === "active" ? "Suspend" : "Reactivate"}
+        {status === "active" ? t("team.suspend") : t("team.reactivate")}
       </Button>
     </div>
   );
 }
 
 export function RevokeInviteButton({ orgSlug, invitationId }: { orgSlug: string; invitationId: string }) {
+  const t = useT("settings");
   const [pending, start] = useTransition();
   return (
-    <Button variant="ghost" size="sm" disabled={pending} onClick={() => start(async () => { const r = await revokeInvitation(orgSlug, invitationId); if (r.ok) toast.success(r.message ?? "Revoked"); else toast.error(r.error); })}>
-      Revoke
+    <Button variant="ghost" size="sm" disabled={pending} onClick={() => start(async () => { const r = await revokeInvitation(orgSlug, invitationId); if (r.ok) toast.success(r.message ?? t("team.revoked")); else toast.error(r.error); })}>
+      {t("team.revoke")}
     </Button>
   );
 }

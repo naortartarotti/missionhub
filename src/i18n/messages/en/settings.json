@@ -1,0 +1,132 @@
+{
+  "title": "Settings",
+  "description": "Manage {name}.",
+  "nav": {
+    "label": "Settings",
+    "organization": "Organization",
+    "team": "Team",
+    "privacy": "Privacy requests",
+    "audit": "Audit log",
+    "preferences": "Preferences"
+  },
+  "organization": {
+    "title": "Organization",
+    "name": "Organization name",
+    "currency": "Default currency",
+    "currencyHint": "Used for new jobs and dashboard totals. Amounts are never converted.",
+    "adminOnly": "Only organization admins can change these settings."
+  },
+  "integrations": {
+    "title": "Integrations",
+    "aiName": "AI extraction & explanations",
+    "aiDescription": "Matching uses deterministic, rule-based scoring without it.",
+    "emailName": "Transactional email",
+    "emailDescription": "Without it, notifications are in-app only.",
+    "paymentsName": "Payments provider",
+    "paymentsDescription": "Settlement is recorded through a verified manual ledger. No funds move through MissionHub.",
+    "configured": "Configured",
+    "notConfigured": "Not configured",
+    "manualLedger": "Manual ledger",
+    "residency": "Data residency: configure your Supabase project in a Canadian region (ca-central-1). Subprocessors such as AI or email vendors may process data outside Canada."
+  },
+  "team": {
+    "metaTitle": "Team",
+    "inviteTitle": "Invite a teammate",
+    "inviteDescription": "Candidates and jobs belong to the organization; each record keeps a responsible owner. Recruiters can manage records and referrals; managers also handle privacy requests and audit; admins manage the team.",
+    "expires": "expires {date}",
+    "members": "Members",
+    "suspended": "Suspended",
+    "email": "Email",
+    "role": "Role",
+    "inviting": "Inviting…",
+    "invite": "Invite",
+    "linkCopied": "Link copied",
+    "copy": "Copy",
+    "you": "You",
+    "updated": "Updated",
+    "suspend": "Suspend",
+    "reactivate": "Reactivate",
+    "revoked": "Revoked",
+    "revoke": "Revoke"
+  },
+  "privacy": {
+    "metaTitle": "Privacy requests",
+    "logTitle": "Log a data-subject request",
+    "logDescription": "Candidates aren't users, so requests arrive by email or phone. Log them here to track deadlines. Draft process — legal review required.",
+    "requests": "Requests",
+    "empty": "No requests logged.",
+    "overdue": "Overdue",
+    "due": "Due {date}",
+    "kind": {
+      "access": "access",
+      "correction": "correction",
+      "withdrawal": "withdrawal",
+      "deletion": "deletion"
+    },
+    "kindOption": {
+      "access": "Access to personal information",
+      "correction": "Correction",
+      "withdrawal": "Withdrawal of consent",
+      "deletion": "Deletion"
+    },
+    "status": {
+      "open": "open",
+      "in_progress": "in progress",
+      "completed": "completed",
+      "rejected": "rejected"
+    },
+    "form": {
+      "type": "Request type",
+      "contact": "Requester contact",
+      "candidateId": "Candidate record ID (optional)",
+      "candidateIdHint": "Copy from the candidate page URL.",
+      "details": "Details",
+      "submit": "Log request"
+    },
+    "actions": {
+      "start": "Start",
+      "startTitle": "Mark in progress?",
+      "startDescription": "Record that the request is being handled.",
+      "startConfirm": "Mark in progress",
+      "note": "Note",
+      "complete": "Complete",
+      "completeTitle": "Complete request?",
+      "completeDescription": "Describe what was done (e.g. data exported and sent, record anonymized).",
+      "resolution": "Resolution"
+    },
+    "validation": {
+      "contact": "How can we reach the requester?",
+      "contactTooLong": "Use at most 200 characters"
+    },
+    "messages": {
+      "logged": "Request logged. Respond within the statutory timeline (PIPEDA: generally 30 days).",
+      "updated": "Request updated."
+    },
+    "errors": {
+      "notFound": "Request not found."
+    }
+  },
+  "audit": {
+    "metaTitle": "Audit log",
+    "caption": "Audit events",
+    "when": "When",
+    "actor": "Actor",
+    "action": "Action",
+    "entity": "Entity",
+    "system": "Partner / system",
+    "empty": "No events yet."
+  },
+  "preferences": {
+    "title": "Preferences",
+    "language": "Language",
+    "languageHint": "Used across MissionHub on this browser.",
+    "theme": "Appearance",
+    "themeHint": "Choose light, dark, or follow your device.",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "saved": "Language updated"
+  }
+}

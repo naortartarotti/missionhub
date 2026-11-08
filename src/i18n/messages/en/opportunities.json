@@ -1,0 +1,200 @@
+{
+  "title": "Opportunities",
+  "description": "Partner jobs that fit your candidates. Earn a share of the fee when someone you submit is hired.",
+  "filteredByCandidate": "Showing matches for one candidate.",
+  "statusNav": "Match status",
+  "newCount": {
+    "one": ", {count} new",
+    "other": ", {count} new"
+  },
+  "views": {
+    "review": {
+      "label": "To review",
+      "hint": "New and undecided matches. Submit, save for later, or mark as not a fit."
+    },
+    "saved": {
+      "label": "Saved",
+      "hint": "Your shortlist. Matches you want to come back to."
+    },
+    "submitted": {
+      "label": "Submitted",
+      "hint": "Candidates you've already sent. Open one to follow the referral."
+    },
+    "dismissed": {
+      "label": "Dismissed",
+      "hint": "Matches you marked as not a fit. Restore one if things change."
+    },
+    "not_eligible": {
+      "label": "Not eligible",
+      "hint": "A must-have isn't met, like a required language or location. Shown so you know why."
+    }
+  },
+  "controls": {
+    "sort": "Sort"
+  },
+  "sorts": {
+    "fit": "Best fit",
+    "earnings": "Highest earnings"
+  },
+  "jobGroup": {
+    "candidates": {
+      "one": "{count} candidate",
+      "other": "{count} candidates"
+    },
+    "share": "your est. share"
+  },
+  "empty": {
+    "inactive": {
+      "title": "Turn on matching to see opportunities",
+      "description": "None of your candidates are matching yet. Open a candidate, record their permission and turn on matching. Partner jobs that fit will show up here.",
+      "action": "Go to candidates"
+    },
+    "caughtUp": {
+      "title": "You're all caught up",
+      "description": "Every match has a decision. We check automatically whenever a partner publishes a job or you update a candidate, and we'll show new matches here."
+    },
+    "none": {
+      "title": "No matches yet",
+      "description": "We check automatically whenever a partner publishes a job or you update a candidate. New matches will show up here."
+    },
+    "saved": {
+      "title": "Nothing saved",
+      "description": "Use Save on a match to build a shortlist you can come back to."
+    },
+    "submitted": {
+      "title": "No candidates submitted yet",
+      "description": "When you submit a candidate to a partner job, you can follow it from here."
+    },
+    "dismissed": {
+      "title": "Nothing dismissed",
+      "description": "Matches you mark as not a fit end up here, so you can restore them later."
+    },
+    "not_eligible": {
+      "title": "Nothing blocked",
+      "description": "None of your matches are ruled out by a must-have requirement."
+    },
+    "reviewCount": {
+      "one": "Review {count} match",
+      "other": "Review {count} matches"
+    },
+    "openSaved": {
+      "one": "Open your {count} saved",
+      "other": "Open your {count} saved"
+    }
+  },
+  "card": {
+    "via": "{client} · via {org}",
+    "noHeadline": "No headline",
+    "gapsToCheck": {
+      "one": "{count} gap to check",
+      "other": "{count} gaps to check"
+    },
+    "noGaps": "No notable gaps",
+    "yourCandidate": "Your candidate:",
+    "dismissedReason": "Dismissed: {reason}",
+    "new": "New",
+    "reviewSubmit": "Review & submit",
+    "confidentialClient": "Confidential client"
+  },
+  "share": {
+    "title": "Your estimated share of the placement fee if this candidate is hired",
+    "chip": "~{amount} for you"
+  },
+  "score": {
+    "label": "Indicative compatibility {score} out of 100"
+  },
+  "sheet": {
+    "trigger": "Why this match",
+    "description": "{client} · shared by {org} · for {candidate}",
+    "whyMatches": "Why it matches",
+    "noGaps": "No notable gaps.",
+    "seniority": "Seniority",
+    "contract": "Contract",
+    "compensation": "Compensation",
+    "descriptionHidden": "The full description is shared once you submit a candidate."
+  },
+  "triage": {
+    "restore": "Restore",
+    "restored": "Moved back to To review.",
+    "saved": "Saved",
+    "unsaved": "Removed from Saved.",
+    "unsaveAria": "Remove {name} for {job} from Saved",
+    "save": "Save",
+    "savedToast": "Saved. Find it under Saved when you're ready to submit {name}.",
+    "saveAria": "Save {name} for {job}",
+    "notFit": "Not a fit",
+    "notFitAria": "Mark {name} for {job} as not a fit",
+    "why": "Why? This helps improve your matches.",
+    "dismissedToast": "Dismissed. You'll find it under Dismissed if you change your mind."
+  },
+  "dismissReasons": {
+    "salary": "Pay doesn't fit",
+    "location": "Location or work setup",
+    "seniority": "Wrong seniority",
+    "skills": "Skills don't fit",
+    "candidate_not_interested": "Candidate not interested",
+    "other": "Other"
+  },
+  "review": {
+    "title": "Review match",
+    "heading": "Review match & submit",
+    "description": "{candidate} → {job} ({client}, shared by {org})",
+    "gapsToDiscuss": "Gaps to discuss with the candidate"
+  },
+  "evidence": {
+    "matchingOff": "Matching is turned off for this candidate",
+    "permissionMissing": "The candidate's permission hasn't been recorded",
+    "jobClosed": "Job is not open to external referrals",
+    "arrangementMismatch": "Job is {jobArrangement}; candidate prefers {candidateArrangements}",
+    "relocationRequired": "Job requires presence in {country}; candidate is not open to relocation",
+    "requiredSkillsMatched": "Matches required skills: {skills}",
+    "requiredSkillsMissing": "Missing required skills: {skills}",
+    "noRequiredSkills": "Job lists no required skills; relevance is approximate",
+    "noRequiredSkillsPresent": "None of the job's required skills are present",
+    "preferredSkills": "Also has: {skills}",
+    "seniorityAligns": "Seniority aligns ({jobSeniority})",
+    "seniorityOneAbove": "Seniority is one level above the role ({candidateSeniority} vs {jobSeniority})",
+    "seniorityOneBelow": "Seniority is one level below the role ({candidateSeniority} vs {jobSeniority})",
+    "seniorityFar": "Seniority differs significantly ({candidateSeniority} vs {jobSeniority})",
+    "seniorityUnknown": "Candidate seniority not recorded",
+    "experienceMeets": "{years} years of experience (role asks {min}+)",
+    "experienceBelow": "{years} years of experience; role asks {min}+",
+    "experienceUnknown": "Years of experience not recorded",
+    "remoteCompatible": "Remote role compatible with candidate preferences",
+    "basedIn": "Based in {place}",
+    "relocationOpen": "Would require relocation (candidate is open to it)",
+    "locationUnknown": "Location information incomplete",
+    "speaks": "Speaks {languages}",
+    "languagesMissing": "Language requirement not confirmed: {languages}",
+    "salaryFits": "Salary expectation fits the compensation band",
+    "salaryAbove": "Salary expectation is ~{percent}% above the band",
+    "currencyMismatch": "Compensation in different currencies; not compared",
+    "belowThreshold": "Overall relevance below the {threshold}/100 threshold"
+  },
+  "panel": {
+    "close": "Close details",
+    "share": "Your share",
+    "fee": "Fee",
+    "posted": "Posted",
+    "skills": "Required skills",
+    "niceToHave": "Nice to have",
+    "strengths": "Strengths",
+    "gaps": "Gaps",
+    "noGaps": "None found",
+    "details": "Role",
+    "workSetup": "Work setup",
+    "description": "Job description",
+    "private": "Hidden from the hiring recruiter until you submit.",
+    "scoreInfo": "Fit score from skills, seniority, location and pay. Not a hiring prediction. Updated {time}."
+  },
+  "row": {
+    "submit": "Submit",
+    "submitAria": "Review & submit {name}",
+    "details": "Show match details for {name}",
+    "gaps": {
+      "one": "{count} gap",
+      "other": "{count} gaps"
+    }
+  },
+  "filteredByJob": "Showing one partner job."
+}

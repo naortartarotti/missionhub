@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, Search, Upload, Users } from "lucide-react";
+import { Plus, Search, Sparkles, Upload, Users } from "lucide-react";
 import { getRequestContext } from "@/server/auth/context";
 import { listCandidates, CANDIDATE_PAGE_SIZE } from "@/features/candidates/queries";
 import { PageHeader } from "@/components/shared/page-header";
@@ -10,11 +10,14 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { InitialsAvatar } from "@/components/shared/initials-avatar";
 import { Panel } from "@/components/shared/card";
 import { NativeSelect } from "@/components/shared/native-select";
-import { CANDIDATE_STATUS, SENIORITY, relativeTime } from "@/lib/labels";
+import { CANDIDATE_STATUS } from "@/lib/labels";
 import { Pagination } from "@/components/shared/pagination";
 import { Flash } from "@/components/shared/flash";
+import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 
-export const metadata = { title: "Candidates" };
+export async function generateMetadata() {
+  return { title: (await getT("candidates"))("title") };
+}
 
 export default async function CandidatesPage({ params, searchParams }: PageProps<"/w/[orgSlug]/candidates">) {
   const { orgSlug } = await params;
@@ -23,65 +26,83 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
   const q = typeof sp.q === "string" ? sp.q : "";
   const status = typeof sp.status === "string" ? sp.status : "all";
   const page = Number(sp.page ?? 1) || 1;
-  const { rows, total } = await listCandidates(ctx, { q, status, page });
+  const [{ rows, total }, notMatching] = await Promise.all([
+    listCandidates(ctx, { q, status, page }),
+    ctx.db.from("candidates").select("id", { count: "exact", head: true }).eq("organization_id", ctx.organizationId).eq("status", "draft"),
+  ]);
+  const draftCount = notMatching.count ?? 0;
   const base = `/w/${orgSlug}/candidates`;
+  const [t, tg, f] = await Promise.all([getT("candidates"), getGlobalT(), getFormatter()]);
+  const statuses = (Object.keys(CANDIDATE_STATUS) as (keyof typeof CANDIDATE_STATUS)[]).filter((k) => k !== "deleted");
 
   return (
     <div className="grid gap-6">
       <PageHeader
-        title="Candidates"
-        description="Your organization's private talent inventory. Other organizations can never browse or search it."
+        title={t("title")}
+        description={t("list.description")}
         actions={
           <>
             <Button variant="outline" asChild>
               <Link href={`${base}/import`}>
-                <Upload className="size-4" aria-hidden /> Import CSV
+                <Upload className="size-4" aria-hidden /> {t("list.importCsv")}
               </Link>
             </Button>
             <Button asChild>
               <Link href={`${base}/new`}>
-                <Plus className="size-4" aria-hidden /> Add candidate
+                <Plus className="size-4" aria-hidden /> {t("list.addCandidate")}
               </Link>
             </Button>
           </>
         }
       />
-      {sp.anonymized ? <Flash message="Candidate anonymized. Personal information was removed; history and finance records remain." /> : null}
+      {sp.anonymized ? <Flash message={t("list.anonymized")} /> : null}
+      {draftCount > 0 && status !== "draft" ? (
+        <div className="flex flex-col gap-3 rounded-3xl border border-border/60 bg-card p-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="flex items-start gap-3 text-sm">
+            <Sparkles className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden />
+            <span>
+              <span className="font-medium">{t("list.notMatching", { count: draftCount })}</span>{" "}
+              <span className="text-muted-foreground">{t("list.notMatchingHint")}</span>
+            </span>
+          </p>
+          <Button variant="outline" size="sm" asChild className="shrink-0">
+            <Link href={`${base}?status=draft`}>{t("list.showThem")}</Link>
+          </Button>
+        </div>
+      ) : null}
 
       <form className="flex flex-col gap-2 sm:flex-row" role="search" action={base}>
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
-          <Input name="q" defaultValue={q} placeholder="Search by name, headline or exact skill" className="pl-10" aria-label="Search candidates" />
+          <Input name="q" defaultValue={q} placeholder={t("list.searchPlaceholder")} className="pl-10" aria-label={t("list.searchLabel")} />
         </div>
         <div className="sm:w-56">
-          <NativeSelect name="status" defaultValue={status} aria-label="Filter by status">
-            <option value="all">All statuses</option>
-            {Object.entries(CANDIDATE_STATUS)
-              .filter(([k]) => k !== "deleted")
-              .map(([k, v]) => (
-                <option key={k} value={k}>
-                  {v.label}
-                </option>
-              ))}
+          <NativeSelect name="status" defaultValue={status} aria-label={t("list.statusFilter")}>
+            <option value="all">{t("list.allStatuses")}</option>
+            {statuses.map((k) => (
+              <option key={k} value={k}>
+                {tg(`labels.candidateStatus.${k}`)}
+              </option>
+            ))}
           </NativeSelect>
         </div>
         <Button type="submit" variant="secondary">
-          Apply
+          {t("list.apply")}
         </Button>
       </form>
 
       {rows.length === 0 ? (
         <EmptyState
           icon={Users}
-          title={q || status !== "all" ? "No candidates match these filters" : "Add your first candidate"}
+          title={q || status !== "all" ? t("list.emptyFilteredTitle") : t("list.emptyTitle")}
           description={
             q || status !== "all"
-              ? "Try a different search or clear the filters."
-              : "Candidates you add stay private to your organization. Activate them for matching to discover partner jobs."
+              ? t("list.emptyFilteredBody")
+              : t("list.emptyBody")
           }
           action={
             <Button asChild>
-              <Link href={`${base}/new`}>Add candidate</Link>
+              <Link href={`${base}/new`}>{t("list.addCandidate")}</Link>
             </Button>
           }
         />
@@ -89,15 +110,15 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
         <Panel className="overflow-hidden p-0">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[720px] text-sm">
-              <caption className="sr-only">Candidates, {total} total</caption>
+              <caption className="sr-only">{t("list.caption", { total })}</caption>
               <thead>
                 <tr className="border-b border-border text-left text-muted-foreground">
-                  <th scope="col" className="px-5 py-3 font-medium">Candidate</th>
-                  <th scope="col" className="px-5 py-3 font-medium">Seniority</th>
-                  <th scope="col" className="px-5 py-3 font-medium">Top skills</th>
-                  <th scope="col" className="px-5 py-3 font-medium">Owner</th>
-                  <th scope="col" className="px-5 py-3 font-medium">Updated</th>
-                  <th scope="col" className="px-5 py-3 text-right font-medium">Status</th>
+                  <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.candidate")}</th>
+                  <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.seniority")}</th>
+                  <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.skills")}</th>
+                  <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.owner")}</th>
+                  <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.updated")}</th>
+                  <th scope="col" className="px-5 py-3 text-right font-medium">{t("list.columns.status")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -114,12 +135,12 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
                         </span>
                       </Link>
                     </td>
-                    <td className="px-5 py-3.5">{c.seniority ? SENIORITY[c.seniority] : "—"}</td>
+                    <td className="px-5 py-3.5">{c.seniority ? tg(`labels.seniority.${c.seniority}`) : "—"}</td>
                     <td className="px-5 py-3.5 text-muted-foreground">{c.skills.slice(0, 3).join(", ") || "—"}</td>
                     <td className="px-5 py-3.5 text-muted-foreground">{c.owner?.full_name || "—"}</td>
-                    <td className="px-5 py-3.5 text-muted-foreground">{relativeTime(c.updated_at)}</td>
+                    <td className="px-5 py-3.5 text-muted-foreground">{f.relative(c.updated_at)}</td>
                     <td className="px-5 py-3.5 text-right">
-                      <StatusPill tone={CANDIDATE_STATUS[c.status].tone} label={CANDIDATE_STATUS[c.status].label} />
+                      <StatusPill tone={CANDIDATE_STATUS[c.status].tone} label={tg(`labels.candidateStatus.${c.status}`)} />
                     </td>
                   </tr>
                 ))}

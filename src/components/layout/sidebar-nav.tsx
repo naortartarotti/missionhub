@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { NAV_ITEMS } from "./nav-config";
+import { NAV_ITEMS, type BadgeKey } from "./nav-config";
+import { useT } from "@/i18n/client";
 
-export function SidebarNav({ orgSlug, badges }: { orgSlug: string; badges: Partial<Record<"referrals" | "notifications", number>> }) {
+export function SidebarNav({ orgSlug, badges }: { orgSlug: string; badges: Partial<Record<BadgeKey, number>> }) {
+  const t = useT("nav");
   const pathname = usePathname();
   return (
-    <nav aria-label="Main" className="grid gap-1">
+    <nav aria-label={t("main")} className="grid gap-1">
       {NAV_ITEMS.map((item) => {
         const href = `/w/${orgSlug}/${item.href}`;
         const active = pathname === href || pathname.startsWith(`${href}/`);
@@ -25,12 +27,12 @@ export function SidebarNav({ orgSlug, badges }: { orgSlug: string; badges: Parti
           >
             {active ? <span className="absolute top-1.5 bottom-1.5 -left-3 w-1 rounded-r-full bg-foreground lg:-left-5" aria-hidden /> : null}
             <item.icon className="size-[18px]" aria-hidden />
-            <span>{item.label}</span>
+            <span>{t(item.key)}</span>
             {badge ? (
               <span className="ml-auto grid min-w-6 place-items-center rounded-full bg-foreground px-1.5 text-xs font-semibold text-background tabular-nums">
                 <span className="sr-only">, </span>
                 {badge > 99 ? "99+" : badge}
-                <span className="sr-only"> pending</span>
+                <span className="sr-only">{" "}{item.badgeKey === "opportunities" ? t("badgeNew") : t("badgePending")}</span>
               </span>
             ) : null}
           </Link>

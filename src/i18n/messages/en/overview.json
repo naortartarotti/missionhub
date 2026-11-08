@@ -1,0 +1,93 @@
+{
+  "title": "Overview",
+  "welcome": "Welcome back, {name}!",
+  "welcomeFallbackName": "there",
+  "subtitle": "Here's what's happening at {org} today.",
+  "gettingStarted": {
+    "title": "Get started",
+    "intro": "Your candidates stay private. MissionHub matches them with jobs from partner recruiters, you decide who to submit, and the commission is tracked when someone gets hired.",
+    "progress": "{done} of {total} done",
+    "stepSr": "Step {n}",
+    "doneSr": "done",
+    "candidate": {
+      "title": "Add your first candidate",
+      "description": "Add someone you represent, or import a list from a CSV. Only you can see them.",
+      "cta": "Add candidate"
+    },
+    "matching": {
+      "title": "Turn on matching for a candidate",
+      "description": "Record their permission, then turn on matching so MissionHub can look for partner jobs that fit.",
+      "cta": "Go to candidates"
+    },
+    "job": {
+      "title": "Publish a job open to partners",
+      "description": "Have an open role? Publish it so partner recruiters can refer their candidates to you.",
+      "cta": "New job"
+    },
+    "referral": {
+      "title": "Submit a candidate to a partner job",
+      "description": "Review a match, check the fit, and submit when your candidate agrees.",
+      "cta": "See opportunities"
+    }
+  },
+  "attention": {
+    "title": "Needs your attention",
+    "empty": "You're all caught up. New submissions and payment steps will show up here.",
+    "confirmSplit": "Confirm the commission split: {job}",
+    "payable": {
+      "one": "{count} placement with commission payable",
+      "other": "{count} placements with commission payable"
+    },
+    "payableSub": "Confirm each payout once the money arrives"
+  },
+  "best": {
+    "noneInactive": "No matches yet.",
+    "noneInactiveLink": "Turn on matching for a candidate",
+    "noneInactiveTail": "and partner jobs that fit will appear here."
+  },
+  "stats": {
+    "matching": "Candidates matching",
+    "toDecide": "Matches to decide",
+    "toReview": "Referrals to review",
+    "owed": "Commission owed"
+  },
+  "partnerJobs": {
+    "badge": "For your candidates",
+    "title": "Partner jobs that fit your candidates",
+    "subtitle": "Decide who to submit. You earn a share if they're hired.",
+    "empty": "No open matches right now. We'll show partner jobs here as soon as one fits.",
+    "matches": {
+      "one": "{count} candidate fits",
+      "other": "{count} candidates fit"
+    },
+    "strong": {
+      "one": "{count} strong",
+      "other": "{count} strong"
+    },
+    "share": "~{amount} for you",
+    "new": {
+      "one": "{count} new match",
+      "other": "{count} new matches"
+    }
+  },
+  "myJobs": {
+    "badge": "For your jobs",
+    "title": "Your jobs",
+    "subtitle": "Candidates partners submitted, and how many could fit.",
+    "empty": "No open jobs yet.",
+    "received": {
+      "one": "{count} referral",
+      "other": "{count} referrals"
+    },
+    "toReview": {
+      "one": "{count} to review",
+      "other": "{count} to review"
+    },
+    "noneWaiting": "Nothing waiting",
+    "partnerMatches": {
+      "one": "{count} partner candidate fits",
+      "other": "{count} partner candidates fit"
+    },
+    "notOpen": "Not open to partners"
+  }
+}

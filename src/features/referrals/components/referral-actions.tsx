@@ -14,20 +14,14 @@ import { FormField } from "@/components/shared/form-field";
 import { FormMessage } from "@/components/shared/form-message";
 import { SubmitButton } from "@/components/shared/submit-button";
 import { NativeSelect } from "@/components/shared/native-select";
-import { REFERRAL_STATUS } from "@/lib/labels";
+import type { REFERRAL_STATUS } from "@/lib/labels";
+import { useT } from "@/i18n/client";
 import { confirmAgreement, getReferralDocumentUrl, reportHire, sendReferralMessage, transitionReferral } from "../actions";
 
-const ACTION_LABEL: Partial<Record<keyof typeof REFERRAL_STATUS, string>> = {
-  under_review: "Start review",
-  accepted: "Accept",
-  declined: "Decline",
-  info_requested: "Request more info",
-  withdrawn: "Withdraw",
-  interviewing: "Move to interviewing",
-  offer: "Record offer",
-  rejected: "Not selected",
-  cancelled: "Cancel",
-};
+/** Statuses with a button label in `referrals.actions.<status>`. */
+const ACTION_STATUSES = ["under_review", "accepted", "declined", "info_requested", "withdrawn", "interviewing", "offer", "rejected", "cancelled"] as const;
+type ActionStatus = (typeof ACTION_STATUSES)[number];
+const hasActionLabel = (s: string): s is ActionStatus => (ACTION_STATUSES as readonly string[]).includes(s);
 
 const NEGATIVE = new Set(["declined", "withdrawn", "rejected", "cancelled"]);
 
@@ -46,6 +40,7 @@ export function TransitionButtons({
   side: "source" | "target";
   status: string;
 }) {
+  const t = useT("referrals");
   const [pending, start] = useTransition();
   const run = (to: string, reason = "") =>
     transitionReferral(orgSlug, { referralId, to, reason, version }).then((r) => {
@@ -54,29 +49,28 @@ export function TransitionButtons({
     });
   return (
     <div className="flex flex-wrap gap-2">
-      {transitions.map((t) => {
-        const label = side === "source" && t.to_status === "under_review" && status === "info_requested" ? "Mark information provided" : ACTION_LABEL[t.to_status] ?? t.to_status;
-        if (t.requires_reason) {
+      {transitions.map((tr) => {
+        const label =
+          side === "source" && tr.to_status === "under_review" && status === "info_requested"
+            ? t("actions.markInfoProvided")
+            : hasActionLabel(tr.to_status) ? t(`actions.${tr.to_status}`) : tr.to_status;
+        if (tr.requires_reason) {
           return (
             <ConfirmDialog
-              key={t.to_status}
-              trigger={<Button variant={NEGATIVE.has(t.to_status) ? "outline" : "secondary"}>{label}</Button>}
-              title={`${label}?`}
-              description={
-                t.to_status === "declined"
-                  ? "Share job-related, non-discriminatory feedback. It will be visible to the partner recruiter."
-                  : "Your note is recorded in the referral timeline and visible to the partner."
-              }
+              key={tr.to_status}
+              trigger={<Button variant={NEGATIVE.has(tr.to_status) ? "outline" : "secondary"}>{label}</Button>}
+              title={t("actions.confirmTitle", { label })}
+              description={tr.to_status === "declined" ? t("actions.declineHint") : t("actions.noteHint")}
               confirmLabel={label}
-              destructive={NEGATIVE.has(t.to_status)}
-              reasonLabel={t.to_status === "info_requested" ? "What information do you need?" : "Reason"}
+              destructive={NEGATIVE.has(tr.to_status)}
+              reasonLabel={tr.to_status === "info_requested" ? t("actions.infoQuestion") : t("actions.reason")}
               reasonRequired
-              onConfirm={(reason) => run(t.to_status, reason)}
+              onConfirm={(reason) => run(tr.to_status, reason)}
             />
           );
         }
         return (
-          <Button key={t.to_status} disabled={pending} onClick={() => start(async () => { const r = await run(t.to_status); if (r.ok) toast.success(r.message ?? "Updated"); })}>
+          <Button key={tr.to_status} disabled={pending} onClick={() => start(async () => { const r = await run(tr.to_status); if (r.ok) toast.success(r.message ?? t("actions.updated")); })}>
             {label}
           </Button>
         );
@@ -86,41 +80,43 @@ export function TransitionButtons({
 }
 
 export function ConfirmAgreementButton({ orgSlug, referralId }: { orgSlug: string; referralId: string }) {
+  const t = useT("referrals");
   return (
     <ConfirmDialog
-      trigger={<Button>Review & confirm terms</Button>}
-      title="Confirm collaboration agreement"
-      description="You agree to the commission split shown, frozen for this referral. Template terms are a draft pending legal review; confirm your own contractual obligations separately."
-      confirmLabel="Confirm agreement"
+      trigger={<Button>{t("agreement.trigger")}</Button>}
+      title={t("agreement.title")}
+      description={t("agreement.description")}
+      confirmLabel={t("agreement.confirm")}
       onConfirm={() => confirmAgreement(orgSlug, referralId)}
     />
   );
 }
 
 export function ReportHireDialog({ orgSlug, referralId, version, defaultFee, currency }: { orgSlug: string; referralId: string; version: number; defaultFee: string; currency: string }) {
+  const t = useT("referrals");
   const [state, action] = useActionState(reportHire.bind(null, orgSlug), null);
   const fe = state && !state.ok ? state.fieldErrors : undefined;
   return (
     <Dialog>
-      <DialogTrigger asChild><Button>Report hire</Button></DialogTrigger>
+      <DialogTrigger asChild><Button>{t("hire.trigger")}</Button></DialogTrigger>
       <DialogContent className="rounded-3xl sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Report a successful hire</DialogTitle>
-          <DialogDescription>Creates the placement using the frozen agreement. Commission stays projected until the client payment is verified.</DialogDescription>
+          <DialogTitle>{t("hire.title")}</DialogTitle>
+          <DialogDescription>{t("hire.description")}</DialogDescription>
         </DialogHeader>
         <ActionForm action={action} className="grid gap-4">
           <input type="hidden" name="referralId" value={referralId} />
           <input type="hidden" name="version" value={version} />
           <div className="grid grid-cols-[1fr_110px] gap-3">
-            <FormField id="fee" label="Contracted placement fee" error={fe?.fee}><Input id="fee" name="fee" inputMode="decimal" defaultValue={defaultFee} required /></FormField>
-            <FormField id="currency" label="Currency">
+            <FormField id="fee" label={t("hire.fee")} error={fe?.fee}><Input id="fee" name="fee" inputMode="decimal" defaultValue={defaultFee} required /></FormField>
+            <FormField id="currency" label={t("hire.currency")}>
               <NativeSelect id="currency" name="currency" defaultValue={currency}>{["CAD", "USD", "EUR", "GBP", "BRL"].map((c) => <option key={c}>{c}</option>)}</NativeSelect>
             </FormField>
           </div>
-          <FormField id="startDate" label="Start date" error={fe?.startDate}><Input id="startDate" name="startDate" type="date" required /></FormField>
-          <FormField id="guaranteeDays" label="Replacement guarantee (days)"><Input id="guaranteeDays" name="guaranteeDays" type="number" min={0} max={365} defaultValue={90} /></FormField>
+          <FormField id="startDate" label={t("hire.startDate")} error={fe?.startDate}><Input id="startDate" name="startDate" type="date" required /></FormField>
+          <FormField id="guaranteeDays" label={t("hire.guarantee")}><Input id="guaranteeDays" name="guaranteeDays" type="number" min={0} max={365} defaultValue={90} /></FormField>
           <FormMessage state={state} />
-          <SubmitButton pendingLabel="Recording…">Record hire</SubmitButton>
+          <SubmitButton pendingLabel={t("hire.recording")}>{t("hire.submit")}</SubmitButton>
         </ActionForm>
       </DialogContent>
     </Dialog>
@@ -128,6 +124,7 @@ export function ReportHireDialog({ orgSlug, referralId, version, defaultFee, cur
 }
 
 export function MessageForm({ orgSlug, referralId }: { orgSlug: string; referralId: string }) {
+  const t = useT("referrals");
   const [state, action] = useActionState(sendReferralMessage.bind(null, orgSlug, referralId), null);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
@@ -135,17 +132,18 @@ export function MessageForm({ orgSlug, referralId }: { orgSlug: string; referral
   }, [state]);
   return (
     <ActionForm ref={formRef} action={action} className="grid gap-2">
-      <label htmlFor="body" className="sr-only">Message</label>
-      <Textarea id="body" name="body" rows={3} placeholder="Professional, job-related messages only. Visible to both recruiters." required />
+      <label htmlFor="body" className="sr-only">{t("message.label")}</label>
+      <Textarea id="body" name="body" rows={3} placeholder={t("message.placeholder")} required />
       {state && !state.ok ? <FormMessage state={state} /> : null}
-      <SubmitButton variant="secondary" className="justify-self-end" pendingLabel="Sending…">Send message</SubmitButton>
+      <SubmitButton variant="secondary" className="justify-self-end" pendingLabel={t("message.sending")}>{t("message.send")}</SubmitButton>
     </ActionForm>
   );
 }
 
 export function GrantDownload({ orgSlug, grant }: { orgSlug: string; grant: { id: string; file_name: string; status: string; revoked_at: string | null } }) {
+  const t = useT("referrals");
   const [pending, start] = useTransition();
-  const unavailable = grant.revoked_at ? "Access revoked" : grant.status === "pending_copy" ? "Preparing…" : grant.status === "failed" ? "Unavailable" : null;
+  const unavailable = grant.revoked_at ? t("grant.revoked") : grant.status === "pending_copy" ? t("grant.preparing") : grant.status === "failed" ? t("grant.unavailable") : null;
   return (
     <li className="flex items-center gap-3 rounded-2xl border border-border p-3">
       <span className="grid size-9 place-items-center rounded-xl bg-muted" aria-hidden><FileText className="size-4" /></span>
@@ -153,7 +151,7 @@ export function GrantDownload({ orgSlug, grant }: { orgSlug: string; grant: { id
       {unavailable ? (
         <span className="text-xs text-muted-foreground">{unavailable}</span>
       ) : (
-        <Button variant="ghost" size="icon-sm" aria-label={`Download ${grant.file_name}`} disabled={pending}
+        <Button variant="ghost" size="icon-sm" aria-label={t("grant.download", { name: grant.file_name })} disabled={pending}
           onClick={() => start(async () => { const r = await getReferralDocumentUrl(orgSlug, grant.id); if (r.ok && r.data) window.location.assign(r.data.url); else if (!r.ok) toast.error(r.error); })}>
           <Download className="size-4" />
         </Button>

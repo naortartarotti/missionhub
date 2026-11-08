@@ -1,0 +1,344 @@
+{
+  "title": "Referrals",
+  "description": "Track every submission from start to hire: candidates you sent to partner jobs, and candidates partners sent to yours.",
+  "directionNav": "Referral direction",
+  "tabs": {
+    "sent": "Sent",
+    "received": "Received"
+  },
+  "empty": {
+    "sent": {
+      "title": "No referrals sent yet",
+      "description": "When a partner job fits one of your candidates, submit them from Opportunities. You'll follow their progress here.",
+      "action": "View opportunities"
+    },
+    "received": {
+      "title": "No submissions received yet",
+      "description": "Publish a job open to partners. Recruiters with matching candidates can then submit them to you.",
+      "action": "Manage jobs"
+    }
+  },
+  "caption": {
+    "sent": "Sent referrals",
+    "received": "Received submissions"
+  },
+  "columns": {
+    "candidate": "Candidate",
+    "job": "Job",
+    "partner": "Partner",
+    "from": "From",
+    "updated": "Updated",
+    "status": "Status"
+  },
+  "detail": {
+    "title": "Referral",
+    "submittedFlash": "Submitted. {partner} has been notified and can now see only the fields you approved.",
+    "sentTo": "Sent to {partner}",
+    "receivedFrom": "Received from {partner}",
+    "forJob": "for {job}",
+    "revoked": "The candidate's sharing authorization was revoked on {date}.",
+    "revokedTarget": "The shared profile and documents are no longer available to you.",
+    "revokedSource": "The partner no longer has access to the snapshot or documents.",
+    "guidanceTarget": "Review the approved profile, then decide. Feedback must be job-related and non-discriminatory.",
+    "guidanceSource": "Keep the partner updated. Withdrawing stops their access to further documents.",
+    "openCandidate": "Open candidate record",
+    "approvedProfile": "Approved candidate profile",
+    "whatYouShared": "What you shared",
+    "notAvailable": "Not available.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "headline": "Headline",
+      "seniority": "Seniority",
+      "years": {
+        "one": "{count} yrs",
+        "other": "{count} yrs"
+      },
+      "skills": "Skills",
+      "languages": "Languages",
+      "arrangement": "Arrangement",
+      "location": "Location",
+      "openToRelocation": "open to relocation",
+      "available": "Available",
+      "salary": "Salary expectation"
+    },
+    "experience": "Experience",
+    "present": "present",
+    "disclosed": "Disclosed fields: {fields}. Snapshot taken {date}; later edits to the source record are not shared.",
+    "sharedDocuments": "Shared documents",
+    "messages": "Messages",
+    "you": "You",
+    "partnerRecruiter": "{partner} recruiter",
+    "noMessages": "No messages yet.",
+    "agreement": {
+      "title": "Collaboration agreement",
+      "sourcing": "Sourcing recruiter",
+      "jobOwner": "Job owner",
+      "platform": "Platform",
+      "rule": "{rule} v{version} · terms {terms}",
+      "confirmed": "Confirmed by both parties",
+      "awaiting": "Awaiting sourcing recruiter",
+      "openPlacement": "Open placement & ledger",
+      "pending": "Created automatically from the current commission rule when the job owner accepts. The snapshot is frozen after that."
+    },
+    "timeline": "Timeline",
+    "reasonQuote": "“{reason}”",
+    "ownership": "Ownership protected until {date}."
+  },
+  "actions": {
+    "under_review": "Start review",
+    "accepted": "Accept",
+    "declined": "Decline",
+    "info_requested": "Request more info",
+    "withdrawn": "Withdraw",
+    "interviewing": "Move to interviewing",
+    "offer": "Record offer",
+    "rejected": "Not selected",
+    "cancelled": "Cancel",
+    "markInfoProvided": "Mark information provided",
+    "confirmTitle": "{label}?",
+    "declineHint": "Share job-related, non-discriminatory feedback. It will be visible to the partner recruiter.",
+    "noteHint": "Your note is recorded in the referral timeline and visible to the partner.",
+    "infoQuestion": "What information do you need?",
+    "reason": "Reason",
+    "updated": "Updated"
+  },
+  "agreement": {
+    "trigger": "Review & confirm terms",
+    "title": "Confirm collaboration agreement",
+    "description": "You agree to the commission split shown, frozen for this referral. Template terms are a draft pending legal review; confirm your own contractual obligations separately.",
+    "confirm": "Confirm agreement"
+  },
+  "hire": {
+    "trigger": "Report hire",
+    "title": "Report a successful hire",
+    "description": "Creates the placement using the frozen agreement. Commission stays projected until the client payment is verified.",
+    "fee": "Contracted placement fee",
+    "currency": "Currency",
+    "startDate": "Start date",
+    "guarantee": "Replacement guarantee (days)",
+    "recording": "Recording…",
+    "submit": "Record hire"
+  },
+  "message": {
+    "label": "Message",
+    "placeholder": "Professional, job-related messages only. Visible to both recruiters.",
+    "sending": "Sending…",
+    "send": "Send message"
+  },
+  "grant": {
+    "revoked": "Access revoked",
+    "preparing": "Preparing…",
+    "unavailable": "Unavailable",
+    "download": "Download {name}"
+  },
+  "form": {
+    "step1": "1. Choose what to share",
+    "step1Body": "Only checked fields are copied into an immutable snapshot for {recipient}. Your private notes and the original record are never shared.",
+    "fieldsLegend": "Fields to disclose",
+    "identifying": "Identifying",
+    "documents": "Documents",
+    "noDocuments": "No documents on file.",
+    "awaitingScan": "Awaiting scan",
+    "step2": "2. Record the candidate's authorization",
+    "authBefore": "Sharing requires authorization specific to",
+    "authAnd": "and",
+    "authAfter": ". A resume upload alone does not authorize sharing.",
+    "authorization": "Authorization",
+    "recorded": "Recorded {date}: {evidence}",
+    "newAuthorization": "Record a new authorization",
+    "legalBasis": "Legal basis",
+    "legalBasisHint": "Draft options — confirm with privacy counsel.",
+    "evidence": "Evidence",
+    "evidenceHint": "e.g. 'Candidate approved by email on 2026-11-06 after reviewing the role summary.'",
+    "confirmInterest": "I confirmed the candidate is interested in this specific role and approved sharing the selected information.",
+    "step3": "3. Add a note (optional)",
+    "noteLabel": "Note to the job owner",
+    "notePlaceholder": "Context for the job owner: motivation, notice period, why this is a fit…",
+    "whoSees": "Who will see what",
+    "nothingSelected": "Nothing selected",
+    "plusDocuments": {
+      "one": "+ {count} document",
+      "other": "+ {count} documents"
+    },
+    "identifyingWarning": "You are sharing identifying information: {fields}.",
+    "anonymous": "The candidate stays anonymous to the partner unless you add identifying fields.",
+    "revocation": "If the authorization is revoked later, the partner immediately loses access to the snapshot and documents.",
+    "submitting": "Submitting…",
+    "submit": "Submit candidate"
+  },
+  "disclosure": {
+    "headline": "Headline",
+    "summary": "Professional summary",
+    "skills": "Skills",
+    "seniority": "Seniority & years of experience",
+    "experience": "Work history (titles, companies, dates)",
+    "languages": "Working languages",
+    "work_arrangements": "Work arrangement preferences",
+    "location": "City / region",
+    "availability": "Availability date",
+    "salary_expectation": "Salary expectation",
+    "full_name": "Full name",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "validation": {
+    "selectField": "Select at least one field to share",
+    "confirmInterest": "Confirm the candidate is interested in this role",
+    "describeAuthorization": "Describe how the candidate authorized sharing with this recruiter for this job",
+    "writeMessage": "Write a message",
+    "enterFee": "Enter the placement fee",
+    "enterStartDate": "Enter a start date",
+    "validAmount": "Enter a valid amount",
+    "pickReason": "Pick a reason",
+    "addNote": "Add a short explanation",
+    "addQuestion": "Write your question"
+  },
+  "errors": {
+    "opportunityGone": "This opportunity is no longer available.",
+    "notFound": "Referral not found."
+  },
+  "success": {
+    "statusUpdated": "Status updated. The partner has been notified.",
+    "agreementConfirmed": "Agreement confirmed. Commission terms are now frozen for this referral."
+  },
+  "queue": {
+    "bucketNav": "Referral stage",
+    "buckets": {
+      "review": "To review",
+      "active": "In process",
+      "closed": "Closed"
+    },
+    "jobFilter": "Filter by job",
+    "allJobs": "All jobs",
+    "jobOption": "{title} · {count} to review",
+    "sortLabel": "Sort",
+    "sorts": {
+      "fit": "Best fit",
+      "oldest": "Oldest",
+      "newest": "Newest"
+    },
+    "caughtUp": {
+      "title": "All caught up",
+      "description": "No submissions waiting for a decision. New ones appear here and in your notifications."
+    },
+    "emptyBucket": "Nothing here yet.",
+    "selectAll": "Select all on this page",
+    "selectRow": "Select {name}",
+    "selectHint": "Select rows to decline several at once",
+    "selected": {
+      "one": "{count} selected",
+      "other": "{count} selected"
+    },
+    "declineSelected": "Decline…",
+    "clear": "Clear",
+    "keys": {
+      "move": "move",
+      "accept": "accept",
+      "decline": "decline",
+      "info": "ask for info",
+      "select": "select"
+    },
+    "noScore": "No fit score for this submission",
+    "coverage": "{has}/{total} required skills",
+    "salaryFits": "Within budget",
+    "salaryAbove": "Above budget",
+    "revoked": "Sharing revoked",
+    "availableFrom": "Available {date}",
+    "panelLabel": "Review {name}",
+    "fromPartner": "From {partner}",
+    "close": "Close",
+    "revokedLong": "The candidate revoked sharing. The profile and documents are no longer available.",
+    "vsJob": "Against your job",
+    "bonusSkills": "Also has: {skills}",
+    "vsRequirement": "{value} (role: {req})",
+    "vsBudget": "{value} (budget up to {budget})",
+    "notShared": "Not shared",
+    "notSet": "Not set",
+    "summary": "Summary",
+    "experience": {
+      "one": "Experience ({count})",
+      "other": "Experience ({count})"
+    },
+    "documents": "Documents",
+    "noMessages": "No messages yet. Open the full page to write one.",
+    "messages": {
+      "one": "{count} message",
+      "other": "{count} messages"
+    },
+    "agreementLine": "Split: sourcing {sourcing} · you {owner} · platform {platform}",
+    "accept": "Accept",
+    "decline": "Decline",
+    "askInfo": "Ask for info",
+    "openFull": "Open full page",
+    "waitingPartner": "Waiting for the partner's answer",
+    "checkOk": "Meets",
+    "checkWarn": "Partly meets",
+    "checkUnknown": "Unknown",
+    "declineTitle": "Decline this candidate?",
+    "declineTitleMany": {
+      "one": "Decline {count} candidate?",
+      "other": "Decline {count} candidates?"
+    },
+    "declineHint": "The partner sees the reason. Keep it job-related.",
+    "reason": "Reason",
+    "note": "Note for the partner",
+    "notePlaceholder": "Optional note for the partner",
+    "notePlaceholderRequired": "Explain the reason (required)",
+    "declineMany": {
+      "one": "Decline {count}",
+      "other": "Decline {count}"
+    },
+    "cancel": "Cancel",
+    "infoTitle": "Ask the partner for more information",
+    "infoHint": "The referral pauses until the partner answers.",
+    "infoPlaceholder": "e.g. Can you share their notice period and recent projects?",
+    "done": {
+      "accepted": "Accepted. The collaboration agreement was created.",
+      "declined": "Declined. The partner was notified.",
+      "info_requested": "Question sent to the partner.",
+      "under_review": "Marked as in review.",
+      "bulk": {
+        "one": "{count} referral declined.",
+        "other": "{count} referrals declined."
+      }
+    },
+    "group": {
+      "waiting": {
+        "one": "{count} waiting for your decision",
+        "other": "{count} waiting for your decision"
+      },
+      "noneWaiting": "Nothing waiting",
+      "viewJob": "View job"
+    }
+  },
+  "declineReasons": {
+    "skills": "Missing skills",
+    "seniority": "Seniority",
+    "salary": "Salary",
+    "location": "Location",
+    "availability": "Availability",
+    "duplicate": "Already in process",
+    "position_filled": "Position filled",
+    "other": "Other"
+  },
+  "direction": {
+    "inbound": {
+      "tab": "Received",
+      "tabHint": "Partners' candidates for your jobs",
+      "badge": "Partner's candidate → your job",
+      "short": "Incoming"
+    },
+    "outbound": {
+      "tab": "Sent",
+      "tabHint": "Your candidates for partners' jobs",
+      "badge": "Your candidate → partner's job",
+      "short": "Outgoing"
+    },
+    "yourJob": "Your job",
+    "yourCandidate": "Your candidate",
+    "partnerJob": "Partner's job",
+    "hiringRecruiter": "Hiring recruiter"
+  }
+}

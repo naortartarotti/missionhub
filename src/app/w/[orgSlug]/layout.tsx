@@ -1,43 +1,51 @@
 import Link from "next/link";
-import { Bell } from "lucide-react";
 import { getRequestContext, listMemberships } from "@/server/auth/context";
-import { ROLE_LABELS } from "@/server/authorization/permissions";
+import { countNewOpportunities } from "@/features/matching/queries";
+import { getGlobalT } from "@/i18n/server";
 import { Logo } from "@/components/layout/logo";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { OrgSwitcher } from "@/components/layout/org-switcher";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { MobileNav } from "@/components/layout/mobile-nav";
-import { Button } from "@/components/ui/button";
+import { ActivityPopover } from "@/features/notifications/components/activity-popover";
+import { ActivityProvider } from "@/features/notifications/components/activity-context";
 
 export default async function WorkspaceLayout({ children, params }: LayoutProps<"/w/[orgSlug]">) {
   const { orgSlug } = await params;
   const ctx = await getRequestContext(orgSlug);
-  const [memberships, unread, incoming] = await Promise.all([
+  const [t, memberships, unread, recent, incoming, newMatches] = await Promise.all([
+    getGlobalT(),
     listMemberships(),
     ctx.db.from("notifications").select("id", { count: "exact", head: true }).eq("user_id", ctx.userId).is("read_at", null),
+    ctx.db.from("notifications").select("id, title, body, read_at, created_at").eq("user_id", ctx.userId).order("created_at", { ascending: false }).limit(8),
     ctx.db
       .from("referrals")
       .select("id", { count: "exact", head: true })
       .eq("target_org_id", ctx.organizationId)
       .in("status", ["submitted", "under_review"]),
+    countNewOpportunities(ctx),
   ]);
-  const badges = { notifications: unread.count ?? 0, referrals: incoming.count ?? 0 };
+  const badges = { opportunities: newMatches, notifications: unread.count ?? 0, referrals: incoming.count ?? 0 };
 
+  const activityItems = recent.data ?? [];
+  // Desktop has no top bar: each page's sticky PageHeader is the header and carries the bell.
+  // Language and theme live in Settings → Preferences.
   const sidebar = (
     <div className="flex h-full flex-col">
-      <Link href={`/w/${orgSlug}/overview`} className="mb-8 flex justify-center rounded-xl py-1 lg:mb-10" >
-        <Logo />
-      </Link>
+      <div className="mb-8 flex items-center justify-between gap-2 lg:mb-10">
+        <Link href={`/w/${orgSlug}/overview`} className="rounded-xl px-2 py-1">
+          <Logo />
+        </Link>
+      </div>
       <SidebarNav orgSlug={orgSlug} badges={badges} />
       <div className="mt-auto pt-6">
         {ctx.isDemo ? (
           <div className="mb-3 rounded-2xl bg-tile-yellow p-4 text-tile-foreground">
-            <p className="text-sm font-semibold">Demo workspace</p>
-            <p className="mt-0.5 text-xs opacity-80">All data here is synthetic. Never mix it with real candidates.</p>
+            <p className="text-sm font-semibold">{t("common.demo.title")}</p>
+            <p className="mt-0.5 text-xs opacity-80">{t("common.demo.body")}</p>
           </div>
         ) : null}
         <OrgSwitcher
-          current={{ slug: ctx.organizationSlug, name: ctx.organizationName, roleLabel: ROLE_LABELS[ctx.membershipRole] }}
+          current={{ slug: ctx.organizationSlug, name: ctx.organizationName, roleLabel: t(`labels.role.${ctx.membershipRole}`) }}
           memberships={memberships}
           user={ctx.user}
         />
@@ -48,28 +56,23 @@ export default async function WorkspaceLayout({ children, params }: LayoutProps<
   return (
     <div className="min-h-dvh bg-background">
       <a href="#main" className="sr-only z-50 rounded-full bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3">
-        Skip to content
+        {t("common.skipToContent")}
       </a>
       <div className="flex min-h-dvh">
         <aside className="sticky top-0 hidden h-dvh w-[260px] shrink-0 overflow-y-auto border-r border-sidebar-border bg-sidebar px-5 py-8 lg:block">{sidebar}</aside>
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center justify-between gap-3 px-4 pt-4 sm:px-8 lg:px-10 lg:pt-8">
-            <div className="flex items-center gap-3 lg:hidden">
+          {/* Mobile only: menu, logo and the bell (the sidebar is hidden here). */}
+          <header className="flex items-center justify-between gap-3 px-4 pt-4 sm:px-8 lg:hidden">
+            <div className="flex items-center gap-3">
               <MobileNav>{sidebar}</MobileNav>
               <Logo compact />
             </div>
-            <div className="ml-auto flex items-center gap-2">
-              <ThemeToggle />
-              <Button variant="outline" size="icon" asChild>
-                <Link href={`/w/${orgSlug}/notifications`} aria-label={`Notifications${badges.notifications ? `, ${badges.notifications} unread` : ""}`} className="relative">
-                  <Bell className="size-[18px]" aria-hidden />
-                  {badges.notifications ? <span className="absolute top-2 right-2.5 size-2 rounded-full bg-danger ring-2 ring-card" aria-hidden /> : null}
-                </Link>
-              </Button>
-            </div>
+            <ActivityPopover orgSlug={orgSlug} items={activityItems} unread={badges.notifications} />
           </header>
-          <main id="main" className="flex-1 px-4 pt-2 pb-12 sm:px-8 lg:px-10">
-            {children}
+          <main id="main" className="flex-1 px-4 pb-12 sm:px-8 lg:px-10">
+            <ActivityProvider orgSlug={orgSlug} items={activityItems} unread={badges.notifications}>
+              {children}
+            </ActivityProvider>
           </main>
         </div>
       </div>

@@ -1,0 +1,132 @@
+{
+  "title": "Configurações",
+  "description": "Gerencie {name}.",
+  "nav": {
+    "label": "Configurações",
+    "organization": "Organização",
+    "team": "Equipe",
+    "privacy": "Solicitações de privacidade",
+    "audit": "Log de auditoria",
+    "preferences": "Preferências"
+  },
+  "organization": {
+    "title": "Organização",
+    "name": "Nome da organização",
+    "currency": "Moeda padrão",
+    "currencyHint": "Usada em novas vagas e nos totais do painel. Os valores nunca são convertidos.",
+    "adminOnly": "Somente administradores da organização podem alterar estas configurações."
+  },
+  "integrations": {
+    "title": "Integrações",
+    "aiName": "Extração e explicações por IA",
+    "aiDescription": "Sem ela, a correspondência usa pontuação determinística baseada em regras.",
+    "emailName": "E-mail transacional",
+    "emailDescription": "Sem ele, as notificações ficam apenas no aplicativo.",
+    "paymentsName": "Provedor de pagamentos",
+    "paymentsDescription": "A liquidação é registrada em um livro-razão manual verificado. Nenhum valor passa pelo MissionHub.",
+    "configured": "Configurado",
+    "notConfigured": "Não configurado",
+    "manualLedger": "Livro-razão manual",
+    "residency": "Residência de dados: configure seu projeto Supabase em uma região canadense (ca-central-1). Subprocessadores, como fornecedores de IA ou de e-mail, podem processar dados fora do Canadá."
+  },
+  "team": {
+    "metaTitle": "Equipe",
+    "inviteTitle": "Convidar um colega",
+    "inviteDescription": "Candidatos e vagas pertencem à organização; cada registro mantém um responsável. Recrutadores gerenciam registros e indicações; gerentes também cuidam de solicitações de privacidade e auditoria; administradores gerenciam a equipe.",
+    "expires": "expira em {date}",
+    "members": "Membros",
+    "suspended": "Suspenso",
+    "email": "E-mail",
+    "role": "Função",
+    "inviting": "Convidando…",
+    "invite": "Convidar",
+    "linkCopied": "Link copiado",
+    "copy": "Copiar",
+    "you": "Você",
+    "updated": "Atualizado",
+    "suspend": "Suspender",
+    "reactivate": "Reativar",
+    "revoked": "Revogado",
+    "revoke": "Revogar"
+  },
+  "privacy": {
+    "metaTitle": "Solicitações de privacidade",
+    "logTitle": "Registrar uma solicitação de titular de dados",
+    "logDescription": "Candidatos não são usuários, então as solicitações chegam por e-mail ou telefone. Registre-as aqui para acompanhar os prazos. Processo preliminar — revisão jurídica necessária.",
+    "requests": "Solicitações",
+    "empty": "Nenhuma solicitação registrada.",
+    "overdue": "Atrasada",
+    "due": "Prazo: {date}",
+    "kind": {
+      "access": "acesso",
+      "correction": "correção",
+      "withdrawal": "revogação",
+      "deletion": "exclusão"
+    },
+    "kindOption": {
+      "access": "Acesso a informações pessoais",
+      "correction": "Correção",
+      "withdrawal": "Revogação do consentimento",
+      "deletion": "Exclusão"
+    },
+    "status": {
+      "open": "aberta",
+      "in_progress": "em andamento",
+      "completed": "concluída",
+      "rejected": "rejeitada"
+    },
+    "form": {
+      "type": "Tipo de solicitação",
+      "contact": "Contato do solicitante",
+      "candidateId": "ID do registro do candidato (opcional)",
+      "candidateIdHint": "Copie da URL da página do candidato.",
+      "details": "Detalhes",
+      "submit": "Registrar solicitação"
+    },
+    "actions": {
+      "start": "Iniciar",
+      "startTitle": "Marcar como em andamento?",
+      "startDescription": "Registre que a solicitação está sendo tratada.",
+      "startConfirm": "Marcar como em andamento",
+      "note": "Observação",
+      "complete": "Concluir",
+      "completeTitle": "Concluir solicitação?",
+      "completeDescription": "Descreva o que foi feito (ex.: dados exportados e enviados, registro anonimizado).",
+      "resolution": "Resolução"
+    },
+    "validation": {
+      "contact": "Como podemos contatar o solicitante?",
+      "contactTooLong": "Use no máximo 200 caracteres"
+    },
+    "messages": {
+      "logged": "Solicitação registrada. Responda dentro do prazo legal (PIPEDA: geralmente 30 dias).",
+      "updated": "Solicitação atualizada."
+    },
+    "errors": {
+      "notFound": "Solicitação não encontrada."
+    }
+  },
+  "audit": {
+    "metaTitle": "Log de auditoria",
+    "caption": "Eventos de auditoria",
+    "when": "Quando",
+    "actor": "Autor",
+    "action": "Ação",
+    "entity": "Entidade",
+    "system": "Parceiro / sistema",
+    "empty": "Nenhum evento ainda."
+  },
+  "preferences": {
+    "title": "Preferências",
+    "language": "Idioma",
+    "languageHint": "Usado em todo o MissionHub neste navegador.",
+    "theme": "Aparência",
+    "themeHint": "Escolha claro, escuro ou siga seu dispositivo.",
+    "themes": {
+      "light": "Claro",
+      "dark": "Escuro",
+      "system": "Sistema"
+    },
+    "saved": "Idioma atualizado"
+  }
+}

@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useT } from "@/i18n/client";
 
 export function SettingsNav({ items }: { items: { href: string; label: string }[] }) {
+  const t = useT("settings");
   const pathname = usePathname();
   return (
-    <nav aria-label="Settings" className="flex flex-wrap gap-2">
+    <nav aria-label={t("nav.label")} className="flex flex-wrap gap-2">
       {items.map((i) => {
         const active = pathname === i.href;
         return (

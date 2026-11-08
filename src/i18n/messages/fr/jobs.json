@@ -1,0 +1,143 @@
+{
+  "title": "Postes",
+  "description": "Vos postes ouverts. Ouvrez un poste aux partenaires et les recruteurs ayant des candidats correspondants pourront vous les recommander. Vous ne verrez l'identité de personne avant sa soumission.",
+  "newJob": "Nouveau poste",
+  "searchPlaceholder": "Rechercher par titre ou client",
+  "searchLabel": "Rechercher des postes",
+  "filterLabel": "Filtrer par statut",
+  "allStatuses": "Tous les statuts",
+  "apply": "Appliquer",
+  "empty": {
+    "filteredTitle": "Aucun poste ne correspond à ces filtres",
+    "filteredDescription": "Essayez une autre recherche ou effacez les filtres.",
+    "firstTitle": "Publiez votre premier poste",
+    "firstDescription": "Ajoutez un poste que vous cherchez à pourvoir. Ouvrez-le aux partenaires et nous vous dirons combien de leurs candidats conviennent, sans révéler qui ils sont."
+  },
+  "clientConfidential": "{client} (confidentiel)",
+  "openToPartners": "Ouvert aux partenaires",
+  "new": {
+    "title": "Nouveau poste",
+    "description": "Collez une description pour obtenir des exigences suggérées, puis vérifiez chaque champ avant de publier."
+  },
+  "edit": {
+    "metaTitle": "Modifier le poste",
+    "title": "Modifier {title}",
+    "description": "Les changements d'exigences relancent le jumelage en arrière-plan."
+  },
+  "detail": {
+    "metaTitle": "Poste",
+    "flashPublished": "Poste publié. Le nombre de correspondances apparaîtra d'ici une minute.",
+    "flashDraft": "Brouillon enregistré. Les partenaires ne peuvent pas le voir avant que vous le publiiez.",
+    "flashUpdated": "Modifications enregistrées.",
+    "clientConfidential": "{client} · confidentiel pour les partenaires",
+    "clientNotSet": "Client non défini",
+    "edit": "Modifier",
+    "kpiStrong": "Fortes correspondances",
+    "kpiPartial": "Correspondances partielles",
+    "kpiPartnerHint": "Candidats partenaires · anonymes",
+    "submittedTitle": "Candidats qui vous ont été soumis",
+    "privacyNotPublished": "Ce poste n'est pas publié, il n'est donc pas jumelé. Publiez-le pour voir combien de candidats partenaires conviennent.",
+    "privacyNotOpen": "Ce poste n'est pas ouvert aux partenaires. Modifiez-le et activez les recommandations de partenaires pour être jumelé avec leurs candidats.",
+    "required": "Requis",
+    "niceToHave": "Atouts",
+    "seniority": "Niveau",
+    "years": "{years}+ ans",
+    "languages": "Langues",
+    "location": "Lieu",
+    "compensation": "Rémunération",
+    "placementFee": "Honoraires de placement",
+    "visible": {
+      "always": "Titre, niveau, mode de travail et compétences",
+      "description": "Description",
+      "location": "Lieu",
+      "compensation": "Rémunération",
+      "placementFee": "Honoraires de placement",
+      "clientName": "Nom du client"
+    },
+    "statSubmitted": "Soumis",
+    "privacyShort": "Les candidats partenaires restent anonymes jusqu'à leur soumission.",
+    "privacyShortRefreshed": "Les candidats partenaires restent anonymes jusqu'à leur soumission · mis à jour {when}",
+    "submittedEmptyShort": "Personne pour l'instant. Vous serez avisé quand un partenaire soumettra quelqu'un.",
+    "role": "Poste",
+    "visibleShort": "Visible aux partenaires",
+    "description": "Description du poste"
+  },
+  "status": {
+    "publish": "Publier",
+    "pause": "Suspendre",
+    "markFilled": "Marquer comme pourvu",
+    "close": "Fermer",
+    "resume": "Reprendre",
+    "reopen": "Rouvrir",
+    "updated": "Mis à jour",
+    "more": "Plus d'actions"
+  },
+  "form": {
+    "role": "Poste",
+    "title": "Titre du poste",
+    "contractType": "Type de contrat",
+    "client": "Client qui embauche",
+    "hideClient": "Masquer le nom du client aux recruteurs partenaires",
+    "description": "Description du poste",
+    "descriptionHint": "Collez l'offre d'emploi complète. Nous pouvons en suggérer les compétences et le niveau. Les suggestions n'utilisent que les mots de votre texte, et vous les vérifiez avant d'enregistrer.",
+    "analyzing": "Analyse en cours…",
+    "suggest": "Suggérer des exigences à partir de la description",
+    "suggestTooShort": "Collez d'abord une description de poste plus complète.",
+    "suggested": {
+      "one": "{count} compétence suggérée à partir du texte. Vérifiez avant d'enregistrer.",
+      "other": "{count} compétences suggérées à partir du texte. Vérifiez avant d'enregistrer."
+    },
+    "requirements": "Exigences",
+    "requiredSkills": "Compétences requises",
+    "requiredSkillsHint": "Seulement les compétences vraiment obligatoires, séparées par des virgules",
+    "niceToHave": "Atouts",
+    "seniority": "Niveau",
+    "notSpecified": "Non précisé",
+    "minYears": "Années d'expérience minimales",
+    "languages": "Langues de travail requises",
+    "languagesHint": "N'indiquez que les langues réellement exigées par le poste",
+    "workArrangement": "Mode de travail",
+    "city": "Ville",
+    "region": "Province / État",
+    "country": "Pays",
+    "salaryMin": "Salaire min.",
+    "salaryMax": "Salaire max.",
+    "currency": "Devise",
+    "partnerReferrals": "Recommandations de partenaires",
+    "openToPartners": "Ouvrir ce poste aux recruteurs partenaires",
+    "openToPartnersHint": "Les recruteurs ayant des candidats qui conviennent verront ce poste et pourront les soumettre. Vous verrez combien conviennent, mais pas qui, jusqu'à ce qu'une personne soit soumise.",
+    "visibleTitle": "Ce que les partenaires voient avant de soumettre",
+    "visibleHint": "Le titre, le niveau, le mode de travail et les compétences sont toujours affichés. Le nom du client suit le réglage ci-dessus.",
+    "shareDescription": "Description du poste",
+    "shareLocation": "Lieu",
+    "shareSalary": "Fourchette de rémunération",
+    "shareFee": "Honoraires de placement prévus",
+    "expectedFee": "Honoraires de placement prévus",
+    "expectedFeeHint": "Le montant total que vous prévoyez facturer au client",
+    "feeCurrency": "Devise des honoraires",
+    "cancel": "Annuler",
+    "saveDraft": "Enregistrer comme brouillon",
+    "publish": "Publier le poste",
+    "saveChanges": "Enregistrer les modifications"
+  },
+  "messages": {
+    "activated": "Le poste est actif. Le jumelage s'exécute en arrière-plan.",
+    "statusUpdated": "Statut mis à jour. Les correspondances des postes inactifs expirent immédiatement.",
+    "statusUpdatedReleased": {
+      "one": "Statut mis à jour. {count} recommandation en attente a été refusée (« Poste pourvu »).",
+      "other": "Statut mis à jour. {count} recommandations en attente ont été refusées (« Poste pourvu »)."
+    }
+  },
+  "errors": {
+    "notFound": "Poste introuvable."
+  },
+  "validation": {
+    "positiveAmount": "Entrez un montant positif",
+    "titleRequired": "Entrez un titre de poste",
+    "maxYears": "Doit être 70 ou moins",
+    "countryCode": "Utilisez un code de pays à 2 lettres",
+    "salaryRange": "Le maximum doit être au moins égal au minimum",
+    "clientRequired": "Entrez le nom du client ou gardez-le confidentiel",
+    "descriptionTooLong": "La description est trop longue."
+  }
+}

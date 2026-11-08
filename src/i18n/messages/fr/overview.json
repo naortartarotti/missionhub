@@ -1,0 +1,93 @@
+{
+  "title": "Aperçu",
+  "welcome": "Bon retour, {name}!",
+  "welcomeFallbackName": "vous",
+  "subtitle": "Voici ce qui se passe chez {org} aujourd'hui.",
+  "gettingStarted": {
+    "title": "Premiers pas",
+    "intro": "Vos candidats restent privés. MissionHub les jumelle avec des postes de recruteurs partenaires, vous décidez qui soumettre, et la commission est suivie lorsqu'une personne est embauchée.",
+    "progress": "{done} sur {total} terminées",
+    "stepSr": "Étape {n}",
+    "doneSr": "terminée",
+    "candidate": {
+      "title": "Ajoutez votre premier candidat",
+      "description": "Ajoutez une personne que vous représentez ou importez une liste à partir d'un CSV. Vous seul pouvez la voir.",
+      "cta": "Ajouter un candidat"
+    },
+    "matching": {
+      "title": "Activez le jumelage pour un candidat",
+      "description": "Enregistrez sa permission, puis activez le jumelage pour que MissionHub cherche des postes partenaires qui lui conviennent.",
+      "cta": "Voir les candidats"
+    },
+    "job": {
+      "title": "Publiez un poste ouvert aux partenaires",
+      "description": "Vous avez un poste à pourvoir? Publiez-le pour que les recruteurs partenaires puissent vous recommander leurs candidats.",
+      "cta": "Nouveau poste"
+    },
+    "referral": {
+      "title": "Soumettez un candidat à un poste partenaire",
+      "description": "Examinez une correspondance, vérifiez l'adéquation et soumettez lorsque votre candidat est d'accord.",
+      "cta": "Voir les opportunités"
+    }
+  },
+  "attention": {
+    "title": "À traiter",
+    "empty": "Vous êtes à jour. Les nouvelles soumissions et étapes de paiement apparaîtront ici.",
+    "confirmSplit": "Confirmer le partage de la commission : {job}",
+    "payable": {
+      "one": "{count} placement avec commission à verser",
+      "other": "{count} placements avec commission à verser"
+    },
+    "payableSub": "Confirmez chaque versement à la réception des fonds"
+  },
+  "best": {
+    "noneInactive": "Aucune correspondance pour l'instant.",
+    "noneInactiveLink": "Activez le jumelage pour un candidat",
+    "noneInactiveTail": "et les postes partenaires qui lui conviennent apparaîtront ici."
+  },
+  "stats": {
+    "matching": "Candidats en jumelage",
+    "toDecide": "Correspondances à décider",
+    "toReview": "Recommandations à examiner",
+    "owed": "Commission due"
+  },
+  "partnerJobs": {
+    "badge": "Pour vos candidats",
+    "title": "Postes partenaires pour vos candidats",
+    "subtitle": "Décidez qui soumettre. Vous touchez une part si la personne est embauchée.",
+    "empty": "Aucune correspondance ouverte pour l'instant. Les postes partenaires apparaîtront ici dès qu'un poste convient.",
+    "matches": {
+      "one": "{count} candidat convient",
+      "other": "{count} candidats conviennent"
+    },
+    "strong": {
+      "one": "{count} forte",
+      "other": "{count} fortes"
+    },
+    "share": "~{amount} pour vous",
+    "new": {
+      "one": "{count} nouvelle correspondance",
+      "other": "{count} nouvelles correspondances"
+    }
+  },
+  "myJobs": {
+    "badge": "Pour vos postes",
+    "title": "Vos postes",
+    "subtitle": "Candidats soumis par les partenaires, et combien pourraient convenir.",
+    "empty": "Aucun poste ouvert pour l'instant.",
+    "received": {
+      "one": "{count} recommandation",
+      "other": "{count} recommandations"
+    },
+    "toReview": {
+      "one": "{count} à examiner",
+      "other": "{count} à examiner"
+    },
+    "noneWaiting": "Rien en attente",
+    "partnerMatches": {
+      "one": "{count} candidat partenaire convient",
+      "other": "{count} candidats partenaires conviennent"
+    },
+    "notOpen": "Non ouvert aux partenaires"
+  }
+}

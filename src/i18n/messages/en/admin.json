@@ -1,0 +1,86 @@
+{
+  "title": "Platform admin",
+  "backToWorkspace": "Back to workspace",
+  "page": {
+    "title": "Platform operations",
+    "description": "Aggregated metrics and operational queues. Platform admins have no access to candidate records."
+  },
+  "kpi": {
+    "organizations": "Organizations",
+    "excludingDemo": "Excluding demo",
+    "placements": "Placements",
+    "evidence": "Evidence to verify",
+    "disputes": "Open disputes"
+  },
+  "evidence": {
+    "title": "Payment evidence queue",
+    "empty": "Nothing awaiting verification.",
+    "ref": "ref {reference}",
+    "fees": "fees {amount}",
+    "ownRecord": "You recorded this; another admin must verify it."
+  },
+  "disputes": {
+    "title": "Disputes",
+    "empty": "No open disputes.",
+    "openedBy": "Opened by {org} · {date}"
+  },
+  "revenue": {
+    "title": "Platform revenue (verified ledger)",
+    "empty": "No verified revenue yet.",
+    "line": "{earned} earned · {outstanding} awaiting remittance"
+  },
+  "rules": {
+    "title": "Commission rules",
+    "current": "Current default: v{version} — {sourcing} / {jobOwner} / {platform}. Accepted referrals keep their frozen snapshot.",
+    "currentTag": "(current)",
+    "sourcing": "Sourcing %",
+    "jobOwner": "Job owner %",
+    "platform": "Platform %",
+    "publish": "Publish new version"
+  },
+  "orgs": {
+    "title": "Organizations",
+    "name": "Name",
+    "type": "Type",
+    "created": "Created",
+    "status": "Status",
+    "actions": "Actions",
+    "demo": "DEMO",
+    "suspended": "Suspended",
+    "active": "Active",
+    "kind": {
+      "agency": "agency",
+      "independent": "independent"
+    }
+  },
+  "suspension": {
+    "reinstate": "Reinstate",
+    "reinstateTitle": "Reinstate organization?",
+    "reinstateDescription": "Members regain access. Matching resumes on the next change.",
+    "suspend": "Suspend",
+    "suspendTitle": "Suspend organization?",
+    "suspendDescription": "Members immediately lose access. Its jobs and candidates stop matching; existing referrals and finance records are preserved and remain visible to partners; partners can't submit to its jobs.",
+    "reason": "Reason"
+  },
+  "dispute": {
+    "resolve": "Resolve",
+    "resolveTitle": "Resolve dispute",
+    "resolveDescription": "The placement returns to its prior status. Record any corrections as compensating evidence.",
+    "resolution": "Resolution",
+    "reject": "Reject",
+    "rejectTitle": "Reject dispute",
+    "rejectDescription": "The placement returns to its prior status.",
+    "reason": "Reason"
+  },
+  "validation": {
+    "reason": "Give a reason (at least 5 characters).",
+    "resolution": "Describe the resolution (5–2000 characters).",
+    "total": "Percentages must total exactly 100%."
+  },
+  "messages": {
+    "suspended": "Organization suspended.",
+    "reinstated": "Organization reinstated.",
+    "disputeClosed": "Dispute closed.",
+    "rulePublished": "New rule version published. Existing agreements keep their frozen snapshot."
+  }
+}

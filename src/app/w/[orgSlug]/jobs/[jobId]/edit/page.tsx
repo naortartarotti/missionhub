@@ -5,8 +5,11 @@ import { updateJob } from "@/features/jobs/actions";
 import { JobForm } from "@/features/jobs/components/job-form";
 import { PageHeader } from "@/components/shared/page-header";
 import { minorToMajorString } from "@/lib/money/format";
+import { getT } from "@/i18n/server";
 
-export const metadata = { title: "Edit job" };
+export async function generateMetadata() {
+  return { title: (await getT("jobs"))("edit.metaTitle") };
+}
 
 export default async function EditJobPage({ params }: PageProps<"/w/[orgSlug]/jobs/[jobId]/edit">) {
   const { orgSlug, jobId } = await params;
@@ -14,10 +17,12 @@ export default async function EditJobPage({ params }: PageProps<"/w/[orgSlug]/jo
   assertCan(ctx, "jobs:write");
   const j = await getJob(ctx, jobId);
   if (!j) notFound();
+  const t = await getT("jobs");
   const m = (v: number | null, c: string) => (v === null ? "" : minorToMajorString(v, c));
   return (
-    <div className="mx-auto grid max-w-4xl gap-6">
-      <PageHeader title={`Edit ${j.title}`} description="Requirement changes re-run matching in the background." />
+    <div className="grid gap-6">
+      <PageHeader title={t("edit.title", { title: j.title })} description={t("edit.description")} />
+      <div className="mx-auto grid w-full max-w-4xl gap-6">
       <JobForm
         orgSlug={orgSlug}
         action={updateJob.bind(null, orgSlug, jobId)}
@@ -50,6 +55,7 @@ export default async function EditJobPage({ params }: PageProps<"/w/[orgSlug]/jo
           shareFee: j.share_fee,
         }}
       />
+    </div>
     </div>
   );
 }

@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["postgres"],
   poweredByHeader: false,
   experimental: {
+    // The proxy buffers request bodies; keep its cap in line with the Server Action limit below.
+    proxyClientMaxBodySize: "12mb",
     serverActions: {
       // Resume uploads are capped at 10 MB in the action itself; leave headroom for multipart overhead.
       bodySizeLimit: "12mb",

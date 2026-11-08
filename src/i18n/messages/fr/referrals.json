@@ -1,0 +1,344 @@
+{
+  "title": "Recommandations",
+  "description": "Suivez chaque soumission jusqu'à l'embauche : les candidats que vous avez envoyés aux postes de vos partenaires, et ceux que vos partenaires ont envoyés aux vôtres.",
+  "directionNav": "Sens des recommandations",
+  "tabs": {
+    "sent": "Envoyées",
+    "received": "Reçues"
+  },
+  "empty": {
+    "sent": {
+      "title": "Aucune recommandation envoyée pour l'instant",
+      "description": "Quand un poste partenaire convient à l'un de vos candidats, soumettez-le depuis Occasions. Vous suivrez son parcours ici.",
+      "action": "Voir les occasions"
+    },
+    "received": {
+      "title": "Aucune soumission reçue pour l'instant",
+      "description": "Publiez un poste ouvert aux partenaires. Les recruteurs ayant des candidats correspondants pourront alors vous les soumettre.",
+      "action": "Gérer les postes"
+    }
+  },
+  "caption": {
+    "sent": "Recommandations envoyées",
+    "received": "Soumissions reçues"
+  },
+  "columns": {
+    "candidate": "Candidat",
+    "job": "Poste",
+    "partner": "Partenaire",
+    "from": "De",
+    "updated": "Mise à jour",
+    "status": "Statut"
+  },
+  "detail": {
+    "title": "Recommandation",
+    "submittedFlash": "Soumis. {partner} a été avisé et ne peut voir que les champs que vous avez approuvés.",
+    "sentTo": "Envoyée à {partner}",
+    "receivedFrom": "Reçue de {partner}",
+    "forJob": "pour {job}",
+    "revoked": "L'autorisation de partage du candidat a été révoquée le {date}.",
+    "revokedTarget": "Le profil partagé et les documents ne vous sont plus accessibles.",
+    "revokedSource": "Le partenaire n'a plus accès à l'instantané ni aux documents.",
+    "guidanceTarget": "Examinez le profil approuvé, puis décidez. Les commentaires doivent être liés au poste et non discriminatoires.",
+    "guidanceSource": "Tenez le partenaire informé. Un retrait met fin à son accès aux documents supplémentaires.",
+    "openCandidate": "Ouvrir la fiche du candidat",
+    "approvedProfile": "Profil de candidat approuvé",
+    "whatYouShared": "Ce que vous avez partagé",
+    "notAvailable": "Non disponible.",
+    "fields": {
+      "name": "Nom",
+      "email": "Courriel",
+      "phone": "Téléphone",
+      "headline": "Titre",
+      "seniority": "Niveau",
+      "years": {
+        "one": "{count} an",
+        "other": "{count} ans"
+      },
+      "skills": "Compétences",
+      "languages": "Langues",
+      "arrangement": "Mode de travail",
+      "location": "Lieu",
+      "openToRelocation": "ouvert à la relocalisation",
+      "available": "Disponible",
+      "salary": "Attentes salariales"
+    },
+    "experience": "Expérience",
+    "present": "aujourd'hui",
+    "disclosed": "Champs divulgués : {fields}. Instantané pris le {date}; les modifications ultérieures de la fiche source ne sont pas partagées.",
+    "sharedDocuments": "Documents partagés",
+    "messages": "Messages",
+    "you": "Vous",
+    "partnerRecruiter": "Recruteur de {partner}",
+    "noMessages": "Aucun message pour l'instant.",
+    "agreement": {
+      "title": "Entente de collaboration",
+      "sourcing": "Recruteur source",
+      "jobOwner": "Responsable du poste",
+      "platform": "Plateforme",
+      "rule": "{rule} v{version} · conditions {terms}",
+      "confirmed": "Confirmée par les deux parties",
+      "awaiting": "En attente du recruteur source",
+      "openPlacement": "Ouvrir le placement et le registre",
+      "pending": "Créée automatiquement à partir de la règle de commission en vigueur lorsque le responsable du poste accepte. L'instantané est ensuite figé."
+    },
+    "timeline": "Historique",
+    "reasonQuote": "« {reason} »",
+    "ownership": "Propriété protégée jusqu'au {date}."
+  },
+  "actions": {
+    "under_review": "Commencer l'examen",
+    "accepted": "Accepter",
+    "declined": "Refuser",
+    "info_requested": "Demander plus d'information",
+    "withdrawn": "Retirer",
+    "interviewing": "Passer aux entrevues",
+    "offer": "Consigner une offre",
+    "rejected": "Non retenu",
+    "cancelled": "Annuler",
+    "markInfoProvided": "Indiquer que l'information a été fournie",
+    "confirmTitle": "{label}?",
+    "declineHint": "Donnez une rétroaction liée au poste et non discriminatoire. Elle sera visible par le recruteur partenaire.",
+    "noteHint": "Votre note est consignée dans l'historique de la recommandation et visible par le partenaire.",
+    "infoQuestion": "De quelle information avez-vous besoin?",
+    "reason": "Motif",
+    "updated": "Mis à jour"
+  },
+  "agreement": {
+    "trigger": "Examiner et confirmer les conditions",
+    "title": "Confirmer l'entente de collaboration",
+    "description": "Vous acceptez la répartition de commission affichée, figée pour cette recommandation. Les conditions types sont une ébauche en attente de révision juridique; confirmez vos propres obligations contractuelles séparément.",
+    "confirm": "Confirmer l'entente"
+  },
+  "hire": {
+    "trigger": "Déclarer une embauche",
+    "title": "Déclarer une embauche réussie",
+    "description": "Crée le placement selon l'entente figée. La commission reste projetée jusqu'à ce que le paiement du client soit vérifié.",
+    "fee": "Honoraires de placement convenus",
+    "currency": "Devise",
+    "startDate": "Date d'entrée en fonction",
+    "guarantee": "Garantie de remplacement (jours)",
+    "recording": "Enregistrement…",
+    "submit": "Consigner l'embauche"
+  },
+  "message": {
+    "label": "Message",
+    "placeholder": "Messages professionnels et liés au poste seulement. Visibles par les deux recruteurs.",
+    "sending": "Envoi…",
+    "send": "Envoyer le message"
+  },
+  "grant": {
+    "revoked": "Accès révoqué",
+    "preparing": "Préparation…",
+    "unavailable": "Non disponible",
+    "download": "Télécharger {name}"
+  },
+  "form": {
+    "step1": "1. Choisir quoi partager",
+    "step1Body": "Seuls les champs cochés sont copiés dans un instantané immuable pour {recipient}. Vos notes privées et la fiche d'origine ne sont jamais partagées.",
+    "fieldsLegend": "Champs à divulguer",
+    "identifying": "Identifiant",
+    "documents": "Documents",
+    "noDocuments": "Aucun document au dossier.",
+    "awaitingScan": "Analyse en attente",
+    "step2": "2. Consigner l'autorisation du candidat",
+    "authBefore": "Le partage exige une autorisation propre à",
+    "authAnd": "et à",
+    "authAfter": ". Le simple téléversement d'un CV n'autorise pas le partage.",
+    "authorization": "Autorisation",
+    "recorded": "Consignée le {date} : {evidence}",
+    "newAuthorization": "Consigner une nouvelle autorisation",
+    "legalBasis": "Fondement juridique",
+    "legalBasisHint": "Options provisoires — à confirmer avec un conseiller en protection de la vie privée.",
+    "evidence": "Preuve",
+    "evidenceHint": "p. ex. « Le candidat a approuvé par courriel le 2026-11-06 après avoir lu le résumé du poste. »",
+    "confirmInterest": "J'ai confirmé que le candidat est intéressé par ce poste précis et qu'il a approuvé le partage des renseignements sélectionnés.",
+    "step3": "3. Ajouter une note (facultatif)",
+    "noteLabel": "Note au responsable du poste",
+    "notePlaceholder": "Contexte pour le responsable du poste : motivation, préavis, pourquoi c'est un bon choix…",
+    "whoSees": "Qui verra quoi",
+    "nothingSelected": "Rien de sélectionné",
+    "plusDocuments": {
+      "one": "+ {count} document",
+      "other": "+ {count} documents"
+    },
+    "identifyingWarning": "Vous partagez des renseignements identifiants : {fields}.",
+    "anonymous": "Le candidat reste anonyme pour le partenaire, sauf si vous ajoutez des champs identifiants.",
+    "revocation": "Si l'autorisation est révoquée plus tard, le partenaire perd immédiatement l'accès à l'instantané et aux documents.",
+    "submitting": "Soumission…",
+    "submit": "Soumettre le candidat"
+  },
+  "disclosure": {
+    "headline": "Titre",
+    "summary": "Résumé professionnel",
+    "skills": "Compétences",
+    "seniority": "Niveau et années d'expérience",
+    "experience": "Parcours professionnel (postes, entreprises, dates)",
+    "languages": "Langues de travail",
+    "work_arrangements": "Préférences de mode de travail",
+    "location": "Ville / région",
+    "availability": "Date de disponibilité",
+    "salary_expectation": "Attentes salariales",
+    "full_name": "Nom complet",
+    "email": "Courriel",
+    "phone": "Téléphone"
+  },
+  "validation": {
+    "selectField": "Sélectionnez au moins un champ à partager",
+    "confirmInterest": "Confirmez que le candidat est intéressé par ce poste",
+    "describeAuthorization": "Décrivez comment le candidat a autorisé le partage avec ce recruteur pour ce poste",
+    "writeMessage": "Rédigez un message",
+    "enterFee": "Saisissez les honoraires de placement",
+    "enterStartDate": "Saisissez une date d'entrée en fonction",
+    "validAmount": "Saisissez un montant valide",
+    "pickReason": "Choisissez un motif",
+    "addNote": "Ajoutez une courte explication",
+    "addQuestion": "Écrivez votre question"
+  },
+  "errors": {
+    "opportunityGone": "Cette occasion n'est plus disponible.",
+    "notFound": "Recommandation introuvable."
+  },
+  "success": {
+    "statusUpdated": "Statut mis à jour. Le partenaire a été avisé.",
+    "agreementConfirmed": "Entente confirmée. Les conditions de commission sont maintenant figées pour cette recommandation."
+  },
+  "queue": {
+    "bucketNav": "Étape de la recommandation",
+    "buckets": {
+      "review": "À évaluer",
+      "active": "En cours",
+      "closed": "Fermées"
+    },
+    "jobFilter": "Filtrer par poste",
+    "allJobs": "Tous les postes",
+    "jobOption": "{title} · {count} à évaluer",
+    "sortLabel": "Trier",
+    "sorts": {
+      "fit": "Meilleure correspondance",
+      "oldest": "Plus anciennes",
+      "newest": "Plus récentes"
+    },
+    "caughtUp": {
+      "title": "Tout est à jour",
+      "description": "Aucune soumission n'attend de décision. Les nouvelles apparaîtront ici et dans vos notifications."
+    },
+    "emptyBucket": "Rien pour l'instant.",
+    "selectAll": "Tout sélectionner sur cette page",
+    "selectRow": "Sélectionner {name}",
+    "selectHint": "Sélectionnez des lignes pour en refuser plusieurs à la fois",
+    "selected": {
+      "one": "{count} sélectionnée",
+      "other": "{count} sélectionnées"
+    },
+    "declineSelected": "Refuser…",
+    "clear": "Effacer",
+    "keys": {
+      "move": "naviguer",
+      "accept": "accepter",
+      "decline": "refuser",
+      "info": "demander des infos",
+      "select": "sélectionner"
+    },
+    "noScore": "Aucun score de correspondance pour cette soumission",
+    "coverage": "{has}/{total} compétences requises",
+    "salaryFits": "Dans le budget",
+    "salaryAbove": "Au-dessus du budget",
+    "revoked": "Partage révoqué",
+    "availableFrom": "Disponible le {date}",
+    "panelLabel": "Évaluer {name}",
+    "fromPartner": "De {partner}",
+    "close": "Fermer",
+    "revokedLong": "Le candidat a révoqué le partage. Le profil et les documents ne sont plus disponibles.",
+    "vsJob": "Par rapport à votre poste",
+    "bonusSkills": "A aussi : {skills}",
+    "vsRequirement": "{value} (poste : {req})",
+    "vsBudget": "{value} (budget jusqu'à {budget})",
+    "notShared": "Non partagé",
+    "notSet": "Non indiqué",
+    "summary": "Résumé",
+    "experience": {
+      "one": "Expérience ({count})",
+      "other": "Expériences ({count})"
+    },
+    "documents": "Documents",
+    "noMessages": "Aucun message. Ouvrez la page complète pour en écrire un.",
+    "messages": {
+      "one": "{count} message",
+      "other": "{count} messages"
+    },
+    "agreementLine": "Partage : recruteur source {sourcing} · vous {owner} · plateforme {platform}",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "askInfo": "Demander des infos",
+    "openFull": "Ouvrir la page complète",
+    "waitingPartner": "En attente de la réponse du partenaire",
+    "checkOk": "Conforme",
+    "checkWarn": "Partiellement conforme",
+    "checkUnknown": "Inconnu",
+    "declineTitle": "Refuser ce candidat?",
+    "declineTitleMany": {
+      "one": "Refuser {count} candidat?",
+      "other": "Refuser {count} candidats?"
+    },
+    "declineHint": "Le partenaire voit le motif. Restez sur des critères liés au poste.",
+    "reason": "Motif",
+    "note": "Note pour le partenaire",
+    "notePlaceholder": "Note facultative pour le partenaire",
+    "notePlaceholderRequired": "Expliquez le motif (obligatoire)",
+    "declineMany": {
+      "one": "Refuser {count}",
+      "other": "Refuser {count}"
+    },
+    "cancel": "Annuler",
+    "infoTitle": "Demander plus d'informations au partenaire",
+    "infoHint": "La recommandation est en pause jusqu'à la réponse du partenaire.",
+    "infoPlaceholder": "p. ex. Pouvez-vous indiquer son préavis et ses projets récents?",
+    "done": {
+      "accepted": "Accepté. L'entente de collaboration a été créée.",
+      "declined": "Refusé. Le partenaire a été avisé.",
+      "info_requested": "Question envoyée au partenaire.",
+      "under_review": "Marqué en évaluation.",
+      "bulk": {
+        "one": "{count} recommandation refusée.",
+        "other": "{count} recommandations refusées."
+      }
+    },
+    "group": {
+      "waiting": {
+        "one": "{count} en attente de votre décision",
+        "other": "{count} en attente de votre décision"
+      },
+      "noneWaiting": "Rien en attente",
+      "viewJob": "Voir le poste"
+    }
+  },
+  "declineReasons": {
+    "skills": "Compétences manquantes",
+    "seniority": "Niveau",
+    "salary": "Salaire",
+    "location": "Lieu",
+    "availability": "Disponibilité",
+    "duplicate": "Déjà en processus",
+    "position_filled": "Poste pourvu",
+    "other": "Autre"
+  },
+  "direction": {
+    "inbound": {
+      "tab": "Reçues",
+      "tabHint": "Candidats de partenaires pour vos postes",
+      "badge": "Candidat du partenaire → votre poste",
+      "short": "Entrante"
+    },
+    "outbound": {
+      "tab": "Envoyées",
+      "tabHint": "Vos candidats pour les postes de partenaires",
+      "badge": "Votre candidat → poste du partenaire",
+      "short": "Sortante"
+    },
+    "yourJob": "Votre poste",
+    "yourCandidate": "Votre candidat",
+    "partnerJob": "Poste du partenaire",
+    "hiringRecruiter": "Recruteur du poste"
+  }
+}

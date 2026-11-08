@@ -1,0 +1,132 @@
+{
+  "title": "Paramètres",
+  "description": "Gérer {name}.",
+  "nav": {
+    "label": "Paramètres",
+    "organization": "Organisation",
+    "team": "Équipe",
+    "privacy": "Demandes de confidentialité",
+    "audit": "Journal d'audit",
+    "preferences": "Préférences"
+  },
+  "organization": {
+    "title": "Organisation",
+    "name": "Nom de l'organisation",
+    "currency": "Devise par défaut",
+    "currencyHint": "Utilisée pour les nouveaux postes et les totaux du tableau de bord. Les montants ne sont jamais convertis.",
+    "adminOnly": "Seuls les administrateurs de l'organisation peuvent modifier ces paramètres."
+  },
+  "integrations": {
+    "title": "Intégrations",
+    "aiName": "Extraction et explications par IA",
+    "aiDescription": "Sans elle, la correspondance utilise une notation déterministe fondée sur des règles.",
+    "emailName": "Courriels transactionnels",
+    "emailDescription": "Sans cela, les notifications sont uniquement dans l'application.",
+    "paymentsName": "Fournisseur de paiements",
+    "paymentsDescription": "Le règlement est consigné dans un registre manuel vérifié. Aucun fonds ne transite par MissionHub.",
+    "configured": "Configuré",
+    "notConfigured": "Non configuré",
+    "manualLedger": "Registre manuel",
+    "residency": "Résidence des données : configurez votre projet Supabase dans une région canadienne (ca-central-1). Des sous-traitants comme les fournisseurs d'IA ou de courriel peuvent traiter des données hors du Canada."
+  },
+  "team": {
+    "metaTitle": "Équipe",
+    "inviteTitle": "Inviter un collègue",
+    "inviteDescription": "Les candidats et les postes appartiennent à l'organisation; chaque dossier conserve un responsable. Les recruteurs gèrent les dossiers et les recommandations; les gestionnaires traitent aussi les demandes de confidentialité et l'audit; les administrateurs gèrent l'équipe.",
+    "expires": "expire le {date}",
+    "members": "Membres",
+    "suspended": "Suspendu",
+    "email": "Courriel",
+    "role": "Rôle",
+    "inviting": "Invitation…",
+    "invite": "Inviter",
+    "linkCopied": "Lien copié",
+    "copy": "Copier",
+    "you": "Vous",
+    "updated": "Mis à jour",
+    "suspend": "Suspendre",
+    "reactivate": "Réactiver",
+    "revoked": "Révoquée",
+    "revoke": "Révoquer"
+  },
+  "privacy": {
+    "metaTitle": "Demandes de confidentialité",
+    "logTitle": "Consigner une demande d'une personne concernée",
+    "logDescription": "Les candidats ne sont pas des utilisateurs : les demandes arrivent par courriel ou par téléphone. Consignez-les ici pour suivre les échéances. Processus provisoire — révision juridique requise.",
+    "requests": "Demandes",
+    "empty": "Aucune demande consignée.",
+    "overdue": "En retard",
+    "due": "Échéance : {date}",
+    "kind": {
+      "access": "accès",
+      "correction": "rectification",
+      "withdrawal": "retrait",
+      "deletion": "suppression"
+    },
+    "kindOption": {
+      "access": "Accès aux renseignements personnels",
+      "correction": "Rectification",
+      "withdrawal": "Retrait du consentement",
+      "deletion": "Suppression"
+    },
+    "status": {
+      "open": "ouverte",
+      "in_progress": "en cours",
+      "completed": "terminée",
+      "rejected": "refusée"
+    },
+    "form": {
+      "type": "Type de demande",
+      "contact": "Coordonnées du demandeur",
+      "candidateId": "ID du dossier candidat (facultatif)",
+      "candidateIdHint": "Copiez-le depuis l'URL de la page du candidat.",
+      "details": "Détails",
+      "submit": "Consigner la demande"
+    },
+    "actions": {
+      "start": "Commencer",
+      "startTitle": "Marquer comme en cours?",
+      "startDescription": "Indiquez que la demande est en cours de traitement.",
+      "startConfirm": "Marquer comme en cours",
+      "note": "Note",
+      "complete": "Terminer",
+      "completeTitle": "Terminer la demande?",
+      "completeDescription": "Décrivez ce qui a été fait (p. ex. données exportées et envoyées, dossier anonymisé).",
+      "resolution": "Résolution"
+    },
+    "validation": {
+      "contact": "Comment pouvons-nous joindre le demandeur?",
+      "contactTooLong": "Utilisez au plus 200 caractères"
+    },
+    "messages": {
+      "logged": "Demande consignée. Répondez dans le délai prévu par la loi (LPRPDE : généralement 30 jours).",
+      "updated": "Demande mise à jour."
+    },
+    "errors": {
+      "notFound": "Demande introuvable."
+    }
+  },
+  "audit": {
+    "metaTitle": "Journal d'audit",
+    "caption": "Événements d'audit",
+    "when": "Date",
+    "actor": "Auteur",
+    "action": "Action",
+    "entity": "Entité",
+    "system": "Partenaire / système",
+    "empty": "Aucun événement pour l'instant."
+  },
+  "preferences": {
+    "title": "Préférences",
+    "language": "Langue",
+    "languageHint": "Utilisée partout dans MissionHub sur ce navigateur.",
+    "theme": "Apparence",
+    "themeHint": "Choisissez clair, sombre ou suivez votre appareil.",
+    "themes": {
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système"
+    },
+    "saved": "Langue mise à jour"
+  }
+}

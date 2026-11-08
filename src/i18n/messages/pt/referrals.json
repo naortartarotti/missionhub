@@ -1,0 +1,344 @@
+{
+  "title": "Indicações",
+  "description": "Acompanhe cada envio do início à contratação: candidatos que você enviou para vagas de parceiros e candidatos que parceiros enviaram para as suas.",
+  "directionNav": "Direção das indicações",
+  "tabs": {
+    "sent": "Enviadas",
+    "received": "Recebidas"
+  },
+  "empty": {
+    "sent": {
+      "title": "Nenhuma indicação enviada ainda",
+      "description": "Quando uma vaga de parceiro combinar com um dos seus candidatos, envie-o pela página Oportunidades. Você acompanhará o progresso aqui.",
+      "action": "Ver oportunidades"
+    },
+    "received": {
+      "title": "Nenhum envio recebido ainda",
+      "description": "Publique uma vaga aberta a parceiros. Recrutadores com candidatos compatíveis poderão enviá-los a você.",
+      "action": "Gerenciar vagas"
+    }
+  },
+  "caption": {
+    "sent": "Indicações enviadas",
+    "received": "Envios recebidos"
+  },
+  "columns": {
+    "candidate": "Candidato",
+    "job": "Vaga",
+    "partner": "Parceiro",
+    "from": "De",
+    "updated": "Atualizado",
+    "status": "Status"
+  },
+  "detail": {
+    "title": "Indicação",
+    "submittedFlash": "Enviado. {partner} foi notificado e agora vê apenas os campos que você aprovou.",
+    "sentTo": "Enviada para {partner}",
+    "receivedFrom": "Recebida de {partner}",
+    "forJob": "para {job}",
+    "revoked": "A autorização de compartilhamento do candidato foi revogada em {date}.",
+    "revokedTarget": "O perfil compartilhado e os documentos não estão mais disponíveis para você.",
+    "revokedSource": "O parceiro não tem mais acesso ao snapshot nem aos documentos.",
+    "guidanceTarget": "Analise o perfil aprovado e depois decida. O feedback deve ser relacionado à vaga e não discriminatório.",
+    "guidanceSource": "Mantenha o parceiro atualizado. Retirar a indicação encerra o acesso dele a novos documentos.",
+    "openCandidate": "Abrir ficha do candidato",
+    "approvedProfile": "Perfil do candidato aprovado",
+    "whatYouShared": "O que você compartilhou",
+    "notAvailable": "Não disponível.",
+    "fields": {
+      "name": "Nome",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "headline": "Título",
+      "seniority": "Senioridade",
+      "years": {
+        "one": "{count} ano",
+        "other": "{count} anos"
+      },
+      "skills": "Habilidades",
+      "languages": "Idiomas",
+      "arrangement": "Modelo de trabalho",
+      "location": "Local",
+      "openToRelocation": "aberto a mudança",
+      "available": "Disponível",
+      "salary": "Pretensão salarial"
+    },
+    "experience": "Experiência",
+    "present": "atual",
+    "disclosed": "Campos divulgados: {fields}. Snapshot feito em {date}; edições posteriores na ficha original não são compartilhadas.",
+    "sharedDocuments": "Documentos compartilhados",
+    "messages": "Mensagens",
+    "you": "Você",
+    "partnerRecruiter": "Recrutador de {partner}",
+    "noMessages": "Nenhuma mensagem ainda.",
+    "agreement": {
+      "title": "Acordo de colaboração",
+      "sourcing": "Recrutador de origem",
+      "jobOwner": "Dono da vaga",
+      "platform": "Plataforma",
+      "rule": "{rule} v{version} · termos {terms}",
+      "confirmed": "Confirmado por ambas as partes",
+      "awaiting": "Aguardando o recrutador de origem",
+      "openPlacement": "Abrir colocação e extrato",
+      "pending": "Criado automaticamente a partir da regra de comissão vigente quando o dono da vaga aceita. Depois disso, o snapshot fica congelado."
+    },
+    "timeline": "Linha do tempo",
+    "reasonQuote": "“{reason}”",
+    "ownership": "Titularidade protegida até {date}."
+  },
+  "actions": {
+    "under_review": "Iniciar análise",
+    "accepted": "Aceitar",
+    "declined": "Recusar",
+    "info_requested": "Pedir mais informações",
+    "withdrawn": "Retirar",
+    "interviewing": "Mover para entrevistas",
+    "offer": "Registrar oferta",
+    "rejected": "Não selecionado",
+    "cancelled": "Cancelar",
+    "markInfoProvided": "Marcar informações como enviadas",
+    "confirmTitle": "{label}?",
+    "declineHint": "Compartilhe um feedback relacionado à vaga e não discriminatório. Ele ficará visível para o recrutador parceiro.",
+    "noteHint": "Sua nota é registrada na linha do tempo da indicação e fica visível para o parceiro.",
+    "infoQuestion": "De quais informações você precisa?",
+    "reason": "Motivo",
+    "updated": "Atualizado"
+  },
+  "agreement": {
+    "trigger": "Analisar e confirmar termos",
+    "title": "Confirmar acordo de colaboração",
+    "description": "Você concorda com a divisão de comissão exibida, congelada para esta indicação. Os termos-modelo são um rascunho pendente de revisão jurídica; confirme suas próprias obrigações contratuais separadamente.",
+    "confirm": "Confirmar acordo"
+  },
+  "hire": {
+    "trigger": "Informar contratação",
+    "title": "Informar uma contratação",
+    "description": "Cria a colocação usando o acordo congelado. A comissão fica projetada até o pagamento do cliente ser verificado.",
+    "fee": "Taxa de colocação contratada",
+    "currency": "Moeda",
+    "startDate": "Data de início",
+    "guarantee": "Garantia de reposição (dias)",
+    "recording": "Registrando…",
+    "submit": "Registrar contratação"
+  },
+  "message": {
+    "label": "Mensagem",
+    "placeholder": "Apenas mensagens profissionais e relacionadas à vaga. Visíveis para os dois recrutadores.",
+    "sending": "Enviando…",
+    "send": "Enviar mensagem"
+  },
+  "grant": {
+    "revoked": "Acesso revogado",
+    "preparing": "Preparando…",
+    "unavailable": "Indisponível",
+    "download": "Baixar {name}"
+  },
+  "form": {
+    "step1": "1. Escolha o que compartilhar",
+    "step1Body": "Apenas os campos marcados são copiados para um snapshot imutável para {recipient}. Suas notas privadas e a ficha original nunca são compartilhadas.",
+    "fieldsLegend": "Campos a divulgar",
+    "identifying": "Identificador",
+    "documents": "Documentos",
+    "noDocuments": "Nenhum documento cadastrado.",
+    "awaitingScan": "Aguardando verificação",
+    "step2": "2. Registre a autorização do candidato",
+    "authBefore": "O compartilhamento exige autorização específica para",
+    "authAnd": "e para",
+    "authAfter": ". O simples envio de um currículo não autoriza o compartilhamento.",
+    "authorization": "Autorização",
+    "recorded": "Registrada em {date}: {evidence}",
+    "newAuthorization": "Registrar nova autorização",
+    "legalBasis": "Base legal",
+    "legalBasisHint": "Opções provisórias — confirme com um assessor de privacidade.",
+    "evidence": "Evidência",
+    "evidenceHint": "ex.: 'Candidato aprovou por e-mail em 2026-11-06 após ler o resumo da vaga.'",
+    "confirmInterest": "Confirmei que o candidato tem interesse nesta vaga específica e aprovou o compartilhamento das informações selecionadas.",
+    "step3": "3. Adicione uma nota (opcional)",
+    "noteLabel": "Nota para o dono da vaga",
+    "notePlaceholder": "Contexto para o dono da vaga: motivação, aviso prévio, por que combina…",
+    "whoSees": "Quem verá o quê",
+    "nothingSelected": "Nada selecionado",
+    "plusDocuments": {
+      "one": "+ {count} documento",
+      "other": "+ {count} documentos"
+    },
+    "identifyingWarning": "Você está compartilhando informações identificadoras: {fields}.",
+    "anonymous": "O candidato permanece anônimo para o parceiro, a menos que você adicione campos identificadores.",
+    "revocation": "Se a autorização for revogada depois, o parceiro perde imediatamente o acesso ao snapshot e aos documentos.",
+    "submitting": "Enviando…",
+    "submit": "Enviar candidato"
+  },
+  "disclosure": {
+    "headline": "Título",
+    "summary": "Resumo profissional",
+    "skills": "Habilidades",
+    "seniority": "Senioridade e anos de experiência",
+    "experience": "Histórico profissional (cargos, empresas, datas)",
+    "languages": "Idiomas de trabalho",
+    "work_arrangements": "Preferências de modelo de trabalho",
+    "location": "Cidade / região",
+    "availability": "Data de disponibilidade",
+    "salary_expectation": "Pretensão salarial",
+    "full_name": "Nome completo",
+    "email": "E-mail",
+    "phone": "Telefone"
+  },
+  "validation": {
+    "selectField": "Selecione pelo menos um campo para compartilhar",
+    "confirmInterest": "Confirme que o candidato tem interesse nesta vaga",
+    "describeAuthorization": "Descreva como o candidato autorizou o compartilhamento com este recrutador para esta vaga",
+    "writeMessage": "Escreva uma mensagem",
+    "enterFee": "Informe a taxa de colocação",
+    "enterStartDate": "Informe uma data de início",
+    "validAmount": "Informe um valor válido",
+    "pickReason": "Escolha um motivo",
+    "addNote": "Adicione uma explicação curta",
+    "addQuestion": "Escreva sua pergunta"
+  },
+  "errors": {
+    "opportunityGone": "Esta oportunidade não está mais disponível.",
+    "notFound": "Indicação não encontrada."
+  },
+  "success": {
+    "statusUpdated": "Status atualizado. O parceiro foi notificado.",
+    "agreementConfirmed": "Acordo confirmado. Os termos de comissão agora estão congelados para esta indicação."
+  },
+  "queue": {
+    "bucketNav": "Etapa da indicação",
+    "buckets": {
+      "review": "A avaliar",
+      "active": "Em processo",
+      "closed": "Encerradas"
+    },
+    "jobFilter": "Filtrar por vaga",
+    "allJobs": "Todas as vagas",
+    "jobOption": "{title} · {count} a avaliar",
+    "sortLabel": "Ordenar",
+    "sorts": {
+      "fit": "Maior aderência",
+      "oldest": "Mais antigas",
+      "newest": "Mais recentes"
+    },
+    "caughtUp": {
+      "title": "Tudo em dia",
+      "description": "Nenhum envio aguardando decisão. Os novos aparecem aqui e nas suas notificações."
+    },
+    "emptyBucket": "Nada por aqui ainda.",
+    "selectAll": "Selecionar todos desta página",
+    "selectRow": "Selecionar {name}",
+    "selectHint": "Selecione linhas para recusar várias de uma vez",
+    "selected": {
+      "one": "{count} selecionada",
+      "other": "{count} selecionadas"
+    },
+    "declineSelected": "Recusar…",
+    "clear": "Limpar",
+    "keys": {
+      "move": "navegar",
+      "accept": "aceitar",
+      "decline": "recusar",
+      "info": "pedir info",
+      "select": "selecionar"
+    },
+    "noScore": "Sem score de aderência para este envio",
+    "coverage": "{has}/{total} skills obrigatórias",
+    "salaryFits": "Dentro do budget",
+    "salaryAbove": "Acima do budget",
+    "revoked": "Compartilhamento revogado",
+    "availableFrom": "Disponível em {date}",
+    "panelLabel": "Avaliar {name}",
+    "fromPartner": "De {partner}",
+    "close": "Fechar",
+    "revokedLong": "O candidato revogou o compartilhamento. O perfil e os documentos não estão mais disponíveis.",
+    "vsJob": "Comparado à sua vaga",
+    "bonusSkills": "Também tem: {skills}",
+    "vsRequirement": "{value} (vaga: {req})",
+    "vsBudget": "{value} (budget até {budget})",
+    "notShared": "Não compartilhado",
+    "notSet": "Não informado",
+    "summary": "Resumo",
+    "experience": {
+      "one": "Experiência ({count})",
+      "other": "Experiências ({count})"
+    },
+    "documents": "Documentos",
+    "noMessages": "Nenhuma mensagem ainda. Abra a página completa para escrever.",
+    "messages": {
+      "one": "{count} mensagem",
+      "other": "{count} mensagens"
+    },
+    "agreementLine": "Divisão: indicador {sourcing} · você {owner} · plataforma {platform}",
+    "accept": "Aceitar",
+    "decline": "Recusar",
+    "askInfo": "Pedir info",
+    "openFull": "Abrir página completa",
+    "waitingPartner": "Aguardando resposta do parceiro",
+    "checkOk": "Atende",
+    "checkWarn": "Atende parcialmente",
+    "checkUnknown": "Desconhecido",
+    "declineTitle": "Recusar este candidato?",
+    "declineTitleMany": {
+      "one": "Recusar {count} candidato?",
+      "other": "Recusar {count} candidatos?"
+    },
+    "declineHint": "O parceiro vê o motivo. Mantenha critérios ligados à vaga.",
+    "reason": "Motivo",
+    "note": "Nota para o parceiro",
+    "notePlaceholder": "Nota opcional para o parceiro",
+    "notePlaceholderRequired": "Explique o motivo (obrigatório)",
+    "declineMany": {
+      "one": "Recusar {count}",
+      "other": "Recusar {count}"
+    },
+    "cancel": "Cancelar",
+    "infoTitle": "Pedir mais informações ao parceiro",
+    "infoHint": "A indicação fica pausada até o parceiro responder.",
+    "infoPlaceholder": "Ex.: Pode informar o aviso prévio e projetos recentes?",
+    "done": {
+      "accepted": "Aceito. O acordo de colaboração foi criado.",
+      "declined": "Recusado. O parceiro foi avisado.",
+      "info_requested": "Pergunta enviada ao parceiro.",
+      "under_review": "Marcado como em avaliação.",
+      "bulk": {
+        "one": "{count} indicação recusada.",
+        "other": "{count} indicações recusadas."
+      }
+    },
+    "group": {
+      "waiting": {
+        "one": "{count} aguardando sua decisão",
+        "other": "{count} aguardando sua decisão"
+      },
+      "noneWaiting": "Nada aguardando",
+      "viewJob": "Ver vaga"
+    }
+  },
+  "declineReasons": {
+    "skills": "Faltam skills",
+    "seniority": "Senioridade",
+    "salary": "Salário",
+    "location": "Localização",
+    "availability": "Disponibilidade",
+    "duplicate": "Já em processo",
+    "position_filled": "Vaga preenchida",
+    "other": "Outro"
+  },
+  "direction": {
+    "inbound": {
+      "tab": "Recebidas",
+      "tabHint": "Candidatos de parceiros para suas vagas",
+      "badge": "Candidato do parceiro → sua vaga",
+      "short": "Recebida"
+    },
+    "outbound": {
+      "tab": "Enviadas",
+      "tabHint": "Seus candidatos para vagas de parceiros",
+      "badge": "Seu candidato → vaga do parceiro",
+      "short": "Enviada"
+    },
+    "yourJob": "Sua vaga",
+    "yourCandidate": "Seu candidato",
+    "partnerJob": "Vaga do parceiro",
+    "hiringRecruiter": "Recrutador da vaga"
+  }
+}

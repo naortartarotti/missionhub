@@ -4,35 +4,38 @@ import { OrgSettingsForm } from "@/features/organizations/components/org-setting
 import { Panel } from "@/components/shared/card";
 import { SectionTitle } from "@/components/shared/page-header";
 import { StatusPill } from "@/components/shared/status-pill";
+import { getT } from "@/i18n/server";
 
-export const metadata = { title: "Settings" };
+export async function generateMetadata() {
+  return { title: (await getT("settings"))("title") };
+}
 
 export default async function SettingsPage({ params }: PageProps<"/w/[orgSlug]/settings">) {
   const { orgSlug } = await params;
-  const ctx = await getRequestContext(orgSlug);
+  const [ctx, t] = await Promise.all([getRequestContext(orgSlug), getT("settings")]);
   return (
     <div className="grid gap-6 xl:grid-cols-2">
       <Panel>
-        <SectionTitle>Organization</SectionTitle>
+        <SectionTitle>{t("organization.title")}</SectionTitle>
         <OrgSettingsForm orgSlug={orgSlug} name={ctx.organizationName} currency={ctx.currency} disabled={!can(ctx, "team:manage")} />
       </Panel>
       <Panel>
-        <SectionTitle>Integrations</SectionTitle>
+        <SectionTitle>{t("integrations.title")}</SectionTitle>
         <ul className="grid gap-3 text-sm">
           <li className="flex items-center justify-between gap-3">
-            <span><span className="font-medium">AI extraction & explanations</span><span className="block text-muted-foreground">Matching uses deterministic, rule-based scoring without it.</span></span>
-            <StatusPill tone={integrations.ai ? "success" : "neutral"} label={integrations.ai ? "Configured" : "Not configured"} />
+            <span><span className="font-medium">{t("integrations.aiName")}</span><span className="block text-muted-foreground">{t("integrations.aiDescription")}</span></span>
+            <StatusPill tone={integrations.ai ? "success" : "neutral"} label={integrations.ai ? t("integrations.configured") : t("integrations.notConfigured")} />
           </li>
           <li className="flex items-center justify-between gap-3">
-            <span><span className="font-medium">Transactional email</span><span className="block text-muted-foreground">Without it, notifications are in-app only.</span></span>
-            <StatusPill tone={integrations.email ? "success" : "neutral"} label={integrations.email ? "Configured" : "Not configured"} />
+            <span><span className="font-medium">{t("integrations.emailName")}</span><span className="block text-muted-foreground">{t("integrations.emailDescription")}</span></span>
+            <StatusPill tone={integrations.email ? "success" : "neutral"} label={integrations.email ? t("integrations.configured") : t("integrations.notConfigured")} />
           </li>
           <li className="flex items-center justify-between gap-3">
-            <span><span className="font-medium">Payments provider</span><span className="block text-muted-foreground">Settlement is recorded through a verified manual ledger. No funds move through MissionHub.</span></span>
-            <StatusPill tone="neutral" label="Manual ledger" />
+            <span><span className="font-medium">{t("integrations.paymentsName")}</span><span className="block text-muted-foreground">{t("integrations.paymentsDescription")}</span></span>
+            <StatusPill tone="neutral" label={t("integrations.manualLedger")} />
           </li>
         </ul>
-        <p className="mt-4 text-xs text-muted-foreground">Data residency: configure your Supabase project in a Canadian region (ca-central-1). Subprocessors such as AI or email vendors may process data outside Canada.</p>
+        <p className="mt-4 text-xs text-muted-foreground">{t("integrations.residency")}</p>
       </Panel>
     </div>
   );

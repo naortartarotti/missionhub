@@ -7,10 +7,11 @@ import { revalidatePath } from "next/cache";
 import { assertCan, getRequestContext } from "@/server/auth/context";
 import { createAdminClient } from "@/server/supabase/admin";
 import { fromZodError, toActionError, type ActionResult } from "@/lib/actions/result";
+import { msg } from "@/i18n/translate";
 import { formToObject } from "@/lib/validation/form-data";
 import { parseMajorToMinor } from "@/lib/money/format";
 import { listOpportunities } from "@/features/matching/queries";
-import { messageSchema, reportHireSchema, submitReferralSchema, transitionSchema } from "./schemas";
+import { bulkDeclineSchema, messageSchema, reportHireSchema, reviewSchema, submitReferralSchema, transitionSchema } from "./schemas";
 
 export async function submitReferral(orgSlug: string, _: ActionResult | null, formData: FormData): Promise<ActionResult> {
   return guard(async () => {
@@ -23,7 +24,7 @@ export async function submitReferral(orgSlug: string, _: ActionResult | null, fo
 
     // Resolve candidate & job from the authorized projection, never from client-supplied ids.
     const [opp] = await listOpportunities(ctx, { matchId: v.matchId });
-    if (!opp) return { ok: false, error: "This opportunity is no longer available." };
+    if (!opp) return { ok: false, error: msg("referrals.errors.opportunityGone") };
 
     let consentId = v.consentId && v.consentId !== "new" ? v.consentId : null;
     if (!consentId) {
@@ -76,7 +77,47 @@ export async function transitionReferral(orgSlug: string, input: { referralId: s
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/referrals/${parsed.data.referralId}`);
     revalidatePath(`/w/${orgSlug}/referrals`);
-    return { ok: true, message: "Status updated. The partner has been notified." };
+    return { ok: true, message: msg("referrals.success.statusUpdated") };
+  });
+}
+
+/** One queue decision (accept / decline with reason code / ask for info / mark in review). */
+export async function reviewReferral(
+  orgSlug: string,
+  input: { referralId: string; to: string; reasonCode?: string; note?: string; version: number },
+): Promise<ActionResult> {
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "referrals:review");
+    const parsed = reviewSchema.safeParse(input);
+    if (!parsed.success) return fromZodError(parsed.error);
+    const v = parsed.data;
+    const { error } = await ctx.db.rpc("review_referral", {
+      p_referral: v.referralId,
+      p_to: v.to,
+      p_reason_code: v.reasonCode ?? "",
+      p_note: v.note,
+      p_expected_version: v.version,
+    });
+    if (error) return toActionError(error);
+    revalidatePath(`/w/${orgSlug}/referrals`);
+    revalidatePath(`/w/${orgSlug}/referrals/${v.referralId}`);
+    return { ok: true, message: msg(`referrals.queue.done.${v.to}`) };
+  });
+}
+
+/** Declines several pending referrals with one reason. Ones that changed meanwhile are skipped. */
+export async function declineReferrals(orgSlug: string, input: { ids: string[]; reasonCode: string; note?: string }): Promise<ActionResult<{ count: number }>> {
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "referrals:review");
+    const parsed = bulkDeclineSchema.safeParse(input);
+    if (!parsed.success) return fromZodError(parsed.error);
+    await rateLimit(ctx.db, "referral.bulk_decline", 30, 600);
+    const { data, error } = await ctx.db.rpc("decline_referrals", { p_ids: parsed.data.ids, p_reason_code: parsed.data.reasonCode, p_note: parsed.data.note });
+    if (error) return toActionError(error);
+    revalidatePath(`/w/${orgSlug}/referrals`);
+    return { ok: true, data: { count: data ?? 0 }, message: msg("referrals.queue.done.bulk", { count: data ?? 0 }) };
   });
 }
 
@@ -87,9 +128,9 @@ export async function sendReferralMessage(orgSlug: string, referralId: string, _
     if (parsed.success) await rateLimit(ctx.db, "referral.message", 60, 600);
     if (!parsed.success) return fromZodError(parsed.error);
     const { data: ref } = await ctx.db.from("referrals").select("source_org_id, target_org_id").eq("id", referralId).maybeSingle();
-    if (!ref) return { ok: false, error: "Referral not found." };
+    if (!ref) return { ok: false, error: msg("referrals.errors.notFound") };
     const side = ref.source_org_id === ctx.organizationId ? "source" : ref.target_org_id === ctx.organizationId ? "target" : null;
-    if (!side) return { ok: false, error: "You don't have permission to do that." };
+    if (!side) return { ok: false, error: msg("errors.forbidden") };
     const { error } = await ctx.db.from("referral_messages").insert({ referral_id: referralId, author_id: ctx.userId, author_side: side, body: parsed.data.body });
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/referrals/${referralId}`);
@@ -105,7 +146,7 @@ export async function confirmAgreement(orgSlug: string, referralId: string): Pro
     const { error } = await ctx.db.rpc("confirm_agreement", { p_referral: referralId });
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/referrals/${referralId}`);
-    return { ok: true, message: "Agreement confirmed. Commission terms are now frozen for this referral." };
+    return { ok: true, message: msg("referrals.success.agreementConfirmed") };
   });
 }
 
@@ -116,7 +157,7 @@ export async function reportHire(orgSlug: string, _: ActionResult | null, formDa
     const parsed = reportHireSchema.safeParse(formToObject(formData));
     if (!parsed.success) return fromZodError(parsed.error);
     const fee = parseMajorToMinor(parsed.data.fee, parsed.data.currency);
-    if (!fee) return { ok: false, error: "Enter a valid placement fee.", fieldErrors: { fee: ["Enter a valid amount"] } };
+    if (!fee) return { ok: false, error: msg("errors.invalid_fee"), fieldErrors: { fee: [msg("referrals.validation.validAmount")] } };
     const { data: placementId, error } = await ctx.db.rpc("report_hire", {
       p_referral: parsed.data.referralId,
       p_fee_minor: fee,

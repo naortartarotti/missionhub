@@ -1,0 +1,53 @@
+{
+  "appName": "MissionHub",
+  "actions": {
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "working": "En cours…",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "viewAll": "Tout voir",
+    "showAll": "Tout afficher",
+    "undo": "Annuler",
+    "tryAgain": "Réessayer",
+    "continue": "Continuer",
+    "search": "Rechercher"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "summary": "Page {page} sur {pages} · {total} au total"
+  },
+  "theme": {
+    "toggle": "Basculer le mode sombre"
+  },
+  "language": {
+    "label": "Langue",
+    "changed": "Langue mise à jour"
+  },
+  "account": {
+    "switch": "Changer d'organisation ou de compte",
+    "organizations": "Organisations",
+    "current": "Actuelle",
+    "demo": "DÉMO",
+    "yourAccount": "Votre compte",
+    "signOut": "Se déconnecter",
+    "createOrganization": "Créer une organisation",
+    "platformAdmin": "Administration de la plateforme",
+    "newOrganization": "Nouvelle organisation"
+  },
+  "skipToContent": "Aller au contenu",
+  "demo": {
+    "title": "Espace de démonstration",
+    "body": "Toutes les données ici sont fictives. Ne les mélangez jamais avec de vrais candidats."
+  },
+  "none": "—",
+  "notShared": "Non partagé",
+  "yes": "Oui",
+  "no": "Non"
+}

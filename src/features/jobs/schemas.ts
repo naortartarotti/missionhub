@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { msg } from "@/i18n/translate";
 import { normalizeSkills } from "@/features/matching/domain/skills";
 import { SENIORITY_VALUES, ARRANGEMENT_VALUES } from "@/features/candidates/schemas";
 
@@ -14,7 +15,7 @@ const optMoney = z
     if (!v || !v.trim()) return null;
     const n = Number(v.replace(/[,\s]/g, ""));
     if (!Number.isFinite(n) || n < 0) {
-      ctx.addIssue({ code: "custom", message: "Enter a positive amount" });
+      ctx.addIssue({ code: "custom", message: msg("jobs.validation.positiveAmount") });
       return z.NEVER;
     }
     return n;
@@ -22,14 +23,14 @@ const optMoney = z
 
 export const jobFormSchema = z
   .object({
-    title: z.string().trim().min(2, "Enter a job title").max(160),
+    title: z.string().trim().min(2, msg("jobs.validation.titleRequired")).max(160),
     clientName: z.string().trim().max(160).optional().transform((v) => v || null),
     clientConfidential: bool,
     description: z.string().trim().max(20000).default(""),
     requiredSkills: list,
     preferredSkills: list,
     seniority: z.enum(SENIORITY_VALUES).optional().or(z.literal("")).transform((v) => v || null),
-    minYearsExperience: optMoney.refine((v) => v === null || v <= 70, "Must be 70 or less"),
+    minYearsExperience: optMoney.refine((v) => v === null || v <= 70, msg("jobs.validation.maxYears")),
     workArrangement: z.enum(ARRANGEMENT_VALUES),
     locationCity: z.string().trim().max(100).optional().transform((v) => v || null),
     locationRegion: z.string().trim().max(100).optional().transform((v) => v || null),
@@ -38,7 +39,7 @@ export const jobFormSchema = z
       .trim()
       .toUpperCase()
       .optional()
-      .refine((v) => !v || /^[A-Z]{2}$/.test(v), "Use a 2-letter country code")
+      .refine((v) => !v || /^[A-Z]{2}$/.test(v), msg("jobs.validation.countryCode"))
       .transform((v) => v || null),
     languages: list,
     contractType: z.enum(["permanent", "contract", "temporary", "contract_to_hire"]),
@@ -54,8 +55,8 @@ export const jobFormSchema = z
     shareFee: bool,
     status: z.enum(["draft", "active"]).default("draft"),
   })
-  .refine((v) => v.salaryMin === null || v.salaryMax === null || v.salaryMin <= v.salaryMax, { path: ["salaryMax"], message: "Maximum must be at least the minimum" })
-  .refine((v) => v.clientConfidential || v.clientName, { path: ["clientName"], message: "Enter the client name or keep it confidential" });
+  .refine((v) => v.salaryMin === null || v.salaryMax === null || v.salaryMin <= v.salaryMax, { path: ["salaryMax"], message: msg("jobs.validation.salaryRange") })
+  .refine((v) => v.clientConfidential || v.clientName, { path: ["clientName"], message: msg("jobs.validation.clientRequired") });
 
 export type JobFormValues = z.infer<typeof jobFormSchema>;
 
