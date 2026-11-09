@@ -89,5 +89,40 @@
       "other": "{count} partner candidates fit"
     },
     "notOpen": "Not open to partners"
+  },
+  "hero": {
+    "eyebrow": "Opportunities for you",
+    "amountNone": {
+      "one": "{count} match to decide",
+      "other": "{count} matches to decide"
+    },
+    "body": {
+      "one": "{count} partner job fits your candidates right now. Pick who to submit.",
+      "other": "{count} partner jobs fit your candidates right now. Pick who to submit."
+    },
+    "cta": "Review matches",
+    "upNext": "Up next",
+    "caughtUp": "You're all caught up. New referrals and payment steps will show up here."
+  },
+  "attentionExtra": {
+    "review": {
+      "one": "Review {count} referral · {job}",
+      "other": "Review {count} referrals · {job}"
+    },
+    "reviewSub": "A partner submitted a candidate to your job",
+    "newMatches": {
+      "one": "{count} new match to look at",
+      "other": "{count} new matches to look at"
+    },
+    "newMatchesSub": "Fresh fits for your candidates"
+  },
+  "cards": {
+    "new": "New",
+    "fit": "could fit",
+    "referred": "referred",
+    "review": "to review",
+    "reviewNow": "Review now",
+    "open": "Open job",
+    "forYou": "potential share for you"
   }
 }

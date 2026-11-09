@@ -2032,6 +2032,14 @@ export type Database = {
         Args: { p_grant: string; p_ok: boolean; p_path: string }
         Returns: undefined
       }
+      get_sent_referral_jobs: {
+        Args: { p_org: string }
+        Returns: {
+          job_id: string
+          status: Database["public"]["Enums"]["job_status"]
+          status_updated_at: string
+        }[]
+      }
       mark_matches_seen: {
         Args: { p_matches: string[]; p_org: string }
         Returns: undefined
@@ -2106,6 +2114,7 @@ export type Database = {
       }
       review_referral: {
         Args: {
+          p_acting_org?: string
           p_expected_version: number
           p_note: string
           p_reason_code: string
@@ -2141,6 +2150,7 @@ export type Database = {
       }
       transition_referral: {
         Args: {
+          p_acting_org?: string
           p_expected_version: number
           p_reason: string
           p_referral: string

@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "title": "MissionHub · The private referral network for recruiters",
+    "description": "Match your private candidates to other recruiters' open jobs. Nothing is shared until you authorize it, and every placement ends in an auditable 45/45/10 commission split."
+  },
+  "nav": {
+    "label": "Main",
+    "skip": "Skip to content",
+    "how": "How it works",
+    "privacy": "Privacy",
+    "commissions": "Commissions",
+    "faq": "FAQ",
+    "signIn": "Sign in",
+    "getStarted": "Get started",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "eyebrow": "The private referral network for recruiters",
+    "line1": "Your candidates.",
+    "line2": "Their jobs.",
+    "line3": "One shared win.",
+    "subtitle": "MissionHub matches the candidates sitting in your pipeline with open roles from partner agencies. Nothing leaves your hands until you say so, and every placement ends in a clear, auditable split.",
+    "primary": "Create your workspace",
+    "secondary": "See how it works",
+    "note": "Free to start · No candidate data shared without authorization",
+    "imageAlt": "Two recruiters celebrating a successful placement with a high five",
+    "card": {
+      "matchLabel": "Strong match",
+      "matchJob": "Senior Product Designer",
+      "anonTitle": "Partner matches",
+      "anonBody": "3 candidates fit · identities hidden",
+      "splitTitle": "Commission split",
+      "splitBody": "45 · 45 · 10"
+    }
+  },
+  "marquee": {
+    "label": "Roles recruiters place together",
+    "items": {
+      "a": "Software engineering",
+      "b": "Finance & accounting",
+      "c": "Healthcare",
+      "d": "Sales leadership",
+      "e": "Product & design",
+      "f": "Construction",
+      "g": "Legal",
+      "h": "Data & AI",
+      "i": "Operations",
+      "j": "Executive search"
+    }
+  },
+  "statement": {
+    "text": "Every recruiter has great candidates that don't fit any of their own open roles. Every recruiter has roles they can't fill fast enough. MissionHub connects the two, without anyone giving away their network."
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "title": "From a quiet pipeline to a shared placement.",
+    "subtitle": "Four steps. Each one is explicit, permissioned and recorded.",
+    "steps": {
+      "one": {
+        "title": "Add candidates privately",
+        "body": "Import a CSV or add profiles by hand. Record the candidate's processing authorization, then activate them for matching. They stay visible to your organization only."
+      },
+      "two": {
+        "title": "Get matched to partner jobs",
+        "body": "The engine scores your candidates against partner roles and sorts them into Strong, Potential and Not eligible, with a plain explanation of why."
+      },
+      "three": {
+        "title": "Submit with authorization",
+        "body": "Choose exactly which fields and documents to share, record the job-specific authorization, confirm the candidate's interest, and submit."
+      },
+      "four": {
+        "title": "Hire and split the fee",
+        "body": "Track interviews, offers and the hire. The commission flows through a versioned ledger: projected, payable, paid."
+      }
+    }
+  },
+  "sides": {
+    "eyebrow": "Two sides, one marketplace",
+    "title": "Built for both ends of the referral.",
+    "owner": {
+      "badge": "You have the candidate",
+      "title": "Turn idle profiles into placements.",
+      "body": "Candidates who aren't right for your roles are often perfect for someone else's. Find out where they fit and earn your share when they're hired.",
+      "points": {
+        "a": "Opportunities sorted by match strength",
+        "b": "\"Why this match\" breakdown for every result",
+        "c": "You pick what's shared, field by field"
+      },
+      "imageAlt": "A recruiter smiling by an office window, holding a laptop"
+    },
+    "jobOwner": {
+      "badge": "You have the job",
+      "title": "Fill roles faster with a trusted bench.",
+      "body": "Open a role to partner referrals and see how many candidates already fit, before anyone shares a name. Review, accept or decline in one place.",
+      "points": {
+        "a": "Paste a job description, get suggested requirements",
+        "b": "Anonymized match counts before referrals arrive",
+        "c": "Accept, decline with a reason, or request info"
+      },
+      "imageAlt": "Two recruiters working side by side at their desks"
+    }
+  },
+  "privacy": {
+    "eyebrow": "Privacy by design",
+    "title": "Anonymous until it's authorized.",
+    "subtitle": "Job owners see match counts, never identities. A candidate is only revealed when their recruiter submits them, with documented consent for that specific role.",
+    "mock": {
+      "job": "Head of Finance · Montréal",
+      "visible": "What the job owner sees",
+      "count": "4 partner candidates match",
+      "strong": "2 strong",
+      "potential": "2 potential",
+      "hidden": "Name, contact and resume stay hidden"
+    },
+    "features": {
+      "isolation": {
+        "title": "Organization isolation",
+        "body": "Row-level security keeps every agency's data inside its own workspace."
+      },
+      "consent": {
+        "title": "Documented consent",
+        "body": "Processing and job-specific authorizations are recorded before anything is shared."
+      },
+      "audit": {
+        "title": "Full audit trail",
+        "body": "Every submission, decision and ledger entry is logged and reviewable."
+      },
+      "requests": {
+        "title": "Privacy requests",
+        "body": "Access and deletion requests are tracked with due dates, from your settings."
+      }
+    }
+  },
+  "commissions": {
+    "eyebrow": "Commissions",
+    "title": "A split everyone can see coming.",
+    "subtitle": "Agree on the terms before work starts. The ledger shows exactly who is owed what, at every step.",
+    "split": {
+      "source": "Candidate recruiter",
+      "job": "Job recruiter",
+      "platform": "MissionHub"
+    },
+    "ledger": {
+      "title": "Placement ledger",
+      "projected": "Projected",
+      "payable": "Payable",
+      "paid": "Paid",
+      "projectedBody": "Hire reported with fee and start date",
+      "payableBody": "Client payment verified by the platform",
+      "paidBody": "Payout receipt confirmed by the recruiter"
+    },
+    "note": "No funds move through MissionHub. Payments happen between you and your partners, and the platform keeps the evidence.",
+    "configurable": "Split rules are configurable and versioned."
+  },
+  "facts": {
+    "a": { "value": "0", "label": "candidate details shared before authorization" },
+    "b": { "value": "45/45/10", "label": "default commission split, versioned" },
+    "c": { "value": "3", "label": "languages: English, Français, Português" },
+    "d": { "value": "100%", "label": "of ledger entries auditable" }
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions recruiters ask first.",
+    "items": {
+      "a": {
+        "q": "Can other agencies see my candidates?",
+        "a": "No. Your candidates are visible only to your organization. Job owners see anonymized match counts. A candidate is revealed only when you submit them to a specific job, sharing only the fields and documents you choose."
+      },
+      "b": {
+        "q": "How is the commission split?",
+        "a": "By default, 45% to the recruiter who sourced the candidate, 45% to the recruiter who owns the job and 10% to MissionHub. Rules are configurable and versioned, and both sides confirm a collaboration agreement before the process continues."
+      },
+      "c": {
+        "q": "Does MissionHub handle payments?",
+        "a": "No funds move through the platform. You invoice your client as usual and record the evidence. Client payments are verified by the platform, and payouts are confirmed by the recruiter receiving them."
+      },
+      "d": {
+        "q": "How does matching work?",
+        "a": "Each active candidate is compared to partner jobs on skills, seniority, location and work arrangement. Results come with an indicative score and a readable explanation, so you decide, not the algorithm."
+      },
+      "e": {
+        "q": "Can I bring my team?",
+        "a": "Yes. Invite teammates with one-time links, assign roles and suspend access at any time from Settings › Team."
+      }
+    }
+  },
+  "cta": {
+    "title": "Your next placement is already in someone else's pipeline.",
+    "subtitle": "Set up your workspace in minutes. Bring your candidates, open your roles, and start matching.",
+    "primary": "Create your workspace",
+    "secondary": "Sign in",
+    "imageAlt": "Two professionals shaking hands"
+  },
+  "footer": {
+    "tagline": "The private, permission-based referral network for recruiters.",
+    "product": "Product",
+    "account": "Account",
+    "createAccount": "Create account",
+    "signIn": "Sign in",
+    "legal": "Terms and Privacy Policy are drafts pending legal review.",
+    "rights": "© {year} MissionHub",
+    "photos": "Photos: Unsplash"
+  }
+}

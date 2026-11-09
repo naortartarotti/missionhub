@@ -333,5 +333,29 @@
     "yourCandidate": "Votre candidat",
     "partnerJob": "Poste du partenaire",
     "hiringRecruiter": "Recruteur du poste"
+  },
+  "pages": {
+    "received": {
+      "title": "Recommandations reçues",
+      "description": "Candidats soumis par des recruteurs partenaires à vos postes ouverts. Évaluez chacun et faites-le avancer ou refusez-le."
+    },
+    "sent": {
+      "title": "Recommandations envoyées",
+      "description": "Vos candidats soumis aux postes de recruteurs partenaires, de la soumission à l'embauche."
+    }
+  },
+  "sent": {
+    "eyebrow": "Poste du partenaire · {partner}",
+    "candidates": {
+      "one": "{count} candidat soumis",
+      "other": "{count} candidats soumis"
+    },
+    "jobStatus": "Poste : {status}",
+    "jobUpdated": "Mis à jour {time}",
+    "jobStatusUnknown": "Statut du poste indisponible",
+    "movedBy": "{partner} a changé le statut à {status} · {time}",
+    "movedByYou": "Vous avez changé le statut à {status} · {time}",
+    "submittedAt": "Soumis {time}",
+    "progress": "Étape {step} sur {total}"
   }
 }

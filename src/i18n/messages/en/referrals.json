@@ -333,5 +333,29 @@
     "yourCandidate": "Your candidate",
     "partnerJob": "Partner's job",
     "hiringRecruiter": "Hiring recruiter"
+  },
+  "pages": {
+    "received": {
+      "title": "Referrals received",
+      "description": "Candidates partner recruiters submitted to your open jobs. Review each one and move them forward or decline."
+    },
+    "sent": {
+      "title": "Referrals sent",
+      "description": "Your candidates submitted to partner recruiters' jobs, from submission to hire."
+    }
+  },
+  "sent": {
+    "eyebrow": "Partner's job · {partner}",
+    "candidates": {
+      "one": "{count} candidate submitted",
+      "other": "{count} candidates submitted"
+    },
+    "jobStatus": "Job: {status}",
+    "jobUpdated": "Updated {time}",
+    "jobStatusUnknown": "Job status unavailable",
+    "movedBy": "{partner} moved to {status} · {time}",
+    "movedByYou": "You moved to {status} · {time}",
+    "submittedAt": "Submitted {time}",
+    "progress": "Step {step} of {total}"
   }
 }

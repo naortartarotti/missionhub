@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NavHint } from "@/components/layout/nav-hint";
 import { notFound } from "next/navigation";
 import { EyeOff, Handshake, ShieldOff } from "lucide-react";
 import { getRequestContext } from "@/server/auth/context";
@@ -57,6 +58,7 @@ export default async function ReferralPage({ params, searchParams }: PageProps<"
 
   return (
     <div className="grid gap-6">
+      <NavHint tab={side === "source" ? "sent" : "received"} />
       <PageHeader
         eyebrow={
           <span className="inline-flex flex-wrap items-center gap-2">

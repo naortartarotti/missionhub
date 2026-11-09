@@ -4,12 +4,16 @@
   "navigation": "Navegação",
   "overview": "Visão geral",
   "opportunities": "Oportunidades",
-  "candidates": "Candidatos",
-  "jobs": "Vagas",
+  "candidates": "Todos os candidatos",
+  "jobs": "Todas as vagas",
   "referrals": "Indicações",
   "commissions": "Comissões",
   "activity": "Atividade",
   "settings": "Configurações",
   "badgeNew": "novos",
-  "badgePending": "pendentes"
+  "badgePending": "pendentes",
+  "referralsReceived": "Indicações recebidas",
+  "referralsSent": "Indicações enviadas",
+  "myCandidates": "Meus candidatos",
+  "myJobs": "Minhas vagas"
 }

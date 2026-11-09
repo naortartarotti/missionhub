@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { ArrowLeftRight, CheckCircle2 } from "lucide-react";
 import { getRequestContext } from "@/server/auth/context";
-import { getReferralDetail, listReceivedQueue, listReferrals, receivedCounts, receivedJobs, type QueueRow, type ReceivedJob } from "@/features/referrals/queries";
+import { getReferralDetail, listReceivedQueue, listSentByJob, receivedCounts, receivedJobs, type QueueRow, type ReceivedJob } from "@/features/referrals/queries";
 import { BUCKET_KEYS, DECIDABLE, PAGE_SIZE, QUEUE_SORTS, isDeclineReason, salaryFit, skillCoverage, waitTone, type Bucket, type FitEvidence, type QueueSort, type Snapshot } from "@/features/referrals/review";
-import { DIRECTION_STYLE } from "@/features/referrals/components/direction-badge";
 import { QueueJobFilter, QueueList, ReviewPanel, type PanelView, type QueueGroup, type ReqCheck, type RowView } from "@/features/referrals/components/review-queue";
 import { evidenceText } from "@/features/matching/evidence";
 import { PageHeader } from "@/components/shared/page-header";
@@ -12,7 +11,9 @@ import { Panel } from "@/components/shared/card";
 import { StatusPill } from "@/components/shared/status-pill";
 import { Pagination } from "@/components/shared/pagination";
 import { Button } from "@/components/ui/button";
-import { REFERRAL_STATUS } from "@/lib/labels";
+import { JOB_STATUS, REFERRAL_STATUS } from "@/lib/labels";
+import { DIRECTION_STYLE } from "@/features/referrals/components/direction-badge";
+import { ScoreRing } from "@/features/matching/components/score-ring";
 import { bpsToPercent } from "@/lib/money/format";
 import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 import type { Formatter } from "@/i18n/format";
@@ -35,41 +36,11 @@ export default async function ReferralsPage({ params, searchParams }: PageProps<
   const pendingCount = await receivedCounts(ctx).then((c) => c.review);
   // Land on "Received" when submissions are waiting for a decision (matches the sidebar badge).
   const tab: "sent" | "received" = sp.tab === "received" || (!sp.tab && pendingCount > 0) ? "received" : "sent";
-  const base = `/w/${orgSlug}/referrals`;
-
+  // Sent and Received are separate pages in the sidebar ("Referrals sent" / "Referrals received"),
+  // so each view stands alone here with its own title, without a direction switcher.
   return (
     <div className="grid gap-6">
-      <PageHeader title={t("title")} description={t("description")} />
-      {/* Direction is the first choice on this page: two clearly labelled, color-coded cards. */}
-      <nav aria-label={t("directionNav")} className="grid gap-2 sm:grid-cols-2">
-        {(["received", "sent"] as const).map((k) => {
-          const dir = k === "received" ? "inbound" : "outbound";
-          const { icon: Icon, chip } = DIRECTION_STYLE[dir];
-          const active = tab === k;
-          return (
-            <Link
-              key={k}
-              href={`${base}?tab=${k}`}
-              aria-current={active ? "page" : undefined}
-              className={cn(
-                "flex items-center gap-3 rounded-2xl border px-4 py-3 transition-colors",
-                active ? "border-foreground bg-card ring-1 ring-foreground" : "border-border/60 bg-card/60 hover:bg-card",
-              )}
-            >
-              <span className={cn("grid size-9 shrink-0 place-items-center rounded-full", chip)}>
-                <Icon className="size-4" aria-hidden />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="flex items-center gap-2 text-sm font-semibold">
-                  {t(`direction.${dir}.tab`)}
-                  {k === "received" && pendingCount ? <span className="rounded-full bg-foreground px-1.5 text-xs tabular-nums text-background">{pendingCount}</span> : null}
-                </span>
-                <span className="block truncate text-xs text-muted-foreground">{t(`direction.${dir}.tabHint`)}</span>
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
+      <PageHeader title={t(`pages.${tab}.title`)} description={t(`pages.${tab}.description`)} />
       {tab === "sent" ? <SentTable orgSlug={orgSlug} /> : <ReceivedQueue orgSlug={orgSlug} sp={sp} t={t} tg={tg} f={f} />}
     </div>
   );
@@ -339,11 +310,16 @@ function toPanelView(d: Detail, job: ReceivedJob | undefined, o: Ctx & { orgSlug
 // ---------------------------------------------------------------------------
 // Sent: unchanged table
 
+// Pipeline the hiring recruiter moves a referral through; info_requested sits at the review step.
+const SENT_STAGES = ["submitted", "under_review", "interviewing", "offer", "hired"] as const;
+const STAGE_INDEX: Partial<Record<string, number>> = { submitted: 0, under_review: 1, info_requested: 1, accepted: 1, interviewing: 2, offer: 3, hired: 4 };
+const CLOSED_STATUSES = new Set(["declined", "rejected", "withdrawn", "cancelled"]);
+
 async function SentTable({ orgSlug }: { orgSlug: string }) {
   const ctx = await getRequestContext(orgSlug);
-  const [t, tg, f, rows] = await Promise.all([getT("referrals"), getGlobalT(), getFormatter(), listReferrals(ctx, "sent")]);
+  const [t, tg, f, groups] = await Promise.all([getT("referrals"), getGlobalT(), getFormatter(), listSentByJob(ctx)]);
   const base = `/w/${orgSlug}/referrals`;
-  if (rows.length === 0) {
+  if (groups.length === 0) {
     return (
       <EmptyState
         icon={ArrowLeftRight}
@@ -354,32 +330,68 @@ async function SentTable({ orgSlug }: { orgSlug: string }) {
     );
   }
   return (
-    <Panel className="overflow-hidden p-0">
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[680px] text-sm">
-          <caption className="sr-only">{t("caption.sent")}</caption>
-          <thead>
-            <tr className="border-b border-border text-left text-muted-foreground">
-              <th scope="col" className="px-5 py-3 font-medium">{t("direction.yourCandidate")}</th>
-              <th scope="col" className="px-5 py-3 font-medium">{t("direction.partnerJob")}</th>
-              <th scope="col" className="px-5 py-3 font-medium">{t("direction.hiringRecruiter")}</th>
-              <th scope="col" className="px-5 py-3 font-medium">{t("columns.updated")}</th>
-              <th scope="col" className="px-5 py-3 text-right font-medium">{t("columns.status")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.id} className="border-b border-border/60 last:border-0 hover:bg-muted/40">
-                <td className="px-5 py-3.5"><Link href={`${base}/${r.id}`} className="font-medium underline-offset-4 hover:underline">{r.candidate_label}</Link></td>
-                <td className="px-5 py-3.5">{r.job_title_snapshot}</td>
-                <td className="px-5 py-3.5 text-muted-foreground">{r.target_org?.name}</td>
-                <td className="px-5 py-3.5 text-muted-foreground">{f.relative(r.updated_at)}</td>
-                <td className="px-5 py-3.5 text-right"><StatusPill tone={REFERRAL_STATUS[r.status].tone} label={tg(`labels.referralStatus.${r.status}`)} /></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </Panel>
+    <div className="grid gap-4">
+      {groups.map((g) => (
+        <section key={g.jobId} aria-label={g.title} className="overflow-hidden rounded-3xl border border-border/60 bg-card">
+          <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border/60 px-5 py-3.5">
+            <div className="min-w-0">
+              <p className="mb-0.5 inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                <span className={cn("size-1.5 rounded-full", DIRECTION_STYLE.outbound.dot)} aria-hidden />
+                {t("sent.eyebrow", { partner: g.partner })}
+              </p>
+              <h3 className="truncate text-base font-semibold tracking-tight">{g.title}</h3>
+              <p className="text-xs text-muted-foreground">{t("sent.candidates", { count: g.referrals.length })}</p>
+            </div>
+            <div className="text-right">
+              {g.job ? (
+                <>
+                  <StatusPill tone={JOB_STATUS[g.job.status].tone} label={t("sent.jobStatus", { status: tg(`labels.jobStatus.${g.job.status}`) })} />
+                  <p className="mt-1 text-xs text-muted-foreground">{t("sent.jobUpdated", { time: f.relative(g.job.updatedAt) })}</p>
+                </>
+              ) : (
+                <span className="text-xs text-muted-foreground">{t("sent.jobStatusUnknown")}</span>
+              )}
+            </div>
+          </header>
+          <ul className="divide-y divide-border/50">
+            {g.referrals.map((r) => {
+              const closed = CLOSED_STATUSES.has(r.status);
+              const stage = STAGE_INDEX[r.status] ?? 0;
+              const ev = r.lastEvent;
+              return (
+                <li key={r.id} className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3 px-5 py-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-start">
+                  {/* Same fit score the hiring recruiter sees for this submission (frozen at submit). */}
+                  {r.fit_score != null ? <ScoreRing score={r.fit_score} className="size-11 [&_span]:text-xs" /> : <span className="size-11" aria-hidden />}
+                  <div className="min-w-0 self-center">
+                    <Link href={`${base}/${r.id}`} className="font-medium underline-offset-4 hover:underline">{r.candidate_label}</Link>
+                    {ev && ev.to_status !== "submitted" ? (
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {ev.actor_side === "target"
+                          ? t("sent.movedBy", { partner: g.partner, status: tg(`labels.referralStatus.${ev.to_status}`), time: f.relative(ev.created_at) })
+                          : t("sent.movedByYou", { status: tg(`labels.referralStatus.${ev.to_status}`), time: f.relative(ev.created_at) })}
+                      </p>
+                    ) : (
+                      <p className="mt-1 text-sm text-muted-foreground">{t("sent.submittedAt", { time: f.relative(r.submitted_at) })}</p>
+                    )}
+                    {ev?.reason ? <p className="mt-1.5 rounded-xl bg-muted/60 px-3 py-2 text-sm text-pretty">“{ev.reason}”</p> : null}
+                  </div>
+                  <div className="col-start-2 grid justify-items-start gap-2 sm:col-start-auto sm:justify-items-end">
+                    <StatusPill tone={REFERRAL_STATUS[r.status].tone} label={tg(`labels.referralStatus.${r.status}`)} />
+                    {/* Progress through the hiring recruiter's pipeline; closed referrals show no track. */}
+                    {closed ? null : (
+                      <ol className="flex items-center gap-1" aria-label={t("sent.progress", { step: stage + 1, total: SENT_STAGES.length })}>
+                        {SENT_STAGES.map((s, i) => (
+                          <li key={s} title={tg(`labels.referralStatus.${s}`)} className={cn("h-1.5 w-6 rounded-full", i <= stage ? "bg-foreground" : "bg-border")} />
+                        ))}
+                      </ol>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))}
+    </div>
   );
 }

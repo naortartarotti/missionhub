@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useGlobalT, useT } from "@/i18n/client";
+import { useFormatter, useGlobalT, useT } from "@/i18n/client";
 import { REFERRAL_STATUS } from "@/lib/labels";
 import { cn } from "@/lib/utils";
 import { isSubmitted } from "../triage";
@@ -16,15 +16,34 @@ const BAND_DOT: Record<OpportunityView["band"], string> = {
 };
 
 /**
- * One of your candidates inside a job card. The whole row opens the details panel; the icon
+ * One match inside a group card. `subject="candidate"` (default) names the candidate (inside a job
+ * card); `subject="job"` names the partner job (inside a candidate card). The whole row opens the details panel; the icon
  * actions and the primary button sit above that link (z-10) so they stay independently clickable.
  */
-export function JobMatchRow({ opp, orgSlug, detailHref, selected }: { opp: OpportunityView; orgSlug: string; detailHref: string; selected: boolean }) {
+export function JobMatchRow({
+  opp,
+  orgSlug,
+  detailHref,
+  selected,
+  subject = "candidate",
+}: {
+  opp: OpportunityView;
+  orgSlug: string;
+  detailHref: string;
+  selected: boolean;
+  subject?: "candidate" | "job";
+}) {
   const t = useT("opportunities");
   const tg = useGlobalT();
+  const f = useFormatter();
   const submitted = isSubmitted(opp);
   const canAct = !submitted && opp.band !== "not_eligible";
   const gaps = opp.gaps.length;
+  const name = subject === "job" ? opp.job_title : opp.candidate_name;
+  const sub =
+    subject === "job"
+      ? [opp.job_org_name, opp.client_label, [tg(`labels.arrangement.${opp.work_arrangement}`), opp.location].filter(Boolean).join(", ")].filter(Boolean).join(" · ")
+      : opp.candidate_headline ?? t("card.noHeadline");
 
   return (
     <div
@@ -43,10 +62,10 @@ export function JobMatchRow({ opp, orgSlug, detailHref, selected }: { opp: Oppor
             href={detailHref}
             scroll={false}
             aria-current={selected ? "true" : undefined}
-            aria-label={t("row.details", { name: opp.candidate_name })}
+            aria-label={t("row.details", { name })}
             className="truncate font-medium outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-ring"
           >
-            {opp.candidate_name}
+            {name}
           </Link>
           <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground">
             <span className={cn("size-1.5 rounded-full", BAND_DOT[opp.band])} aria-hidden />
@@ -54,10 +73,18 @@ export function JobMatchRow({ opp, orgSlug, detailHref, selected }: { opp: Oppor
           </span>
         </div>
         <p className="mt-0.5 flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
-          <span className="truncate">{opp.candidate_headline ?? t("card.noHeadline")}</span>
+          <span className="truncate">{sub}</span>
           {gaps ? <span className="shrink-0 text-warning">· {t("row.gaps", { count: gaps })}</span> : null}
         </p>
       </div>
+
+      {/* Inside a candidate card each row is a different job, so its fee share differs: show it per row. */}
+      {subject === "job" && opp.your_share_minor ? (
+        <div className="hidden shrink-0 text-right sm:block">
+          <p className="text-sm font-semibold tabular-nums text-success">{f.money(opp.your_share_minor, opp.fee_currency ?? "CAD", { whole: true })}</p>
+          <p className="text-xs text-muted-foreground">{t("jobGroup.share")}</p>
+        </div>
+      ) : null}
 
       <div className="flex shrink-0 items-center gap-1">
         {submitted && opp.referral_id ? (

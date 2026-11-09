@@ -1,6 +1,6 @@
 {
   "title": "Occasions",
-  "description": "Postes partenaires qui conviennent à vos candidats. Touchez une part des honoraires quand une personne que vous soumettez est embauchée.",
+  "description": "Postes partenaires qui conviennent à vos candidats. Soumettez quelqu'un et suivez-le dans Recommandations envoyées; vous touchez une part des honoraires à l'embauche.",
   "filteredByCandidate": "Correspondances affichées pour un seul candidat.",
   "statusNav": "Statut des correspondances",
   "newCount": {
@@ -16,10 +16,6 @@
       "label": "Gardées",
       "hint": "Votre présélection. Les correspondances auxquelles vous voulez revenir."
     },
-    "submitted": {
-      "label": "Soumises",
-      "hint": "Les candidats déjà envoyés. Ouvrez-en un pour suivre la recommandation."
-    },
     "dismissed": {
       "label": "Écartées",
       "hint": "Les correspondances marquées comme ne convenant pas. Restaurez-en une si la situation change."
@@ -30,7 +26,8 @@
     }
   },
   "controls": {
-    "sort": "Trier"
+    "sort": "Trier",
+    "groupBy": "Regrouper"
   },
   "sorts": {
     "fit": "Meilleure adéquation",
@@ -42,6 +39,30 @@
       "other": "{count} candidats"
     },
     "share": "votre part estimée"
+  },
+  "groupBy": {
+    "job": "Par poste",
+    "candidate": "Par candidat"
+  },
+  "candidateGroup": {
+    "jobs": {
+      "one": "{count} poste",
+      "other": "{count} postes"
+    },
+    "bestShare": "meilleure part estimée",
+    "referrals": {
+      "one": "{count} recommandation envoyée",
+      "other": "{count} recommandations envoyées"
+    },
+    "inProgress": {
+      "one": "{count} en cours",
+      "other": "{count} en cours"
+    },
+    "hired": {
+      "one": "{count} embauche",
+      "other": "{count} embauches"
+    },
+    "noReferrals": "Pas encore recommandé"
   },
   "empty": {
     "inactive": {
@@ -60,10 +81,6 @@
     "saved": {
       "title": "Rien de gardé",
       "description": "Utilisez Garder sur une correspondance pour bâtir une présélection à laquelle revenir."
-    },
-    "submitted": {
-      "title": "Aucun candidat soumis pour l'instant",
-      "description": "Quand vous soumettez un candidat à un poste partenaire, vous pouvez le suivre d'ici."
     },
     "dismissed": {
       "title": "Rien d'écarté",

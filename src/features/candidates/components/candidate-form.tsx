@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/shared/form-field";
+import { LocationFields } from "@/components/shared/location-fields";
 import { SubmitButton } from "@/components/shared/submit-button";
 import { FormMessage } from "@/components/shared/form-message";
 import { Panel } from "@/components/shared/card";
@@ -124,17 +125,11 @@ export function CandidateForm({
             ))}
           </div>
         </fieldset>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <FormField id="locationCity" label={t("form.city")} error={fe?.locationCity}>
-            <Input id="locationCity" name="locationCity" defaultValue={d.locationCity} />
-          </FormField>
-          <FormField id="locationRegion" label={t("form.region")} error={fe?.locationRegion} hint={t("form.regionHint")}>
-            <Input id="locationRegion" name="locationRegion" defaultValue={d.locationRegion} />
-          </FormField>
-          <FormField id="locationCountry" label={t("form.country")} error={fe?.locationCountry} hint={t("form.countryHint")}>
-            <Input id="locationCountry" name="locationCountry" maxLength={2} defaultValue={d.locationCountry ?? "CA"} />
-          </FormField>
-        </div>
+        <LocationFields
+          defaults={{ country: d.locationCountry ?? "CA", region: d.locationRegion, city: d.locationCity }}
+          labels={{ country: t("form.country"), region: t("form.region"), city: t("form.city") }}
+          errors={{ country: fe?.locationCountry, region: fe?.locationRegion, city: fe?.locationCity }}
+        />
         <Label className="flex items-center gap-2 font-normal">
           <Checkbox name="openToRelocation" defaultChecked={d.openToRelocation} /> {t("form.openToRelocation")}
         </Label>

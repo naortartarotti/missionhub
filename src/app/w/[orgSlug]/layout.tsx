@@ -6,6 +6,7 @@ import { Logo } from "@/components/layout/logo";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { OrgSwitcher } from "@/components/layout/org-switcher";
 import { MobileNav } from "@/components/layout/mobile-nav";
+import { DashboardOnly } from "@/components/layout/dashboard-only";
 import { ActivityPopover } from "@/features/notifications/components/activity-popover";
 import { ActivityProvider } from "@/features/notifications/components/activity-context";
 
@@ -27,7 +28,7 @@ export default async function WorkspaceLayout({ children, params }: LayoutProps<
   const badges = { opportunities: newMatches, notifications: unread.count ?? 0, referrals: incoming.count ?? 0 };
 
   const activityItems = recent.data ?? [];
-  // Desktop has no top bar: each page's sticky PageHeader is the header and carries the bell.
+  // Desktop has no top bar: each page's sticky PageHeader is the header; the dashboard's carries the bell.
   // Language and theme live in Settings → Preferences.
   const sidebar = (
     <div className="flex h-full flex-col">
@@ -61,13 +62,15 @@ export default async function WorkspaceLayout({ children, params }: LayoutProps<
       <div className="flex min-h-dvh">
         <aside className="sticky top-0 hidden h-dvh w-[260px] shrink-0 overflow-y-auto border-r border-sidebar-border bg-sidebar px-5 py-8 lg:block">{sidebar}</aside>
         <div className="flex min-w-0 flex-1 flex-col">
-          {/* Mobile only: menu, logo and the bell (the sidebar is hidden here). */}
+          {/* Mobile only: menu, logo and (on the dashboard) the bell; the sidebar is hidden here. */}
           <header className="flex items-center justify-between gap-3 px-4 pt-4 sm:px-8 lg:hidden">
             <div className="flex items-center gap-3">
               <MobileNav>{sidebar}</MobileNav>
               <Logo compact />
             </div>
-            <ActivityPopover orgSlug={orgSlug} items={activityItems} unread={badges.notifications} />
+            <DashboardOnly>
+              <ActivityPopover orgSlug={orgSlug} items={activityItems} unread={badges.notifications} />
+            </DashboardOnly>
           </header>
           <main id="main" className="flex-1 px-4 pb-12 sm:px-8 lg:px-10">
             <ActivityProvider orgSlug={orgSlug} items={activityItems} unread={badges.notifications}>

@@ -17,7 +17,7 @@
   "openToPartners": "Ouvert aux partenaires",
   "new": {
     "title": "Nouveau poste",
-    "description": "Collez une description pour obtenir des exigences suggérées, puis vérifiez chaque champ avant de publier."
+    "description": "Partez d'une offre existante pour remplir le formulaire automatiquement, puis vérifiez chaque champ avant de publier."
   },
   "edit": {
     "metaTitle": "Modifier le poste",
@@ -60,7 +60,33 @@
     "submittedEmptyShort": "Personne pour l'instant. Vous serez avisé quand un partenaire soumettra quelqu'un.",
     "role": "Poste",
     "visibleShort": "Visible aux partenaires",
-    "description": "Description du poste"
+    "description": "Description du poste",
+    "matchingLive": "Correspondance active",
+    "matchingPaused": "Aucune correspondance en cours",
+    "matchingClosed": "Fermé aux partenaires",
+    "editCta": "Modifier le poste",
+    "pipelineReview": "En évaluation",
+    "pipelineInterviewing": "Entrevues",
+    "pipelineOffer": "Offre",
+    "pipelineHired": "Embauché",
+    "pipelineClosed": {
+      "one": "{count} fermée",
+      "other": "{count} fermées"
+    },
+    "submittedEmptyTitle": "Aucun candidat pour l'instant",
+    "submittedEmptyMatches": {
+      "one": "{count} candidat partenaire correspond déjà à ce poste.",
+      "other": "{count} candidats partenaires correspondent déjà à ce poste."
+    },
+    "visibilityTitle": "Ce que voient les partenaires",
+    "visibilityClosed": "Les partenaires ne voient pas ce poste.",
+    "hidden": "Masqué",
+    "owner": "Responsable",
+    "posted": "Publié",
+    "showMore": "Afficher plus",
+    "showLess": "Afficher moins",
+    "details": "Détails",
+    "submittedEmptyBody": "Vous serez averti dès qu'un partenaire soumettra un candidat."
   },
   "status": {
     "publish": "Publier",
@@ -139,5 +165,43 @@
     "salaryRange": "Le maximum doit être au moins égal au minimum",
     "clientRequired": "Entrez le nom du client ou gardez-le confidentiel",
     "descriptionTooLong": "La description est trop longue."
+  },
+  "import": {
+    "title": "Remplissez ce poste en quelques secondes",
+    "subtitle": "Collez l'offre, un lien ou un fichier. Nous remplissons ce qui y est écrit — vous vérifiez tout avant d'enregistrer.",
+    "tabs": {
+      "text": "Coller le texte",
+      "url": "Lien",
+      "file": "Fichier"
+    },
+    "textLabel": "Offre d'emploi",
+    "textPlaceholder": "Collez ici la description complète : titre, exigences, lieu, salaire…",
+    "urlLabel": "Lien vers l'offre",
+    "urlPlaceholder": "https://jobs.lever.co/acme/123",
+    "urlHint": "Fonctionne mieux avec les pages carrières et Greenhouse, Lever, Workable, Gupy, etc. LinkedIn et Indeed bloquent la lecture automatique — collez le texte.",
+    "fileLabel": "Fichier de description",
+    "fileDrop": "Déposez un PDF, DOCX ou TXT ici, ou cliquez pour choisir",
+    "fileHint": "5 Mo maximum. Les PDF numérisés (images) ne peuvent pas être lus.",
+    "fileChosen": "{name} · {size}",
+    "submit": "Remplir le formulaire",
+    "working": "Lecture…",
+    "skip": "ou remplissez-le manuellement ci-dessous",
+    "done": {
+      "one": "{count} champ rempli. Vérifiez-le avant d'enregistrer.",
+      "other": "{count} champs remplis. Vérifiez-les avant d'enregistrer."
+    },
+    "doneStructured": "Lu à partir des données structurées de la page.",
+    "again": "Importer une autre",
+    "autoBadge": "Rempli",
+    "errors": {
+      "invalidUrl": "Saisissez un lien public https:// valide.",
+      "blockedSite": "Ce site bloque la lecture automatique. Copiez le texte de l'offre et utilisez « Coller le texte ».",
+      "fetchFailed": "Impossible d'ouvrir ce lien. Vérifiez-le ou collez le texte.",
+      "notHtml": "Ce lien n'est pas une page web. Téléchargez le fichier et utilisez « Fichier ».",
+      "fileType": "Utilisez un fichier PDF, DOCX ou TXT.",
+      "fileSize": "Le fichier dépasse 5 Mo.",
+      "noText": "Aucun texte lisible trouvé. S'il s'agit d'un PDF numérisé, collez le texte.",
+      "tooShort": "Collez l'offre complète — au moins quelques phrases."
+    }
   }
 }

@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "title": "MissionHub · Le réseau privé de recommandation pour recruteurs",
+    "description": "Associez vos candidats privés aux postes ouverts d'autres recruteurs. Rien n'est partagé sans votre autorisation, et chaque placement se conclut par un partage de commission 45/45/10 vérifiable."
+  },
+  "nav": {
+    "label": "Principal",
+    "skip": "Aller au contenu",
+    "how": "Fonctionnement",
+    "privacy": "Confidentialité",
+    "commissions": "Commissions",
+    "faq": "FAQ",
+    "signIn": "Se connecter",
+    "getStarted": "Commencer",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "hero": {
+    "eyebrow": "Le réseau privé de recommandation pour recruteurs",
+    "line1": "Vos candidats.",
+    "line2": "Leurs postes.",
+    "line3": "Une réussite partagée.",
+    "subtitle": "MissionHub associe les candidats de votre bassin aux postes ouverts d'agences partenaires. Rien ne sort de vos mains sans votre accord, et chaque placement se conclut par un partage clair et vérifiable.",
+    "primary": "Créer votre espace",
+    "secondary": "Voir le fonctionnement",
+    "note": "Gratuit pour commencer · Aucune donnée de candidat partagée sans autorisation",
+    "imageAlt": "Deux recruteurs célébrant un placement réussi avec un tope-là",
+    "card": {
+      "matchLabel": "Correspondance forte",
+      "matchJob": "Designer produit principal",
+      "anonTitle": "Correspondances partenaires",
+      "anonBody": "3 candidats correspondent · identités masquées",
+      "splitTitle": "Partage de commission",
+      "splitBody": "45 · 45 · 10"
+    }
+  },
+  "marquee": {
+    "label": "Postes que les recruteurs pourvoient ensemble",
+    "items": {
+      "a": "Génie logiciel",
+      "b": "Finance et comptabilité",
+      "c": "Santé",
+      "d": "Direction des ventes",
+      "e": "Produit et design",
+      "f": "Construction",
+      "g": "Juridique",
+      "h": "Données et IA",
+      "i": "Opérations",
+      "j": "Recrutement de cadres"
+    }
+  },
+  "statement": {
+    "text": "Chaque recruteur a d'excellents candidats qui ne conviennent à aucun de ses postes. Chaque recruteur a des postes qu'il n'arrive pas à pourvoir assez vite. MissionHub relie les deux, sans que personne ne cède son réseau."
+  },
+  "how": {
+    "eyebrow": "Fonctionnement",
+    "title": "D'un bassin dormant à un placement partagé.",
+    "subtitle": "Quatre étapes. Chacune explicite, autorisée et consignée.",
+    "steps": {
+      "one": {
+        "title": "Ajoutez vos candidats en privé",
+        "body": "Importez un CSV ou saisissez des profils à la main. Consignez l'autorisation de traitement du candidat, puis activez-le pour la correspondance. Seule votre organisation le voit."
+      },
+      "two": {
+        "title": "Recevez des correspondances",
+        "body": "Le moteur compare vos candidats aux postes partenaires et les classe en Forte, Potentielle et Non admissible, avec une explication claire."
+      },
+      "three": {
+        "title": "Soumettez avec autorisation",
+        "body": "Choisissez précisément les champs et documents à partager, consignez l'autorisation propre au poste, confirmez l'intérêt du candidat et soumettez."
+      },
+      "four": {
+        "title": "Embauchez et partagez les honoraires",
+        "body": "Suivez entrevues, offres et embauche. La commission passe par un registre versionné : prévue, payable, payée."
+      }
+    }
+  },
+  "sides": {
+    "eyebrow": "Deux côtés, un marché",
+    "title": "Conçu pour les deux bouts de la recommandation.",
+    "owner": {
+      "badge": "Vous avez le candidat",
+      "title": "Transformez les profils dormants en placements.",
+      "body": "Les candidats qui ne conviennent pas à vos postes sont souvent parfaits pour ceux d'un autre. Découvrez où ils s'intègrent et touchez votre part à l'embauche.",
+      "points": {
+        "a": "Occasions triées selon la force de correspondance",
+        "b": "Explication « Pourquoi cette correspondance » pour chaque résultat",
+        "c": "Vous choisissez ce qui est partagé, champ par champ"
+      },
+      "imageAlt": "Une recruteuse souriante près d'une fenêtre de bureau, un ordinateur portable à la main"
+    },
+    "jobOwner": {
+      "badge": "Vous avez le poste",
+      "title": "Pourvoyez vos postes plus vite grâce à un réseau de confiance.",
+      "body": "Ouvrez un poste aux recommandations partenaires et voyez combien de candidats correspondent déjà, avant que le moindre nom soit partagé. Évaluez, acceptez ou refusez au même endroit.",
+      "points": {
+        "a": "Collez une description de poste, obtenez des exigences suggérées",
+        "b": "Nombre de correspondances anonymisé avant les recommandations",
+        "c": "Acceptez, refusez avec motif ou demandez des précisions"
+      },
+      "imageAlt": "Deux recruteurs travaillant côte à côte à leur bureau"
+    }
+  },
+  "privacy": {
+    "eyebrow": "Confidentialité dès la conception",
+    "title": "Anonyme jusqu'à l'autorisation.",
+    "subtitle": "Le titulaire du poste voit le nombre de correspondances, jamais les identités. Un candidat n'est révélé que lorsque son recruteur le soumet, avec un consentement documenté pour ce poste précis.",
+    "mock": {
+      "job": "Directeur·rice des finances · Montréal",
+      "visible": "Ce que voit le titulaire du poste",
+      "count": "4 candidats partenaires correspondent",
+      "strong": "2 fortes",
+      "potential": "2 potentielles",
+      "hidden": "Nom, coordonnées et CV restent masqués"
+    },
+    "features": {
+      "isolation": {
+        "title": "Isolation par organisation",
+        "body": "La sécurité au niveau des lignes garde les données de chaque agence dans son propre espace."
+      },
+      "consent": {
+        "title": "Consentement documenté",
+        "body": "Les autorisations de traitement et par poste sont consignées avant tout partage."
+      },
+      "audit": {
+        "title": "Piste d'audit complète",
+        "body": "Chaque soumission, décision et écriture du registre est journalisée et vérifiable."
+      },
+      "requests": {
+        "title": "Demandes de confidentialité",
+        "body": "Les demandes d'accès et de suppression sont suivies avec échéances, depuis vos paramètres."
+      }
+    }
+  },
+  "commissions": {
+    "eyebrow": "Commissions",
+    "title": "Un partage que tout le monde voit venir.",
+    "subtitle": "Convenez des modalités avant de commencer. Le registre indique exactement qui doit recevoir quoi, à chaque étape.",
+    "split": {
+      "source": "Recruteur du candidat",
+      "job": "Recruteur du poste",
+      "platform": "MissionHub"
+    },
+    "ledger": {
+      "title": "Registre du placement",
+      "projected": "Prévue",
+      "payable": "Payable",
+      "paid": "Payée",
+      "projectedBody": "Embauche déclarée avec honoraires et date d'entrée",
+      "payableBody": "Paiement du client vérifié par la plateforme",
+      "paidBody": "Réception du versement confirmée par le recruteur"
+    },
+    "note": "Aucun fonds ne transite par MissionHub. Les paiements se font entre vous et vos partenaires, et la plateforme conserve les preuves.",
+    "configurable": "Les règles de partage sont configurables et versionnées."
+  },
+  "facts": {
+    "a": { "value": "0", "label": "donnée de candidat partagée avant autorisation" },
+    "b": { "value": "45/45/10", "label": "partage de commission par défaut, versionné" },
+    "c": { "value": "3", "label": "langues : English, Français, Português" },
+    "d": { "value": "100 %", "label": "des écritures du registre vérifiables" }
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Les premières questions des recruteurs.",
+    "items": {
+      "a": {
+        "q": "Les autres agences peuvent-elles voir mes candidats?",
+        "a": "Non. Vos candidats ne sont visibles que par votre organisation. Les titulaires de postes voient un nombre de correspondances anonymisé. Un candidat n'est révélé que lorsque vous le soumettez à un poste précis, avec uniquement les champs et documents choisis."
+      },
+      "b": {
+        "q": "Comment la commission est-elle partagée?",
+        "a": "Par défaut, 45 % au recruteur qui a trouvé le candidat, 45 % au recruteur titulaire du poste et 10 % à MissionHub. Les règles sont configurables et versionnées, et les deux parties confirment une entente de collaboration avant de poursuivre."
+      },
+      "c": {
+        "q": "MissionHub gère-t-il les paiements?",
+        "a": "Aucun fonds ne transite par la plateforme. Vous facturez votre client comme d'habitude et consignez les preuves. Les paiements des clients sont vérifiés par la plateforme, et les versements sont confirmés par le recruteur qui les reçoit."
+      },
+      "d": {
+        "q": "Comment fonctionne la correspondance?",
+        "a": "Chaque candidat actif est comparé aux postes partenaires selon les compétences, l'ancienneté, le lieu et le mode de travail. Les résultats sont accompagnés d'un score indicatif et d'une explication lisible : c'est vous qui décidez, pas l'algorithme."
+      },
+      "e": {
+        "q": "Puis-je inviter mon équipe?",
+        "a": "Oui. Invitez vos collègues par lien à usage unique, attribuez des rôles et suspendez l'accès à tout moment dans Paramètres › Équipe."
+      }
+    }
+  },
+  "cta": {
+    "title": "Votre prochain placement est déjà dans le bassin de quelqu'un d'autre.",
+    "subtitle": "Configurez votre espace en quelques minutes. Apportez vos candidats, ouvrez vos postes et lancez les correspondances.",
+    "primary": "Créer votre espace",
+    "secondary": "Se connecter",
+    "imageAlt": "Deux professionnels se serrant la main"
+  },
+  "footer": {
+    "tagline": "Le réseau privé de recommandation pour recruteurs, fondé sur les autorisations.",
+    "product": "Produit",
+    "account": "Compte",
+    "createAccount": "Créer un compte",
+    "signIn": "Se connecter",
+    "legal": "Les conditions et la politique de confidentialité sont des ébauches en attente de révision juridique.",
+    "rights": "© {year} MissionHub",
+    "photos": "Photos : Unsplash"
+  }
+}

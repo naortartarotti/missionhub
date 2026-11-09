@@ -1,6 +1,6 @@
 {
   "title": "Oportunidades",
-  "description": "Vagas de parceiros que combinam com seus candidatos. Ganhe parte da taxa quando alguém que você enviou for contratado.",
+  "description": "Vagas de parceiros que combinam com seus candidatos. Envie alguém e acompanhe em Indicações enviadas; você ganha parte da taxa quando a pessoa for contratada.",
   "filteredByCandidate": "Mostrando matches de um candidato.",
   "statusNav": "Status dos matches",
   "newCount": {
@@ -16,10 +16,6 @@
       "label": "Salvos",
       "hint": "Sua lista curta. Matches aos quais você quer voltar."
     },
-    "submitted": {
-      "label": "Enviados",
-      "hint": "Candidatos que você já enviou. Abra um para acompanhar a indicação."
-    },
     "dismissed": {
       "label": "Descartados",
       "hint": "Matches que você marcou como não adequados. Restaure um se algo mudar."
@@ -30,7 +26,8 @@
     }
   },
   "controls": {
-    "sort": "Ordenar"
+    "sort": "Ordenar",
+    "groupBy": "Agrupar"
   },
   "sorts": {
     "fit": "Melhor aderência",
@@ -42,6 +39,30 @@
       "other": "{count} candidatos"
     },
     "share": "sua parte estimada"
+  },
+  "groupBy": {
+    "job": "Por vaga",
+    "candidate": "Por candidato"
+  },
+  "candidateGroup": {
+    "jobs": {
+      "one": "{count} vaga",
+      "other": "{count} vagas"
+    },
+    "bestShare": "melhor parte estimada",
+    "referrals": {
+      "one": "{count} indicação enviada",
+      "other": "{count} indicações enviadas"
+    },
+    "inProgress": {
+      "one": "{count} em andamento",
+      "other": "{count} em andamento"
+    },
+    "hired": {
+      "one": "{count} contratada",
+      "other": "{count} contratadas"
+    },
+    "noReferrals": "Ainda não indicado"
   },
   "empty": {
     "inactive": {
@@ -60,10 +81,6 @@
     "saved": {
       "title": "Nada salvo",
       "description": "Use Salvar em um match para montar uma lista curta à qual voltar."
-    },
-    "submitted": {
-      "title": "Nenhum candidato enviado ainda",
-      "description": "Quando você envia um candidato para uma vaga de parceiro, pode acompanhá-lo por aqui."
     },
     "dismissed": {
       "title": "Nada descartado",

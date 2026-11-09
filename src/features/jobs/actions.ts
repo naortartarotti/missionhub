@@ -12,6 +12,10 @@ import { formToObject } from "@/lib/validation/form-data";
 import { parseMajorToMinor } from "@/lib/money/format";
 import { msg } from "@/i18n/translate";
 import { jobFormSchema, jobStatusSchema, type JobFormValues } from "./schemas";
+import { extractJobFromText, type ExtractResult } from "./import/extract";
+import { htmlToText, pageTitle, readJobPosting } from "./import/html";
+import { fetchPage, ImportError, readFileText } from "./import/sources";
+import { findSkills } from "./import/vocab";
 
 function toRow(v: JobFormValues) {
   const m = (n: number | null, cur: string) => (n === null ? null : parseMajorToMinor(String(n), cur));
@@ -122,17 +126,49 @@ export async function suggestFromDescription(orgSlug: string, description: strin
     assertCan(ctx, "jobs:write");
     await rateLimit(ctx.db, "job.suggest", 60, 3600);
     const text = parse(z.string().max(50000, msg("jobs.validation.descriptionTooLong")), description).slice(0, 20000).toLowerCase();
-    const VOCAB = [
-      "typescript", "javascript", "react", "next.js", "node.js", "python", "django", "java", "kotlin", "go", "rust", "c#", ".net",
-      "ruby", "rails", "php", "sql", "postgresql", "mysql", "mongodb", "redis", "aws", "azure", "google cloud", "docker", "kubernetes",
-      "terraform", "graphql", "rest", "machine learning", "data engineering", "spark", "airflow", "dbt", "tableau", "power bi",
-      "figma", "ux design", "product management", "agile", "scrum", "salesforce", "sap", "accounting", "cpa", "sales", "marketing",
-      "seo", "excel", "project management", "ci-cd", "linux", "security", "swift", "ios", "android", "flutter",
-    ];
-    const skills = VOCAB.filter((s) => new RegExp(`(^|[^a-z0-9])${s.replace(/[.+#]/g, (c) => `\\${c}`)}([^a-z0-9]|$)`).test(text));
+    const skills = findSkills(text);
     const seniority = (["principal", "lead", "senior", "junior", "intern"] as const).find((s) => text.includes(s)) ?? (text.includes("intermediate") ? "mid" : null);
     const yrs = text.match(/(\d{1,2})\+?\s*(?:years|yrs)/);
     const arrangement = text.includes("remote") ? (text.includes("hybrid") ? "hybrid" : "remote") : text.includes("hybrid") ? "hybrid" : text.includes("on-site") || text.includes("onsite") ? "onsite" : null;
     return { ok: true, data: { skills, seniority, years: yrs ? Number(yrs[1]) : null, arrangement } };
+  });
+}
+
+export type JobImportResult = ExtractResult & { source: "text" | "url" | "file"; structured: boolean };
+
+/**
+ * Pre-fills the new-job form from a pasted posting, a link or a file — rule-based, no AI.
+ * Nothing is saved: the result only seeds the form, which the recruiter reviews before saving.
+ * Pasted / fetched / uploaded content is untrusted data and is only ever parsed as text.
+ */
+export async function importJobPosting(orgSlug: string, formData: FormData): Promise<ActionResult<JobImportResult>> {
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "jobs:write");
+    const mode = parse(z.enum(["text", "url", "file"]), formData.get("mode"));
+    await rateLimit(ctx.db, "job.import", 40, 3600);
+    try {
+      if (mode === "text") {
+        const text = parse(z.string().max(50000, msg("jobs.validation.descriptionTooLong")), formData.get("text") ?? "");
+        if (text.trim().length < 40) throw new ImportError("tooShort");
+        return { ok: true, data: { ...extractJobFromText(text), source: mode, structured: false } };
+      }
+      if (mode === "url") {
+        const raw = parse(z.string().trim().min(4, msg("jobs.import.errors.invalidUrl")).max(2000), formData.get("url") ?? "");
+        const { html } = await fetchPage(raw);
+        const posting = readJobPosting(html);
+        if (posting) return { ok: true, data: { ...extractJobFromText(posting.descriptionText, posting.hints), source: mode, structured: true } };
+        const text = htmlToText(html);
+        const title = pageTitle(html);
+        if (text.replace(/\s/g, "").length < 200) throw new ImportError("noText");
+        return { ok: true, data: { ...extractJobFromText(text, title ? { title: title.split(/\s+[|–—-]\s+/)[0] } : {}), source: mode, structured: false } };
+      }
+      const file = formData.get("file");
+      if (!(file instanceof File)) throw new ImportError("fileType");
+      return { ok: true, data: { ...extractJobFromText(await readFileText(file)), source: mode, structured: false } };
+    } catch (e) {
+      if (e instanceof ImportError) return { ok: false, error: msg(`jobs.import.errors.${e.code}`) };
+      throw e;
+    }
   });
 }

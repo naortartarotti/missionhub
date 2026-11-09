@@ -56,18 +56,25 @@ test("B sees only the approved snapshot, then accepts", async ({ browser }) => {
   await page.goto(`/w/${orgB.slug}/referrals`);
   // Pending submissions make "Received" the default tab.
   await expect(page.getByRole("link", { name: "Received" })).toHaveAttribute("aria-current", "page");
-  const row = page.getByRole("row").filter({ hasText: JOB_TITLE });
-  await expect(row).toContainText("E2E Sourcing Co");
-  await row.getByRole("link").first().click();
+  // Received referrals are grouped by job: one region per job, one list item per referral.
+  const group = page.getByRole("region", { name: JOB_TITLE });
+  const item = group.getByRole("listitem").first();
+  await expect(item).toContainText("E2E Sourcing Co");
+  await item.getByRole("link").first().click();
   await expect(page.getByText(JOB_TITLE).first()).toBeVisible();
   const body = page.locator("main");
   await expect(body).not.toContainText(CANDIDATE_NAME);
   await expect(body).not.toContainText("e2e-candidate@example.com");
   await expect(body).not.toContainText("555 0199");
 
-  await page.getByRole("button", { name: "Start review" }).click();
-  await expect(page.getByText("Under review").first()).toBeVisible();
+  // The review panel offers Accept / Ask for info / Decline directly (no separate "Start review" step).
+  await page.waitForURL(/[?&]r=/);
+  const referralId = new URL(page.url()).searchParams.get("r");
+  expect(referralId).toBeTruthy();
   await page.getByRole("button", { name: "Accept" }).click();
+  // Accepting moves the referral out of "To review" (the panel closes); the full page shows the agreement status.
+  await expect(page.getByRole("link", { name: /In process/ })).toContainText("1");
+  await page.goto(`/w/${orgB.slug}/referrals/${referralId}`);
   await expect(page.getByText("Accepted").first()).toBeVisible();
   await expect(page.getByText("Awaiting sourcing recruiter")).toBeVisible();
   await ctx.close();

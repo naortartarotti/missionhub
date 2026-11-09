@@ -17,7 +17,7 @@
   "openToPartners": "Aberta a parceiros",
   "new": {
     "title": "Nova vaga",
-    "description": "Cole uma descrição para receber requisitos sugeridos e revise cada campo antes de publicar."
+    "description": "Comece por um anúncio existente para preencher o formulário automaticamente e revise cada campo antes de publicar."
   },
   "edit": {
     "metaTitle": "Editar vaga",
@@ -60,7 +60,33 @@
     "submittedEmptyShort": "Ninguém ainda. Você será avisado quando um parceiro enviar alguém.",
     "role": "Vaga",
     "visibleShort": "Visível para parceiros",
-    "description": "Descrição da vaga"
+    "description": "Descrição da vaga",
+    "matchingLive": "Matching ativo",
+    "matchingPaused": "Sem matching no momento",
+    "matchingClosed": "Fechada para parceiros",
+    "editCta": "Editar vaga",
+    "pipelineReview": "Em análise",
+    "pipelineInterviewing": "Entrevistas",
+    "pipelineOffer": "Proposta",
+    "pipelineHired": "Contratado",
+    "pipelineClosed": {
+      "one": "{count} encerrada",
+      "other": "{count} encerradas"
+    },
+    "submittedEmptyTitle": "Nenhum candidato ainda",
+    "submittedEmptyMatches": {
+      "one": "{count} candidato de parceiro já se encaixa nesta vaga.",
+      "other": "{count} candidatos de parceiros já se encaixam nesta vaga."
+    },
+    "visibilityTitle": "O que os parceiros veem",
+    "visibilityClosed": "Parceiros não veem esta vaga.",
+    "hidden": "Oculto",
+    "owner": "Responsável",
+    "posted": "Publicada",
+    "showMore": "Mostrar mais",
+    "showLess": "Mostrar menos",
+    "details": "Detalhes",
+    "submittedEmptyBody": "Você será avisado assim que um parceiro enviar alguém."
   },
   "status": {
     "publish": "Publicar",
@@ -139,5 +165,43 @@
     "salaryRange": "O máximo deve ser pelo menos igual ao mínimo",
     "clientRequired": "Informe o nome do cliente ou mantenha-o confidencial",
     "descriptionTooLong": "A descrição é muito longa."
+  },
+  "import": {
+    "title": "Preencha a vaga em segundos",
+    "subtitle": "Cole o anúncio, um link ou envie um arquivo. Preenchemos o que estiver escrito — você revisa tudo antes de salvar.",
+    "tabs": {
+      "text": "Colar texto",
+      "url": "Link",
+      "file": "Arquivo"
+    },
+    "textLabel": "Anúncio da vaga",
+    "textPlaceholder": "Cole aqui a descrição completa: título, requisitos, local, salário…",
+    "urlLabel": "Link do anúncio",
+    "urlPlaceholder": "https://empresa.gupy.io/jobs/123",
+    "urlHint": "Funciona melhor com páginas de carreira e Greenhouse, Lever, Workable, Gupy e similares. LinkedIn e Indeed bloqueiam leitura automática — cole o texto.",
+    "fileLabel": "Arquivo com a descrição",
+    "fileDrop": "Arraste um PDF, DOCX ou TXT aqui, ou clique para escolher",
+    "fileHint": "Até 5 MB. PDFs escaneados (imagem) não podem ser lidos.",
+    "fileChosen": "{name} · {size}",
+    "submit": "Preencher formulário",
+    "working": "Lendo…",
+    "skip": "ou preencha manualmente abaixo",
+    "done": {
+      "one": "{count} campo preenchido. Confira abaixo antes de salvar.",
+      "other": "{count} campos preenchidos. Confira abaixo antes de salvar."
+    },
+    "doneStructured": "Lido dos dados estruturados da página.",
+    "again": "Importar outra",
+    "autoBadge": "Preenchido",
+    "errors": {
+      "invalidUrl": "Informe um link público https:// válido.",
+      "blockedSite": "Este site bloqueia leitura automática. Copie o texto do anúncio e use \"Colar texto\".",
+      "fetchFailed": "Não conseguimos abrir esse link. Confira ou cole o texto.",
+      "notHtml": "Esse link não é uma página web. Baixe o arquivo e use \"Arquivo\".",
+      "fileType": "Use um arquivo PDF, DOCX ou TXT.",
+      "fileSize": "O arquivo tem mais de 5 MB.",
+      "noText": "Não encontramos texto legível. Se for um PDF escaneado, cole o texto.",
+      "tooShort": "Cole o anúncio completo — pelo menos algumas frases."
+    }
   }
 }

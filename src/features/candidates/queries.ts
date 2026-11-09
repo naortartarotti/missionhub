@@ -65,3 +65,28 @@ export async function getCandidateRelations(ctx: RequestContext, id: string) {
     referrals: (links.data ?? []).map((l) => l.referrals).filter(Boolean),
   };
 }
+
+export type CandidateReferralStats = { total: number; open: number; hired: number };
+const CLOSED_REFERRAL = new Set(["declined", "withdrawn", "rejected", "cancelled"]);
+
+/** Referrals this organization sent for each candidate: total, still in progress, and hired. */
+export async function countReferralsByCandidate(ctx: RequestContext, candidateIds: string[]): Promise<Map<string, CandidateReferralStats>> {
+  const stats = new Map<string, CandidateReferralStats>();
+  if (!candidateIds.length) return stats;
+  const { data, error } = await ctx.db
+    .from("referral_candidate_links")
+    .select("candidate_id, referrals(status)")
+    .eq("organization_id", ctx.organizationId)
+    .in("candidate_id", candidateIds.slice(0, 500));
+  if (error) throw error;
+  for (const l of data ?? []) {
+    const status = l.referrals?.status;
+    if (!status) continue;
+    const s = stats.get(l.candidate_id) ?? { total: 0, open: 0, hired: 0 };
+    s.total += 1;
+    if (status === "hired") s.hired += 1;
+    else if (!CLOSED_REFERRAL.has(status)) s.open += 1;
+    stats.set(l.candidate_id, s);
+  }
+  return stats;
+}

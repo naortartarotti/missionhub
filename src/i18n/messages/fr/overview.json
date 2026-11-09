@@ -89,5 +89,40 @@
       "other": "{count} candidats partenaires conviennent"
     },
     "notOpen": "Non ouvert aux partenaires"
+  },
+  "hero": {
+    "eyebrow": "Opportunités pour vous",
+    "amountNone": {
+      "one": "{count} correspondance à décider",
+      "other": "{count} correspondances à décider"
+    },
+    "body": {
+      "one": "{count} poste partenaire convient à vos candidats en ce moment. Choisissez qui soumettre.",
+      "other": "{count} postes partenaires conviennent à vos candidats en ce moment. Choisissez qui soumettre."
+    },
+    "cta": "Voir les correspondances",
+    "upNext": "À faire",
+    "caughtUp": "Tout est à jour. Les nouvelles recommandations et étapes de paiement apparaîtront ici."
+  },
+  "attentionExtra": {
+    "review": {
+      "one": "Examiner {count} recommandation · {job}",
+      "other": "Examiner {count} recommandations · {job}"
+    },
+    "reviewSub": "Un partenaire a soumis un candidat à votre poste",
+    "newMatches": {
+      "one": "{count} nouvelle correspondance à voir",
+      "other": "{count} nouvelles correspondances à voir"
+    },
+    "newMatchesSub": "De nouveaux postes pour vos candidats"
+  },
+  "cards": {
+    "new": "Nouveau",
+    "fit": "pourraient convenir",
+    "referred": "recommandés",
+    "review": "à examiner",
+    "reviewNow": "Examiner",
+    "open": "Ouvrir le poste",
+    "forYou": "votre part estimée"
   }
 }

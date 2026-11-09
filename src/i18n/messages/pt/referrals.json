@@ -333,5 +333,29 @@
     "yourCandidate": "Seu candidato",
     "partnerJob": "Vaga do parceiro",
     "hiringRecruiter": "Recrutador da vaga"
+  },
+  "pages": {
+    "received": {
+      "title": "Indicações recebidas",
+      "description": "Candidatos que recrutadores parceiros enviaram para as suas vagas abertas. Avalie cada um e avance ou recuse."
+    },
+    "sent": {
+      "title": "Indicações enviadas",
+      "description": "Seus candidatos enviados para vagas de recrutadores parceiros, do envio à contratação."
+    }
+  },
+  "sent": {
+    "eyebrow": "Vaga do parceiro · {partner}",
+    "candidates": {
+      "one": "{count} candidato enviado",
+      "other": "{count} candidatos enviados"
+    },
+    "jobStatus": "Vaga: {status}",
+    "jobUpdated": "Atualizada {time}",
+    "jobStatusUnknown": "Status da vaga indisponível",
+    "movedBy": "{partner} mudou para {status} · {time}",
+    "movedByYou": "Você mudou para {status} · {time}",
+    "submittedAt": "Enviado {time}",
+    "progress": "Etapa {step} de {total}"
   }
 }

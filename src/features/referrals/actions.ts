@@ -73,6 +73,7 @@ export async function transitionReferral(orgSlug: string, input: { referralId: s
       p_to: parsed.data.to,
       p_reason: parsed.data.reason,
       p_expected_version: parsed.data.version,
+      p_acting_org: ctx.organizationId,
     });
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/referrals/${parsed.data.referralId}`);
@@ -98,6 +99,7 @@ export async function reviewReferral(
       p_reason_code: v.reasonCode ?? "",
       p_note: v.note,
       p_expected_version: v.version,
+      p_acting_org: ctx.organizationId,
     });
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/referrals`);

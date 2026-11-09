@@ -13,7 +13,8 @@ import settings from "./settings.json";
 import auth from "./auth.json";
 import onboarding from "./onboarding.json";
 import admin from "./admin.json";
+import landing from "./landing.json";
 import type { Messages } from "../index";
 
-const messages: Messages = { common, nav, labels, errors, activity, overview, opportunities, candidates, jobs, referrals, commissions, settings, auth, onboarding, admin };
+const messages: Messages = { common, nav, labels, errors, activity, overview, opportunities, candidates, jobs, referrals, commissions, settings, auth, onboarding, admin, landing };
 export default messages;

@@ -89,5 +89,40 @@
       "other": "{count} candidatos de parceiros combinam"
     },
     "notOpen": "Não aberta a parceiros"
+  },
+  "hero": {
+    "eyebrow": "Oportunidades para você",
+    "amountNone": {
+      "one": "{count} match para decidir",
+      "other": "{count} matches para decidir"
+    },
+    "body": {
+      "one": "{count} vaga de parceiro combina com seus candidatos agora. Escolha quem enviar.",
+      "other": "{count} vagas de parceiros combinam com seus candidatos agora. Escolha quem enviar."
+    },
+    "cta": "Ver matches",
+    "upNext": "Próximos passos",
+    "caughtUp": "Tudo em dia. Novas indicações e etapas de pagamento aparecem aqui."
+  },
+  "attentionExtra": {
+    "review": {
+      "one": "Analisar {count} indicação · {job}",
+      "other": "Analisar {count} indicações · {job}"
+    },
+    "reviewSub": "Um parceiro enviou um candidato para sua vaga",
+    "newMatches": {
+      "one": "{count} match novo para ver",
+      "other": "{count} matches novos para ver"
+    },
+    "newMatchesSub": "Novas combinações para seus candidatos"
+  },
+  "cards": {
+    "new": "Novo",
+    "fit": "podem combinar",
+    "referred": "indicados",
+    "review": "para analisar",
+    "reviewNow": "Analisar agora",
+    "open": "Abrir vaga",
+    "forYou": "sua parte estimada"
   }
 }

@@ -14,6 +14,45 @@ export async function listReferrals(ctx: RequestContext, side: "sent" | "receive
   return data ?? [];
 }
 
+/**
+ * "Referrals sent", grouped by the partner's job: each job's current status (open, paused, filled…
+ * via get_sent_referral_jobs, since jobs RLS hides partner jobs) and, per candidate, the latest
+ * stage change the hiring recruiter recorded (with their note, if any).
+ */
+export async function listSentByJob(ctx: RequestContext) {
+  const { data: rows, error } = await ctx.db
+    .from("referrals")
+    .select("id, job_id, status, job_title_snapshot, candidate_label, submitted_at, updated_at, fit_score, target_org:organizations!referrals_target_org_id_fkey(name)")
+    .eq("source_org_id", ctx.organizationId)
+    .order("updated_at", { ascending: false })
+    .limit(200);
+  if (error) throw error;
+  if (!rows?.length) return [];
+  const ids = rows.map((r) => r.id);
+  const [jobs, events] = await Promise.all([
+    ctx.db.rpc("get_sent_referral_jobs", { p_org: ctx.organizationId }),
+    ctx.db.from("referral_status_events").select("referral_id, to_status, actor_side, reason, created_at").in("referral_id", ids).order("created_at", { ascending: false }),
+  ]);
+  // A missing job status (e.g. migration not applied yet) must not break the page.
+  const jobStatus = new Map((jobs.data ?? []).map((j) => [j.job_id, j]));
+  const latest = new Map<string, NonNullable<typeof events.data>[number]>();
+  for (const e of events.data ?? []) if (!latest.has(e.referral_id)) latest.set(e.referral_id, e);
+
+  const enriched = rows.map((r) => ({ ...r, lastEvent: latest.get(r.id) ?? null }));
+  const groups = new Map<string, { jobId: string; title: string; partner: string; job: { status: (typeof jobs.data & {})[number]["status"]; updatedAt: string } | null; referrals: typeof enriched }>();
+  for (const r of enriched) {
+    let g = groups.get(r.job_id);
+    if (!g) {
+      const j = jobStatus.get(r.job_id);
+      g = { jobId: r.job_id, title: r.job_title_snapshot, partner: r.target_org?.name ?? "", job: j ? { status: j.status, updatedAt: j.status_updated_at } : null, referrals: [] };
+      groups.set(r.job_id, g);
+    }
+    g.referrals.push(r);
+  }
+  // Rows arrive newest-first, so groups are already ordered by their most recent activity.
+  return [...groups.values()];
+}
+
 export async function getReferralDetail(ctx: RequestContext, id: string) {
   const { data: referral, error } = await ctx.db
     .from("referrals")

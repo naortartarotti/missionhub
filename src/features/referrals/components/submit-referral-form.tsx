@@ -110,7 +110,7 @@ export function SubmitReferralForm({
               </FormField>
             </>
           ) : null}
-          <Label className="flex items-start gap-2.5 font-normal">
+          <Label className="flex items-start gap-2.5 leading-5 font-normal">
             <Checkbox name="confirmInterest" className="mt-0.5" />
             <span>{t("form.confirmInterest")}</span>
           </Label>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BriefcaseBusiness, CircleDollarSign, Handshake, Inbox, Plus, Sparkles, Users } from "lucide-react";
+import { ArrowRight, BriefcaseBusiness, CheckCircle2, CircleDollarSign, Handshake, Inbox, Plus, Sparkles, Users } from "lucide-react";
 import { getRequestContext } from "@/server/auth/context";
 import { getJobMatchSummary, listOpportunities, needsDecision } from "@/features/matching/queries";
 import { listPlacements } from "@/features/commissions/queries";
@@ -107,14 +107,19 @@ export default async function OverviewPage({ params }: PageProps<"/w/[orgSlug]/o
     .reduce((sum, p) => sum + Math.max(0, ledgerBalances((p.ledger ?? []) as LedgerEntry[]).sourcingOutstanding), 0);
   const payoutsToConfirm = placements.filter((p) => p.source_org_id === org && p.status === "commission_payable").length;
   const firstName = ctx.user.fullName.split(" ")[0] || t("welcomeFallbackName");
+  const freshMatches = partnerList.reduce((n, j) => n + j.fresh, 0);
   const actions = [
+    ...myJobList
+      .filter((j) => j.recv.pending)
+      .map((j) => ({ key: `r-${j.id}`, icon: Inbox, title: t("attentionExtra.review", { count: j.recv.pending, job: j.title }), sub: t("attentionExtra.reviewSub"), href: `${base}/referrals?tab=received&job=${j.id}` })),
     ...(pendingAgreements.data ?? []).map((r) => ({ key: `a-${r.id}`, icon: Handshake, title: t("attention.confirmSplit", { job: r.job_title_snapshot }), sub: r.candidate_label, href: `${base}/referrals/${r.id}` })),
     ...(payoutsToConfirm ? [{ key: "payouts", icon: CircleDollarSign, title: t("attention.payable", { count: payoutsToConfirm }), sub: t("attention.payableSub"), href: `${base}/commissions` }] : []),
-  ];
+    ...(freshMatches ? [{ key: "fresh", icon: Sparkles, title: t("attentionExtra.newMatches", { count: freshMatches }), sub: t("attentionExtra.newMatchesSub"), href: `${base}/opportunities` }] : []),
+  ].slice(0, 4);
 
   return (
     <div className="grid gap-6">
-      <PageHeader title={t("welcome", { name: firstName })} description={t("subtitle", { org: ctx.organizationName })} />
+      <PageHeader title={t("welcome", { name: firstName })} description={t("subtitle", { org: ctx.organizationName })} showBell />
 
       <GettingStarted steps={setupSteps} />
 
@@ -125,123 +130,207 @@ export default async function OverviewPage({ params }: PageProps<"/w/[orgSlug]/o
         <KpiTile label={t("stats.owed")} value={f.money(payable, ctx.currency, { whole: true })} tone="green" icon={CircleDollarSign} href={`${base}/commissions`} />
       </div>
 
-      {actions.length ? (
-        <ul className="grid gap-2">
-          {actions.map((a) => (
-            <li key={a.key}>
-              <Link href={a.href} className="flex items-center gap-3 rounded-2xl border border-border/60 bg-card px-4 py-3 transition-colors hover:bg-muted/40">
-                <a.icon className="size-4 shrink-0 text-muted-foreground" aria-hidden />
-                <span className="min-w-0 flex-1 truncate text-sm"><span className="font-medium">{a.title}</span> <span className="text-muted-foreground">· {a.sub}</span></span>
-                <ArrowRight className="size-4 text-muted-foreground" aria-hidden />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-
-      <div className="grid items-start gap-6 xl:grid-cols-2 [&>*]:min-w-0">
-        {/* ① Partner jobs → my candidates */}
-        <section className="overflow-hidden rounded-3xl border border-border/60 bg-card">
-          <header className="flex items-center justify-between gap-3 border-b border-border/60 px-5 py-4">
-            <div className="min-w-0">
-              <DirectionBadge direction="outbound" label={t("partnerJobs.badge")} />
-              <h2 className="mt-1.5 text-lg font-semibold tracking-tight">{t("partnerJobs.title")}</h2>
-              <p className="text-sm text-muted-foreground">{t("partnerJobs.subtitle")}</p>
-            </div>
-            <Button variant="outline" size="sm" asChild><Link href={`${base}/opportunities`}>{tg("common.actions.viewAll")}</Link></Button>
-          </header>
-          {partnerList.length === 0 ? (
-            <div className="flex items-center gap-3 px-5 py-6 text-sm text-muted-foreground">
-              <Sparkles className="size-5 shrink-0" aria-hidden />
-              <span>
-                {activeCount === 0 ? (
-                  <>{t("best.noneInactive")} <Link href={`${base}/candidates`} className="font-medium text-foreground underline-offset-4 hover:underline">{t("best.noneInactiveLink")}</Link> {t("best.noneInactiveTail")}</>
-                ) : (
-                  t("partnerJobs.empty")
-                )}
+      {/* Hero: what's in it for me + what to do next */}
+      <section className="relative overflow-hidden rounded-3xl bg-primary text-primary-foreground">
+        <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-tile-yellow/25 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-32 left-1/3 size-72 rounded-full bg-tile-lilac/20 blur-3xl" />
+        <div className="relative grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.25fr_1fr] lg:gap-10">
+          <div className="flex min-w-0 flex-col justify-between gap-6">
+            <div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-tile-yellow px-2.5 py-1 text-xs font-semibold text-tile-foreground">
+                <Sparkles className="size-3.5" aria-hidden />
+                {t("hero.eyebrow")}
               </span>
+              <p className="mt-4 text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
+                {t("hero.amountNone", { count: toDecide })}
+              </p>
+              <p className="mt-3 max-w-md text-[15px] opacity-75">
+                {partnerList.length ? t("hero.body", { count: partnerList.length }) : t("partnerJobs.empty")}
+              </p>
             </div>
-          ) : (
-            <ul className="divide-y divide-border/50">
-              {partnerList.slice(0, 6).map((j) => (
-                <li key={j.id}>
-                  <Link href={`${base}/opportunities?job=${j.id}`} className="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-muted/40">
-                    <ScoreRing score={j.best} className="size-11 [&_span]:text-xs" />
-                    <span className="min-w-0 flex-1">
-                      <span className="flex items-center gap-2">
-                        {j.fresh ? <span className="size-2 shrink-0 rounded-full bg-info" aria-label={t("partnerJobs.new", { count: j.fresh })} /> : null}
-                        <span className="truncate font-medium">{j.title}</span>
-                      </span>
-                      <span className="block truncate text-sm text-muted-foreground">{j.org} · {j.client}</span>
-                    </span>
-                    <span className="shrink-0 text-right">
-                      <span className="block text-sm font-semibold tabular-nums">{t("partnerJobs.matches", { count: j.matches })}</span>
-                      <span className={cn("block text-xs tabular-nums", j.share ? "text-success" : "text-muted-foreground")}>
-                        {j.share ? t("partnerJobs.share", { amount: f.money(j.share, j.currency, { whole: true }) }) : t("partnerJobs.strong", { count: j.strong })}
-                      </span>
-                    </span>
+            {partnerList.length ? (
+              <div>
+                <Button asChild size="lg" className="rounded-full bg-tile-yellow text-tile-foreground hover:bg-tile-yellow/90">
+                  <Link href={`${base}/opportunities`}>
+                    {t("hero.cta")}
+                    <ArrowRight className="size-4" aria-hidden />
                   </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+                </Button>
+              </div>
+            ) : null}
+          </div>
 
-        {/* ② My jobs → partners' candidates */}
-        <section className="overflow-hidden rounded-3xl border border-border/60 bg-card">
-          <header className="flex items-center justify-between gap-3 border-b border-border/60 px-5 py-4">
-            <div className="min-w-0">
-              <DirectionBadge direction="inbound" label={t("myJobs.badge")} />
-              <h2 className="mt-1.5 text-lg font-semibold tracking-tight">{t("myJobs.title")}</h2>
-              <p className="text-sm text-muted-foreground">{t("myJobs.subtitle")}</p>
-            </div>
-            <Button variant="outline" size="sm" asChild><Link href={`${base}/jobs`}>{tg("common.actions.viewAll")}</Link></Button>
-          </header>
-          {myJobList.length === 0 ? (
-            <div className="flex items-center justify-between gap-3 px-5 py-6 text-sm text-muted-foreground">
-              <span className="flex items-center gap-3"><BriefcaseBusiness className="size-5 shrink-0" aria-hidden />{t("myJobs.empty")}</span>
-              <Button size="sm" asChild><Link href={`${base}/jobs/new`}><Plus className="size-4" aria-hidden />{t("gettingStarted.job.cta")}</Link></Button>
-            </div>
-          ) : (
-            <ul className="divide-y divide-border/50">
-              {myJobList.map((j) => {
-                const href = j.recv.total ? `${base}/referrals?tab=received&job=${j.id}` : `${base}/jobs/${j.id}`;
-                const matchCount = j.summary ? j.summary.strong_count + j.summary.potential_count : null;
-                return (
-                  <li key={j.id}>
-                    <Link href={href} className="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-muted/40">
-                      <span className="grid size-11 shrink-0 place-items-center rounded-full bg-tile-blue text-tile-foreground">
-                        <BriefcaseBusiness className="size-4" aria-hidden />
+          <div className="min-w-0 rounded-2xl bg-primary-foreground/[0.07] p-2 ring-1 ring-primary-foreground/10">
+            <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-wider opacity-60">{t("hero.upNext")}</p>
+            {actions.length ? (
+              <ul className="grid">
+                {actions.map((a) => (
+                  <li key={a.key}>
+                    <Link href={a.href} className="group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-primary-foreground/10">
+                      <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary-foreground/10">
+                        <a.icon className="size-4" aria-hidden />
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate font-medium">{j.title}</span>
-                        <span className="block truncate text-sm text-muted-foreground">
-                          {j.status === "active"
-                            ? matchCount === null
-                              ? t("myJobs.notOpen")
-                              : t("myJobs.partnerMatches", { count: matchCount })
-                            : tg(`labels.jobStatus.${j.status}`)}
-                        </span>
+                        <span className="block truncate text-sm font-medium">{a.title}</span>
+                        <span className="block truncate text-xs opacity-60">{a.sub}</span>
                       </span>
-                      <span className="shrink-0 text-right">
-                        <span className="block text-sm font-semibold tabular-nums">{t("myJobs.received", { count: j.recv.total })}</span>
-                        {j.recv.pending ? (
-                          <span className="inline-flex items-center gap-1 text-xs font-medium text-info">
-                            <span className="size-1.5 rounded-full bg-info" aria-hidden />
-                            {t("myJobs.toReview", { count: j.recv.pending })}
-                          </span>
-                        ) : (
-                          <span className="block text-xs text-muted-foreground">{t("myJobs.noneWaiting")}</span>
-                        )}
-                      </span>
+                      <ArrowRight className="size-4 shrink-0 opacity-50 transition-transform group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden />
                     </Link>
                   </li>
-                );
-              })}
-            </ul>
-          )}
-        </section>
+                ))}
+              </ul>
+            ) : (
+              <p className="flex items-center gap-3 px-3 py-4 text-sm opacity-75">
+                <CheckCircle2 className="size-5 shrink-0" aria-hidden />
+                {t("hero.caughtUp")}
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ① Partner jobs → my candidates */}
+      <section className="grid gap-4">
+        <SectionHeader
+          badge={<DirectionBadge direction="outbound" label={t("partnerJobs.badge")} />}
+          title={t("partnerJobs.title")}
+          subtitle={t("partnerJobs.subtitle")}
+          action={<Button variant="outline" size="sm" asChild><Link href={`${base}/opportunities`}>{tg("common.actions.viewAll")}</Link></Button>}
+        />
+        {partnerList.length === 0 ? (
+          <div className="flex items-center gap-3 rounded-3xl border border-dashed border-border px-5 py-6 text-sm text-muted-foreground">
+            <Sparkles className="size-5 shrink-0" aria-hidden />
+            <span>
+              {activeCount === 0 ? (
+                <>{t("best.noneInactive")} <Link href={`${base}/candidates`} className="font-medium text-foreground underline-offset-4 hover:underline">{t("best.noneInactiveLink")}</Link> {t("best.noneInactiveTail")}</>
+              ) : (
+                t("partnerJobs.empty")
+              )}
+            </span>
+          </div>
+        ) : (
+          <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {partnerList.slice(0, 6).map((j) => (
+              <li key={j.id} className="min-w-0">
+                <Link
+                  href={`${base}/opportunities?job=${j.id}`}
+                  className="group flex h-full flex-col gap-4 rounded-3xl border border-border/60 bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-border hover:shadow-lg hover:shadow-black/5"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <ScoreRing score={j.best} className="size-12" />
+                    {j.fresh ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-info-soft px-2 py-0.5 text-xs font-semibold text-info" aria-label={t("partnerJobs.new", { count: j.fresh })}>
+                        <span className="size-1.5 rounded-full bg-info" aria-hidden />
+                        {t("cards.new")}
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="line-clamp-2 font-semibold leading-snug">{j.title}</p>
+                    <p className="mt-1 truncate text-sm text-muted-foreground">{j.org} · {j.client}</p>
+                  </div>
+                  <div className="flex items-end justify-between gap-3 border-t border-border/60 pt-4">
+                    {j.share ? (
+                      <span className="min-w-0">
+                        <span className="block text-2xl font-semibold tracking-tight text-success tabular-nums">~{f.money(j.share, j.currency, { whole: true })}</span>
+                        <span className="block text-xs text-muted-foreground">{t("cards.forYou")}</span>
+                      </span>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">{t("partnerJobs.strong", { count: j.strong })}</span>
+                    )}
+                    <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-tile-lilac px-2.5 py-1 text-xs font-medium text-tile-foreground">
+                      <Users className="size-3.5" aria-hidden />
+                      {t("partnerJobs.matches", { count: j.matches })}
+                    </span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      {/* ② My jobs → partners' candidates */}
+      <section className="grid gap-4">
+        <SectionHeader
+          badge={<DirectionBadge direction="inbound" label={t("myJobs.badge")} />}
+          title={t("myJobs.title")}
+          subtitle={t("myJobs.subtitle")}
+          action={<Button variant="outline" size="sm" asChild><Link href={`${base}/jobs`}>{tg("common.actions.viewAll")}</Link></Button>}
+        />
+        {myJobList.length === 0 ? (
+          <div className="flex items-center justify-between gap-3 rounded-3xl border border-dashed border-border px-5 py-6 text-sm text-muted-foreground">
+            <span className="flex items-center gap-3"><BriefcaseBusiness className="size-5 shrink-0" aria-hidden />{t("myJobs.empty")}</span>
+            <Button size="sm" asChild><Link href={`${base}/jobs/new`}><Plus className="size-4" aria-hidden />{t("gettingStarted.job.cta")}</Link></Button>
+          </div>
+        ) : (
+          <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {myJobList.map((j) => {
+              const href = j.recv.total ? `${base}/referrals?tab=received&job=${j.id}` : `${base}/jobs/${j.id}`;
+              const matchCount = j.summary ? j.summary.strong_count + j.summary.potential_count : null;
+              const hot = j.recv.pending > 0;
+              return (
+                <li key={j.id} className="min-w-0">
+                  <Link
+                    href={href}
+                    className={cn(
+                      "group flex h-full flex-col gap-4 rounded-3xl border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5",
+                      hot ? "border-info/40 ring-1 ring-info/30" : "border-border/60 hover:border-border",
+                    )}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-tile-blue text-tile-foreground">
+                        <BriefcaseBusiness className="size-4" aria-hidden />
+                      </span>
+                      {hot ? (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-info px-2.5 py-1 text-xs font-semibold text-white dark:text-black">
+                          {t("cards.reviewNow")}
+                          <ArrowRight className="size-3" aria-hidden />
+                        </span>
+                      ) : j.status !== "active" ? (
+                        <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">{tg(`labels.jobStatus.${j.status}`)}</span>
+                      ) : null}
+                    </div>
+                    <p className="line-clamp-2 flex-1 font-semibold leading-snug">{j.title}</p>
+                    {j.status === "active" && matchCount === null ? (
+                      <p className="border-t border-border/60 pt-4 text-xs text-muted-foreground">{t("myJobs.notOpen")}</p>
+                    ) : (
+                      <dl className="grid grid-cols-3 gap-2 border-t border-border/60 pt-4 text-center">
+                        <Stat value={matchCount ?? 0} label={t("cards.fit")} />
+                        <Stat value={j.recv.total} label={t("cards.referred")} />
+                        <Stat value={j.recv.pending} label={t("cards.review")} highlight={hot} />
+                      </dl>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+    </div>
+  );
+}
+
+function SectionHeader({ badge, title, subtitle, action }: { badge: React.ReactNode; title: string; subtitle: string; action: React.ReactNode }) {
+  return (
+    <header className="flex items-end justify-between gap-3">
+      <div className="min-w-0">
+        {badge}
+        <h2 className="mt-2 text-xl font-semibold tracking-tight">{title}</h2>
+        <p className="text-sm text-muted-foreground">{subtitle}</p>
       </div>
+      {action}
+    </header>
+  );
+}
+
+function Stat({ value, label, highlight }: { value: number; label: string; highlight?: boolean }) {
+  return (
+    <div className={cn("rounded-xl px-1 py-1.5", highlight && "bg-info-soft text-info")}>
+      <dt className="sr-only">{label}</dt>
+      <dd className="text-lg font-semibold tabular-nums leading-none">{value}</dd>
+      <dd className={cn("mt-1 truncate text-[11px]", highlight ? "font-medium" : "text-muted-foreground")}>{label}</dd>
     </div>
   );
 }

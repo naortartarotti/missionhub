@@ -24,12 +24,13 @@ export function InviteForm({ orgSlug }: { orgSlug: string }) {
   const tg = useGlobalT();
   return (
     <ActionForm action={action} className="grid gap-4">
-      <div className="grid gap-3 sm:grid-cols-[1fr_200px_auto] sm:items-end">
+      {/* items-start + button offset (label 20px + 6px gap) keeps the row aligned when Email shows an error. */}
+      <div className="grid gap-3 sm:grid-cols-[1fr_200px_auto] sm:items-start">
         <FormField id="email" label={t("team.email")} error={fe?.email}><Input id="email" name="email" type="email" required /></FormField>
         <FormField id="role" label={t("team.role")}>
           <NativeSelect id="role" name="role" defaultValue="recruiter">{ROLES.map((v) => <option key={v} value={v}>{tg(`labels.role.${v}`)}</option>)}</NativeSelect>
         </FormField>
-        <SubmitButton pendingLabel={t("team.inviting")}>{t("team.invite")}</SubmitButton>
+        <SubmitButton pendingLabel={t("team.inviting")} className="sm:mt-[26px]">{t("team.invite")}</SubmitButton>
       </div>
       <FormMessage state={state} />
       {state?.ok && state.data ? (

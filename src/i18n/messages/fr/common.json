@@ -49,5 +49,17 @@
   "none": "—",
   "notShared": "Non partagé",
   "yes": "Oui",
-  "no": "Non"
+  "no": "Non",
+  "location": {
+    "selectCountry": "Choisissez un pays",
+    "selectCountryFirst": "Choisissez d'abord un pays",
+    "selectRegion": "Choisissez une province / un État",
+    "selectRegionFirst": "Choisissez d'abord une province / un État",
+    "noRegions": "Sans objet",
+    "selectCity": "Choisissez ou saisissez une ville",
+    "search": "Rechercher…",
+    "noResults": "Aucun résultat",
+    "useCustom": "Utiliser « {value} »",
+    "more": "Continuez à taper pour affiner la liste"
+  }
 }

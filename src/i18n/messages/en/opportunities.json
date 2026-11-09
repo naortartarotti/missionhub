@@ -1,6 +1,6 @@
 {
   "title": "Opportunities",
-  "description": "Partner jobs that fit your candidates. Earn a share of the fee when someone you submit is hired.",
+  "description": "Partner jobs that fit your candidates. Submit someone and follow it in Referrals sent; you earn a share of the fee when they're hired.",
   "filteredByCandidate": "Showing matches for one candidate.",
   "statusNav": "Match status",
   "newCount": {
@@ -16,10 +16,6 @@
       "label": "Saved",
       "hint": "Your shortlist. Matches you want to come back to."
     },
-    "submitted": {
-      "label": "Submitted",
-      "hint": "Candidates you've already sent. Open one to follow the referral."
-    },
     "dismissed": {
       "label": "Dismissed",
       "hint": "Matches you marked as not a fit. Restore one if things change."
@@ -30,7 +26,8 @@
     }
   },
   "controls": {
-    "sort": "Sort"
+    "sort": "Sort",
+    "groupBy": "Group by"
   },
   "sorts": {
     "fit": "Best fit",
@@ -42,6 +39,30 @@
       "other": "{count} candidates"
     },
     "share": "your est. share"
+  },
+  "groupBy": {
+    "job": "By job",
+    "candidate": "By candidate"
+  },
+  "candidateGroup": {
+    "jobs": {
+      "one": "{count} job",
+      "other": "{count} jobs"
+    },
+    "bestShare": "best est. share",
+    "referrals": {
+      "one": "{count} referral sent",
+      "other": "{count} referrals sent"
+    },
+    "inProgress": {
+      "one": "{count} in progress",
+      "other": "{count} in progress"
+    },
+    "hired": {
+      "one": "{count} hired",
+      "other": "{count} hired"
+    },
+    "noReferrals": "Not referred yet"
   },
   "empty": {
     "inactive": {
@@ -60,10 +81,6 @@
     "saved": {
       "title": "Nothing saved",
       "description": "Use Save on a match to build a shortlist you can come back to."
-    },
-    "submitted": {
-      "title": "No candidates submitted yet",
-      "description": "When you submit a candidate to a partner job, you can follow it from here."
     },
     "dismissed": {
       "title": "Nothing dismissed",

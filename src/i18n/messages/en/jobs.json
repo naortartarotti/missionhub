@@ -17,7 +17,7 @@
   "openToPartners": "Open to partners",
   "new": {
     "title": "New job",
-    "description": "Paste a description to get suggested requirements, then review every field before publishing."
+    "description": "Start from an existing posting to fill the form automatically, then review every field before publishing."
   },
   "edit": {
     "metaTitle": "Edit job",
@@ -60,7 +60,33 @@
     "submittedEmptyShort": "No one yet. You'll be notified when a partner submits someone.",
     "role": "Role",
     "visibleShort": "Visible to partners",
-    "description": "Job description"
+    "description": "Job description",
+    "matchingLive": "Matching is live",
+    "matchingPaused": "Not being matched",
+    "matchingClosed": "Closed to partners",
+    "editCta": "Edit job",
+    "pipelineReview": "In review",
+    "pipelineInterviewing": "Interviewing",
+    "pipelineOffer": "Offer",
+    "pipelineHired": "Hired",
+    "pipelineClosed": {
+      "one": "{count} closed",
+      "other": "{count} closed"
+    },
+    "submittedEmptyTitle": "No candidates yet",
+    "submittedEmptyMatches": {
+      "one": "{count} partner candidate already fits this role.",
+      "other": "{count} partner candidates already fit this role."
+    },
+    "visibilityTitle": "What partners see",
+    "visibilityClosed": "Partners can't see this job.",
+    "hidden": "Hidden",
+    "owner": "Owner",
+    "posted": "Posted",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "details": "Details",
+    "submittedEmptyBody": "You'll be notified as soon as a partner submits someone."
   },
   "status": {
     "publish": "Publish",
@@ -139,5 +165,43 @@
     "salaryRange": "Maximum must be at least the minimum",
     "clientRequired": "Enter the client name or keep it confidential",
     "descriptionTooLong": "Description is too long."
+  },
+  "import": {
+    "title": "Fill this job in seconds",
+    "subtitle": "Paste the posting, drop a link or upload a file. We'll fill in what it says — you review everything before saving.",
+    "tabs": {
+      "text": "Paste text",
+      "url": "Link",
+      "file": "File"
+    },
+    "textLabel": "Job posting",
+    "textPlaceholder": "Paste the full job description here: title, requirements, location, salary…",
+    "urlLabel": "Link to the job posting",
+    "urlPlaceholder": "https://boards.greenhouse.io/acme/jobs/123",
+    "urlHint": "Works best with company career pages and Greenhouse, Lever, Workable, Gupy and similar. LinkedIn and Indeed block automatic reading — paste the text instead.",
+    "fileLabel": "Job description file",
+    "fileDrop": "Drop a PDF, DOCX or TXT here, or click to choose",
+    "fileHint": "Up to 5 MB. Scanned PDFs (images) can't be read.",
+    "fileChosen": "{name} · {size}",
+    "submit": "Fill the form",
+    "working": "Reading…",
+    "skip": "or fill it in manually below",
+    "done": {
+      "one": "{count} field filled. Check it below before saving.",
+      "other": "{count} fields filled. Check them below before saving."
+    },
+    "doneStructured": "Read from the page's structured job data.",
+    "again": "Import another",
+    "autoBadge": "Auto-filled",
+    "errors": {
+      "invalidUrl": "Enter a valid public https:// link.",
+      "blockedSite": "This site blocks automatic reading. Copy the posting text and use \"Paste text\" instead.",
+      "fetchFailed": "We couldn't open that link. Check it, or paste the text instead.",
+      "notHtml": "That link isn't a web page. Download the file and use \"File\" instead.",
+      "fileType": "Use a PDF, DOCX or TXT file.",
+      "fileSize": "The file is larger than 5 MB.",
+      "noText": "We couldn't find readable text. If it's a scanned PDF, paste the text instead.",
+      "tooShort": "Paste the full posting — at least a few sentences."
+    }
   }
 }

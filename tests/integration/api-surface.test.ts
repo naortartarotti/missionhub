@@ -37,6 +37,8 @@ const AUTHENTICATED_RPCS = new Set([
   "publish_commission_rule", "record_invoice", "record_payment_evidence", "report_hire",
   "resolve_dispute", "review_payment_evidence", "set_organization_suspension", "submit_referral",
   "transition_referral",
+  // Referral review & match triage (20261108000200/000300): each checks org membership internally.
+  "review_referral", "decline_referrals", "decline_pending_for_job", "set_match_triage", "mark_matches_seen",
 ]);
 
 beforeAll(async () => {

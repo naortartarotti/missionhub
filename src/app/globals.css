@@ -206,3 +206,127 @@
 .match-panel { animation: match-panel-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 .match-panel[data-state="closing"] { animation: match-panel-out 220ms cubic-bezier(0.4, 0, 1, 1) both; }
 .match-panel-content { animation: match-panel-content 260ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ---------------------------------------------------------------------------------------------
+   Landing page motion. Everything here is decorative: content is readable without JS, and the
+   global prefers-reduced-motion rule above collapses durations to ~0.
+   --------------------------------------------------------------------------------------------- */
+html:has([data-landing]) {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has([data-landing]) { scroll-behavior: auto; }
+}
+
+@keyframes lp-rise {
+  from { opacity: 0; transform: translateY(1.25rem); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes lp-line {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+@keyframes lp-highlight {
+  from { background-size: 0% 0.3em; }
+  to { background-size: 100% 0.3em; }
+}
+@keyframes lp-pop {
+  from { opacity: 0; transform: translateY(1rem) scale(0.9); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes lp-hero-image {
+  from { clip-path: inset(12% 12% 12% 12% round 2.75rem); transform: scale(1.08); }
+  to { clip-path: inset(0 0 0 0 round 2.75rem); transform: none; }
+}
+@keyframes lp-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes lp-blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(3rem, -2rem) scale(1.08); }
+  66% { transform: translate(-2rem, 2rem) scale(0.95); }
+}
+@keyframes lp-marquee {
+  to { transform: translateX(-100%); }
+}
+@keyframes lp-ring {
+  from { stroke-dashoffset: var(--ring-c); }
+  to { stroke-dashoffset: var(--ring-to); }
+}
+@keyframes lp-shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+@keyframes lp-kenburns {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+@keyframes lp-word {
+  from { opacity: 0.16; }
+  to { opacity: 1; }
+}
+
+.lp-rise { animation: lp-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--rise-delay, 0ms) both; }
+.lp-line { animation: lp-line 1000ms cubic-bezier(0.22, 1, 0.36, 1) var(--rise-delay, 0ms) both; }
+.lp-highlight {
+  background-image: linear-gradient(var(--tile-yellow), var(--tile-yellow));
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  animation: lp-highlight 900ms cubic-bezier(0.65, 0, 0.35, 1) 900ms both;
+}
+.lp-pop { animation: lp-pop 800ms cubic-bezier(0.34, 1.56, 0.64, 1) var(--rise-delay, 0ms) both; }
+.lp-hero-image { animation: lp-hero-image 1400ms cubic-bezier(0.22, 1, 0.36, 1) 150ms both; }
+.lp-float { animation: lp-float 6s ease-in-out infinite; }
+.lp-blob { animation: lp-blob 22s ease-in-out infinite; }
+.lp-marquee { animation: lp-marquee 45s linear infinite; }
+.lp-marquee-track:is(:hover, :focus-within) .lp-marquee { animation-play-state: paused; }
+.lp-ring { animation: lp-ring 1600ms cubic-bezier(0.22, 1, 0.36, 1) 1100ms both; }
+.lp-shimmer { animation: lp-shimmer 2.4s ease-in-out infinite; }
+
+/* Scroll reveal: hidden only once JS has confirmed it can reveal it again. */
+[data-reveal-ready] [data-reveal]:not([data-shown]) {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+[data-reveal] {
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    translate 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-reveal][data-shown] .lp-kenburns { animation: lp-kenburns 2400ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Commission split: segments grow to their share once the bar is in view. */
+@media (min-width: 640px) {
+  .lp-split-seg {
+    flex: var(--seg) 1 0;
+    transition: flex-grow 1200ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+  }
+  [data-reveal-ready] .lp-split:not([data-shown]) .lp-split-seg { flex-grow: 1; }
+}
+
+/* Statement: words light up as the paragraph scrolls through the viewport (progressive enhancement). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lp-word {
+      animation: lp-word linear both;
+      animation-timeline: view();
+      animation-range: cover var(--w-start) cover var(--w-end);
+    }
+  }
+}
+
+/* FAQ: smooth open/close where the browser can animate to auto height. */
+@supports (interpolate-size: allow-keywords) {
+  .lp-faq { interpolate-size: allow-keywords; }
+  .lp-faq::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition: block-size 400ms cubic-bezier(0.22, 1, 0.36, 1), content-visibility 400ms allow-discrete;
+  }
+  .lp-faq[open]::details-content { block-size: auto; }
+}

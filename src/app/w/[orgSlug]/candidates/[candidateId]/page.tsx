@@ -204,7 +204,7 @@ export default async function CandidatePage({ params, searchParams }: PageProps<
             )}
           </Panel>
 
-          <Panel>
+          <Panel id="referrals" className="scroll-mt-28">
             <SectionTitle>
               {t("detail.referrals")}
               <Count n={rel.referrals.length} />
