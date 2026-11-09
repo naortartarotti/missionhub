@@ -111,7 +111,9 @@
     "invitationCreated": "Invitation created. Email delivery isn't configured, so share this one-time link securely.",
     "invitationRevoked": "Invitation revoked.",
     "memberUpdated": "Member updated.",
-    "organizationUpdated": "Organization updated."
+    "organizationUpdated": "Organization updated.",
+    "invitationSent": "Invitation emailed to {email}. You can also share the link below.",
+    "invitationEmailFailed": "Invitation created, but the email couldn't be sent. Share this one-time link securely."
   },
   "invite": {
     "metaTitle": "Join organization",
@@ -119,5 +121,12 @@
     "subtitle": "You're signed in as {email}. The invitation must match this email address.",
     "joining": "Joining…",
     "accept": "Accept invitation"
+  },
+  "inviteEmail": {
+    "subject": "{inviter} invited you to {org} on MissionHub",
+    "heading": "Join {org} on MissionHub",
+    "body": "{inviter} invited you to join {org} as {role}. Sign in or create an account with {email} to accept.",
+    "cta": "Accept invitation",
+    "footer": "This invitation expires in 7 days. If you weren't expecting it, you can ignore this email."
   }
 }

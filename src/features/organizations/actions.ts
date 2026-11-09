@@ -8,7 +8,9 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/server/supabase/server";
 import { assertCan, getRequestContext, requireUser } from "@/server/auth/context";
-import { env } from "@/server/env";
+import { env, integrations } from "@/server/env";
+import { renderActionEmail, sendEmail } from "@/server/integrations/email";
+import { getGlobalT, getT } from "@/i18n/server";
 import { fromZodError, toActionError, type ActionResult } from "@/lib/actions/result";
 import { createOrganizationSchema, inviteSchema, memberUpdateSchema, splitList } from "./schemas";
 import { msg } from "@/i18n/translate";
@@ -50,7 +52,11 @@ export async function createOrganization(_: ActionResult | null, formData: FormD
   });
 }
 
-export async function inviteMember(orgSlug: string, _: ActionResult<{ link: string }> | null, formData: FormData): Promise<ActionResult<{ link: string }>> {
+export async function inviteMember(
+  orgSlug: string,
+  _: ActionResult<{ link: string; emailed: boolean }> | null,
+  formData: FormData,
+): Promise<ActionResult<{ link: string; emailed: boolean }>> {
   return guard(async () => {
     const ctx = await getRequestContext(orgSlug);
     assertCan(ctx, "team:manage");
@@ -65,12 +71,31 @@ export async function inviteMember(orgSlug: string, _: ActionResult<{ link: stri
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/settings/team`);
     const link = `${env.NEXT_PUBLIC_APP_URL}/invite/${token}`;
-    // Email delivery is NOT configured unless EMAIL_PROVIDER is set; the UI shows the link to copy.
-    return {
-      ok: true,
-      data: { link },
-      message: msg("onboarding.messages.invitationCreated"),
+    if (!integrations.email) {
+      return { ok: true, data: { link, emailed: false }, message: msg("onboarding.messages.invitationCreated") };
+    }
+    // The link stays visible in the UI either way, so a delivery failure never loses the invite.
+    const [t, tg] = await Promise.all([getT("onboarding"), getGlobalT()]);
+    const vars = {
+      inviter: ctx.user.fullName || ctx.user.email,
+      org: ctx.organizationName,
+      role: tg(`labels.role.${parsed.data.role}`),
+      email: parsed.data.email,
     };
+    const result = await sendEmail({
+      to: parsed.data.email,
+      subject: t("inviteEmail.subject", vars),
+      ...renderActionEmail({
+        heading: t("inviteEmail.heading", vars),
+        body: t("inviteEmail.body", vars),
+        cta: t("inviteEmail.cta"),
+        url: link,
+        footer: t("inviteEmail.footer"),
+      }),
+    });
+    return result.sent
+      ? { ok: true, data: { link, emailed: true }, message: msg("onboarding.messages.invitationSent", { email: parsed.data.email }) }
+      : { ok: true, data: { link, emailed: false }, message: msg("onboarding.messages.invitationEmailFailed") };
   });
 }
 

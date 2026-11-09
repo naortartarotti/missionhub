@@ -111,7 +111,9 @@
     "invitationCreated": "Convite criado. O envio de e-mails não está configurado; compartilhe este link de uso único com segurança.",
     "invitationRevoked": "Convite revogado.",
     "memberUpdated": "Membro atualizado.",
-    "organizationUpdated": "Organização atualizada."
+    "organizationUpdated": "Organização atualizada.",
+    "invitationSent": "Convite enviado por e-mail para {email}. Você também pode compartilhar o link abaixo.",
+    "invitationEmailFailed": "Convite criado, mas não foi possível enviar o e-mail. Compartilhe este link de uso único com segurança."
   },
   "invite": {
     "metaTitle": "Entrar na organização",
@@ -119,5 +121,12 @@
     "subtitle": "Você está conectado como {email}. O convite precisa corresponder a este endereço de e-mail.",
     "joining": "Entrando…",
     "accept": "Aceitar convite"
+  },
+  "inviteEmail": {
+    "subject": "{inviter} convidou você para {org} no MissionHub",
+    "heading": "Entre em {org} no MissionHub",
+    "body": "{inviter} convidou você para entrar em {org} como {role}. Entre ou crie uma conta com {email} para aceitar.",
+    "cta": "Aceitar convite",
+    "footer": "Este convite expira em 7 dias. Se você não esperava por ele, pode ignorar este e-mail."
   }
 }

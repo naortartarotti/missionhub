@@ -111,7 +111,9 @@
     "invitationCreated": "Invitation créée. L'envoi de courriels n'est pas configuré; partagez ce lien à usage unique de façon sécurisée.",
     "invitationRevoked": "Invitation révoquée.",
     "memberUpdated": "Membre mis à jour.",
-    "organizationUpdated": "Organisation mise à jour."
+    "organizationUpdated": "Organisation mise à jour.",
+    "invitationSent": "Invitation envoyée par courriel à {email}. Vous pouvez aussi partager le lien ci-dessous.",
+    "invitationEmailFailed": "Invitation créée, mais le courriel n'a pas pu être envoyé. Partagez ce lien à usage unique de façon sécurisée."
   },
   "invite": {
     "metaTitle": "Rejoindre l'organisation",
@@ -119,5 +121,12 @@
     "subtitle": "Vous êtes connecté en tant que {email}. L'invitation doit correspondre à cette adresse courriel.",
     "joining": "Connexion à l'équipe…",
     "accept": "Accepter l'invitation"
+  },
+  "inviteEmail": {
+    "subject": "{inviter} vous invite à rejoindre {org} sur MissionHub",
+    "heading": "Rejoignez {org} sur MissionHub",
+    "body": "{inviter} vous invite à rejoindre {org} en tant que {role}. Connectez-vous ou créez un compte avec {email} pour accepter.",
+    "cta": "Accepter l'invitation",
+    "footer": "Cette invitation expire dans 7 jours. Si vous ne l'attendiez pas, vous pouvez ignorer ce courriel."
   }
 }

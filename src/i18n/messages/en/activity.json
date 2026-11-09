@@ -9,5 +9,5 @@
   "emptyBody": "You'll see new matches, submissions and payment updates here as they happen.",
   "viewAll": "View all activity",
   "unread": "unread",
-  "emailOff": "Email delivery isn't configured (set EMAIL_PROVIDER). Notifications are in-app only; no emails have been sent."
+  "emailOff": "Email delivery isn't configured (set RESEND_API_KEY). Notifications are in-app only; no emails have been sent."
 }

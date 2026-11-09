@@ -9,5 +9,5 @@
   "emptyBody": "Você vai ver aqui novos matches, envios e atualizações de pagamento conforme acontecem.",
   "viewAll": "Ver toda a atividade",
   "unread": "não lida",
-  "emailOff": "O envio de e-mails não está configurado (defina EMAIL_PROVIDER). As notificações são só no app; nenhum e-mail foi enviado."
+  "emailOff": "O envio de e-mails não está configurado (defina RESEND_API_KEY). As notificações são só no app; nenhum e-mail foi enviado."
 }

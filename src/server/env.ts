@@ -8,7 +8,9 @@ const schema = z.object({
   NEXT_PUBLIC_APP_URL: z.url().default("http://localhost:3000"),
   APP_ENV: z.enum(["development", "demo", "production", "test"]).default("development"),
   AI_PROVIDER: z.string().optional(),
-  EMAIL_PROVIDER: z.string().optional(),
+  RESEND_API_KEY: z.string().min(10).optional(),
+  // Until a domain is verified in Resend, onboarding@resend.dev can only deliver to the account owner.
+  EMAIL_FROM: z.string().min(3).default("MissionHub <onboarding@resend.dev>"),
 });
 
 type Env = z.infer<typeof schema>;
@@ -36,7 +38,8 @@ function load(): Env {
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || vercelUrl(),
     APP_ENV: process.env.APP_ENV || undefined,
     AI_PROVIDER: process.env.AI_PROVIDER || undefined,
-    EMAIL_PROVIDER: process.env.EMAIL_PROVIDER || undefined,
+    RESEND_API_KEY: process.env.RESEND_API_KEY || undefined,
+    EMAIL_FROM: process.env.EMAIL_FROM || undefined,
   });
   return cached;
 }
@@ -53,6 +56,6 @@ export const integrations = {
     return Boolean(env.AI_PROVIDER);
   },
   get email() {
-    return Boolean(env.EMAIL_PROVIDER);
+    return Boolean(env.RESEND_API_KEY);
   },
 };
