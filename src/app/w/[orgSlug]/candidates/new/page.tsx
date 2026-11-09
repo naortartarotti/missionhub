@@ -19,7 +19,7 @@ export default async function NewCandidatePage({ params }: PageProps<"/w/[orgSlu
         title={t("new.title")}
         description={t("new.description")}
       />
-      <div className="mx-auto grid w-full max-w-4xl gap-6">
+      <div className="grid w-full gap-6">
       <CandidateForm
         action={createCandidate.bind(null, orgSlug)}
         cancelHref={`/w/${orgSlug}/candidates`}

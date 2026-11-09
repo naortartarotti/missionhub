@@ -22,7 +22,7 @@ export default async function EditJobPage({ params }: PageProps<"/w/[orgSlug]/jo
   return (
     <div className="grid gap-6">
       <PageHeader title={t("edit.title", { title: j.title })} description={t("edit.description")} />
-      <div className="mx-auto grid w-full max-w-4xl gap-6">
+      <div className="grid w-full gap-6">
       <JobForm
         orgSlug={orgSlug}
         action={updateJob.bind(null, orgSlug, jobId)}

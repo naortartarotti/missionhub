@@ -233,13 +233,6 @@
     },
     "declineSelected": "Decline…",
     "clear": "Clear",
-    "keys": {
-      "move": "move",
-      "accept": "accept",
-      "decline": "decline",
-      "info": "ask for info",
-      "select": "select"
-    },
     "noScore": "No fit score for this submission",
     "coverage": "{has}/{total} required skills",
     "salaryFits": "Within budget",

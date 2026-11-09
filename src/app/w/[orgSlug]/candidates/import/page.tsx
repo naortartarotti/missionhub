@@ -18,7 +18,7 @@ export default async function ImportPage({ params }: PageProps<"/w/[orgSlug]/can
         title={t("import.title")}
         description={t("import.description")}
       />
-      <div className="mx-auto grid w-full max-w-5xl gap-6">
+      <div className="grid w-full gap-6">
       <ImportWizard orgSlug={orgSlug} />
     </div>
     </div>

@@ -16,7 +16,7 @@ export default async function NewJobPage({ params }: PageProps<"/w/[orgSlug]/job
   return (
     <div className="grid gap-6">
       <PageHeader title={t("new.title")} description={t("new.description")} />
-      <div className="mx-auto grid w-full max-w-4xl gap-6">
+      <div className="grid w-full gap-6">
       <JobForm orgSlug={orgSlug} action={createJob.bind(null, orgSlug)} cancelHref={`/w/${orgSlug}/jobs`} isNew defaults={{ salaryCurrency: ctx.currency, feeCurrency: ctx.currency }} />
     </div>
     </div>

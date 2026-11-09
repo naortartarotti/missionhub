@@ -187,9 +187,6 @@ export function QueueList({ groups, orgSlug }: { groups: QueueGroup[]; orgSlug: 
           </ul>
         </section>
       ))}
-      <p className="hidden items-center gap-3 px-1 text-xs text-muted-foreground lg:flex">
-        <Kbd>J</Kbd><Kbd>K</Kbd> {t("queue.keys.move")} · <Kbd>A</Kbd> {t("queue.keys.accept")} · <Kbd>D</Kbd> {t("queue.keys.decline")} · <Kbd>I</Kbd> {t("queue.keys.info")} · <Kbd>X</Kbd> {t("queue.keys.select")}
-      </p>
       <DeclineDialog
         open={declineOpen}
         onOpenChange={setDeclineOpen}
@@ -204,10 +201,6 @@ export function QueueList({ groups, orgSlug }: { groups: QueueGroup[]; orgSlug: 
       />
     </div>
   );
-}
-
-function Kbd({ children }: { children: React.ReactNode }) {
-  return <kbd className="rounded-md border border-border bg-card px-1.5 py-0.5 font-sans text-[11px] font-medium text-foreground">{children}</kbd>;
 }
 
 function QueueRow({ row: r, picked, onPick }: { row: RowView; picked: boolean; onPick: () => void }) {

@@ -8,7 +8,7 @@ export async function generateMetadata() {
 
 export default function PreferencesPage() {
   return (
-    <Panel className="max-w-3xl">
+    <Panel>
       <PreferencesForm />
     </Panel>
   );

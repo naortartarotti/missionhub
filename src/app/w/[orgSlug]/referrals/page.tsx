@@ -41,7 +41,7 @@ export default async function ReferralsPage({ params, searchParams }: PageProps<
     <div className="grid gap-6">
       <PageHeader title={t("title")} description={t("description")} />
       {/* Direction is the first choice on this page: two clearly labelled, color-coded cards. */}
-      <nav aria-label={t("directionNav")} className="grid gap-2 sm:grid-cols-2 lg:max-w-3xl">
+      <nav aria-label={t("directionNav")} className="grid gap-2 sm:grid-cols-2">
         {(["received", "sent"] as const).map((k) => {
           const dir = k === "received" ? "inbound" : "outbound";
           const { icon: Icon, chip } = DIRECTION_STYLE[dir];

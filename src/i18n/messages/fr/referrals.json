@@ -233,13 +233,6 @@
     },
     "declineSelected": "Refuser…",
     "clear": "Effacer",
-    "keys": {
-      "move": "naviguer",
-      "accept": "accepter",
-      "decline": "refuser",
-      "info": "demander des infos",
-      "select": "sélectionner"
-    },
     "noScore": "Aucun score de correspondance pour cette soumission",
     "coverage": "{has}/{total} compétences requises",
     "salaryFits": "Dans le budget",

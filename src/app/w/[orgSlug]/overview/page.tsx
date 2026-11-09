@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, BriefcaseBusiness, CircleDollarSign, Handshake, Plus, Sparkles } from "lucide-react";
+import { ArrowRight, BriefcaseBusiness, CircleDollarSign, Handshake, Inbox, Plus, Sparkles, Users } from "lucide-react";
 import { getRequestContext } from "@/server/auth/context";
 import { getJobMatchSummary, listOpportunities, needsDecision } from "@/features/matching/queries";
 import { listPlacements } from "@/features/commissions/queries";
 import { ledgerBalances, type LedgerEntry } from "@/features/commissions/domain";
-import { StatTile } from "@/components/shared/stat-tile";
+import { KpiTile } from "@/components/shared/kpi-tile";
 import { GettingStarted } from "@/components/shared/getting-started";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
@@ -118,11 +118,11 @@ export default async function OverviewPage({ params }: PageProps<"/w/[orgSlug]/o
 
       <GettingStarted steps={setupSteps} />
 
-      <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-        <StatTile label={t("stats.matching")} value={String(activeCount)} />
-        <StatTile label={t("stats.toDecide")} value={String(toDecide)} />
-        <StatTile label={t("stats.toReview")} value={String(pendingReview)} />
-        <StatTile label={t("stats.owed")} value={f.money(payable, ctx.currency, { whole: true })} tone={payable ? "success" : undefined} />
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <KpiTile label={t("stats.matching")} value={String(activeCount)} tone="yellow" icon={Users} href={`${base}/candidates?status=active_for_matching`} />
+        <KpiTile label={t("stats.toDecide")} value={String(toDecide)} tone="blue" icon={Sparkles} href={`${base}/opportunities`} />
+        <KpiTile label={t("stats.toReview")} value={String(pendingReview)} tone="lilac" icon={Inbox} href={`${base}/referrals?tab=received`} />
+        <KpiTile label={t("stats.owed")} value={f.money(payable, ctx.currency, { whole: true })} tone="green" icon={CircleDollarSign} href={`${base}/commissions`} />
       </div>
 
       {actions.length ? (

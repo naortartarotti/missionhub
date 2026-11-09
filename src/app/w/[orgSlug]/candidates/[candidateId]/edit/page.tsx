@@ -22,7 +22,7 @@ export default async function EditCandidatePage({ params }: PageProps<"/w/[orgSl
   return (
     <div className="grid gap-6">
       <PageHeader title={t("edit.title", { name: c.full_name })} description={t("edit.description")} />
-      <div className="mx-auto grid w-full max-w-4xl gap-6">
+      <div className="grid w-full gap-6">
       <CandidateForm
         action={updateCandidate.bind(null, orgSlug, candidateId)}
         cancelHref={`/w/${orgSlug}/candidates/${candidateId}`}

@@ -233,13 +233,6 @@
     },
     "declineSelected": "Recusar…",
     "clear": "Limpar",
-    "keys": {
-      "move": "navegar",
-      "accept": "aceitar",
-      "decline": "recusar",
-      "info": "pedir info",
-      "select": "selecionar"
-    },
     "noScore": "Sem score de aderência para este envio",
     "coverage": "{has}/{total} skills obrigatórias",
     "salaryFits": "Dentro do budget",

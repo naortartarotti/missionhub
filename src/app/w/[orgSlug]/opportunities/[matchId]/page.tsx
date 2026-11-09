@@ -48,7 +48,7 @@ export default async function ReviewMatchPage({ params }: PageProps<"/w/[orgSlug
         title={t("review.heading")}
         description={t("review.description", { candidate: opp.candidate_name, job: opp.job_title, client: opp.client_label, org: opp.job_org_name })}
       />
-      <div className="mx-auto grid w-full max-w-5xl gap-6">
+      <div className="grid w-full gap-6">
       <Panel className="grid gap-5 sm:grid-cols-[auto_1fr]">
         <ScoreRing score={opp.score} className="size-16" />
         <div className="grid gap-4 sm:grid-cols-2">
