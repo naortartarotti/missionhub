@@ -2,7 +2,7 @@
   "title": "Aperçu",
   "welcome": "Bon retour, {name}!",
   "welcomeFallbackName": "vous",
-  "subtitle": "Voici ce qui se passe chez {org} aujourd'hui.",
+  "subtitle": "Voici ce qui demande votre attention aujourd'hui.",
   "gettingStarted": {
     "title": "Premiers pas",
     "intro": "Vos candidats restent privés. MissionHub les jumelle avec des postes de recruteurs partenaires, vous décidez qui soumettre, et la commission est suivie lorsqu'une personne est embauchée.",
@@ -30,99 +30,123 @@
       "cta": "Voir les opportunités"
     }
   },
+  "stats": {
+    "label": "Résumé",
+    "matches": "Correspondances à examiner",
+    "referrals": "Recommandations à examiner",
+    "earned": "Commission gagnée",
+    "earnedProjected": "~{amount} prévus"
+  },
   "attention": {
-    "title": "À traiter",
-    "empty": "Vous êtes à jour. Les nouvelles soumissions et étapes de paiement apparaîtront ici.",
-    "confirmSplit": "Confirmer le partage de la commission : {job}",
-    "payable": {
-      "one": "{count} placement avec commission à verser",
-      "other": "{count} placements avec commission à verser"
+    "title": "Demande votre attention",
+    "referral": {
+      "title": "Examiner la recommandation",
+      "body": "{candidate} · {partner}",
+      "action": "Examiner"
     },
-    "payableSub": "Confirmez chaque versement à la réception des fonds"
+    "moreReferrals": {
+      "title": {
+        "one": "{count} autre recommandation en attente",
+        "other": "{count} autres recommandations en attente"
+      },
+      "action": "Ouvrir la file"
+    },
+    "matches": {
+      "title": "Examiner les correspondances",
+      "body": {
+        "one": "{count} poste partenaire correspond à vos candidats",
+        "other": "{count} postes partenaires correspondent à vos candidats"
+      },
+      "fresh": {
+        "one": "{count} nouvelle",
+        "other": "{count} nouvelles"
+      },
+      "action": "Examiner"
+    },
+    "info": {
+      "title": "Répondre à une question",
+      "action": "Répondre"
+    },
+    "moreInfo": {
+      "title": {
+        "one": "{count} autre question en attente",
+        "other": "{count} autres questions en attente"
+      },
+      "action": "Ouvrir"
+    },
+    "agreement": {
+      "title": "Confirmer le partage de commission",
+      "action": "Confirmer"
+    },
+    "payout": {
+      "title": "Enregistrer le versement au partenaire",
+      "action": "Ouvrir"
+    },
+    "empty": {
+      "title": "Tout est à jour",
+      "addCandidate": "Ajouter un candidat",
+      "newJob": "Nouveau poste"
+    }
   },
   "best": {
+    "title": "Meilleures opportunités pour vos candidats",
+    "viewAll": "Tout voir",
+    "more": {
+      "one": "+{count} autre",
+      "other": "+{count} autres"
+    },
+    "share": "~{amount} pour vous",
+    "action": "Examiner",
+    "empty": "Aucune correspondance ouverte pour le moment.",
     "noneInactive": "Aucune correspondance pour l'instant.",
     "noneInactiveLink": "Activez le jumelage pour un candidat",
     "noneInactiveTail": "et les postes partenaires qui lui conviennent apparaîtront ici."
   },
-  "stats": {
-    "matching": "Candidats en jumelage",
-    "toDecide": "Correspondances à décider",
-    "toReview": "Recommandations à examiner",
-    "owed": "Commission due"
-  },
-  "partnerJobs": {
-    "badge": "Pour vos candidats",
-    "title": "Postes partenaires pour vos candidats",
-    "subtitle": "Décidez qui soumettre. Vous touchez une part si la personne est embauchée.",
-    "empty": "Aucune correspondance ouverte pour l'instant. Les postes partenaires apparaîtront ici dès qu'un poste convient.",
-    "matches": {
-      "one": "{count} candidat convient",
-      "other": "{count} candidats conviennent"
+  "activity": {
+    "title": "Votre activité de recrutement",
+    "viewAll": "Tout voir",
+    "candidates": {
+      "title": "Recommandations envoyées",
+      "sent": "Envoyées",
+      "progressing": "En cours",
+      "hired": "Embauchés"
     },
-    "strong": {
-      "one": "{count} forte",
-      "other": "{count} fortes"
-    },
-    "share": "~{amount} pour vous",
-    "new": {
-      "one": "{count} nouvelle correspondance",
-      "other": "{count} nouvelles correspondances"
+    "jobs": {
+      "title": "Vos postes",
+      "open": "Ouverts",
+      "fits": "Profils partenaires",
+      "progressing": "En cours",
+      "none": "Aucun poste ouvert aux partenaires pour l'instant.",
+      "create": "Nouveau poste"
     }
   },
-  "myJobs": {
-    "badge": "Pour vos postes",
-    "title": "Vos postes",
-    "subtitle": "Candidats soumis par les partenaires, et combien pourraient convenir.",
-    "empty": "Aucun poste ouvert pour l'instant.",
-    "received": {
-      "one": "{count} recommandation",
-      "other": "{count} recommandations"
+  "pipeline": {
+    "title": "Pipeline",
+    "subtitle": "Candidats à chaque étape en ce moment",
+    "views": {
+      "received": "Vos postes",
+      "sent": "Vos candidats"
     },
-    "toReview": {
-      "one": "{count} à examiner",
-      "other": "{count} à examiner"
+    "viewsLabel": "Côté du pipeline",
+    "stages": {
+      "review": "En revue",
+      "accepted": "Accepté",
+      "interviewing": "Entretiens",
+      "offer": "Offre",
+      "hired": "Embauché"
     },
-    "noneWaiting": "Rien en attente",
-    "partnerMatches": {
-      "one": "{count} candidat partenaire convient",
-      "other": "{count} candidats partenaires conviennent"
+    "total": {
+      "one": "candidat en cours",
+      "other": "candidats en cours"
     },
-    "notOpen": "Non ouvert aux partenaires"
-  },
-  "hero": {
-    "eyebrow": "Opportunités pour vous",
-    "amountNone": {
-      "one": "{count} correspondance à décider",
-      "other": "{count} correspondances à décider"
+    "closed": {
+      "one": "+ {count} clôturé",
+      "other": "+ {count} clôturés"
     },
-    "body": {
-      "one": "{count} poste partenaire convient à vos candidats en ce moment. Choisissez qui soumettre.",
-      "other": "{count} postes partenaires conviennent à vos candidats en ce moment. Choisissez qui soumettre."
-    },
-    "cta": "Voir les correspondances",
-    "upNext": "À faire",
-    "caughtUp": "Tout est à jour. Les nouvelles recommandations et étapes de paiement apparaîtront ici."
-  },
-  "attentionExtra": {
-    "review": {
-      "one": "Examiner {count} recommandation · {job}",
-      "other": "Examiner {count} recommandations · {job}"
-    },
-    "reviewSub": "Un partenaire a soumis un candidat à votre poste",
-    "newMatches": {
-      "one": "{count} nouvelle correspondance à voir",
-      "other": "{count} nouvelles correspondances à voir"
-    },
-    "newMatchesSub": "De nouveaux postes pour vos candidats"
-  },
-  "cards": {
-    "new": "Nouveau",
-    "fit": "pourraient convenir",
-    "referred": "recommandés",
-    "review": "à examiner",
-    "reviewNow": "Examiner",
-    "open": "Ouvrir le poste",
-    "forYou": "votre part estimée"
+    "share": "{percent} du pipeline",
+    "empty": "Rien dans le pipeline pour l'instant.",
+    "open": "Ouvrir le pipeline",
+    "chartLabel": "Candidats par étape du pipeline",
+    "openSent": "Voir les recommandations envoyées"
   }
 }

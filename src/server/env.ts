@@ -7,10 +7,16 @@ const schema = z.object({
   SUPABASE_SECRET_KEY: z.string().min(10).optional(),
   NEXT_PUBLIC_APP_URL: z.url().default("http://localhost:3000"),
   APP_ENV: z.enum(["development", "demo", "production", "test"]).default("development"),
-  AI_PROVIDER: z.string().optional(),
+  // OpenAI powers job/resume extraction and semantic skill matching. Unset => rule-based only.
+  OPENAI_API_KEY: z.string().min(20).optional(),
+  OPENAI_MODEL: z.string().min(2).optional(),
+  OPENAI_REASONING_EFFORT: z.enum(["minimal", "low", "medium", "high"]).optional(),
   RESEND_API_KEY: z.string().min(10).optional(),
   // Until a domain is verified in Resend, onboarding@resend.dev can only deliver to the account owner.
   EMAIL_FROM: z.string().min(3).default("MissionHub <onboarding@resend.dev>"),
+  // Stripe (wallet payments). Both must be set for payments to switch on.
+  STRIPE_SECRET_KEY: z.string().min(10).optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().min(10).optional(),
 });
 
 type Env = z.infer<typeof schema>;
@@ -37,9 +43,13 @@ function load(): Env {
     SUPABASE_SECRET_KEY: process.env.SUPABASE_SECRET_KEY || undefined,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || vercelUrl(),
     APP_ENV: process.env.APP_ENV || undefined,
-    AI_PROVIDER: process.env.AI_PROVIDER || undefined,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY || undefined,
+    OPENAI_MODEL: process.env.OPENAI_MODEL || undefined,
+    OPENAI_REASONING_EFFORT: process.env.OPENAI_REASONING_EFFORT || undefined,
     RESEND_API_KEY: process.env.RESEND_API_KEY || undefined,
     EMAIL_FROM: process.env.EMAIL_FROM || undefined,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || undefined,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET || undefined,
   });
   return cached;
 }
@@ -53,9 +63,13 @@ export const env: Readonly<Env> = new Proxy({} as Env, {
 
 export const integrations = {
   get ai() {
-    return Boolean(env.AI_PROVIDER);
+    return Boolean(env.OPENAI_API_KEY);
   },
   get email() {
     return Boolean(env.RESEND_API_KEY);
+  },
+  /** Wallet pay-ins and cash-outs. Off until both Stripe secrets are configured. */
+  get payments() {
+    return Boolean(env.STRIPE_SECRET_KEY && env.STRIPE_WEBHOOK_SECRET);
   },
 };

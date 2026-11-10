@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { StatusPill } from "@/components/shared/status-pill";
+import { SkillChips } from "@/components/shared/skill-chips";
 import { EmptyState } from "@/components/shared/empty-state";
 import { InitialsAvatar } from "@/components/shared/initials-avatar";
 import { Panel } from "@/components/shared/card";
@@ -26,11 +27,14 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
   const q = typeof sp.q === "string" ? sp.q : "";
   const status = typeof sp.status === "string" ? sp.status : "all";
   const page = Number(sp.page ?? 1) || 1;
-  const [{ rows, total }, notMatching] = await Promise.all([
+  const [{ rows, total }, notMatching, othersOwned] = await Promise.all([
     listCandidates(ctx, { q, status, page }),
     ctx.db.from("candidates").select("id", { count: "exact", head: true }).eq("organization_id", ctx.organizationId).eq("status", "draft"),
+    ctx.db.from("candidates").select("id", { count: "exact", head: true }).eq("organization_id", ctx.organizationId).neq("owner_id", ctx.userId),
   ]);
   const draftCount = notMatching.count ?? 0;
+  // The recruiter column only adds information when someone else on the team owns candidates.
+  const showOwner = (othersOwned.count ?? 0) > 0;
   const base = `/w/${orgSlug}/candidates`;
   const [t, tg, f] = await Promise.all([getT("candidates"), getGlobalT(), getFormatter()]);
   const statuses = (Object.keys(CANDIDATE_STATUS) as (keyof typeof CANDIDATE_STATUS)[]).filter((k) => k !== "deleted");
@@ -116,7 +120,7 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
                   <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.candidate")}</th>
                   <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.seniority")}</th>
                   <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.skills")}</th>
-                  <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.owner")}</th>
+                  {showOwner ? <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.owner")}</th> : null}
                   <th scope="col" className="px-5 py-3 font-medium">{t("list.columns.updated")}</th>
                   <th scope="col" className="px-5 py-3 text-right font-medium">{t("list.columns.status")}</th>
                 </tr>
@@ -124,22 +128,24 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
               <tbody>
                 {rows.map((c) => (
                   <tr key={c.id} className="border-b border-border/60 last:border-0 hover:bg-muted/40">
-                    <td className="px-5 py-3.5">
+                    <td className="px-5 py-4">
                       <Link href={`${base}/${c.id}`} className="flex items-center gap-3 rounded-lg focus-visible:outline-2">
-                        <InitialsAvatar name={c.full_name} className="size-9" />
+                        <InitialsAvatar name={c.full_name} className="size-10" />
                         <span className="min-w-0">
-                          <span className="block truncate font-medium">{c.full_name}</span>
-                          <span className="block truncate text-xs text-muted-foreground">
+                          <span className="block truncate text-base font-semibold">{c.full_name}</span>
+                          <span className="block truncate text-sm text-muted-foreground">
                             {[c.headline, [c.location_city, c.location_region].filter(Boolean).join(", ")].filter(Boolean).join(" · ") || "—"}
                           </span>
                         </span>
                       </Link>
                     </td>
-                    <td className="px-5 py-3.5">{c.seniority ? tg(`labels.seniority.${c.seniority}`) : "—"}</td>
-                    <td className="px-5 py-3.5 text-muted-foreground">{c.skills.slice(0, 3).join(", ") || "—"}</td>
-                    <td className="px-5 py-3.5 text-muted-foreground">{c.owner?.full_name || "—"}</td>
-                    <td className="px-5 py-3.5 text-muted-foreground">{f.relative(c.updated_at)}</td>
-                    <td className="px-5 py-3.5 text-right">
+                    <td className="px-5 py-4">{c.seniority ? tg(`labels.seniority.${c.seniority}`) : "—"}</td>
+                    <td className="px-5 py-4">
+                      <SkillChips skills={c.skills} max={3} />
+                    </td>
+                    {showOwner ? <td className="px-5 py-4 text-muted-foreground">{c.owner?.full_name || "—"}</td> : null}
+                    <td className="px-5 py-4 text-muted-foreground">{f.relative(c.updated_at)}</td>
+                    <td className="px-5 py-4 text-right">
                       <StatusPill tone={CANDIDATE_STATUS[c.status].tone} label={tg(`labels.candidateStatus.${c.status}`)} />
                     </td>
                   </tr>

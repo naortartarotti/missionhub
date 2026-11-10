@@ -165,6 +165,7 @@
     "arrangementMismatch": "Le poste est {jobArrangement}; le candidat préfère {candidateArrangements}",
     "relocationRequired": "Le poste exige une présence en {country}; le candidat n'est pas ouvert à la relocalisation",
     "requiredSkillsMatched": "Possède les compétences requises : {skills}",
+    "relatedSkills": "Expérience connexe : {skills}",
     "requiredSkillsMissing": "Compétences requises manquantes : {skills}",
     "noRequiredSkills": "Le poste n'indique aucune compétence requise; la pertinence est approximative",
     "noRequiredSkillsPresent": "Aucune des compétences requises pour le poste n'est présente",
@@ -213,5 +214,9 @@
       "other": "{count} écarts"
     }
   },
-  "filteredByJob": "Un seul poste partenaire affiché."
+  "filteredByJob": "Un seul poste partenaire affiché.",
+  "internal": {
+    "badge": "Votre autre organisation",
+    "hint": "Vous êtes aussi membre de {org}. Les recommandations ici sont internes : aucune commission de partenaire, seulement les frais de plateforme."
+  }
 }

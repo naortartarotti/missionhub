@@ -18,8 +18,8 @@
   },
   "integrations": {
     "title": "Intégrations",
-    "aiName": "Extraction et explications par IA",
-    "aiDescription": "Sans elle, la correspondance utilise une notation déterministe fondée sur des règles.",
+    "aiName": "IA (OpenAI)",
+    "aiDescription": "Lit les offres (lien, PDF, fichiers numérisés) et les CV, et ajoute la correspondance sémantique des compétences. Sans elle, l'extraction et la notation reposent sur des règles.",
     "emailName": "Courriels transactionnels",
     "emailDescription": "Sans cela, les notifications sont uniquement dans l'application.",
     "paymentsName": "Fournisseur de paiements",
@@ -127,6 +127,7 @@
       "dark": "Sombre",
       "system": "Système"
     },
-    "saved": "Langue mise à jour"
+    "saved": "Langue mise à jour",
+    "description": "Votre langue et votre apparence sur ce navigateur. Elles n'affectent pas vos coéquipiers."
   }
 }

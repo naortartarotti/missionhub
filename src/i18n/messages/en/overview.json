@@ -2,7 +2,7 @@
   "title": "Overview",
   "welcome": "Welcome back, {name}!",
   "welcomeFallbackName": "there",
-  "subtitle": "Here's what's happening at {org} today.",
+  "subtitle": "Here's what needs your attention today.",
   "gettingStarted": {
     "title": "Get started",
     "intro": "Your candidates stay private. MissionHub matches them with jobs from partner recruiters, you decide who to submit, and the commission is tracked when someone gets hired.",
@@ -30,99 +30,123 @@
       "cta": "See opportunities"
     }
   },
+  "stats": {
+    "label": "Summary",
+    "matches": "Matches to review",
+    "referrals": "Referrals to review",
+    "earned": "Commission earned",
+    "earnedProjected": "~{amount} projected"
+  },
   "attention": {
     "title": "Needs your attention",
-    "empty": "You're all caught up. New submissions and payment steps will show up here.",
-    "confirmSplit": "Confirm the commission split: {job}",
-    "payable": {
-      "one": "{count} placement with commission payable",
-      "other": "{count} placements with commission payable"
+    "referral": {
+      "title": "Review referral",
+      "body": "{candidate} · {partner}",
+      "action": "Review"
     },
-    "payableSub": "Confirm each payout once the money arrives"
+    "moreReferrals": {
+      "title": {
+        "one": "{count} more referral waiting",
+        "other": "{count} more referrals waiting"
+      },
+      "action": "Open queue"
+    },
+    "matches": {
+      "title": "Review matches",
+      "body": {
+        "one": "{count} partner job fits your candidates",
+        "other": "{count} partner jobs fit your candidates"
+      },
+      "fresh": {
+        "one": "{count} new",
+        "other": "{count} new"
+      },
+      "action": "Review"
+    },
+    "info": {
+      "title": "Answer a question",
+      "action": "Respond"
+    },
+    "moreInfo": {
+      "title": {
+        "one": "{count} more question waiting",
+        "other": "{count} more questions waiting"
+      },
+      "action": "Open"
+    },
+    "agreement": {
+      "title": "Confirm commission split",
+      "action": "Confirm"
+    },
+    "payout": {
+      "title": "Record partner payout",
+      "action": "Open"
+    },
+    "empty": {
+      "title": "All caught up",
+      "addCandidate": "Add candidate",
+      "newJob": "New job"
+    }
   },
   "best": {
+    "title": "Best opportunities for your candidates",
+    "viewAll": "View all",
+    "more": {
+      "one": "+{count} more",
+      "other": "+{count} more"
+    },
+    "share": "~{amount} for you",
+    "action": "Review",
+    "empty": "No open matches right now.",
     "noneInactive": "No matches yet.",
     "noneInactiveLink": "Turn on matching for a candidate",
     "noneInactiveTail": "and partner jobs that fit will appear here."
   },
-  "stats": {
-    "matching": "Candidates matching",
-    "toDecide": "Matches to decide",
-    "toReview": "Referrals to review",
-    "owed": "Commission owed"
-  },
-  "partnerJobs": {
-    "badge": "For your candidates",
-    "title": "Partner jobs that fit your candidates",
-    "subtitle": "Decide who to submit. You earn a share if they're hired.",
-    "empty": "No open matches right now. We'll show partner jobs here as soon as one fits.",
-    "matches": {
-      "one": "{count} candidate fits",
-      "other": "{count} candidates fit"
+  "activity": {
+    "title": "Your recruiting activity",
+    "viewAll": "View all",
+    "candidates": {
+      "title": "Referrals you sent",
+      "sent": "Sent",
+      "progressing": "In progress",
+      "hired": "Hired"
     },
-    "strong": {
-      "one": "{count} strong",
-      "other": "{count} strong"
-    },
-    "share": "~{amount} for you",
-    "new": {
-      "one": "{count} new match",
-      "other": "{count} new matches"
+    "jobs": {
+      "title": "Your jobs",
+      "open": "Open",
+      "fits": "Partner fits",
+      "progressing": "In progress",
+      "none": "No job open to partners yet.",
+      "create": "New job"
     }
   },
-  "myJobs": {
-    "badge": "For your jobs",
-    "title": "Your jobs",
-    "subtitle": "Candidates partners submitted, and how many could fit.",
-    "empty": "No open jobs yet.",
-    "received": {
-      "one": "{count} referral",
-      "other": "{count} referrals"
+  "pipeline": {
+    "title": "Pipeline",
+    "subtitle": "Candidates in each stage right now",
+    "views": {
+      "received": "Your jobs",
+      "sent": "Your candidates"
     },
-    "toReview": {
-      "one": "{count} to review",
-      "other": "{count} to review"
+    "viewsLabel": "Pipeline side",
+    "stages": {
+      "review": "In review",
+      "accepted": "Accepted",
+      "interviewing": "Interviewing",
+      "offer": "Offer",
+      "hired": "Hired"
     },
-    "noneWaiting": "Nothing waiting",
-    "partnerMatches": {
-      "one": "{count} partner candidate fits",
-      "other": "{count} partner candidates fit"
+    "total": {
+      "one": "candidate in progress",
+      "other": "candidates in progress"
     },
-    "notOpen": "Not open to partners"
-  },
-  "hero": {
-    "eyebrow": "Opportunities for you",
-    "amountNone": {
-      "one": "{count} match to decide",
-      "other": "{count} matches to decide"
+    "closed": {
+      "one": "+ {count} closed",
+      "other": "+ {count} closed"
     },
-    "body": {
-      "one": "{count} partner job fits your candidates right now. Pick who to submit.",
-      "other": "{count} partner jobs fit your candidates right now. Pick who to submit."
-    },
-    "cta": "Review matches",
-    "upNext": "Up next",
-    "caughtUp": "You're all caught up. New referrals and payment steps will show up here."
-  },
-  "attentionExtra": {
-    "review": {
-      "one": "Review {count} referral · {job}",
-      "other": "Review {count} referrals · {job}"
-    },
-    "reviewSub": "A partner submitted a candidate to your job",
-    "newMatches": {
-      "one": "{count} new match to look at",
-      "other": "{count} new matches to look at"
-    },
-    "newMatchesSub": "Fresh fits for your candidates"
-  },
-  "cards": {
-    "new": "New",
-    "fit": "could fit",
-    "referred": "referred",
-    "review": "to review",
-    "reviewNow": "Review now",
-    "open": "Open job",
-    "forYou": "potential share for you"
+    "share": "{percent} of the pipeline",
+    "empty": "Nothing in the pipeline yet.",
+    "open": "Open pipeline",
+    "chartLabel": "Candidates per pipeline stage",
+    "openSent": "View sent referrals"
   }
 }

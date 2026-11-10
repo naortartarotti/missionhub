@@ -23,6 +23,12 @@ export type QueueSort = (typeof QUEUE_SORTS)[number];
 
 export const PAGE_SIZE = 25;
 
+/** Pipeline the hiring recruiter moves a referral through; info_requested / accepted sit at the review step. */
+export const REFERRAL_STAGES = ["submitted", "under_review", "interviewing", "offer", "hired"] as const;
+export const STAGE_INDEX: Partial<Record<string, number>> = { submitted: 0, under_review: 1, info_requested: 1, accepted: 1, interviewing: 2, offer: 3, hired: 4 };
+/** Statuses that end a referral without a hire. */
+export const CLOSED_STATUSES = new Set(["declined", "rejected", "withdrawn", "cancelled"]);
+
 /** Statuses where the job owner can still accept / decline / ask for info. */
 export const DECIDABLE = new Set(["submitted", "under_review"]);
 export const PENDING = new Set<string>(BUCKETS.review);

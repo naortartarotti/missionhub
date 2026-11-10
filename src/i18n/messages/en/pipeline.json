@@ -1,0 +1,37 @@
+{
+  "title": "Pipeline",
+  "description": "Move accepted candidates through your hiring process, from acceptance to hire.",
+  "readOnly": "Where each accepted candidate stands. Only members who review referrals can move them.",
+  "allJobs": "All jobs",
+  "closed": "Closed",
+  "columnEmpty": "No candidates",
+  "ownerHint": "Accepted by this person on your team",
+  "openPlacement": "Open placement",
+  "reportHire": "Report hire",
+  "moved": "Moved to {stage}",
+  "waitingAgreement": "Waiting for the partner to confirm the commission split",
+  "closeDialog": {
+    "description": "The candidate leaves the pipeline. The partner sees the change and your reason on the referral.",
+    "reason": "Reason"
+  },
+  "empty": {
+    "title": "No accepted candidates yet",
+    "description": "When you accept a partner's referral, the candidate appears here so you can move them through interviews, offer and hire.",
+    "action": "Review referrals"
+  },
+  "viewInPipeline": "View in pipeline",
+  "ownerOnly": "Only {name} can move this candidate",
+  "ownerOnlyUnknown": "Only the person who accepted can move this candidate",
+  "ownedBy": "Accepted by {name}. Only they move this candidate through the pipeline.",
+  "status": {
+    "ready": "Ready",
+    "readyHint": "You can move this candidate to the next stage",
+    "awaitingSplit": "Awaiting split",
+    "viewOnly": "View only"
+  },
+  "menu": "Actions for {candidate}",
+  "moveTo": "Move to {stage}",
+  "openReferral": "Open referral",
+  "feeHint": "Expected placement fee for this job",
+  "inStage": "In this stage since"
+}

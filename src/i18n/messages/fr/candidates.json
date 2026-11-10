@@ -25,7 +25,7 @@
       "candidate": "Candidat",
       "seniority": "Niveau",
       "skills": "Compétences principales",
-      "owner": "Responsable",
+      "owner": "Recruteur",
       "updated": "Mis à jour",
       "status": "Statut"
     }
@@ -63,7 +63,7 @@
     "salary": "Attentes salariales",
     "salaryRange": "{min} – {max}",
     "availableFrom": "Disponible à partir du",
-    "owner": "Responsable",
+    "owner": "Recruteur",
     "opportunities": "Occasions",
     "allOpportunities": "Toutes les occasions",
     "matchingOff": "Activez le jumelage pour voir les postes partenaires qui conviennent.",
@@ -310,6 +310,38 @@
     "imported": {
       "one": "{count} candidat importé comme brouillon. Vérifiez-le et consignez l'autorisation avant de l'activer.",
       "other": "{count} candidats importés comme brouillons. Vérifiez chacun et consignez les autorisations avant de les activer."
+    }
+  },
+  "resume": {
+    "title": "Partir d'un CV",
+    "subtitle": "Importez un CV ou collez son texte. Nous récupérons les coordonnées et les compétences mentionnées — vous vérifiez tout avant d'enregistrer.",
+    "subtitleAi": "Importez un CV ou collez son texte (PDF numérisés compris). L'IA remplit le profil — vous vérifiez tout avant d'enregistrer.",
+    "tabs": {
+      "file": "Fichier du CV",
+      "text": "Coller le texte"
+    },
+    "textLabel": "Texte du CV",
+    "textPlaceholder": "Collez le CV ici : expérience, compétences, formation…",
+    "fileDrop": "Déposez un PDF, DOCX ou TXT ici, ou cliquez pour choisir",
+    "fileHint": "Jusqu'à 10 Mo. Les PDF numérisés (images) ne peuvent pas être lus.",
+    "fileHintAi": "Jusqu'à 10 Mo. Les PDF numérisés sont lus par l'IA.",
+    "fileChosen": "{name} · {size}",
+    "submit": "Remplir le profil",
+    "working": "Lecture…",
+    "skip": "ou remplissez-le manuellement ci-dessous",
+    "done": {
+      "one": "{count} champ rempli. Vérifiez-le ci-dessous avant d'enregistrer.",
+      "other": "{count} champs remplis. Vérifiez-les ci-dessous avant d'enregistrer."
+    },
+    "doneAi": "Lu par l'IA. Les champs vides ne figuraient pas dans le CV.",
+    "doneBasic": "Lecture de base : coordonnées et compétences mentionnées. Complétez le reste ci-dessous.",
+    "again": "Utiliser un autre CV",
+    "errors": {
+      "fileType": "Utilisez un fichier PDF, DOCX ou TXT.",
+      "fileSize": "Le fichier dépasse 10 Mo.",
+      "noText": "Aucun texte lisible trouvé. S'il s'agit d'un PDF numérisé, collez le texte.",
+      "tooShort": "Collez le CV complet — au moins quelques lignes.",
+      "tooLong": "Le texte est trop long."
     }
   }
 }

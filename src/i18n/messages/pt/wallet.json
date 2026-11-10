@@ -1,0 +1,68 @@
+{
+  "title": "Carteira",
+  "description": "O dinheiro da sua organização no MissionHub: saldo, comissões por colocação, saques e movimentações. Os pagamentos entram como pendentes e ficam disponíveis após a compensação.",
+  "kpi": {
+    "available": "Disponível",
+    "availableHint": "Valores compensados",
+    "pending": "Pendente",
+    "pendingHint": "Recebido, aguardando compensação"
+  },
+  "otherCurrencies": "Outras moedas",
+  "otherCurrencyLine": "{currency}: {available} disponível · {pending} pendente",
+  "frozen": {
+    "title": "As saídas estão pausadas",
+    "description": "A equipe da plataforma pausou transferências e saques desta carteira. Você ainda pode receber valores. Fale com o suporte para saber mais."
+  },
+  "empty": {
+    "title": "Nenhuma movimentação ainda",
+    "description": "Quando um parceiro pagar uma comissão pelo MissionHub, ela aparecerá aqui."
+  },
+  "statement": {
+    "title": "Movimentações",
+    "caption": "Movimentações da carteira",
+    "date": "Data",
+    "description": "Descrição",
+    "account": "Saldo",
+    "amount": "Valor",
+    "balanceAfter": "Saldo após"
+  },
+  "account": {
+    "available": "Disponível",
+    "pending": "Pendente"
+  },
+  "kind": {
+    "placement_funding": "Comissão recebida",
+    "release": "Pagamento compensado",
+    "transfer_in": "Transferência recebida",
+    "transfer_out": "Transferência enviada",
+    "cashout": "Saque",
+    "cashout_reversal": "Saque devolvido",
+    "reversal": "Estorno",
+    "adjustment": "Ajuste"
+  },
+  "payouts": {
+    "title": "Saques",
+    "notSetUp": "Conecte uma conta bancária para sacar seu saldo disponível. Identidade e dados bancários são coletados pelo nosso provedor de pagamentos, não pelo MissionHub.",
+    "setUp": "Configurar saques",
+    "incomplete": "Sua conta de recebimento ainda não foi verificada. Conclua o cadastro no provedor, ou aguarde um instante se acabou de concluir.",
+    "continue": "Continuar configuração",
+    "ready": "Conta de recebimento verificada.",
+    "disabled": "Os saques ainda não estão abertos. Seu saldo está seguro e poderá ser sacado assim que estiverem.",
+    "amount": "Valor ({currency})",
+    "availableHint": "Disponível: {amount}",
+    "submit": "Sacar",
+    "submitting": "Solicitando…",
+    "requested": "Saque solicitado. Você será avisado quando for enviado.",
+    "redirecting": "Abrindo o provedor de pagamentos…",
+    "history": "Saques recentes",
+    "status": {
+      "requested": "Em processamento",
+      "paid": "Enviado",
+      "failed": "Falhou, devolvido ao saldo"
+    }
+  },
+  "placements": {
+    "title": "Colocações",
+    "description": "Comissão por contratação. Os valores são estimativas até o cliente pagar."
+  }
+}

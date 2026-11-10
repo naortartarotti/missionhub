@@ -165,6 +165,7 @@
     "arrangementMismatch": "A vaga é {jobArrangement}; o candidato prefere {candidateArrangements}",
     "relocationRequired": "A vaga exige presença em {country}; o candidato não aceita mudança",
     "requiredSkillsMatched": "Tem as skills obrigatórias: {skills}",
+    "relatedSkills": "Experiência relacionada: {skills}",
     "requiredSkillsMissing": "Faltam skills obrigatórias: {skills}",
     "noRequiredSkills": "A vaga não lista skills obrigatórias; a relevância é aproximada",
     "noRequiredSkillsPresent": "Nenhuma das skills obrigatórias da vaga está presente",
@@ -213,5 +214,9 @@
       "other": "{count} lacunas"
     }
   },
-  "filteredByJob": "Mostrando uma vaga de parceiro."
+  "filteredByJob": "Mostrando uma vaga de parceiro.",
+  "internal": {
+    "badge": "Sua outra organização",
+    "hint": "Você também é membro de {org}. Indicações aqui são internas: sem comissão de parceiro, só a taxa da plataforma."
+  }
 }

@@ -14,6 +14,7 @@ import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 import type { Formatter } from "@/i18n/format";
 import type { GlobalTranslator, Translator } from "@/i18n/translate";
 import { cn } from "@/lib/utils";
+import { InternalBadge } from "@/features/matching/components/internal-badge";
 
 export async function generateMetadata() {
   return { title: (await getT("opportunities"))("title") };
@@ -211,6 +212,7 @@ function JobGroups({ t, tg, f, rows, orgSlug, sort, detail }: { t: T; tg: Global
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="text-lg font-semibold tracking-tight">{j.job_title}</h3>
                   <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">{t("jobGroup.candidates", { count: items.length })}</span>
+                  {j.internal ? <InternalBadge org={j.job_org_name} /> : null}
                 </div>
                 <p className="mt-0.5 truncate text-sm text-muted-foreground">{meta.join("  ·  ")}</p>
               </div>

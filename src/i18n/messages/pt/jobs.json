@@ -202,6 +202,9 @@
       "fileSize": "O arquivo tem mais de 5 MB.",
       "noText": "Não encontramos texto legível. Se for um PDF escaneado, cole o texto.",
       "tooShort": "Cole o anúncio completo — pelo menos algumas frases."
-    }
+    },
+    "subtitleAi": "Cole a vaga, informe um link ou envie um arquivo (inclusive PDF escaneado). A IA lê e preenche o que está escrito — você revisa tudo antes de salvar.",
+    "doneAi": "Lido pela IA. Nada foi inventado: campos vazios não constavam na vaga.",
+    "fileHintAi": "Até 5 MB. PDFs escaneados são lidos pela IA."
   }
 }

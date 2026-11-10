@@ -202,6 +202,9 @@
       "fileSize": "Le fichier dépasse 5 Mo.",
       "noText": "Aucun texte lisible trouvé. S'il s'agit d'un PDF numérisé, collez le texte.",
       "tooShort": "Collez l'offre complète — au moins quelques phrases."
-    }
+    },
+    "subtitleAi": "Collez l'offre, indiquez un lien ou importez un fichier (PDF numérisés compris). L'IA la lit et remplit ce qu'elle indique — vous vérifiez tout avant d'enregistrer.",
+    "doneAi": "Lu par l'IA. Rien n'a été inventé : les champs vides n'étaient pas indiqués dans l'offre.",
+    "fileHintAi": "Jusqu'à 5 Mo. Les PDF numérisés sont lus par l'IA."
   }
 }

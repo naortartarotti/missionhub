@@ -1,0 +1,68 @@
+{
+  "title": "Portefeuille",
+  "description": "L'argent de votre organisation sur MissionHub : solde, commissions par placement, retraits et activité. Les paiements arrivent en attente et deviennent disponibles une fois compensés.",
+  "kpi": {
+    "available": "Disponible",
+    "availableHint": "Fonds compensés",
+    "pending": "En attente",
+    "pendingHint": "Reçus, en cours de compensation"
+  },
+  "otherCurrencies": "Autres devises",
+  "otherCurrencyLine": "{currency} : {available} disponible · {pending} en attente",
+  "frozen": {
+    "title": "Les mouvements sortants sont suspendus",
+    "description": "L'équipe de la plateforme a suspendu les transferts et les retraits de ce portefeuille. Vous pouvez toujours recevoir des fonds. Contactez le soutien pour en savoir plus."
+  },
+  "empty": {
+    "title": "Aucune activité pour l'instant",
+    "description": "Lorsqu'un partenaire paie une commission via MissionHub, elle apparaîtra ici."
+  },
+  "statement": {
+    "title": "Activité",
+    "caption": "Activité du portefeuille",
+    "date": "Date",
+    "description": "Description",
+    "account": "Solde",
+    "amount": "Montant",
+    "balanceAfter": "Solde après"
+  },
+  "account": {
+    "available": "Disponible",
+    "pending": "En attente"
+  },
+  "kind": {
+    "placement_funding": "Commission reçue",
+    "release": "Paiement compensé",
+    "transfer_in": "Transfert reçu",
+    "transfer_out": "Transfert envoyé",
+    "cashout": "Retrait",
+    "cashout_reversal": "Retrait retourné",
+    "reversal": "Annulation",
+    "adjustment": "Ajustement"
+  },
+  "payouts": {
+    "title": "Retraits",
+    "notSetUp": "Associez un compte bancaire pour retirer votre solde disponible. L'identité et les coordonnées bancaires sont recueillies par notre fournisseur de paiement, pas par MissionHub.",
+    "setUp": "Configurer les versements",
+    "incomplete": "Votre compte de versement n'est pas encore vérifié. Terminez l'inscription chez le fournisseur, ou patientez un instant si vous venez de le faire.",
+    "continue": "Poursuivre la configuration",
+    "ready": "Compte de versement vérifié.",
+    "disabled": "Les retraits ne sont pas encore ouverts. Votre solde est en sécurité et pourra être retiré dès qu'ils le seront.",
+    "amount": "Montant ({currency})",
+    "availableHint": "Disponible : {amount}",
+    "submit": "Retirer",
+    "submitting": "Demande en cours…",
+    "requested": "Retrait demandé. Vous serez avisé lorsqu'il sera envoyé.",
+    "redirecting": "Ouverture du fournisseur de paiement…",
+    "history": "Retraits récents",
+    "status": {
+      "requested": "En traitement",
+      "paid": "Envoyé",
+      "failed": "Échoué, retourné au solde"
+    }
+  },
+  "placements": {
+    "title": "Placements",
+    "description": "Commission par embauche. Les montants sont des estimations jusqu'à ce que le client paie."
+  }
+}

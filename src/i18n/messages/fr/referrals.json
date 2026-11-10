@@ -80,11 +80,34 @@
       "confirmed": "Confirmée par les deux parties",
       "awaiting": "En attente du recruteur source",
       "openPlacement": "Ouvrir le placement et le registre",
-      "pending": "Créée automatiquement à partir de la règle de commission en vigueur lorsque le responsable du poste accepte. L'instantané est ensuite figé."
+      "pending": "Créée automatiquement à partir de la règle de commission en vigueur lorsque le responsable du poste accepte. L'instantané est ensuite figé.",
+      "internal": "Recommandation interne : les deux organisations ont un membre en commun, il n'y a donc pas de commission de recrutement. Le responsable du poste conserve cette part; les frais de plateforme ne changent pas."
     },
     "timeline": "Historique",
     "reasonQuote": "« {reason} »",
-    "ownership": "Propriété protégée jusqu'au {date}."
+    "ownership": "Propriété protégée jusqu'au {date}.",
+    "showMore": "Afficher plus",
+    "showLess": "Afficher moins",
+    "summary": "Résumé",
+    "contact": "Contact",
+    "notShared": "Non partagé",
+    "fit": {
+      "title": "Adéquation avec le poste",
+      "hint": "Score indicatif, figé au moment de la soumission.",
+      "strengths": "Pourquoi ça correspond",
+      "gaps": "À discuter",
+      "noGaps": "Aucun écart signalé."
+    },
+    "next": {
+      "yourMove": "À vous de jouer",
+      "waiting": "En attente de {partner}",
+      "waitingBody": "Vous serez averti dès qu'ils mettront à jour cette recommandation.",
+      "infoRequested": "{partner} demande plus d'informations",
+      "closedBy": "{status} par {who}",
+      "closedByYou": "{status} par vous",
+      "noReason": "Aucune raison indiquée.",
+      "hired": "Embauché · le placement est maintenant suivi dans votre portefeuille."
+    }
   },
   "actions": {
     "under_review": "Commencer l'examen",
@@ -356,6 +379,46 @@
     "movedBy": "{partner} a changé le statut à {status} · {time}",
     "movedByYou": "Vous avez changé le statut à {status} · {time}",
     "submittedAt": "Soumis {time}",
-    "progress": "Étape {step} sur {total}"
+    "progress": "Étape {step} sur {total}",
+    "openCandidate": "Fiche candidat",
+    "partnerSees": "Le partenaire voit : {label}"
+  },
+  "composer": {
+    "viewOwn": "Votre vue",
+    "viewPartner": "Vu par {partner}",
+    "shared": "Partagé",
+    "hidden": "Masqué",
+    "share": "Partager : {field}",
+    "hide": "Masquer : {field}",
+    "anonymous": "Candidat anonyme",
+    "hiddenSection": "Masqué pour {partner}",
+    "about": "À propos",
+    "skills": "Compétences",
+    "skillsVsJob": "Comparées aux compétences requises du poste",
+    "experience": "Expérience",
+    "details": "Détails",
+    "contact": "Contact",
+    "documents": "Documents",
+    "sharingCount": "{count} champs partagés sur {total}",
+    "shareHint": "Utilisez l'œil de chaque section pour la partager ou la masquer. Seul ce qui est partagé est copié dans l'instantané.",
+    "noSummary": "Aucun résumé au dossier.",
+    "noExperience": "Aucun historique professionnel au dossier.",
+    "noContact": "Aucune coordonnée au dossier.",
+    "openProfile": "Ouvrir le profil complet",
+    "submittingFor": "Soumission pour",
+    "match": "Adéquation",
+    "seeMore": {
+      "one": "+{count} autre raison",
+      "other": "+{count} autres raisons"
+    },
+    "submitTitle": "Soumettre à {partner}",
+    "authTitle": "Autorisation du candidat",
+    "noteTitle": "Note pour le responsable du poste (facultatif)",
+    "relocation": "Ouvert à la relocalisation",
+    "yearsShort": {
+      "one": "{count} an",
+      "other": "{count} ans"
+    },
+    "availableFrom": "Disponible le {date}"
   }
 }

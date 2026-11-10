@@ -18,8 +18,8 @@
   },
   "integrations": {
     "title": "Integrações",
-    "aiName": "Extração e explicações por IA",
-    "aiDescription": "Sem ela, a correspondência usa pontuação determinística baseada em regras.",
+    "aiName": "IA (OpenAI)",
+    "aiDescription": "Lê vagas (link, PDF, arquivos escaneados) e currículos, e adiciona correspondência semântica de competências. Sem ela, extração e pontuação são baseadas em regras.",
     "emailName": "E-mail transacional",
     "emailDescription": "Sem ele, as notificações ficam apenas no aplicativo.",
     "paymentsName": "Provedor de pagamentos",
@@ -127,6 +127,7 @@
       "dark": "Escuro",
       "system": "Sistema"
     },
-    "saved": "Idioma atualizado"
+    "saved": "Idioma atualizado",
+    "description": "Seu idioma e aparência neste navegador. Não afetam seus colegas de equipe."
   }
 }

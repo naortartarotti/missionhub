@@ -81,6 +81,122 @@
     "suspended": "Organization suspended.",
     "reinstated": "Organization reinstated.",
     "disputeClosed": "Dispute closed.",
-    "rulePublished": "New rule version published. Existing agreements keep their frozen snapshot."
+    "rulePublished": "New rule version published. Existing agreements keep their frozen snapshot.",
+    "walletFrozen": "Wallet frozen.",
+    "walletUnfrozen": "Wallet unfrozen.",
+    "transfersEnabled": "Wallet transfers enabled.",
+    "transfersDisabled": "Wallet transfers disabled.",
+    "cashoutsEnabled": "Withdrawals enabled.",
+    "cashoutsDisabled": "Withdrawals disabled."
+  },
+  "wallets": {
+    "link": "Wallets",
+    "back": "Back to operations",
+    "title": "Wallets",
+    "description": "Balances held for organizations, ledger health and outgoing-movement controls.",
+    "kpi": {
+      "held": "Held for organizations",
+      "heldHint": "Available + pending, {currency}",
+      "revenue": "Platform revenue",
+      "revenueHint": "Fees recognised in the wallet ledger",
+      "frozen": "Frozen wallets",
+      "ledger": "Ledger check",
+      "ledgerOk": "Balanced",
+      "ledgerBad": "{count} issue(s)"
+    },
+    "health": {
+      "title": "Reconciliation",
+      "ok": "Every cached balance matches its entries and the book sums to zero.",
+      "bad": "The ledger is inconsistent. Pause outgoing movements and investigate before anything else.",
+      "account": "Account {id}: cached {cached}, entries {computed}",
+      "book": "The book does not sum to zero (off by {computed} minor units).",
+      "unavailable": "The reconciliation check is not available on this database yet (migration pending).",
+      "note": "This compares the ledger with itself. Comparing it with the payment provider's balance comes with the provider integration."
+    },
+    "totals": {
+      "title": "Totals by currency",
+      "empty": "No wallet activity yet.",
+      "currency": "Currency",
+      "available": "Available",
+      "pending": "Pending",
+      "revenue": "Platform revenue",
+      "provider": "Expected at provider"
+    },
+    "transfers": {
+      "title": "Recruiter-to-recruiter transfers",
+      "on": "Enabled: organization admins can send available funds to partner organizations.",
+      "off": "Disabled: no organization can send funds to another.",
+      "enable": "Enable transfers",
+      "enableTitle": "Enable wallet transfers?",
+      "enableDescription": "Organization admins will be able to move available funds to partner organizations immediately. Do this only once limits, MFA and the legal review are in place.",
+      "disable": "Disable transfers",
+      "disableTitle": "Disable wallet transfers?",
+      "disableDescription": "New transfers are refused for every organization. Balances are not affected."
+    },
+    "orgs": {
+      "title": "Organization wallets",
+      "name": "Organization",
+      "available": "Available",
+      "pending": "Pending",
+      "status": "Status",
+      "actions": "Actions",
+      "none": "—",
+      "frozen": "Frozen",
+      "active": "Active",
+      "frozenSince": "since {date}: {reason}"
+    },
+    "freeze": {
+      "freeze": "Freeze",
+      "freezeTitle": "Freeze this wallet?",
+      "freezeDescription": "The organization can no longer send transfers or withdraw. It can still receive funds, and its members will see that outgoing movements are paused.",
+      "unfreeze": "Unfreeze",
+      "unfreezeTitle": "Unfreeze this wallet?",
+      "unfreezeDescription": "The organization can move its available funds again."
+    },
+    "recent": {
+      "title": "Recent transactions",
+      "empty": "No transactions yet.",
+      "date": "Date",
+      "kind": "Type",
+      "parties": "Organizations",
+      "amount": "Amount",
+      "system": "System only"
+    },
+    "kind": {
+      "placement_funding": "Commission funding",
+      "release": "Release",
+      "transfer": "Transfer",
+      "cashout": "Withdrawal",
+      "cashout_reversal": "Withdrawal returned",
+      "reversal": "Reversal",
+      "adjustment": "Adjustment"
+    },
+    "cashouts": {
+      "title": "Withdrawals",
+      "on": "Enabled: organization admins with a verified payout account can withdraw available funds.",
+      "off": "Disabled: no organization can withdraw.",
+      "enable": "Enable withdrawals",
+      "enableTitle": "Enable withdrawals?",
+      "enableDescription": "Organization admins will be able to send available funds to their bank through the payment provider. Do this only once the provider is connected and tested.",
+      "disable": "Disable withdrawals",
+      "disableTitle": "Disable withdrawals?",
+      "disableDescription": "New withdrawals are refused for every organization. Requests already in progress still complete."
+    },
+    "provider": {
+      "connected": "Payment provider connected.",
+      "missing": "Payment provider not configured: set STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET. Until then nobody can pay or withdraw through the platform."
+    },
+    "attention": {
+      "title": "Needs attention",
+      "empty": "Nothing needs attention.",
+      "charge": "Commission payment {amount} · {status}",
+      "chargeReason": "Reason: {reason}. Resolve it with the payment provider (refund or correct), then record the correction.",
+      "cashout": "Withdrawal {amount} for {org} · processing since {date}",
+      "chargeStatus": {
+        "review": "paid but not posted",
+        "disputed": "disputed at the provider",
+        "refunded": "refunded at the provider"
+      }
+    }
   }
 }

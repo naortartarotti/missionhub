@@ -19,8 +19,11 @@ export function ConfirmDialog({
   reasonLabel,
   reasonRequired,
   onConfirm,
+  open: openProp,
+  onOpenChange,
 }: {
-  trigger: ReactNode;
+  /** Omit when the dialog is opened from code (`open` / `onOpenChange`). */
+  trigger?: ReactNode;
   title: string;
   description: ReactNode;
   confirmLabel: string;
@@ -28,9 +31,16 @@ export function ConfirmDialog({
   reasonLabel?: string;
   reasonRequired?: boolean;
   onConfirm: (reason: string) => Promise<ActionResult<unknown> | void>;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
   const t = useT("common");
-  const [open, setOpen] = useState(false);
+  const [openState, setOpenState] = useState(false);
+  const open = openProp ?? openState;
+  const setOpen = (o: boolean) => {
+    setOpenState(o);
+    onOpenChange?.(o);
+  };
   const [reason, setReason] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
@@ -45,7 +55,7 @@ export function ConfirmDialog({
         }
       }}
     >
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
       <DialogContent className="rounded-3xl sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>

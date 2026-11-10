@@ -202,6 +202,9 @@
       "fileSize": "The file is larger than 5 MB.",
       "noText": "We couldn't find readable text. If it's a scanned PDF, paste the text instead.",
       "tooShort": "Paste the full posting — at least a few sentences."
-    }
+    },
+    "subtitleAi": "Paste the posting, drop a link or upload a file (scanned PDFs too). AI reads it and fills in what it says — you review everything before saving.",
+    "doneAi": "Read by AI. Nothing was invented: empty fields weren't stated in the posting.",
+    "fileHintAi": "Up to 5 MB. Scanned PDFs are read by AI."
   }
 }

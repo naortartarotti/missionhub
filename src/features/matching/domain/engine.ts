@@ -2,6 +2,16 @@ import { normalizeSkills } from "./skills";
 
 // v2: evidence carries i18n keys. Bumping the version changes every input hash, so all matches get re-scored.
 export const MODEL_VERSION = "deterministic-v2";
+/** Recorded instead when an AI-derived skill relation contributed to the score. */
+export const MODEL_VERSION_AI = "deterministic-v2+ai-skills";
+/** Credit for a requirement satisfied through a related skill rather than the exact one. */
+export const RELATED_SKILL_CREDIT = 0.75;
+
+/**
+ * Requirement skill -> candidate skills that imply it (e.g. "react" -> ["next.js", "gatsby"]).
+ * Derived from skill names only (AI-generated, cached globally); never from candidate data.
+ */
+export type SkillRelations = ReadonlyMap<string, readonly string[]>;
 
 export const SENIORITY_LADDER = ["intern", "junior", "mid", "senior", "lead", "principal", "executive"] as const;
 export type Seniority = (typeof SENIORITY_LADDER)[number];
@@ -49,7 +59,7 @@ export type MatchJob = {
 export type Evidence = { factor: Factor; key: EvidenceKey; vars?: Record<string, string | number>; label: string };
 export type EvidenceKey =
   | "matchingOff" | "permissionMissing" | "jobClosed" | "arrangementMismatch" | "relocationRequired"
-  | "requiredSkillsMatched" | "requiredSkillsMissing" | "noRequiredSkills" | "noRequiredSkillsPresent" | "preferredSkills"
+  | "requiredSkillsMatched" | "relatedSkills" | "requiredSkillsMissing" | "noRequiredSkills" | "noRequiredSkillsPresent" | "preferredSkills"
   | "seniorityAligns" | "seniorityOneAbove" | "seniorityOneBelow" | "seniorityFar" | "seniorityUnknown"
   | "experienceMeets" | "experienceBelow" | "experienceUnknown"
   | "remoteCompatible" | "basedIn" | "relocationOpen" | "locationUnknown"
@@ -150,8 +160,20 @@ export function toMatchJob(row: JobRow): MatchJob {
 const list = (xs: string[], max = 4) =>
   xs.length <= max ? xs.join(", ") : `${xs.slice(0, max).join(", ")} +${xs.length - max} more`;
 
+/** For each requirement the candidate lacks exactly, the candidate skill that implies it (if any). */
+export function relatedHits(c: MatchCandidate, skills: readonly string[], relations?: SkillRelations): Map<string, string> {
+  const hits = new Map<string, string>();
+  if (!relations?.size) return hits;
+  for (const s of skills) {
+    if (c.skills.includes(s)) continue;
+    const via = relations.get(s)?.find((r) => c.skills.includes(r));
+    if (via) hits.set(s, via);
+  }
+  return hits;
+}
+
 /** Two-stage evaluation: hard eligibility filters, then weighted deterministic ranking. */
-export function evaluateMatch(c: MatchCandidate, j: MatchJob): MatchResult {
+export function evaluateMatch(c: MatchCandidate, j: MatchJob, relations?: SkillRelations): MatchResult {
   const reasons: Evidence[] = [];
   const gaps: Evidence[] = [];
   const blockers: Evidence[] = [];
@@ -177,18 +199,26 @@ export function evaluateMatch(c: MatchCandidate, j: MatchJob): MatchResult {
   // ---- Stage 2: ranking ----
   const required = j.requiredSkills;
   const matchedRequired = required.filter((s) => c.skills.includes(s));
-  const missingRequired = required.filter((s) => !c.skills.includes(s));
-  const skillsScore = required.length === 0 ? 0.5 : matchedRequired.length / required.length;
+  const relatedRequired = relatedHits(c, required, relations);
+  const missingRequired = required.filter((s) => !c.skills.includes(s) && !relatedRequired.has(s));
+  const skillsScore =
+    required.length === 0 ? 0.5 : (matchedRequired.length + RELATED_SKILL_CREDIT * relatedRequired.size) / required.length;
   if (matchedRequired.length) reasons.push({ factor: "skills", key: "requiredSkillsMatched", vars: { skills: list(matchedRequired) }, label: `Matches required skills: ${list(matchedRequired)}` });
+  if (relatedRequired.size) {
+    const pairs = list([...relatedRequired].map(([need, via]) => `${need} ← ${via}`));
+    reasons.push({ factor: "skills", key: "relatedSkills", vars: { skills: pairs }, label: `Related experience: ${pairs}` });
+  }
   if (missingRequired.length) gaps.push({ factor: "skills", key: "requiredSkillsMissing", vars: { skills: list(missingRequired) }, label: `Missing required skills: ${list(missingRequired)}` });
   if (required.length === 0) gaps.push({ factor: "skills", key: "noRequiredSkills", label: "Job lists no required skills; relevance is approximate" });
-  if (required.length > 0 && matchedRequired.length === 0) {
+  if (required.length > 0 && matchedRequired.length === 0 && relatedRequired.size === 0) {
     blockers.push({ factor: "skills", key: "noRequiredSkillsPresent", label: "None of the job's required skills are present" });
   }
 
   const preferred = j.preferredSkills;
   const matchedPreferred = preferred.filter((s) => c.skills.includes(s));
-  const preferredScore = preferred.length === 0 ? 1 : matchedPreferred.length / preferred.length;
+  const relatedPreferred = relatedHits(c, preferred, relations);
+  const preferredScore =
+    preferred.length === 0 ? 1 : (matchedPreferred.length + RELATED_SKILL_CREDIT * relatedPreferred.size) / preferred.length;
   if (matchedPreferred.length) reasons.push({ factor: "preferred_skills", key: "preferredSkills", vars: { skills: list(matchedPreferred) }, label: `Also has: ${list(matchedPreferred)}` });
 
   let seniorityScore = 0.5;
@@ -280,10 +310,12 @@ export function evaluateMatch(c: MatchCandidate, j: MatchJob): MatchResult {
     gaps.push({ factor: "skills", key: "belowThreshold", vars: { threshold: POTENTIAL_THRESHOLD }, label: `Overall relevance below the ${POTENTIAL_THRESHOLD}/100 threshold` });
   }
 
-  return { score, band, eligible, reasons, gaps, blockers, factorScores, modelVersion: MODEL_VERSION };
+  const usedAi = relatedRequired.size > 0 || relatedPreferred.size > 0;
+  return { score, band, eligible, reasons, gaps, blockers, factorScores, modelVersion: usedAi ? MODEL_VERSION_AI : MODEL_VERSION };
 }
 
 /** Stable fingerprint of engine inputs so unchanged pairs are not rewritten. */
-export function inputFingerprint(c: MatchCandidate, j: MatchJob): string {
-  return JSON.stringify([MODEL_VERSION, c, j]);
+export function inputFingerprint(c: MatchCandidate, j: MatchJob, relations?: SkillRelations): string {
+  const used = [...relatedHits(c, j.requiredSkills, relations), ...relatedHits(c, j.preferredSkills, relations)];
+  return JSON.stringify(used.length ? [MODEL_VERSION, c, j, used] : [MODEL_VERSION, c, j]);
 }

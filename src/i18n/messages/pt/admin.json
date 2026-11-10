@@ -81,6 +81,122 @@
     "suspended": "Organização suspensa.",
     "reinstated": "Organização reativada.",
     "disputeClosed": "Disputa encerrada.",
-    "rulePublished": "Nova versão da regra publicada. Os acordos existentes mantêm seu snapshot congelado."
+    "rulePublished": "Nova versão da regra publicada. Os acordos existentes mantêm seu snapshot congelado.",
+    "walletFrozen": "Carteira congelada.",
+    "walletUnfrozen": "Carteira descongelada.",
+    "transfersEnabled": "Transferências ativadas.",
+    "transfersDisabled": "Transferências desativadas.",
+    "cashoutsEnabled": "Saques ativados.",
+    "cashoutsDisabled": "Saques desativados."
+  },
+  "wallets": {
+    "link": "Carteiras",
+    "back": "Voltar às operações",
+    "title": "Carteiras",
+    "description": "Saldos mantidos para as organizações, saúde do ledger e controle das saídas.",
+    "kpi": {
+      "held": "Mantido para organizações",
+      "heldHint": "Disponível + pendente, {currency}",
+      "revenue": "Receita da plataforma",
+      "revenueHint": "Taxas reconhecidas no ledger da carteira",
+      "frozen": "Carteiras congeladas",
+      "ledger": "Verificação do ledger",
+      "ledgerOk": "Equilibrado",
+      "ledgerBad": "{count} problema(s)"
+    },
+    "health": {
+      "title": "Reconciliação",
+      "ok": "Todo saldo em cache confere com seus lançamentos e o livro soma zero.",
+      "bad": "O ledger está inconsistente. Pause as saídas e investigue antes de qualquer outra coisa.",
+      "account": "Conta {id}: em cache {cached}, lançamentos {computed}",
+      "book": "O livro não soma zero (diferença de {computed} unidades menores).",
+      "unavailable": "A verificação ainda não está disponível neste banco de dados (migration pendente).",
+      "note": "Esta verificação compara o ledger com ele mesmo. A comparação com o saldo do provedor de pagamentos virá com a integração do provedor."
+    },
+    "totals": {
+      "title": "Totais por moeda",
+      "empty": "Nenhuma movimentação ainda.",
+      "currency": "Moeda",
+      "available": "Disponível",
+      "pending": "Pendente",
+      "revenue": "Receita da plataforma",
+      "provider": "Esperado no provedor"
+    },
+    "transfers": {
+      "title": "Transferências entre recrutadores",
+      "on": "Ativadas: administradores de organização podem enviar saldo disponível para organizações parceiras.",
+      "off": "Desativadas: nenhuma organização pode enviar valores para outra.",
+      "enable": "Ativar transferências",
+      "enableTitle": "Ativar transferências?",
+      "enableDescription": "Administradores de organização poderão mover saldo disponível para organizações parceiras imediatamente. Faça isso somente quando limites, MFA e a revisão jurídica estiverem prontos.",
+      "disable": "Desativar transferências",
+      "disableTitle": "Desativar transferências?",
+      "disableDescription": "Novas transferências são recusadas para todas as organizações. Os saldos não mudam."
+    },
+    "orgs": {
+      "title": "Carteiras das organizações",
+      "name": "Organização",
+      "available": "Disponível",
+      "pending": "Pendente",
+      "status": "Status",
+      "actions": "Ações",
+      "none": "—",
+      "frozen": "Congelada",
+      "active": "Ativa",
+      "frozenSince": "desde {date}: {reason}"
+    },
+    "freeze": {
+      "freeze": "Congelar",
+      "freezeTitle": "Congelar esta carteira?",
+      "freezeDescription": "A organização não poderá mais enviar transferências nem sacar. Ela ainda pode receber valores, e seus membros verão que as saídas estão pausadas.",
+      "unfreeze": "Descongelar",
+      "unfreezeTitle": "Descongelar esta carteira?",
+      "unfreezeDescription": "A organização volta a poder movimentar o saldo disponível."
+    },
+    "recent": {
+      "title": "Transações recentes",
+      "empty": "Nenhuma transação ainda.",
+      "date": "Data",
+      "kind": "Tipo",
+      "parties": "Organizações",
+      "amount": "Valor",
+      "system": "Somente sistema"
+    },
+    "kind": {
+      "placement_funding": "Entrada de comissão",
+      "release": "Liberação",
+      "transfer": "Transferência",
+      "cashout": "Saque",
+      "cashout_reversal": "Saque devolvido",
+      "reversal": "Estorno",
+      "adjustment": "Ajuste"
+    },
+    "cashouts": {
+      "title": "Saques",
+      "on": "Ativados: administradores de organização com conta de recebimento verificada podem sacar o saldo disponível.",
+      "off": "Desativados: nenhuma organização pode sacar.",
+      "enable": "Ativar saques",
+      "enableTitle": "Ativar saques?",
+      "enableDescription": "Administradores de organização poderão enviar o saldo disponível para o banco pelo provedor de pagamentos. Faça isso somente depois de conectar e testar o provedor.",
+      "disable": "Desativar saques",
+      "disableTitle": "Desativar saques?",
+      "disableDescription": "Novos saques são recusados para todas as organizações. Pedidos já em andamento ainda são concluídos."
+    },
+    "provider": {
+      "connected": "Provedor de pagamentos conectado.",
+      "missing": "Provedor de pagamentos não configurado: defina STRIPE_SECRET_KEY e STRIPE_WEBHOOK_SECRET. Até lá ninguém consegue pagar nem sacar pela plataforma."
+    },
+    "attention": {
+      "title": "Precisa de atenção",
+      "empty": "Nada precisa de atenção.",
+      "charge": "Pagamento de comissão {amount} · {status}",
+      "chargeReason": "Motivo: {reason}. Resolva com o provedor de pagamentos (estorno ou correção) e depois registre a correção.",
+      "cashout": "Saque {amount} de {org} · em processamento desde {date}",
+      "chargeStatus": {
+        "review": "pago mas não lançado",
+        "disputed": "contestado no provedor",
+        "refunded": "estornado no provedor"
+      }
+    }
   }
 }

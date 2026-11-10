@@ -65,3 +65,46 @@ export async function publishRule(_: ActionResult | null, formData: FormData): P
     return { ok: true, message: msg("admin.messages.rulePublished") };
   });
 }
+
+const freezeSchema = z.object({ orgId: id, frozen: z.boolean(), reason: z.string().trim().max(500) }).refine((v) => !v.frozen || v.reason.length >= 5, {
+  message: msg("admin.validation.reason"),
+  path: ["reason"],
+});
+
+/** Pauses or resumes an organization's outgoing wallet movements. It can still receive funds. */
+export async function setWalletFrozen(input: { orgId: string; frozen: boolean; reason: string }): Promise<ActionResult> {
+  return guard(async () => {
+    const db = await adminDb();
+    const v = parse(freezeSchema, input);
+    const { error } = await db.rpc("set_wallet_frozen", { p_org: v.orgId, p_frozen: v.frozen, p_reason: v.reason });
+    if (error) return toActionError(error);
+    revalidatePath("/admin/wallets");
+    return { ok: true, message: v.frozen ? msg("admin.messages.walletFrozen") : msg("admin.messages.walletUnfrozen") };
+  });
+}
+
+const transfersSchema = z.object({ enabled: z.boolean() });
+
+/** Platform-wide switch for recruiter-to-recruiter wallet transfers. */
+export async function setWalletTransfersEnabled(input: { enabled: boolean }): Promise<ActionResult> {
+  return guard(async () => {
+    const db = await adminDb();
+    const v = parse(transfersSchema, input);
+    const { error } = await db.rpc("set_wallet_transfers_enabled", { p_enabled: v.enabled });
+    if (error) return toActionError(error);
+    revalidatePath("/admin/wallets");
+    return { ok: true, message: v.enabled ? msg("admin.messages.transfersEnabled") : msg("admin.messages.transfersDisabled") };
+  });
+}
+
+/** Platform-wide switch for withdrawals to organizations' payout accounts. */
+export async function setWalletCashoutsEnabled(input: { enabled: boolean }): Promise<ActionResult> {
+  return guard(async () => {
+    const db = await adminDb();
+    const v = parse(transfersSchema, input);
+    const { error } = await db.rpc("set_wallet_cashouts_enabled", { p_enabled: v.enabled });
+    if (error) return toActionError(error);
+    revalidatePath("/admin/wallets");
+    return { ok: true, message: v.enabled ? msg("admin.messages.cashoutsEnabled") : msg("admin.messages.cashoutsDisabled") };
+  });
+}

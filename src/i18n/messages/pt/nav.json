@@ -7,13 +7,13 @@
   "candidates": "Todos os candidatos",
   "jobs": "Todas as vagas",
   "referrals": "Indicações",
-  "commissions": "Comissões",
+  "wallet": "Carteira",
   "activity": "Atividade",
-  "settings": "Configurações",
   "badgeNew": "novos",
   "badgePending": "pendentes",
   "referralsReceived": "Indicações recebidas",
   "referralsSent": "Indicações enviadas",
   "myCandidates": "Meus candidatos",
-  "myJobs": "Minhas vagas"
+  "myJobs": "Minhas vagas",
+  "pipeline": "Pipeline"
 }

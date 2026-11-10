@@ -11,6 +11,7 @@ import {
   Inbox,
   Languages,
   MapPin,
+  KanbanSquare,
   Pencil,
   Radio,
   Sparkles,
@@ -53,7 +54,7 @@ export default async function JobPage({ params, searchParams }: PageProps<"/w/[o
   const ctx = await getRequestContext(orgSlug);
   const job = await getJob(ctx, jobId);
   if (!job) notFound();
-  const [summary, referrals, t, tg, f] = await Promise.all([getJobMatchSummary(ctx, jobId), listJobReferrals(ctx, jobId), getT("jobs"), getGlobalT(), getFormatter()]);
+  const [summary, referrals, t, tg, f, tp] = await Promise.all([getJobMatchSummary(ctx, jobId), listJobReferrals(ctx, jobId), getT("jobs"), getGlobalT(), getFormatter(), getT("pipeline")]);
   const st = JOB_STATUS[job.status];
   const canWrite = can(ctx, "jobs:write");
   const editHref = `/w/${orgSlug}/jobs/${jobId}/edit`;
@@ -117,6 +118,7 @@ export default async function JobPage({ params, searchParams }: PageProps<"/w/[o
             <StatusPill tone={st.tone} label={tg(`labels.jobStatus.${job.status}`)} />
             {canWrite ? (
               <>
+                <Button variant="outline" asChild><Link href={`/w/${orgSlug}/pipeline?job=${jobId}`}><KanbanSquare className="size-4" aria-hidden /> {tp("title")}</Link></Button>
                 <Button variant="outline" asChild><Link href={editHref}><Pencil className="size-4" aria-hidden /> {t("detail.edit")}</Link></Button>
                 <JobStatusActions orgSlug={orgSlug} jobId={jobId} status={job.status} />
               </>

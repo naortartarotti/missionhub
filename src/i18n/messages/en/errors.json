@@ -33,6 +33,16 @@
   "owner_not_member": "The owner must be an active member of this organization.",
   "tenant_mismatch": "That record doesn't belong to this organization.",
   "immutable_record": "This record is immutable. Record a correcting entry instead.",
+  "insufficient_funds": "There isn't enough available balance for that.",
+  "wallet_frozen": "Outgoing movements are paused for this wallet. Contact support.",
+  "wallet_transfers_disabled": "Wallet transfers aren't available yet.",
+  "wallet_cashouts_disabled": "Withdrawals aren't available yet.",
+  "payout_destination_required": "Finish setting up your payout account before withdrawing.",
+  "nothing_to_pay": "There is nothing outstanding to pay on this placement.",
+  "invalid_recipient": "You can only send funds to a partner organization.",
+  "invalid_amount": "Enter a valid amount.",
+  "payments_not_configured": "Online payments aren't set up on this platform yet.",
+  "payment_provider_unavailable": "The payment provider didn't respond. Nothing was charged; try again in a moment.",
   "page": {
     "title": "Something went wrong",
     "body": "The error was logged. Try again, and contact support if it continues.",
@@ -46,5 +56,6 @@
     "title": "This page isn't available",
     "body": "It doesn't exist, or you don't have access to it.",
     "home": "Go to my workspace"
-  }
+  },
+  "not_pipeline_owner": "Only the person who accepted this referral can move it through the pipeline."
 }

@@ -1,0 +1,29 @@
+{
+  "title": "Perfil",
+  "description": "Como você aparece para a sua equipe e para recrutadores parceiros. Seu perfil é o mesmo em todas as organizações das quais você faz parte.",
+  "fields": {
+    "fullName": "Nome completo",
+    "email": "Email",
+    "emailHint": "Seu email de acesso. Não pode ser alterado aqui.",
+    "headline": "Título"
+  },
+  "password": {
+    "title": "Senha",
+    "new": "Nova senha",
+    "confirm": "Confirme a nova senha",
+    "hint": "Pelo menos 10 caracteres, com uma letra e um número.",
+    "submit": "Alterar senha"
+  },
+  "messages": {
+    "saved": "Perfil atualizado",
+    "passwordChanged": "Senha alterada"
+  },
+  "errors": {
+    "samePassword": "Escolha uma senha diferente da atual.",
+    "reauthenticate": "Por segurança, saia e entre novamente antes de alterar sua senha."
+  },
+  "validation": {
+    "headlineTooLong": "Use até 160 caracteres"
+  },
+  "menu": "Perfil"
+}

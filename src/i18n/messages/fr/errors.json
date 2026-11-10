@@ -33,6 +33,16 @@
   "owner_not_member": "Le responsable doit être un membre actif de cette organisation.",
   "tenant_mismatch": "Cet enregistrement n'appartient pas à cette organisation.",
   "immutable_record": "Cet enregistrement est immuable. Enregistrez plutôt une écriture de correction.",
+  "insufficient_funds": "Le solde disponible est insuffisant.",
+  "wallet_frozen": "Les mouvements sortants de ce portefeuille sont suspendus. Contactez le soutien.",
+  "wallet_transfers_disabled": "Les transferts ne sont pas encore offerts.",
+  "wallet_cashouts_disabled": "Les retraits ne sont pas encore offerts.",
+  "payout_destination_required": "Terminez la configuration de votre compte de versement avant de retirer des fonds.",
+  "nothing_to_pay": "Il n'y a rien à payer pour ce placement.",
+  "invalid_recipient": "Vous ne pouvez envoyer des fonds qu'à une organisation partenaire.",
+  "invalid_amount": "Entrez un montant valide.",
+  "payments_not_configured": "Les paiements en ligne ne sont pas encore configurés sur cette plateforme.",
+  "payment_provider_unavailable": "Le fournisseur de paiement n'a pas répondu. Rien n'a été débité; réessayez dans un instant.",
   "page": {
     "title": "Une erreur s'est produite",
     "body": "L'erreur a été consignée. Réessayez et contactez le soutien si elle persiste.",
@@ -46,5 +56,6 @@
     "title": "Cette page n'est pas disponible",
     "body": "Elle n'existe pas, ou vous n'y avez pas accès.",
     "home": "Aller à mon espace de travail"
-  }
+  },
+  "not_pipeline_owner": "Seule la personne qui a accepté cette recommandation peut la faire avancer dans le pipeline."
 }

@@ -1,0 +1,37 @@
+{
+  "title": "Pipeline",
+  "description": "Mova os candidatos aceitos pelo seu processo seletivo, da aceitação à contratação.",
+  "readOnly": "Onde está cada candidato aceito. Só membros que revisam indicações podem movê-los.",
+  "allJobs": "Todas as vagas",
+  "closed": "Encerrados",
+  "columnEmpty": "Nenhum candidato",
+  "ownerHint": "Aceito por esta pessoa da sua equipe",
+  "openPlacement": "Abrir colocação",
+  "reportHire": "Registrar contratação",
+  "moved": "Movido para {stage}",
+  "waitingAgreement": "Aguardando o parceiro confirmar a divisão da comissão",
+  "closeDialog": {
+    "description": "O candidato sai do pipeline. O parceiro vê a mudança e o seu motivo na indicação.",
+    "reason": "Motivo"
+  },
+  "empty": {
+    "title": "Nenhum candidato aceito ainda",
+    "description": "Quando você aceitar uma indicação, o candidato aparece aqui para você movê-lo pelas entrevistas, oferta e contratação.",
+    "action": "Revisar indicações"
+  },
+  "viewInPipeline": "Ver no pipeline",
+  "ownerOnly": "Só {name} pode mover este candidato",
+  "ownerOnlyUnknown": "Só quem aceitou pode mover este candidato",
+  "ownedBy": "Aceito por {name}. Só essa pessoa move este candidato pelo pipeline.",
+  "status": {
+    "ready": "Pronto",
+    "readyHint": "Você pode mover este candidato para a próxima etapa",
+    "awaitingSplit": "Aguardando divisão",
+    "viewOnly": "Só leitura"
+  },
+  "menu": "Ações para {candidate}",
+  "moveTo": "Mover para {stage}",
+  "openReferral": "Abrir indicação",
+  "feeHint": "Taxa de colocação prevista para esta vaga",
+  "inStage": "Nesta etapa desde"
+}

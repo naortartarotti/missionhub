@@ -22,7 +22,8 @@ export async function listReferrals(ctx: RequestContext, side: "sent" | "receive
 export async function listSentByJob(ctx: RequestContext) {
   const { data: rows, error } = await ctx.db
     .from("referrals")
-    .select("id, job_id, status, job_title_snapshot, candidate_label, submitted_at, updated_at, fit_score, target_org:organizations!referrals_target_org_id_fkey(name)")
+    // The source org owns the candidate, so it sees the real person behind the anonymous label.
+    .select("id, job_id, status, job_title_snapshot, candidate_label, submitted_at, updated_at, fit_score, target_org:organizations!referrals_target_org_id_fkey(name), link:referral_candidate_links(candidate:candidates(id, full_name))")
     .eq("source_org_id", ctx.organizationId)
     .order("updated_at", { ascending: false })
     .limit(200);
@@ -38,7 +39,7 @@ export async function listSentByJob(ctx: RequestContext) {
   const latest = new Map<string, NonNullable<typeof events.data>[number]>();
   for (const e of events.data ?? []) if (!latest.has(e.referral_id)) latest.set(e.referral_id, e);
 
-  const enriched = rows.map((r) => ({ ...r, lastEvent: latest.get(r.id) ?? null }));
+  const enriched = rows.map(({ link, ...r }) => ({ ...r, candidate: link?.candidate ?? null, lastEvent: latest.get(r.id) ?? null }));
   const groups = new Map<string, { jobId: string; title: string; partner: string; job: { status: (typeof jobs.data & {})[number]["status"]; updatedAt: string } | null; referrals: typeof enriched }>();
   for (const r of enriched) {
     let g = groups.get(r.job_id);
@@ -70,7 +71,7 @@ export async function getReferralDetail(ctx: RequestContext, id: string) {
     ctx.db.from("referral_document_grants").select("id, file_name, status, revoked_at, size_bytes").eq("referral_id", id),
     ctx.db.from("collaboration_agreements").select("*").eq("referral_id", id).maybeSingle(),
     ctx.db.from("referral_transitions").select("to_status, requires_reason, requires_active_agreement").eq("from_status", referral.status).eq("actor_side", side),
-    side === "source" ? ctx.db.from("referral_candidate_links").select("candidate_id").eq("referral_id", id).maybeSingle() : Promise.resolve({ data: null }),
+    side === "source" ? ctx.db.from("referral_candidate_links").select("candidate_id, candidate:candidates(full_name)").eq("referral_id", id).maybeSingle() : Promise.resolve({ data: null }),
     ctx.db.from("placements").select("id, status").eq("referral_id", id).maybeSingle(),
   ]);
   return {
@@ -83,6 +84,7 @@ export async function getReferralDetail(ctx: RequestContext, id: string) {
     agreement: agreement.data,
     transitions: transitions.data ?? [],
     candidateId: link.data?.candidate_id ?? null,
+    candidateName: (link.data && "candidate" in link.data ? link.data.candidate?.full_name : null) ?? null,
     placement: placement.data,
   };
 }

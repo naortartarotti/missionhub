@@ -39,7 +39,10 @@
     "signOut": "Sair",
     "createOrganization": "Criar uma organização",
     "platformAdmin": "Administração da plataforma",
-    "newOrganization": "Nova organização"
+    "newOrganization": "Nova organização",
+    "menu": "Menu da conta",
+    "orgSettings": "Configurações da organização",
+    "team": "Equipe"
   },
   "skipToContent": "Pular para o conteúdo",
   "demo": {
@@ -61,5 +64,6 @@
     "noResults": "Nenhum resultado",
     "useCustom": "Usar “{value}”",
     "more": "Continue digitando para filtrar a lista"
-  }
+  },
+  "moreItems": "mais {count}"
 }

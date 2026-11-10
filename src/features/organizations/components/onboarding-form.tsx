@@ -21,8 +21,8 @@ type Kind = "agency" | "independent";
 type Data = { kind: Kind; name: string; slug: string; currency: string; headline: string; specialties: string[]; regions: string[] };
 
 const STEPS = ["kind", "workspace", "profile", "review"] as const;
-const SPECIALTIES = ["software", "data", "product", "design", "sales", "finance", "healthcare", "executive"] as const;
-const REGIONS = ["ontario", "quebec", "bc", "alberta", "remoteCanada", "us", "remoteWorld"] as const;
+export const SPECIALTIES = ["software", "data", "product", "design", "sales", "finance", "healthcare", "executive"] as const;
+export const REGIONS = ["ontario", "quebec", "bc", "alberta", "remoteCanada", "us", "remoteWorld"] as const;
 
 export function OnboardingForm({ firstName }: { firstName?: string }) {
   const t = useT("onboarding");

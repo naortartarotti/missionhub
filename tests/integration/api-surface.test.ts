@@ -39,6 +39,15 @@ const AUTHENTICATED_RPCS = new Set([
   "transition_referral",
   // Referral review & match triage (20261108000200/000300): each checks org membership internally.
   "review_referral", "decline_referrals", "decline_pending_for_job", "set_match_triage", "mark_matches_seen",
+  // Sent-referral job status (20261109000200): checks org membership internally.
+  "get_sent_referral_jobs",
+  // Wallet (20261110000100/000200): org-admin transfer, platform-admin switches and reconciliation
+  // (which refuses non-admins internally). Funding and release are service_role only and must
+  // stay out of this list.
+  "wallet_transfer", "set_wallet_frozen", "set_wallet_transfers_enabled", "wallet_reconcile",
+  // Wallet payments (20261110000300): job owner starts a charge, org admin requests a cash-out.
+  // Everything that acts on the payment provider's word is service_role only.
+  "create_placement_charge", "request_cashout", "set_wallet_cashouts_enabled",
 ]);
 
 beforeAll(async () => {

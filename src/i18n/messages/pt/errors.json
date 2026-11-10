@@ -33,6 +33,16 @@
   "owner_not_member": "O responsável precisa ser um membro ativo desta organização.",
   "tenant_mismatch": "Esse registro não pertence a esta organização.",
   "immutable_record": "Este registro é imutável. Registre um lançamento de correção.",
+  "insufficient_funds": "Não há saldo disponível suficiente para isso.",
+  "wallet_frozen": "As saídas desta carteira estão pausadas. Fale com o suporte.",
+  "wallet_transfers_disabled": "As transferências ainda não estão disponíveis.",
+  "wallet_cashouts_disabled": "Os saques ainda não estão disponíveis.",
+  "payout_destination_required": "Conclua a configuração da sua conta de recebimento antes de sacar.",
+  "nothing_to_pay": "Não há nada pendente a pagar nesta colocação.",
+  "invalid_recipient": "Você só pode enviar valores para uma organização parceira.",
+  "invalid_amount": "Informe um valor válido.",
+  "payments_not_configured": "Os pagamentos online ainda não estão configurados nesta plataforma.",
+  "payment_provider_unavailable": "O provedor de pagamentos não respondeu. Nada foi cobrado; tente novamente em instantes.",
   "page": {
     "title": "Algo deu errado",
     "body": "O erro foi registrado. Tente de novo e fale com o suporte se continuar.",
@@ -46,5 +56,6 @@
     "title": "Esta página não está disponível",
     "body": "Ela não existe ou você não tem acesso a ela.",
     "home": "Ir para meu workspace"
-  }
+  },
+  "not_pipeline_owner": "Só quem aceitou esta indicação pode movê-la pelo pipeline."
 }

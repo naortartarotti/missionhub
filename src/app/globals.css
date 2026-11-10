@@ -61,7 +61,7 @@
 :root {
   --radius: 0.875rem;
   --canvas: #e9e9eb;
-  --background: #f6f6f7;
+  --background: #ffffff; /* was #f6f6f7 — white background test */
   --foreground: #1c1c1e;
   --card: #ffffff;
   --card-foreground: #1c1c1e;
@@ -79,7 +79,7 @@
   --border: #e5e5e8;
   --input: #dcdce0;
   --ring: #1f1f21;
-  --sidebar: #fbfbfb;
+  --sidebar: #ffffff; /* was #fbfbfb */
   --sidebar-foreground: #1c1c1e;
   --sidebar-accent: #efeff1;
   --sidebar-border: #ececee;

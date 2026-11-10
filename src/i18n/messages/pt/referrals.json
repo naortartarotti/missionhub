@@ -80,11 +80,34 @@
       "confirmed": "Confirmado por ambas as partes",
       "awaiting": "Aguardando o recrutador de origem",
       "openPlacement": "Abrir colocação e extrato",
-      "pending": "Criado automaticamente a partir da regra de comissão vigente quando o dono da vaga aceita. Depois disso, o snapshot fica congelado."
+      "pending": "Criado automaticamente a partir da regra de comissão vigente quando o dono da vaga aceita. Depois disso, o snapshot fica congelado.",
+      "internal": "Indicação interna: as duas organizações têm um membro em comum, então não há comissão de sourcing. O dono da vaga fica com essa parte; a taxa da plataforma não muda."
     },
     "timeline": "Linha do tempo",
     "reasonQuote": "“{reason}”",
-    "ownership": "Titularidade protegida até {date}."
+    "ownership": "Titularidade protegida até {date}.",
+    "showMore": "Mostrar mais",
+    "showLess": "Mostrar menos",
+    "summary": "Resumo",
+    "contact": "Contato",
+    "notShared": "Não compartilhado",
+    "fit": {
+      "title": "Aderência à vaga",
+      "hint": "Pontuação indicativa, congelada no momento do envio.",
+      "strengths": "Por que combina",
+      "gaps": "Para discutir",
+      "noGaps": "Nenhuma lacuna apontada."
+    },
+    "next": {
+      "yourMove": "Sua vez",
+      "waiting": "Aguardando {partner}",
+      "waitingBody": "Você será avisado assim que atualizarem esta indicação.",
+      "infoRequested": "{partner} pediu mais informações",
+      "closedBy": "{status} por {who}",
+      "closedByYou": "{status} por você",
+      "noReason": "Nenhum motivo informado.",
+      "hired": "Contratado · o placement agora é acompanhado na sua carteira."
+    }
   },
   "actions": {
     "under_review": "Iniciar análise",
@@ -356,6 +379,46 @@
     "movedBy": "{partner} mudou para {status} · {time}",
     "movedByYou": "Você mudou para {status} · {time}",
     "submittedAt": "Enviado {time}",
-    "progress": "Etapa {step} de {total}"
+    "progress": "Etapa {step} de {total}",
+    "openCandidate": "Ficha do candidato",
+    "partnerSees": "O parceiro vê: {label}"
+  },
+  "composer": {
+    "viewOwn": "Sua visão",
+    "viewPartner": "Como {partner} vê",
+    "shared": "Compartilhado",
+    "hidden": "Oculto",
+    "share": "Compartilhar {field}",
+    "hide": "Ocultar {field}",
+    "anonymous": "Candidato anônimo",
+    "hiddenSection": "Oculto para {partner}",
+    "about": "Sobre",
+    "skills": "Competências",
+    "skillsVsJob": "Comparadas às competências exigidas pela vaga",
+    "experience": "Experiência",
+    "details": "Detalhes",
+    "contact": "Contato",
+    "documents": "Documentos",
+    "sharingCount": "Compartilhando {count} de {total} campos",
+    "shareHint": "Use o olho de cada seção para compartilhar ou ocultar. Só o que estiver compartilhado entra no snapshot.",
+    "noSummary": "Nenhum resumo cadastrado.",
+    "noExperience": "Nenhum histórico profissional cadastrado.",
+    "noContact": "Nenhum contato cadastrado.",
+    "openProfile": "Abrir perfil completo",
+    "submittingFor": "Enviando para",
+    "match": "Aderência",
+    "seeMore": {
+      "one": "+{count} motivo",
+      "other": "+{count} motivos"
+    },
+    "submitTitle": "Enviar para {partner}",
+    "authTitle": "Autorização do candidato",
+    "noteTitle": "Nota para o dono da vaga (opcional)",
+    "relocation": "Aberto a realocação",
+    "yearsShort": {
+      "one": "{count} ano",
+      "other": "{count} anos"
+    },
+    "availableFrom": "Disponível a partir de {date}"
   }
 }

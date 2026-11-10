@@ -44,7 +44,9 @@ export function NewJobFlow({
   action,
   cancelHref,
   defaults,
+  ai = false,
 }: {
+  ai?: boolean;
   title: string;
   description: string;
   orgSlug: string;
@@ -73,6 +75,7 @@ export function NewJobFlow({
       <div className="grid gap-5">
         <JobImport
           orgSlug={orgSlug}
+          ai={ai}
           result={imported?.result ?? null}
           onReset={() => setImported(null)}
           onImported={(result) => {
@@ -107,11 +110,13 @@ export function NewJobFlow({
 
 function JobImport({
   orgSlug,
+  ai,
   result,
   onImported,
   onReset,
 }: {
   orgSlug: string;
+  ai: boolean;
   result: JobImportResult | null;
   onImported: (r: JobImportResult) => void;
   onReset: () => void;
@@ -171,9 +176,9 @@ function JobImport({
         </span>
         <div className="min-w-0 flex-1" role="status">
           <p className="font-semibold">{t("import.done", { count })}</p>
-          {result.structured ? (
+          {result.structured || result.ai ? (
             <p className="text-sm text-muted-foreground">
-              {t("import.doneStructured")}
+              {result.ai ? t("import.doneAi") : t("import.doneStructured")}
             </p>
           ) : null}
         </div>
@@ -197,7 +202,7 @@ function JobImport({
         <div>
           <h2 className="text-base font-semibold">{t("import.title")}</h2>
           <p className="text-sm text-muted-foreground">
-            {t("import.subtitle")}
+            {ai ? t("import.subtitleAi") : t("import.subtitle")}
           </p>
         </div>
       </div>
@@ -309,7 +314,7 @@ function JobImport({
                   : t("import.fileDrop")}
               </span>
               <span className="text-xs text-muted-foreground">
-                {t("import.fileHint")}
+                {ai ? t("import.fileHintAi") : t("import.fileHint")}
               </span>
             </label>
             <input

@@ -119,3 +119,33 @@ describe("protected-feature exclusion", () => {
     expect(c.skills).toContain("typescript");
   });
 });
+
+describe("evaluateMatch with AI skill relations", () => {
+  const relations = new Map([["react", ["next.js", "gatsby"]], ["postgresql", ["supabase"]]]);
+
+  it("gives partial credit for a related skill and explains it", () => {
+    const c = candidate({ skills: ["typescript", "next.js", "postgresql"] });
+    const exact = evaluateMatch(c, job());
+    const related = evaluateMatch(c, job(), relations);
+    expect(related.factorScores.skills).toBeGreaterThan(exact.factorScores.skills);
+    expect(related.factorScores.skills).toBeLessThan(1);
+    expect(related.reasons.find((r) => r.key === "relatedSkills")?.vars?.skills).toContain("react ← next.js");
+    expect(related.gaps.find((g) => g.key === "requiredSkillsMissing")).toBeUndefined();
+    expect(related.modelVersion).toBe("deterministic-v2+ai-skills");
+    expect(exact.modelVersion).toBe("deterministic-v2");
+  });
+
+  it("lifts the no-required-skills blocker when only related skills are present", () => {
+    const c = candidate({ skills: ["next.js", "supabase"] });
+    expect(evaluateMatch(c, job()).blockers.map((b) => b.key)).toContain("noRequiredSkillsPresent");
+    expect(evaluateMatch(c, job(), relations).blockers.map((b) => b.key)).not.toContain("noRequiredSkillsPresent");
+  });
+
+  it("changes the fingerprint only when a relation is actually used", async () => {
+    const { inputFingerprint } = await import("../domain/engine");
+    const c = candidate();
+    expect(inputFingerprint(c, job(), relations)).toBe(inputFingerprint(c, job()));
+    const c2 = candidate({ skills: ["typescript", "next.js", "postgresql"] });
+    expect(inputFingerprint(c2, job(), relations)).not.toBe(inputFingerprint(c2, job()));
+  });
+});

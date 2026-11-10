@@ -81,6 +81,122 @@
     "suspended": "Organisation suspendue.",
     "reinstated": "Organisation rétablie.",
     "disputeClosed": "Litige clos.",
-    "rulePublished": "Nouvelle version de la règle publiée. Les ententes existantes conservent leur instantané figé."
+    "rulePublished": "Nouvelle version de la règle publiée. Les ententes existantes conservent leur instantané figé.",
+    "walletFrozen": "Portefeuille gelé.",
+    "walletUnfrozen": "Portefeuille dégelé.",
+    "transfersEnabled": "Transferts activés.",
+    "transfersDisabled": "Transferts désactivés.",
+    "cashoutsEnabled": "Retraits activés.",
+    "cashoutsDisabled": "Retraits désactivés."
+  },
+  "wallets": {
+    "link": "Portefeuilles",
+    "back": "Retour aux opérations",
+    "title": "Portefeuilles",
+    "description": "Soldes détenus pour les organisations, santé du grand livre et contrôle des mouvements sortants.",
+    "kpi": {
+      "held": "Détenu pour les organisations",
+      "heldHint": "Disponible + en attente, {currency}",
+      "revenue": "Revenus de la plateforme",
+      "revenueHint": "Frais constatés dans le grand livre",
+      "frozen": "Portefeuilles gelés",
+      "ledger": "Vérification du grand livre",
+      "ledgerOk": "Équilibré",
+      "ledgerBad": "{count} anomalie(s)"
+    },
+    "health": {
+      "title": "Rapprochement",
+      "ok": "Chaque solde en cache correspond à ses écritures et le livre totalise zéro.",
+      "bad": "Le grand livre est incohérent. Suspendez les mouvements sortants et enquêtez avant toute autre chose.",
+      "account": "Compte {id} : en cache {cached}, écritures {computed}",
+      "book": "Le livre ne totalise pas zéro (écart de {computed} unités mineures).",
+      "unavailable": "La vérification n'est pas encore disponible sur cette base de données (migration en attente).",
+      "note": "Cette vérification compare le grand livre à lui-même. La comparaison avec le solde du fournisseur de paiement viendra avec son intégration."
+    },
+    "totals": {
+      "title": "Totaux par devise",
+      "empty": "Aucune activité pour l'instant.",
+      "currency": "Devise",
+      "available": "Disponible",
+      "pending": "En attente",
+      "revenue": "Revenus de la plateforme",
+      "provider": "Attendu chez le fournisseur"
+    },
+    "transfers": {
+      "title": "Transferts entre recruteurs",
+      "on": "Activés : les administrateurs d'organisation peuvent envoyer des fonds disponibles à des organisations partenaires.",
+      "off": "Désactivés : aucune organisation ne peut envoyer de fonds à une autre.",
+      "enable": "Activer les transferts",
+      "enableTitle": "Activer les transferts ?",
+      "enableDescription": "Les administrateurs d'organisation pourront déplacer immédiatement des fonds disponibles vers des organisations partenaires. À faire seulement lorsque les limites, l'authentification multifacteur et la revue juridique sont en place.",
+      "disable": "Désactiver les transferts",
+      "disableTitle": "Désactiver les transferts ?",
+      "disableDescription": "Les nouveaux transferts sont refusés pour toutes les organisations. Les soldes ne changent pas."
+    },
+    "orgs": {
+      "title": "Portefeuilles des organisations",
+      "name": "Organisation",
+      "available": "Disponible",
+      "pending": "En attente",
+      "status": "Statut",
+      "actions": "Actions",
+      "none": "—",
+      "frozen": "Gelé",
+      "active": "Actif",
+      "frozenSince": "depuis le {date} : {reason}"
+    },
+    "freeze": {
+      "freeze": "Geler",
+      "freezeTitle": "Geler ce portefeuille ?",
+      "freezeDescription": "L'organisation ne peut plus envoyer de transferts ni retirer de fonds. Elle peut toujours en recevoir, et ses membres verront que les mouvements sortants sont suspendus.",
+      "unfreeze": "Dégeler",
+      "unfreezeTitle": "Dégeler ce portefeuille ?",
+      "unfreezeDescription": "L'organisation peut de nouveau déplacer ses fonds disponibles."
+    },
+    "recent": {
+      "title": "Transactions récentes",
+      "empty": "Aucune transaction pour l'instant.",
+      "date": "Date",
+      "kind": "Type",
+      "parties": "Organisations",
+      "amount": "Montant",
+      "system": "Système seulement"
+    },
+    "kind": {
+      "placement_funding": "Financement de commission",
+      "release": "Libération",
+      "transfer": "Transfert",
+      "cashout": "Retrait",
+      "cashout_reversal": "Retrait retourné",
+      "reversal": "Annulation",
+      "adjustment": "Ajustement"
+    },
+    "cashouts": {
+      "title": "Retraits",
+      "on": "Activés : les administrateurs d'organisation ayant un compte de versement vérifié peuvent retirer les fonds disponibles.",
+      "off": "Désactivés : aucune organisation ne peut retirer de fonds.",
+      "enable": "Activer les retraits",
+      "enableTitle": "Activer les retraits ?",
+      "enableDescription": "Les administrateurs d'organisation pourront envoyer les fonds disponibles vers leur banque par l'entremise du fournisseur de paiement. À faire seulement lorsque le fournisseur est connecté et testé.",
+      "disable": "Désactiver les retraits",
+      "disableTitle": "Désactiver les retraits ?",
+      "disableDescription": "Les nouveaux retraits sont refusés pour toutes les organisations. Les demandes déjà en cours se terminent quand même."
+    },
+    "provider": {
+      "connected": "Fournisseur de paiement connecté.",
+      "missing": "Fournisseur de paiement non configuré : définissez STRIPE_SECRET_KEY et STRIPE_WEBHOOK_SECRET. D'ici là, personne ne peut payer ni retirer par la plateforme."
+    },
+    "attention": {
+      "title": "À traiter",
+      "empty": "Rien à traiter.",
+      "charge": "Paiement de commission {amount} · {status}",
+      "chargeReason": "Raison : {reason}. Réglez la situation auprès du fournisseur de paiement (remboursement ou correction), puis consignez la correction.",
+      "cashout": "Retrait {amount} pour {org} · en traitement depuis le {date}",
+      "chargeStatus": {
+        "review": "payé mais non comptabilisé",
+        "disputed": "contesté chez le fournisseur",
+        "refunded": "remboursé chez le fournisseur"
+      }
+    }
   }
 }

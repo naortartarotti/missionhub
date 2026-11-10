@@ -46,7 +46,7 @@ export async function recordInvoice(orgSlug: string, _: ActionResult | null, for
       p_placement: v.placementId, p_number: v.number, p_amount_minor: amount, p_tax_minor: tax, p_issued_on: v.issuedOn, p_due_on: v.dueOn || (null as unknown as string),
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/commissions/${v.placementId}`);
+    revalidatePath(`/w/${orgSlug}/wallet/placements/${v.placementId}`);
     return { ok: true, message: msg("commissions.messages.invoiceRecorded") };
   });
 }
@@ -66,7 +66,7 @@ export async function recordEvidence(orgSlug: string, _: ActionResult | null, fo
       p_occurred_on: v.occurredOn, p_reference: v.reference, p_notes: v.notes ?? "", p_idempotency_key: v.idempotencyKey,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/commissions/${v.placementId}`);
+    revalidatePath(`/w/${orgSlug}/wallet/placements/${v.placementId}`);
     return { ok: true, message: msg("commissions.messages.evidenceRecorded") };
   });
 }
@@ -88,7 +88,7 @@ export async function reviewEvidence(input: { evidenceId: string; approve: boole
     const db = v.orgSlug ? (await getRequestContext(v.orgSlug)).db : (await requireUser(), await createClient());
     const { error } = await db.rpc("review_payment_evidence", { p_evidence: v.evidenceId, p_approve: v.approve, p_note: v.note });
     if (error) return toActionError(error);
-    if (v.orgSlug && v.placementId) revalidatePath(`/w/${v.orgSlug}/commissions/${v.placementId}`);
+    if (v.orgSlug && v.placementId) revalidatePath(`/w/${v.orgSlug}/wallet/placements/${v.placementId}`);
     revalidatePath("/admin");
     return { ok: true, message: v.approve ? msg("commissions.messages.verified") : msg("commissions.messages.rejected") };
   });
@@ -104,7 +104,7 @@ export async function openDispute(orgSlug: string, input: { placementId: string;
     await rateLimit(ctx.db, "dispute.open", 5, 3600);
     const { error } = await ctx.db.rpc("open_dispute", { p_placement: v.placementId, p_reason: v.reason });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/commissions/${v.placementId}`);
+    revalidatePath(`/w/${orgSlug}/wallet/placements/${v.placementId}`);
     return { ok: true, message: msg("commissions.messages.disputeOpened") };
   });
 }

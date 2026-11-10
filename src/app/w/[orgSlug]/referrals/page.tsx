@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowLeftRight, CheckCircle2 } from "lucide-react";
 import { getRequestContext } from "@/server/auth/context";
 import { getReferralDetail, listReceivedQueue, listSentByJob, receivedCounts, receivedJobs, type QueueRow, type ReceivedJob } from "@/features/referrals/queries";
-import { BUCKET_KEYS, DECIDABLE, PAGE_SIZE, QUEUE_SORTS, isDeclineReason, salaryFit, skillCoverage, waitTone, type Bucket, type FitEvidence, type QueueSort, type Snapshot } from "@/features/referrals/review";
+import { BUCKET_KEYS, CLOSED_STATUSES, DECIDABLE, REFERRAL_STAGES, STAGE_INDEX, PAGE_SIZE, QUEUE_SORTS, isDeclineReason, salaryFit, skillCoverage, waitTone, type Bucket, type FitEvidence, type QueueSort, type Snapshot } from "@/features/referrals/review";
 import { QueueJobFilter, QueueList, ReviewPanel, type PanelView, type QueueGroup, type ReqCheck, type RowView } from "@/features/referrals/components/review-queue";
 import { evidenceText } from "@/features/matching/evidence";
 import { PageHeader } from "@/components/shared/page-header";
@@ -310,10 +310,6 @@ function toPanelView(d: Detail, job: ReceivedJob | undefined, o: Ctx & { orgSlug
 // ---------------------------------------------------------------------------
 // Sent: unchanged table
 
-// Pipeline the hiring recruiter moves a referral through; info_requested sits at the review step.
-const SENT_STAGES = ["submitted", "under_review", "interviewing", "offer", "hired"] as const;
-const STAGE_INDEX: Partial<Record<string, number>> = { submitted: 0, under_review: 1, info_requested: 1, accepted: 1, interviewing: 2, offer: 3, hired: 4 };
-const CLOSED_STATUSES = new Set(["declined", "rejected", "withdrawn", "cancelled"]);
 
 async function SentTable({ orgSlug }: { orgSlug: string }) {
   const ctx = await getRequestContext(orgSlug);
@@ -363,7 +359,16 @@ async function SentTable({ orgSlug }: { orgSlug: string }) {
                   {/* Same fit score the hiring recruiter sees for this submission (frozen at submit). */}
                   {r.fit_score != null ? <ScoreRing score={r.fit_score} className="size-11 [&_span]:text-xs" /> : <span className="size-11" aria-hidden />}
                   <div className="min-w-0 self-center">
-                    <Link href={`${base}/${r.id}`} className="font-medium underline-offset-4 hover:underline">{r.candidate_label}</Link>
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+                      <Link href={`${base}/${r.id}`} className="font-medium underline-offset-4 hover:underline">{r.candidate?.full_name ?? r.candidate_label}</Link>
+                      {r.candidate ? (
+                        <Link href={`/w/${orgSlug}/candidates/${r.candidate.id}`} className="text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+                          {t("sent.openCandidate")}
+                        </Link>
+                      ) : null}
+                    </div>
+                    {/* What the partner sees instead of the name until contact details are disclosed. */}
+                    {r.candidate ? <p className="truncate text-xs text-muted-foreground">{t("sent.partnerSees", { label: r.candidate_label })}</p> : null}
                     {ev && ev.to_status !== "submitted" ? (
                       <p className="mt-1 text-sm text-muted-foreground">
                         {ev.actor_side === "target"
@@ -373,14 +378,14 @@ async function SentTable({ orgSlug }: { orgSlug: string }) {
                     ) : (
                       <p className="mt-1 text-sm text-muted-foreground">{t("sent.submittedAt", { time: f.relative(r.submitted_at) })}</p>
                     )}
-                    {ev?.reason ? <p className="mt-1.5 rounded-xl bg-muted/60 px-3 py-2 text-sm text-pretty">“{ev.reason}”</p> : null}
+                    {ev?.reason ? <p className="mt-1.5 rounded-xl bg-muted/60 px-3 py-2 text-sm text-pretty">{isDeclineReason(ev.reason) ? t(`declineReasons.${ev.reason}`) : t("detail.reasonQuote", { reason: ev.reason })}</p> : null}
                   </div>
                   <div className="col-start-2 grid justify-items-start gap-2 sm:col-start-auto sm:justify-items-end">
                     <StatusPill tone={REFERRAL_STATUS[r.status].tone} label={tg(`labels.referralStatus.${r.status}`)} />
                     {/* Progress through the hiring recruiter's pipeline; closed referrals show no track. */}
                     {closed ? null : (
-                      <ol className="flex items-center gap-1" aria-label={t("sent.progress", { step: stage + 1, total: SENT_STAGES.length })}>
-                        {SENT_STAGES.map((s, i) => (
+                      <ol className="flex items-center gap-1" aria-label={t("sent.progress", { step: stage + 1, total: REFERRAL_STAGES.length })}>
+                        {REFERRAL_STAGES.map((s, i) => (
                           <li key={s} title={tg(`labels.referralStatus.${s}`)} className={cn("h-1.5 w-6 rounded-full", i <= stage ? "bg-foreground" : "bg-border")} />
                         ))}
                       </ol>

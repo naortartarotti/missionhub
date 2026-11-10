@@ -1,6 +1,6 @@
 {
   "title": "Comissões",
-  "description": "Acompanhe cada colocação da contratação ao repasse. Os valores são estimativas até o cliente pagar. As partes passam a ser devidas quando esse pagamento é confirmado. O MissionHub acompanha o dinheiro, mas nunca o movimenta.",
+  "description": "Acompanhe cada colocação da contratação ao repasse. Os valores são estimativas até o cliente pagar. As partes passam a ser devidas quando esse pagamento é confirmado. As partes podem ser pagas fora do MissionHub e registradas aqui, ou pelo MissionHub quando os pagamentos online estiverem disponíveis.",
   "kpi": {
     "projected": "Previsto",
     "projectedHint": "Contratações ainda não pagas pelo cliente",
@@ -79,7 +79,12 @@
       "allocation_reversal": "estorno de alocação",
       "adjustment": "ajuste"
     },
-    "statusHistory": "Histórico de status"
+    "statusHistory": "Histórico de status",
+    "payThrough": "Pagar {amount} pelo MissionHub",
+    "payThroughHint": "Paga o recrutador que indicou e a parte da plataforma em um só passo. Sem necessidade de comprovante de repasse.",
+    "paymentReturned": "Obrigado. Seu pagamento está sendo confirmado; esta página será atualizada quando o provedor confirmar.",
+    "paymentCancelled": "Pagamento cancelado. Nada foi cobrado.",
+    "productName": "Comissão de colocação"
   },
   "forms": {
     "recorded": "Registrado",

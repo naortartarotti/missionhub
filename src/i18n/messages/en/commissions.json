@@ -1,6 +1,6 @@
 {
   "title": "Commissions",
-  "description": "Follow each placement from hire to payout. Amounts are estimates until the client pays. Shares become owed once that payment is confirmed. MissionHub tracks the money but never moves it.",
+  "description": "Follow each placement from hire to payout. Amounts are estimates until the client pays. Shares become owed once that payment is confirmed. Shares can be paid outside MissionHub and recorded here, or through MissionHub where online payments are available.",
   "kpi": {
     "projected": "Projected",
     "projectedHint": "Hires not yet paid by client",
@@ -79,7 +79,12 @@
       "allocation_reversal": "allocation reversal",
       "adjustment": "adjustment"
     },
-    "statusHistory": "Status history"
+    "statusHistory": "Status history",
+    "payThrough": "Pay {amount} through MissionHub",
+    "payThroughHint": "Pays the sourcing recruiter and the platform share in one step. No payout evidence needed.",
+    "paymentReturned": "Thanks. Your payment is being confirmed; this page updates when the provider confirms it.",
+    "paymentCancelled": "Payment cancelled. Nothing was charged.",
+    "productName": "Placement commission"
   },
   "forms": {
     "recorded": "Recorded",

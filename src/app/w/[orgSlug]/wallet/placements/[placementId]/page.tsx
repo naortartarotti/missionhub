@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getRequestContext } from "@/server/auth/context";
+import { integrations } from "@/server/env";
+import { PayCommissionButton } from "@/features/wallet/components/wallet-actions";
 import { getPlacement } from "@/features/commissions/queries";
 import { ledgerBalances, projectedSplit } from "@/features/commissions/domain";
 import { DisputeButton, EvidenceDialog, InvoiceDialog, ReviewEvidenceButtons } from "@/features/commissions/components/finance-forms";
@@ -17,7 +19,7 @@ export async function generateMetadata() {
   return { title: (await getT("commissions"))("detail.metaTitle") };
 }
 
-export default async function PlacementPage({ params, searchParams }: PageProps<"/w/[orgSlug]/commissions/[placementId]">) {
+export default async function PlacementPage({ params, searchParams }: PageProps<"/w/[orgSlug]/wallet/placements/[placementId]">) {
   const { orgSlug, placementId } = await params;
   const sp = await searchParams;
   const ctx = await getRequestContext(orgSlug);
@@ -33,6 +35,10 @@ export default async function PlacementPage({ params, searchParams }: PageProps<
   const st = PLACEMENT_STATUS[p.status];
   const locked = ["settled", "cancelled", "disputed"].includes(p.status);
   const openDispute = d.disputes.find((x) => x.status === "open");
+  const payable = ["commission_payable", "payment_partially_verified"].includes(p.status);
+  // What the job owner can settle through the platform: the verified, still-unpaid partner and platform shares.
+  const dueThroughPlatform = Math.max(0, b.sourcingOutstanding) + Math.max(0, b.platformOutstanding);
+  const canPayThroughPlatform = side === "target" && payable && dueThroughPlatform > 0 && integrations.payments;
 
   return (
     <div className="grid gap-6">
@@ -46,6 +52,8 @@ export default async function PlacementPage({ params, searchParams }: PageProps<
       />
       <p className="-mt-2 text-sm text-muted-foreground">{tg(`labels.placementStatusDescription.${p.status}`)}</p>
       {sp.created ? <Flash message={t("detail.flashCreated")} /> : null}
+      {sp.payment === "success" && p.status !== "settled" ? <Flash message={t("detail.paymentReturned")} /> : null}
+      {sp.payment === "cancelled" ? <p role="status" className="rounded-2xl bg-muted px-4 py-3 text-sm text-muted-foreground">{t("detail.paymentCancelled")}</p> : null}
 
       {openDispute ? (
         <div role="status" className="rounded-2xl bg-danger-soft px-4 py-3 text-sm text-danger">{t("detail.disputeOpen", { date: f.date(openDispute.created_at), reason: openDispute.reason })}</div>
@@ -66,12 +74,19 @@ export default async function PlacementPage({ params, searchParams }: PageProps<
         ))}
       </div>
 
+      {canPayThroughPlatform ? (
+        <Panel className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <PayCommissionButton orgSlug={orgSlug} placementId={p.id} label={t("detail.payThrough", { amount: f.money(dueThroughPlatform, cur) })} />
+          <p className="text-sm text-muted-foreground">{t("detail.payThroughHint")}</p>
+        </Panel>
+      ) : null}
+
       <Panel className="flex flex-wrap items-center gap-2">
         {side === "target" && !locked ? (
           <>
             <InvoiceDialog orgSlug={orgSlug} placementId={p.id} currency={cur} defaultAmount={minorToMajorString(p.contracted_fee_minor, cur)} />
             {d.invoices.length ? <EvidenceDialog orgSlug={orgSlug} placementId={p.id} currency={cur} kinds={["client_payment", "client_refund"]} label={t("detail.recordClientPayment")} /> : null}
-            {["commission_payable", "payment_partially_verified"].includes(p.status) ? (
+            {payable ? (
               <EvidenceDialog orgSlug={orgSlug} placementId={p.id} currency={cur} kinds={["sourcing_payout", "platform_remittance"]} label={t("detail.recordPayout")} />
             ) : null}
           </>

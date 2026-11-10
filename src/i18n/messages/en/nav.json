@@ -7,13 +7,13 @@
   "candidates": "All candidates",
   "jobs": "All jobs",
   "referrals": "Referrals",
-  "commissions": "Commissions",
+  "wallet": "Wallet",
   "activity": "Activity",
-  "settings": "Settings",
   "badgeNew": "new",
   "badgePending": "pending",
   "referralsReceived": "Referrals received",
   "referralsSent": "Referrals sent",
   "myCandidates": "My candidates",
-  "myJobs": "My jobs"
+  "myJobs": "My jobs",
+  "pipeline": "Pipeline"
 }

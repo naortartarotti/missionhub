@@ -39,7 +39,10 @@
     "signOut": "Se déconnecter",
     "createOrganization": "Créer une organisation",
     "platformAdmin": "Administration de la plateforme",
-    "newOrganization": "Nouvelle organisation"
+    "newOrganization": "Nouvelle organisation",
+    "menu": "Menu du compte",
+    "orgSettings": "Paramètres de l'organisation",
+    "team": "Équipe"
   },
   "skipToContent": "Aller au contenu",
   "demo": {
@@ -61,5 +64,6 @@
     "noResults": "Aucun résultat",
     "useCustom": "Utiliser « {value} »",
     "more": "Continuez à taper pour affiner la liste"
-  }
+  },
+  "moreItems": "{count} de plus"
 }

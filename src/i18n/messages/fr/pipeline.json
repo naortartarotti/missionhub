@@ -1,0 +1,37 @@
+{
+  "title": "Pipeline",
+  "description": "Faites avancer les candidats acceptés dans votre processus, de l'acceptation à l'embauche.",
+  "readOnly": "Où en est chaque candidat accepté. Seuls les membres qui examinent les recommandations peuvent les déplacer.",
+  "allJobs": "Tous les postes",
+  "closed": "Fermés",
+  "columnEmpty": "Aucun candidat",
+  "ownerHint": "Accepté par cette personne de votre équipe",
+  "openPlacement": "Ouvrir le placement",
+  "reportHire": "Déclarer l'embauche",
+  "moved": "Déplacé vers {stage}",
+  "waitingAgreement": "En attente de la confirmation du partage de commission par le partenaire",
+  "closeDialog": {
+    "description": "Le candidat quitte le pipeline. Le partenaire voit le changement et votre motif sur la recommandation.",
+    "reason": "Motif"
+  },
+  "empty": {
+    "title": "Aucun candidat accepté pour l'instant",
+    "description": "Quand vous acceptez une recommandation, le candidat apparaît ici pour que vous le fassiez avancer : entrevues, offre et embauche.",
+    "action": "Examiner les recommandations"
+  },
+  "viewInPipeline": "Voir dans le pipeline",
+  "ownerOnly": "Seul·e {name} peut déplacer ce candidat",
+  "ownerOnlyUnknown": "Seule la personne qui a accepté peut déplacer ce candidat",
+  "ownedBy": "Accepté par {name}. Cette personne seule fait avancer ce candidat dans le pipeline.",
+  "status": {
+    "ready": "Prêt",
+    "readyHint": "Vous pouvez faire passer ce candidat à l'étape suivante",
+    "awaitingSplit": "Partage en attente",
+    "viewOnly": "Lecture seule"
+  },
+  "menu": "Actions pour {candidate}",
+  "moveTo": "Passer à {stage}",
+  "openReferral": "Ouvrir la recommandation",
+  "feeHint": "Honoraires de placement prévus pour ce poste",
+  "inStage": "À cette étape depuis"
+}

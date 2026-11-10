@@ -5,6 +5,7 @@ import { getGlobalT } from "@/i18n/server";
 import { Logo } from "@/components/layout/logo";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { OrgSwitcher } from "@/components/layout/org-switcher";
+import { AccountMenu } from "@/components/layout/account-menu";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { DashboardOnly } from "@/components/layout/dashboard-only";
 import { ActivityPopover } from "@/features/notifications/components/activity-popover";
@@ -29,13 +30,19 @@ export default async function WorkspaceLayout({ children, params }: LayoutProps<
 
   const activityItems = recent.data ?? [];
   // Desktop has no top bar: each page's sticky PageHeader is the header; the dashboard's carries the bell.
-  // Language and theme live in Settings → Preferences.
+  // Organization (switch, settings) sits at the top; the person's own account menu at the bottom.
   const sidebar = (
     <div className="flex h-full flex-col">
-      <div className="mb-8 flex items-center justify-between gap-2 lg:mb-10">
+      <div className="mb-6 flex items-center justify-between gap-2">
         <Link href={`/w/${orgSlug}/overview`} className="rounded-xl px-2 py-1">
           <Logo />
         </Link>
+      </div>
+      <div className="mb-6 lg:mb-8">
+        <OrgSwitcher
+          current={{ slug: ctx.organizationSlug, name: ctx.organizationName, roleLabel: t(`labels.role.${ctx.membershipRole}`) }}
+          memberships={memberships}
+        />
       </div>
       <SidebarNav orgSlug={orgSlug} badges={badges} />
       <div className="mt-auto pt-6">
@@ -45,11 +52,9 @@ export default async function WorkspaceLayout({ children, params }: LayoutProps<
             <p className="mt-0.5 text-xs opacity-80">{t("common.demo.body")}</p>
           </div>
         ) : null}
-        <OrgSwitcher
-          current={{ slug: ctx.organizationSlug, name: ctx.organizationName, roleLabel: t(`labels.role.${ctx.membershipRole}`) }}
-          memberships={memberships}
-          user={ctx.user}
-        />
+        <div className="border-t border-sidebar-border pt-3">
+          <AccountMenu orgSlug={orgSlug} user={ctx.user} />
+        </div>
       </div>
     </div>
   );

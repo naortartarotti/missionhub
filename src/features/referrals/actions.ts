@@ -78,6 +78,7 @@ export async function transitionReferral(orgSlug: string, input: { referralId: s
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/referrals/${parsed.data.referralId}`);
     revalidatePath(`/w/${orgSlug}/referrals`);
+    revalidatePath(`/w/${orgSlug}/pipeline`);
     return { ok: true, message: msg("referrals.success.statusUpdated") };
   });
 }
@@ -104,6 +105,7 @@ export async function reviewReferral(
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/referrals`);
     revalidatePath(`/w/${orgSlug}/referrals/${v.referralId}`);
+    revalidatePath(`/w/${orgSlug}/pipeline`);
     return { ok: true, message: msg(`referrals.queue.done.${v.to}`) };
   });
 }
@@ -170,7 +172,7 @@ export async function reportHire(orgSlug: string, _: ActionResult | null, formDa
     });
     if (error) return toActionError(error);
     revalidatePath(`/w/${orgSlug}/referrals/${parsed.data.referralId}`);
-    redirect(`/w/${orgSlug}/commissions/${placementId}?created=1`);
+    redirect(`/w/${orgSlug}/wallet/placements/${placementId}?created=1`);
   });
 }
 

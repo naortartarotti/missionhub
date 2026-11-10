@@ -8,6 +8,8 @@ import type { Database } from "@/server/db/database.types";
  *   - src/features/matching/infrastructure (internal cross-org matching)
  *   - src/server/queue (background worker)
  *   - src/server/storage (signed URL issuance AFTER an authorization check)
+ *   - src/app/api/stripe/webhook (storing a provider event AFTER its signature is verified)
+ *   - src/features/wallet/actions.ts (recording a payout account AFTER an authorization check)
  * Never import this from UI components, route params handlers without checks, or client code.
  */
 export function createAdminClient() {

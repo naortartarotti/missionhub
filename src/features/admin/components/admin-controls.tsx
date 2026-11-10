@@ -9,7 +9,7 @@ import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { FormField } from "@/components/shared/form-field";
 import { FormMessage } from "@/components/shared/form-message";
 import { SubmitButton } from "@/components/shared/submit-button";
-import { publishRule, resolveDispute, setSuspension } from "../actions";
+import { publishRule, resolveDispute, setSuspension, setWalletCashoutsEnabled, setWalletFrozen, setWalletTransfersEnabled } from "../actions";
 import { useT } from "@/i18n/client";
 
 export function SuspendButton({ orgId, suspended }: { orgId: string; suspended: boolean }) {
@@ -54,5 +54,41 @@ export function RuleForm({ current }: { current: { sourcing: number; jobOwner: n
       <FormMessage state={state} />
       <SubmitButton variant="secondary" className="justify-self-start">{t("rules.publish")}</SubmitButton>
     </ActionForm>
+  );
+}
+
+export function WalletFreezeButton({ orgId, frozen }: { orgId: string; frozen: boolean }) {
+  const t = useT("admin");
+  return frozen ? (
+    <ConfirmDialog trigger={<Button size="sm" variant="outline">{t("wallets.freeze.unfreeze")}</Button>} title={t("wallets.freeze.unfreezeTitle")} description={t("wallets.freeze.unfreezeDescription")} confirmLabel={t("wallets.freeze.unfreeze")} onConfirm={() => setWalletFrozen({ orgId, frozen: false, reason: "" })} />
+  ) : (
+    <ConfirmDialog
+      trigger={<Button size="sm" variant="outline">{t("wallets.freeze.freeze")}</Button>}
+      title={t("wallets.freeze.freezeTitle")}
+      description={t("wallets.freeze.freezeDescription")}
+      confirmLabel={t("wallets.freeze.freeze")}
+      destructive
+      reasonLabel={t("suspension.reason")}
+      reasonRequired
+      onConfirm={(reason) => setWalletFrozen({ orgId, frozen: true, reason })}
+    />
+  );
+}
+
+export function WalletTransfersSwitch({ enabled }: { enabled: boolean }) {
+  const t = useT("admin");
+  return enabled ? (
+    <ConfirmDialog trigger={<Button size="sm" variant="outline">{t("wallets.transfers.disable")}</Button>} title={t("wallets.transfers.disableTitle")} description={t("wallets.transfers.disableDescription")} confirmLabel={t("wallets.transfers.disable")} onConfirm={() => setWalletTransfersEnabled({ enabled: false })} />
+  ) : (
+    <ConfirmDialog trigger={<Button size="sm" variant="outline">{t("wallets.transfers.enable")}</Button>} title={t("wallets.transfers.enableTitle")} description={t("wallets.transfers.enableDescription")} confirmLabel={t("wallets.transfers.enable")} destructive onConfirm={() => setWalletTransfersEnabled({ enabled: true })} />
+  );
+}
+
+export function WalletCashoutsSwitch({ enabled }: { enabled: boolean }) {
+  const t = useT("admin");
+  return enabled ? (
+    <ConfirmDialog trigger={<Button size="sm" variant="outline">{t("wallets.cashouts.disable")}</Button>} title={t("wallets.cashouts.disableTitle")} description={t("wallets.cashouts.disableDescription")} confirmLabel={t("wallets.cashouts.disable")} onConfirm={() => setWalletCashoutsEnabled({ enabled: false })} />
+  ) : (
+    <ConfirmDialog trigger={<Button size="sm" variant="outline">{t("wallets.cashouts.enable")}</Button>} title={t("wallets.cashouts.enableTitle")} description={t("wallets.cashouts.enableDescription")} confirmLabel={t("wallets.cashouts.enable")} destructive onConfirm={() => setWalletCashoutsEnabled({ enabled: true })} />
   );
 }

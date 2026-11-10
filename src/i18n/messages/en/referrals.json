@@ -80,11 +80,34 @@
       "confirmed": "Confirmed by both parties",
       "awaiting": "Awaiting sourcing recruiter",
       "openPlacement": "Open placement & ledger",
-      "pending": "Created automatically from the current commission rule when the job owner accepts. The snapshot is frozen after that."
+      "pending": "Created automatically from the current commission rule when the job owner accepts. The snapshot is frozen after that.",
+      "internal": "Internal referral: both organizations share a member, so there's no sourcing commission. The job owner keeps that share; the platform fee is unchanged."
     },
     "timeline": "Timeline",
     "reasonQuote": "“{reason}”",
-    "ownership": "Ownership protected until {date}."
+    "ownership": "Ownership protected until {date}.",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "summary": "Summary",
+    "contact": "Contact",
+    "notShared": "Not shared",
+    "fit": {
+      "title": "Fit with the job",
+      "hint": "Indicative score, frozen when the candidate was submitted.",
+      "strengths": "Why it matches",
+      "gaps": "To discuss",
+      "noGaps": "No gaps flagged."
+    },
+    "next": {
+      "yourMove": "Your move",
+      "waiting": "Waiting on {partner}",
+      "waitingBody": "You'll be notified as soon as they update this referral.",
+      "infoRequested": "{partner} asked for more information",
+      "closedBy": "{status} by {who}",
+      "closedByYou": "{status} by you",
+      "noReason": "No reason given.",
+      "hired": "Hired · the placement is now tracked in your wallet."
+    }
   },
   "actions": {
     "under_review": "Start review",
@@ -356,6 +379,46 @@
     "movedBy": "{partner} moved to {status} · {time}",
     "movedByYou": "You moved to {status} · {time}",
     "submittedAt": "Submitted {time}",
-    "progress": "Step {step} of {total}"
+    "progress": "Step {step} of {total}",
+    "openCandidate": "Candidate record",
+    "partnerSees": "Partner sees: {label}"
+  },
+  "composer": {
+    "viewOwn": "Your view",
+    "viewPartner": "As {partner} sees it",
+    "shared": "Shared",
+    "hidden": "Hidden",
+    "share": "Share {field}",
+    "hide": "Hide {field}",
+    "anonymous": "Anonymous candidate",
+    "hiddenSection": "Hidden from {partner}",
+    "about": "About",
+    "skills": "Skills",
+    "skillsVsJob": "Checked against the job's required skills",
+    "experience": "Experience",
+    "details": "Details",
+    "contact": "Contact",
+    "documents": "Documents",
+    "sharingCount": "Sharing {count} of {total} fields",
+    "shareHint": "Use the eye on each section to share or hide it. Only what's shared is copied into the snapshot.",
+    "noSummary": "No summary on file.",
+    "noExperience": "No work history on file.",
+    "noContact": "No contact details on file.",
+    "openProfile": "Open full profile",
+    "submittingFor": "Submitting for",
+    "match": "Match",
+    "seeMore": {
+      "one": "+{count} more reason",
+      "other": "+{count} more reasons"
+    },
+    "submitTitle": "Submit to {partner}",
+    "authTitle": "Candidate's authorization",
+    "noteTitle": "Note to the job owner (optional)",
+    "relocation": "Open to relocation",
+    "yearsShort": {
+      "one": "{count} yr",
+      "other": "{count} yrs"
+    },
+    "availableFrom": "Available {date}"
   }
 }

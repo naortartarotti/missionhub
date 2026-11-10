@@ -1,6 +1,7 @@
 import "server-only";
 import type { AdminClient } from "@/server/supabase/admin";
-import { evaluateMatch, inputFingerprint, toMatchCandidate, toMatchJob, type MatchCandidate } from "../domain/engine";
+import { evaluateMatch, inputFingerprint, toMatchCandidate, toMatchJob, type MatchCandidate, type SkillRelations } from "../domain/engine";
+import { getSkillRelations, relatedOf, skillsImpliedBy } from "./skill-relations";
 import { createHash } from "node:crypto";
 
 /**
@@ -57,9 +58,10 @@ function buildRow(
   candidate: { id: string; organization_id: string },
   mc: MatchCandidate,
   job: Parameters<typeof toMatchJob>[0] & { id: string; organization_id: string },
+  relations?: SkillRelations,
 ): MatchRow {
   const mj = toMatchJob(job);
-  const r = evaluateMatch(mc, mj);
+  const r = evaluateMatch(mc, mj, relations);
   return {
     candidate_id: candidate.id,
     job_id: job.id,
@@ -72,7 +74,7 @@ function buildRow(
     blockers: r.blockers,
     factor_scores: r.factorScores,
     model_version: r.modelVersion,
-    input_hash: hash(inputFingerprint(mc, mj)),
+    input_hash: hash(inputFingerprint(mc, mj, relations)),
     refreshed_at: new Date().toISOString(),
     expired_at: null,
   };
@@ -100,7 +102,9 @@ export async function recomputeForCandidate(db: AdminClient, candidateId: string
   const authorized = await hasProcessingAuthorization(db, [candidateId]);
   const mc = toMatchCandidate(candidate, authorized.has(candidateId));
 
-  // Filter-then-rank: only jobs from OTHER orgs, open, sharing at least one skill (GIN overlap).
+  // Filter-then-rank: only jobs from OTHER orgs, open, sharing at least one skill (GIN overlap) —
+  // exactly, or through a cached semantic relation ("next.js" also reaches jobs asking for "react").
+  const reachable = mc.skills.length ? [...new Set([...mc.skills, ...(await skillsImpliedBy(db, mc.skills))])] : [];
   let written = 0;
   for (let from = 0; ; from += PAGE) {
     let q = db
@@ -113,11 +117,12 @@ export async function recomputeForCandidate(db: AdminClient, candidateId: string
       .neq("organization_id", candidate.organization_id)
       .order("id")
       .range(from, from + PAGE - 1);
-    if (mc.skills.length) q = q.overlaps("required_skills", mc.skills);
+    if (reachable.length) q = q.overlaps("required_skills", reachable);
     const { data: jobs, error: jErr } = await q;
     if (jErr) throw jErr;
     if (!jobs?.length) break;
-    const rows = jobs.map((j) => buildRow(candidate, mc, j));
+    const relations = await getSkillRelations(db, jobs.flatMap((j) => [...(j.required_skills ?? []), ...(j.preferred_skills ?? [])]));
+    const rows = jobs.map((j) => buildRow(candidate, mc, j, relations));
     await upsert(db, rows);
     written += rows.length;
     if (jobs.length < PAGE) break;
@@ -135,7 +140,10 @@ export async function recomputeForJob(db: AdminClient, jobId: string) {
   }
   const flags = await orgFlags(db, job.organization_id);
   if (flags.suspended_at) return { written: 0 };
-  const required = toMatchJob(job).requiredSkills;
+  const mj = toMatchJob(job);
+  const required = mj.requiredSkills;
+  const relations = await getSkillRelations(db, [...required, ...mj.preferredSkills]);
+  const reachable = [...new Set([...required, ...relatedOf(relations, required)])];
   let written = 0;
   for (let from = 0; ; from += PAGE) {
     let q = db
@@ -147,12 +155,12 @@ export async function recomputeForJob(db: AdminClient, jobId: string) {
       .neq("organization_id", job.organization_id)
       .order("id")
       .range(from, from + PAGE - 1);
-    if (required.length) q = q.overlaps("skills", required);
+    if (reachable.length) q = q.overlaps("skills", reachable);
     const { data: candidates, error: cErr } = await q;
     if (cErr) throw cErr;
     if (!candidates?.length) break;
     const authorized = await hasProcessingAuthorization(db, candidates.map((c) => c.id));
-    const rows = candidates.map((c) => buildRow(c, toMatchCandidate(c, authorized.has(c.id)), job));
+    const rows = candidates.map((c) => buildRow(c, toMatchCandidate(c, authorized.has(c.id)), job, relations));
     await upsert(db, rows);
     written += rows.length;
     if (candidates.length < PAGE) break;

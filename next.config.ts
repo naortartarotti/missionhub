@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    // Commissions moved into the Wallet page. Notifications already stored in the database link
+    // to /commissions/<placement>, so these must stay. Query strings are passed through.
+    return [
+      { source: "/w/:orgSlug/commissions", destination: "/w/:orgSlug/wallet", permanent: true },
+      { source: "/w/:orgSlug/commissions/:placementId", destination: "/w/:orgSlug/wallet/placements/:placementId", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

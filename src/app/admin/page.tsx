@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AlertTriangle, Building2, FileCheck2, Handshake } from "lucide-react";
 import { createClient } from "@/server/supabase/server";
 import { requireUser } from "@/server/auth/context";
@@ -7,6 +8,7 @@ import { PageHeader, SectionTitle } from "@/components/shared/page-header";
 import { StatusPill } from "@/components/shared/status-pill";
 import { ReviewEvidenceButtons } from "@/features/commissions/components/finance-forms";
 import { DisputeResolution, RuleForm, SuspendButton } from "@/features/admin/components/admin-controls";
+import { Button } from "@/components/ui/button";
 import { bpsToPercent } from "@/lib/money/format";
 import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 
@@ -33,7 +35,7 @@ export default async function AdminPage() {
 
   return (
     <div className="grid gap-8">
-      <PageHeader title={t("page.title")} description={t("page.description")} />
+      <PageHeader title={t("page.title")} description={t("page.description")} actions={<Button variant="outline" asChild><Link href="/admin/wallets">{t("wallets.link")}</Link></Button>} />
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KpiTile label={t("kpi.organizations")} hint={t("kpi.excludingDemo")} value={String(m?.organizations ?? 0)} tone="yellow" icon={Building2} />
         <KpiTile label={t("kpi.placements")} value={String(m?.placements ?? 0)} tone="blue" icon={Handshake} />

@@ -25,6 +25,9 @@ const CODES: ErrorCode[] = [
   "agreement_required", "agreement_not_pending", "invalid_fee", "placement_locked", "invoice_required",
   "commission_not_payable", "four_eyes_required", "already_reviewed", "payout_exceeds_balance",
   "remittance_exceeds_balance", "dispute_not_open", "owner_not_member", "tenant_mismatch", "immutable_record",
+  "insufficient_funds", "wallet_frozen", "wallet_transfers_disabled", "wallet_cashouts_disabled",
+  "payout_destination_required", "nothing_to_pay", "invalid_recipient", "invalid_amount",
+  "not_pipeline_owner",
 ];
 
 export function toActionError(error: unknown): ActionResult<never> {

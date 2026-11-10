@@ -25,7 +25,7 @@
       "candidate": "Candidate",
       "seniority": "Seniority",
       "skills": "Top skills",
-      "owner": "Owner",
+      "owner": "Recruiter",
       "updated": "Updated",
       "status": "Status"
     }
@@ -63,7 +63,7 @@
     "salary": "Salary expectation",
     "salaryRange": "{min} – {max}",
     "availableFrom": "Available from",
-    "owner": "Owner",
+    "owner": "Recruiter",
     "opportunities": "Opportunities",
     "allOpportunities": "All opportunities",
     "matchingOff": "Turn on matching to see partner jobs that fit.",
@@ -310,6 +310,38 @@
     "imported": {
       "one": "{count} candidate imported as a draft. Review it and record authorization before activating.",
       "other": "{count} candidates imported as drafts. Review each and record authorizations before activating."
+    }
+  },
+  "resume": {
+    "title": "Start from a resume",
+    "subtitle": "Upload a resume or paste its text. We'll pick up contact details and the skills it mentions — you review everything before saving.",
+    "subtitleAi": "Upload a resume or paste its text (scanned PDFs too). AI fills in the profile — you review everything before saving.",
+    "tabs": {
+      "file": "Resume file",
+      "text": "Paste text"
+    },
+    "textLabel": "Resume text",
+    "textPlaceholder": "Paste the resume here: experience, skills, education…",
+    "fileDrop": "Drop a PDF, DOCX or TXT here, or click to choose",
+    "fileHint": "Up to 10 MB. Scanned PDFs (images) can't be read.",
+    "fileHintAi": "Up to 10 MB. Scanned PDFs are read by AI.",
+    "fileChosen": "{name} · {size}",
+    "submit": "Fill the profile",
+    "working": "Reading…",
+    "skip": "or fill it in manually below",
+    "done": {
+      "one": "{count} field filled. Check it below before saving.",
+      "other": "{count} fields filled. Check them below before saving."
+    },
+    "doneAi": "Read by AI. Empty fields weren't in the resume.",
+    "doneBasic": "Basic reading: contact details and skills mentioned. Fill in the rest below.",
+    "again": "Use another resume",
+    "errors": {
+      "fileType": "Use a PDF, DOCX or TXT file.",
+      "fileSize": "The file is larger than 10 MB.",
+      "noText": "We couldn't find readable text. If it's a scanned PDF, paste the text instead.",
+      "tooShort": "Paste the full resume — at least a few lines.",
+      "tooLong": "The text is too long."
     }
   }
 }

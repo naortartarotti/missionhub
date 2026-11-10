@@ -139,7 +139,7 @@ test("B moves the candidate to offer, reports the hire and invoices the client",
   await hire.getByLabel("Contracted placement fee").fill("20000");
   await hire.getByLabel("Start date").fill(today);
   await hire.getByRole("button", { name: "Record hire" }).click();
-  await page.waitForURL(/\/commissions\/[0-9a-f-]+\?created=1/);
+  await page.waitForURL(/\/wallet\/placements\/[0-9a-f-]+\?created=1/);
   placementPath = new URL(page.url()).pathname;
   await expect(page.getByText("Hire reported").first()).toBeVisible();
 

@@ -24,6 +24,10 @@ type ActionStatus = (typeof ACTION_STATUSES)[number];
 const hasActionLabel = (s: string): s is ActionStatus => (ACTION_STATUSES as readonly string[]).includes(s);
 
 const NEGATIVE = new Set(["declined", "withdrawn", "rejected", "cancelled"]);
+/** Intermediate steps that never get the primary style, so each bar has at most one main action. */
+const SECONDARY = new Set(["under_review", "info_requested"]);
+/** Left to right: negative, secondary, then the main action (same order as the review panel). */
+const rank = (to: string) => (NEGATIVE.has(to) ? 0 : SECONDARY.has(to) ? 1 : 2);
 
 export function TransitionButtons({
   orgSlug,
@@ -49,7 +53,7 @@ export function TransitionButtons({
     });
   return (
     <div className="flex flex-wrap gap-2">
-      {transitions.map((tr) => {
+      {[...transitions].sort((a, b) => rank(a.to_status) - rank(b.to_status)).map((tr) => {
         const label =
           side === "source" && tr.to_status === "under_review" && status === "info_requested"
             ? t("actions.markInfoProvided")
@@ -70,7 +74,7 @@ export function TransitionButtons({
           );
         }
         return (
-          <Button key={tr.to_status} disabled={pending} onClick={() => start(async () => { const r = await run(tr.to_status); if (r.ok) toast.success(r.message ?? t("actions.updated")); })}>
+          <Button key={tr.to_status} variant={SECONDARY.has(tr.to_status) && !(side === "source" && status === "info_requested") ? "secondary" : "default"} disabled={pending} onClick={() => start(async () => { const r = await run(tr.to_status); if (r.ok) toast.success(r.message ?? t("actions.updated")); })}>
             {label}
           </Button>
         );
@@ -92,13 +96,33 @@ export function ConfirmAgreementButton({ orgSlug, referralId }: { orgSlug: strin
   );
 }
 
-export function ReportHireDialog({ orgSlug, referralId, version, defaultFee, currency }: { orgSlug: string; referralId: string; version: number; defaultFee: string; currency: string }) {
+export function ReportHireDialog({
+  orgSlug,
+  referralId,
+  version,
+  defaultFee,
+  currency,
+  open,
+  onOpenChange,
+  trigger,
+}: {
+  orgSlug: string;
+  referralId: string;
+  version: number;
+  defaultFee: string;
+  currency: string;
+  /** Controlled mode (e.g. opened by dropping a card on the Hired column). */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  /** Custom trigger; pass `null` for no trigger in controlled mode. */
+  trigger?: React.ReactNode | null;
+}) {
   const t = useT("referrals");
   const [state, action] = useActionState(reportHire.bind(null, orgSlug), null);
   const fe = state && !state.ok ? state.fieldErrors : undefined;
   return (
-    <Dialog>
-      <DialogTrigger asChild><Button>{t("hire.trigger")}</Button></DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {trigger === null ? null : <DialogTrigger asChild>{trigger ?? <Button>{t("hire.trigger")}</Button>}</DialogTrigger>}
       <DialogContent className="rounded-3xl sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("hire.title")}</DialogTitle>

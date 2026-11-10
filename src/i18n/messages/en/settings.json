@@ -18,8 +18,8 @@
   },
   "integrations": {
     "title": "Integrations",
-    "aiName": "AI extraction & explanations",
-    "aiDescription": "Matching uses deterministic, rule-based scoring without it.",
+    "aiName": "AI (OpenAI)",
+    "aiDescription": "Reads job postings (link, PDF, scanned files) and resumes, and adds semantic skill matching. Without it, extraction and scoring are rule-based.",
     "emailName": "Transactional email",
     "emailDescription": "Without it, notifications are in-app only.",
     "paymentsName": "Payments provider",
@@ -127,6 +127,7 @@
       "dark": "Dark",
       "system": "System"
     },
-    "saved": "Language updated"
+    "saved": "Language updated",
+    "description": "Your language and appearance on this browser. They don't affect your teammates."
   }
 }

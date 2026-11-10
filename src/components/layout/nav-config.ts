@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, LayoutGrid, Users, Wallet, Settings, type LucideIcon } from "lucide-react";
+import { BriefcaseBusiness, LayoutGrid, Users, Wallet, type LucideIcon } from "lucide-react";
 
 export type BadgeKey = "opportunities" | "referrals";
 
@@ -11,8 +11,8 @@ type NavKey =
   | "myJobs"
   | "jobs"
   | "referralsReceived"
-  | "commissions"
-  | "settings";
+  | "pipeline"
+  | "wallet";
 
 /** A page link. `tab` targets `?tab=` on the page (Referrals has Sent / Received tabs). */
 export type NavLink = { key: NavKey; href: string; tab?: string; icon?: LucideIcon; badgeKey?: BadgeKey };
@@ -25,8 +25,10 @@ export const isGroup = (item: NavItem): item is NavGroup => "children" in item;
 /**
  * Organized by the two roles a recruiter plays:
  * - My candidates: my pool → partner jobs that fit them → referrals I sent.
- * - My jobs: jobs I posted → referrals partners sent me.
+ * - My jobs: jobs I posted → referrals partners sent me → the pipeline of the ones I accepted.
  * Each record lives on one page only; detail pages link back to it.
+ * Settings aren't here: organization settings open from the org switcher, personal preferences
+ * from the account menu.
  */
 export const NAV_ITEMS: NavItem[] = [
   { key: "overview", href: "overview", icon: LayoutGrid },
@@ -45,8 +47,10 @@ export const NAV_ITEMS: NavItem[] = [
     children: [
       { key: "jobs", href: "jobs" },
       { key: "referralsReceived", href: "referrals", tab: "received", badgeKey: "referrals" },
+      // Accepted referrals, stage by stage until the hire.
+      { key: "pipeline", href: "pipeline" },
     ],
   },
-  { key: "commissions", href: "commissions", icon: Wallet },
-  { key: "settings", href: "settings", icon: Settings },
+  // Balances, commissions per placement, withdrawals and the statement live on one page.
+  { key: "wallet", href: "wallet", icon: Wallet },
 ];

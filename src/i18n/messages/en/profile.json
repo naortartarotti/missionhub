@@ -1,0 +1,29 @@
+{
+  "title": "Profile",
+  "description": "How you appear to your team and partner recruiters. Your profile is the same in every organization you belong to.",
+  "fields": {
+    "fullName": "Full name",
+    "email": "Email",
+    "emailHint": "Your sign-in email. It can't be changed here.",
+    "headline": "Headline"
+  },
+  "password": {
+    "title": "Password",
+    "new": "New password",
+    "confirm": "Confirm new password",
+    "hint": "At least 10 characters, with a letter and a number.",
+    "submit": "Change password"
+  },
+  "messages": {
+    "saved": "Profile updated",
+    "passwordChanged": "Password changed"
+  },
+  "errors": {
+    "samePassword": "Choose a password different from your current one.",
+    "reauthenticate": "For your security, sign out and sign in again before changing your password."
+  },
+  "validation": {
+    "headlineTooLong": "Use up to 160 characters"
+  },
+  "menu": "Profile"
+}

@@ -121,20 +121,28 @@ async function readCapped(body: ReadableStream<Uint8Array>): Promise<string> {
 
 export const MAX_IMPORT_FILE_BYTES = 5 * 1024 * 1024;
 
-export async function readFileText(file: File): Promise<string> {
+export type ImportFile = { name: string; text: string | null; pdf: Uint8Array | null };
+
+/**
+ * Reads an uploaded posting / resume. `text` is null when a PDF has no text layer (scanned):
+ * callers with AI enabled can then hand `pdf` to the model; without AI that is a "noText" error.
+ */
+export async function readImportFile(file: File, maxBytes = MAX_IMPORT_FILE_BYTES): Promise<ImportFile> {
   if (file.size === 0) throw new ImportError("noText");
-  if (file.size > MAX_IMPORT_FILE_BYTES) throw new ImportError("fileSize");
+  if (file.size > maxBytes) throw new ImportError("fileSize");
   const bytes = new Uint8Array(await file.arrayBuffer());
   const name = file.name.toLowerCase();
   const head = String.fromCharCode(...bytes.subarray(0, 5));
 
   let text: string;
+  let pdf: Uint8Array | null = null;
   if (head === "%PDF-") {
+    pdf = bytes;
     const { extractText } = await import("unpdf");
     try {
-      text = (await extractText(bytes, { mergePages: true })).text;
+      text = (await extractText(bytes.slice(), { mergePages: true })).text;
     } catch {
-      throw new ImportError("noText"); // encrypted or malformed PDF
+      text = ""; // encrypted or malformed PDF: only the AI path may still read it
     }
   } else if (head.startsWith("PK\u0003\u0004") && name.endsWith(".docx")) {
     const mammoth = await import("mammoth");
@@ -144,6 +152,13 @@ export async function readFileText(file: File): Promise<string> {
   } else {
     throw new ImportError("fileType");
   }
-  if (text.replace(/\s/g, "").length < 40) throw new ImportError("noText");
-  return text;
+  const hasText = text.replace(/\s/g, "").length >= 40;
+  if (!hasText && !pdf) throw new ImportError("noText");
+  return { name: file.name.slice(0, 120) || "document.pdf", text: hasText ? text : null, pdf };
+}
+
+export async function readFileText(file: File): Promise<string> {
+  const f = await readImportFile(file);
+  if (!f.text) throw new ImportError("noText");
+  return f.text;
 }

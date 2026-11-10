@@ -165,6 +165,7 @@
     "arrangementMismatch": "Job is {jobArrangement}; candidate prefers {candidateArrangements}",
     "relocationRequired": "Job requires presence in {country}; candidate is not open to relocation",
     "requiredSkillsMatched": "Matches required skills: {skills}",
+    "relatedSkills": "Related experience: {skills}",
     "requiredSkillsMissing": "Missing required skills: {skills}",
     "noRequiredSkills": "Job lists no required skills; relevance is approximate",
     "noRequiredSkillsPresent": "None of the job's required skills are present",
@@ -213,5 +214,9 @@
       "other": "{count} gaps"
     }
   },
-  "filteredByJob": "Showing one partner job."
+  "filteredByJob": "Showing one partner job.",
+  "internal": {
+    "badge": "Your other organization",
+    "hint": "You're also a member of {org}. Referrals here are internal: no partner commission, only the platform fee."
+  }
 }

@@ -2,6 +2,7 @@ import { assertCan, getRequestContext } from "@/server/auth/context";
 import { createJob } from "@/features/jobs/actions";
 import { NewJobFlow } from "@/features/jobs/components/job-import";
 import { getT } from "@/i18n/server";
+import { integrations } from "@/server/env";
 
 export async function generateMetadata() {
   return { title: (await getT("jobs"))("new.title") };
@@ -21,6 +22,7 @@ export default async function NewJobPage({
       orgSlug={orgSlug}
       action={createJob.bind(null, orgSlug)}
       cancelHref={`/w/${orgSlug}/jobs`}
+      ai={integrations.ai}
       defaults={{ salaryCurrency: ctx.currency, feeCurrency: ctx.currency }}
     />
   );

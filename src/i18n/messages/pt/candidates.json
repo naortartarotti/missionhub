@@ -25,7 +25,7 @@
       "candidate": "Candidato",
       "seniority": "Senioridade",
       "skills": "Principais habilidades",
-      "owner": "Responsável",
+      "owner": "Recrutador",
       "updated": "Atualizado",
       "status": "Status"
     }
@@ -63,7 +63,7 @@
     "salary": "Pretensão salarial",
     "salaryRange": "{min} – {max}",
     "availableFrom": "Disponível a partir de",
-    "owner": "Responsável",
+    "owner": "Recrutador",
     "opportunities": "Oportunidades",
     "allOpportunities": "Todas as oportunidades",
     "matchingOff": "Ligue o matching para ver vagas de parceiros compatíveis.",
@@ -310,6 +310,38 @@
     "imported": {
       "one": "{count} candidato importado como rascunho. Revise-o e registre a autorização antes de ativar.",
       "other": "{count} candidatos importados como rascunhos. Revise cada um e registre as autorizações antes de ativar."
+    }
+  },
+  "resume": {
+    "title": "Comece por um currículo",
+    "subtitle": "Envie um currículo ou cole o texto. Pegamos os contatos e as competências mencionadas — você revisa tudo antes de salvar.",
+    "subtitleAi": "Envie um currículo ou cole o texto (inclusive PDF escaneado). A IA preenche o perfil — você revisa tudo antes de salvar.",
+    "tabs": {
+      "file": "Arquivo do currículo",
+      "text": "Colar texto"
+    },
+    "textLabel": "Texto do currículo",
+    "textPlaceholder": "Cole o currículo aqui: experiência, competências, formação…",
+    "fileDrop": "Solte um PDF, DOCX ou TXT aqui, ou clique para escolher",
+    "fileHint": "Até 10 MB. PDFs escaneados (imagens) não podem ser lidos.",
+    "fileHintAi": "Até 10 MB. PDFs escaneados são lidos pela IA.",
+    "fileChosen": "{name} · {size}",
+    "submit": "Preencher o perfil",
+    "working": "Lendo…",
+    "skip": "ou preencha manualmente abaixo",
+    "done": {
+      "one": "{count} campo preenchido. Confira abaixo antes de salvar.",
+      "other": "{count} campos preenchidos. Confira abaixo antes de salvar."
+    },
+    "doneAi": "Lido pela IA. Campos vazios não constavam no currículo.",
+    "doneBasic": "Leitura básica: contatos e competências mencionadas. Complete o restante abaixo.",
+    "again": "Usar outro currículo",
+    "errors": {
+      "fileType": "Use um arquivo PDF, DOCX ou TXT.",
+      "fileSize": "O arquivo tem mais de 10 MB.",
+      "noText": "Não encontramos texto legível. Se for um PDF escaneado, cole o texto.",
+      "tooShort": "Cole o currículo completo — pelo menos algumas linhas.",
+      "tooLong": "O texto é longo demais."
     }
   }
 }

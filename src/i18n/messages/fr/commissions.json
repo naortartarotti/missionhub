@@ -1,6 +1,6 @@
 {
   "title": "Commissions",
-  "description": "Suivez chaque placement de l'embauche au versement. Les montants sont des estimations jusqu'à ce que le client paie. Les parts deviennent dues une fois ce paiement confirmé. MissionHub suit l'argent, mais ne le déplace jamais.",
+  "description": "Suivez chaque placement de l'embauche au versement. Les montants sont des estimations jusqu'à ce que le client paie. Les parts deviennent dues une fois ce paiement confirmé. Les parts peuvent être payées hors de MissionHub et consignées ici, ou par MissionHub lorsque les paiements en ligne sont offerts.",
   "kpi": {
     "projected": "Prévu",
     "projectedHint": "Embauches pas encore payées par le client",
@@ -79,7 +79,12 @@
       "allocation_reversal": "contrepassation d'attribution",
       "adjustment": "ajustement"
     },
-    "statusHistory": "Historique des statuts"
+    "statusHistory": "Historique des statuts",
+    "payThrough": "Payer {amount} via MissionHub",
+    "payThroughHint": "Paie le recruteur source et la part de la plateforme en une seule étape. Aucune preuve de versement requise.",
+    "paymentReturned": "Merci. Votre paiement est en cours de confirmation; cette page sera mise à jour dès la confirmation du fournisseur.",
+    "paymentCancelled": "Paiement annulé. Rien n'a été débité.",
+    "productName": "Commission de placement"
   },
   "forms": {
     "recorded": "Enregistré",

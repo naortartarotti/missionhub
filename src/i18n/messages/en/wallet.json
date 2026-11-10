@@ -1,0 +1,68 @@
+{
+  "title": "Wallet",
+  "description": "Your organization's money on MissionHub: balance, commissions per placement, withdrawals and activity. Payments land as pending and become available once they clear.",
+  "kpi": {
+    "available": "Available",
+    "availableHint": "Cleared funds",
+    "pending": "Pending",
+    "pendingHint": "Received, waiting to clear"
+  },
+  "otherCurrencies": "Other currencies",
+  "otherCurrencyLine": "{currency}: {available} available · {pending} pending",
+  "frozen": {
+    "title": "Outgoing movements are paused",
+    "description": "The platform team paused transfers and withdrawals for this wallet. You can still receive funds. Contact support for details."
+  },
+  "empty": {
+    "title": "No wallet activity yet",
+    "description": "When a partner pays a commission through MissionHub, it will appear here."
+  },
+  "statement": {
+    "title": "Activity",
+    "caption": "Wallet activity",
+    "date": "Date",
+    "description": "Description",
+    "account": "Balance",
+    "amount": "Amount",
+    "balanceAfter": "Balance after"
+  },
+  "account": {
+    "available": "Available",
+    "pending": "Pending"
+  },
+  "kind": {
+    "placement_funding": "Commission received",
+    "release": "Payment cleared",
+    "transfer_in": "Transfer received",
+    "transfer_out": "Transfer sent",
+    "cashout": "Withdrawal",
+    "cashout_reversal": "Withdrawal returned",
+    "reversal": "Reversal",
+    "adjustment": "Adjustment"
+  },
+  "payouts": {
+    "title": "Withdrawals",
+    "notSetUp": "Connect a bank account to withdraw your available balance. Identity and bank details are collected by our payment provider, not by MissionHub.",
+    "setUp": "Set up payouts",
+    "incomplete": "Your payout account isn't verified yet. Finish the provider's onboarding, or wait a moment if you just did.",
+    "continue": "Continue setup",
+    "ready": "Payout account verified.",
+    "disabled": "Withdrawals aren't open yet. Your balance is safe and will be withdrawable once they are.",
+    "amount": "Amount ({currency})",
+    "availableHint": "Available: {amount}",
+    "submit": "Withdraw",
+    "submitting": "Requesting…",
+    "requested": "Withdrawal requested. You'll be notified when it's sent.",
+    "redirecting": "Opening the payment provider…",
+    "history": "Recent withdrawals",
+    "status": {
+      "requested": "Processing",
+      "paid": "Sent",
+      "failed": "Failed, returned to balance"
+    }
+  },
+  "placements": {
+    "title": "Placements",
+    "description": "Commission per hire. Amounts are estimates until the client pays."
+  }
+}

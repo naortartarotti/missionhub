@@ -446,6 +446,66 @@ export type Database = {
           },
         ]
       }
+      cashout_requests: {
+        Row: {
+          amount_minor: number
+          completed_at: string | null
+          created_at: string
+          currency: string
+          failure_reason: string | null
+          id: string
+          idempotency_key: string
+          organization_id: string
+          psp_transfer_id: string | null
+          requested_by: string
+          reserve_transaction_id: string
+          status: Database["public"]["Enums"]["cashout_status"]
+        }
+        Insert: {
+          amount_minor: number
+          completed_at?: string | null
+          created_at?: string
+          currency: string
+          failure_reason?: string | null
+          id?: string
+          idempotency_key: string
+          organization_id: string
+          psp_transfer_id?: string | null
+          requested_by: string
+          reserve_transaction_id: string
+          status?: Database["public"]["Enums"]["cashout_status"]
+        }
+        Update: {
+          amount_minor?: number
+          completed_at?: string | null
+          created_at?: string
+          currency?: string
+          failure_reason?: string | null
+          id?: string
+          idempotency_key?: string
+          organization_id?: string
+          psp_transfer_id?: string | null
+          requested_by?: string
+          reserve_transaction_id?: string
+          status?: Database["public"]["Enums"]["cashout_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cashout_requests_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cashout_requests_reserve_transaction_id_fkey"
+            columns: ["reserve_transaction_id"]
+            isOneToOne: false
+            referencedRelation: "wallet_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       collaboration_agreements: {
         Row: {
           created_at: string
@@ -1314,6 +1374,139 @@ export type Database = {
           },
         ]
       }
+      payout_destinations: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          details_submitted: boolean
+          organization_id: string
+          payouts_enabled: boolean
+          psp_account_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          details_submitted?: boolean
+          organization_id: string
+          payouts_enabled?: boolean
+          psp_account_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          details_submitted?: boolean
+          organization_id?: string
+          payouts_enabled?: boolean
+          psp_account_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payout_destinations_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      placement_charges: {
+        Row: {
+          amount_minor: number | null
+          created_at: string
+          created_by: string
+          currency: string
+          id: string
+          payee_net_minor: number | null
+          payee_org_id: string
+          payer_org_id: string
+          placement_id: string
+          platform_minor: number
+          psp_fee_minor: number | null
+          psp_payment_intent_id: string | null
+          psp_session_id: string | null
+          review_reason: string | null
+          settled_at: string | null
+          sourcing_minor: number
+          status: Database["public"]["Enums"]["placement_charge_status"]
+          updated_at: string
+          wallet_transaction_id: string | null
+        }
+        Insert: {
+          amount_minor?: number | null
+          created_at?: string
+          created_by: string
+          currency: string
+          id?: string
+          payee_net_minor?: number | null
+          payee_org_id: string
+          payer_org_id: string
+          placement_id: string
+          platform_minor: number
+          psp_fee_minor?: number | null
+          psp_payment_intent_id?: string | null
+          psp_session_id?: string | null
+          review_reason?: string | null
+          settled_at?: string | null
+          sourcing_minor: number
+          status?: Database["public"]["Enums"]["placement_charge_status"]
+          updated_at?: string
+          wallet_transaction_id?: string | null
+        }
+        Update: {
+          amount_minor?: number | null
+          created_at?: string
+          created_by?: string
+          currency?: string
+          id?: string
+          payee_net_minor?: number | null
+          payee_org_id?: string
+          payer_org_id?: string
+          placement_id?: string
+          platform_minor?: number
+          psp_fee_minor?: number | null
+          psp_payment_intent_id?: string | null
+          psp_session_id?: string | null
+          review_reason?: string | null
+          settled_at?: string | null
+          sourcing_minor?: number
+          status?: Database["public"]["Enums"]["placement_charge_status"]
+          updated_at?: string
+          wallet_transaction_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "placement_charges_payee_org_id_fkey"
+            columns: ["payee_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placement_charges_payer_org_id_fkey"
+            columns: ["payer_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placement_charges_placement_id_fkey"
+            columns: ["placement_id"]
+            isOneToOne: false
+            referencedRelation: "placements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placement_charges_wallet_transaction_id_fkey"
+            columns: ["wallet_transaction_id"]
+            isOneToOne: false
+            referencedRelation: "wallet_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       placement_status_events: {
         Row: {
           actor_id: string | null
@@ -1543,6 +1736,33 @@ export type Database = {
           regions?: string[]
           specialties?: string[]
           updated_at?: string
+        }
+        Relationships: []
+      }
+      psp_events: {
+        Row: {
+          id: string
+          outcome: string | null
+          payload: Json
+          processed_at: string | null
+          received_at: string
+          type: string
+        }
+        Insert: {
+          id: string
+          outcome?: string | null
+          payload?: Json
+          processed_at?: string | null
+          received_at?: string
+          type: string
+        }
+        Update: {
+          id?: string
+          outcome?: string | null
+          payload?: Json
+          processed_at?: string | null
+          received_at?: string
+          type?: string
         }
         Relationships: []
       }
@@ -1829,6 +2049,7 @@ export type Database = {
           fit_score: number | null
           id: string
           idempotency_key: string
+          internal: boolean
           job_id: string
           job_title_snapshot: string
           ownership_protected_until: string
@@ -1850,6 +2071,7 @@ export type Database = {
           fit_score?: number | null
           id?: string
           idempotency_key: string
+          internal?: boolean
           job_id: string
           job_title_snapshot: string
           ownership_protected_until?: string
@@ -1871,6 +2093,7 @@ export type Database = {
           fit_score?: number | null
           id?: string
           idempotency_key?: string
+          internal?: boolean
           job_id?: string
           job_title_snapshot?: string
           ownership_protected_until?: string
@@ -1903,6 +2126,214 @@ export type Database = {
             columns: ["target_org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      skill_relations: {
+        Row: {
+          created_at: string
+          model: string
+          related: string[]
+          skill: string
+        }
+        Insert: {
+          created_at?: string
+          model: string
+          related?: string[]
+          skill: string
+        }
+        Update: {
+          created_at?: string
+          model?: string
+          related?: string[]
+          skill?: string
+        }
+        Relationships: []
+      }
+      wallet_accounts: {
+        Row: {
+          balance_minor: number
+          created_at: string
+          currency: string
+          id: string
+          kind: Database["public"]["Enums"]["wallet_account_kind"]
+          organization_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          balance_minor?: number
+          created_at?: string
+          currency: string
+          id?: string
+          kind: Database["public"]["Enums"]["wallet_account_kind"]
+          organization_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          balance_minor?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["wallet_account_kind"]
+          organization_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallet_accounts_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wallet_entries: {
+        Row: {
+          account_id: string
+          amount_minor: number
+          balance_after_minor: number
+          created_at: string
+          id: number
+          transaction_id: string
+        }
+        Insert: {
+          account_id: string
+          amount_minor: number
+          balance_after_minor: number
+          created_at?: string
+          id?: never
+          transaction_id: string
+        }
+        Update: {
+          account_id?: string
+          amount_minor?: number
+          balance_after_minor?: number
+          created_at?: string
+          id?: never
+          transaction_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallet_entries_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "wallet_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "wallet_entries_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "wallet_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wallet_freezes: {
+        Row: {
+          frozen_at: string
+          frozen_by: string | null
+          organization_id: string
+          reason: string
+        }
+        Insert: {
+          frozen_at?: string
+          frozen_by?: string | null
+          organization_id: string
+          reason: string
+        }
+        Update: {
+          frozen_at?: string
+          frozen_by?: string | null
+          organization_id?: string
+          reason?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallet_freezes_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wallet_settings: {
+        Row: {
+          cashouts_enabled: boolean
+          id: boolean
+          transfers_enabled: boolean
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          cashouts_enabled?: boolean
+          id?: boolean
+          transfers_enabled?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          cashouts_enabled?: boolean
+          id?: boolean
+          transfers_enabled?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      wallet_transactions: {
+        Row: {
+          amount_minor: number
+          created_at: string
+          created_by: string | null
+          currency: string
+          id: string
+          idempotency_key: string
+          kind: Database["public"]["Enums"]["wallet_transaction_kind"]
+          memo: string | null
+          placement_id: string | null
+          reverses_transaction_id: string | null
+        }
+        Insert: {
+          amount_minor: number
+          created_at?: string
+          created_by?: string | null
+          currency: string
+          id?: string
+          idempotency_key: string
+          kind: Database["public"]["Enums"]["wallet_transaction_kind"]
+          memo?: string | null
+          placement_id?: string | null
+          reverses_transaction_id?: string | null
+        }
+        Update: {
+          amount_minor?: number
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          id?: string
+          idempotency_key?: string
+          kind?: Database["public"]["Enums"]["wallet_transaction_kind"]
+          memo?: string | null
+          placement_id?: string | null
+          reverses_transaction_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallet_transactions_placement_id_fkey"
+            columns: ["placement_id"]
+            isOneToOne: false
+            referencedRelation: "placements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "wallet_transactions_reverses_transaction_id_fkey"
+            columns: ["reverses_transaction_id"]
+            isOneToOne: false
+            referencedRelation: "wallet_transactions"
             referencedColumns: ["id"]
           },
         ]
@@ -1971,6 +2402,10 @@ export type Database = {
         }
         Returns: string
       }
+      create_placement_charge: {
+        Args: { p_placement: string }
+        Returns: string
+      }
       decline_pending_for_job: { Args: { p_job: string }; Returns: number }
       decline_referrals: {
         Args: { p_ids: string[]; p_note?: string; p_reason_code: string }
@@ -2003,6 +2438,7 @@ export type Database = {
           expected_fee_minor: number
           fee_currency: string
           gaps: Json
+          internal: boolean
           is_new: boolean
           job_id: string
           job_org_name: string
@@ -2028,17 +2464,21 @@ export type Database = {
           your_share_minor: number
         }[]
       }
-      mark_grant_copied: {
-        Args: { p_grant: string; p_ok: boolean; p_path: string }
-        Returns: undefined
-      }
       get_sent_referral_jobs: {
         Args: { p_org: string }
         Returns: {
+          expected_fee_minor: number
+          fee_currency: string
+          internal: boolean
           job_id: string
           status: Database["public"]["Enums"]["job_status"]
           status_updated_at: string
+          your_share_minor: number
         }[]
+      }
+      mark_grant_copied: {
+        Args: { p_grant: string; p_ok: boolean; p_path: string }
+        Returns: undefined
       }
       mark_matches_seen: {
         Args: { p_matches: string[]; p_org: string }
@@ -2059,6 +2499,14 @@ export type Database = {
           placements: number
           referrals: number
         }[]
+      }
+      psp_complete_event: {
+        Args: { p_id: string; p_outcome: string }
+        Returns: undefined
+      }
+      psp_record_event: {
+        Args: { p_id: string; p_payload: Json; p_type: string }
+        Returns: boolean
       }
       publish_commission_rule: {
         Args: {
@@ -2104,6 +2552,15 @@ export type Database = {
         }
         Returns: string
       }
+      request_cashout: {
+        Args: {
+          p_amount_minor: number
+          p_currency: string
+          p_idempotency_key: string
+          p_org: string
+        }
+        Returns: string
+      }
       resolve_dispute: {
         Args: { p_dispute: string; p_resolution: string; p_upheld: boolean }
         Returns: undefined
@@ -2136,6 +2593,18 @@ export type Database = {
         Args: { p_org: string; p_reason: string; p_suspend: boolean }
         Returns: undefined
       }
+      set_wallet_cashouts_enabled: {
+        Args: { p_enabled: boolean }
+        Returns: undefined
+      }
+      set_wallet_frozen: {
+        Args: { p_frozen: boolean; p_org: string; p_reason: string }
+        Returns: undefined
+      }
+      set_wallet_transfers_enabled: {
+        Args: { p_enabled: boolean }
+        Returns: undefined
+      }
       submit_referral: {
         Args: {
           p_candidate: string
@@ -2158,6 +2627,95 @@ export type Database = {
         }
         Returns: number
       }
+      wallet_close_placement_charge: {
+        Args: {
+          p_charge: string
+          p_status: Database["public"]["Enums"]["placement_charge_status"]
+        }
+        Returns: undefined
+      }
+      wallet_complete_cashout: {
+        Args: { p_cashout: string; p_transfer: string }
+        Returns: string
+      }
+      wallet_fail_cashout: {
+        Args: { p_cashout: string; p_reason: string }
+        Returns: string
+      }
+      wallet_flag_placement_charge: {
+        Args: {
+          p_payment_intent: string
+          p_status: Database["public"]["Enums"]["placement_charge_status"]
+        }
+        Returns: string
+      }
+      wallet_reconcile: {
+        Args: never
+        Returns: {
+          account_id: string
+          cached_minor: number
+          computed_minor: number
+        }[]
+      }
+      wallet_record_funding: {
+        Args: {
+          p_amount_minor: number
+          p_currency: string
+          p_idempotency_key: string
+          p_org: string
+          p_placement: string
+          p_platform_fee_minor: number
+        }
+        Returns: string
+      }
+      wallet_release_pending: {
+        Args: {
+          p_amount_minor: number
+          p_currency: string
+          p_idempotency_key: string
+          p_org: string
+        }
+        Returns: string
+      }
+      wallet_release_placement_charge: {
+        Args: { p_charge: string }
+        Returns: string
+      }
+      wallet_set_payout_destination: {
+        Args: { p_account: string; p_org: string; p_user: string }
+        Returns: string
+      }
+      wallet_settle_placement_charge: {
+        Args: {
+          p_amount_minor: number
+          p_available_at: string
+          p_charge: string
+          p_currency: string
+          p_fee_minor: number
+          p_payment_intent: string
+          p_session: string
+        }
+        Returns: string
+      }
+      wallet_transfer: {
+        Args: {
+          p_amount_minor: number
+          p_currency: string
+          p_from_org: string
+          p_idempotency_key: string
+          p_memo: string
+          p_to_org: string
+        }
+        Returns: string
+      }
+      wallet_update_payout_destination: {
+        Args: {
+          p_account: string
+          p_details_submitted: boolean
+          p_payouts_enabled: boolean
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       agreement_status: "pending_source" | "active" | "terminated"
@@ -2173,6 +2731,7 @@ export type Database = {
         | "unavailable"
         | "archived"
         | "deleted"
+      cashout_status: "requested" | "paid" | "failed"
       consent_kind: "processing" | "job_sharing"
       contract_type: "permanent" | "contract" | "temporary" | "contract_to_hire"
       document_scan_status: "pending" | "clean" | "rejected"
@@ -2208,6 +2767,14 @@ export type Database = {
       membership_role: "org_admin" | "recruiter_manager" | "recruiter"
       membership_status: "active" | "suspended"
       organization_kind: "agency" | "independent"
+      placement_charge_status:
+        | "created"
+        | "succeeded"
+        | "failed"
+        | "expired"
+        | "review"
+        | "disputed"
+        | "refunded"
       placement_status:
         | "hire_reported"
         | "invoiced"
@@ -2237,6 +2804,21 @@ export type Database = {
         | "lead"
         | "principal"
         | "executive"
+      wallet_account_kind:
+        | "available"
+        | "pending"
+        | "psp_clearing"
+        | "platform_revenue"
+        | "payout_in_transit"
+        | "psp_fees"
+      wallet_transaction_kind:
+        | "placement_funding"
+        | "release"
+        | "transfer"
+        | "cashout"
+        | "cashout_reversal"
+        | "reversal"
+        | "adjustment"
       work_arrangement: "remote" | "hybrid" | "onsite"
     }
     CompositeTypes: {
@@ -2383,6 +2965,7 @@ export const Constants = {
         "archived",
         "deleted",
       ],
+      cashout_status: ["requested", "paid", "failed"],
       consent_kind: ["processing", "job_sharing"],
       contract_type: ["permanent", "contract", "temporary", "contract_to_hire"],
       document_scan_status: ["pending", "clean", "rejected"],
@@ -2422,6 +3005,15 @@ export const Constants = {
       membership_role: ["org_admin", "recruiter_manager", "recruiter"],
       membership_status: ["active", "suspended"],
       organization_kind: ["agency", "independent"],
+      placement_charge_status: [
+        "created",
+        "succeeded",
+        "failed",
+        "expired",
+        "review",
+        "disputed",
+        "refunded",
+      ],
       placement_status: [
         "hire_reported",
         "invoiced",
@@ -2453,6 +3045,23 @@ export const Constants = {
         "lead",
         "principal",
         "executive",
+      ],
+      wallet_account_kind: [
+        "available",
+        "pending",
+        "psp_clearing",
+        "platform_revenue",
+        "payout_in_transit",
+        "psp_fees",
+      ],
+      wallet_transaction_kind: [
+        "placement_funding",
+        "release",
+        "transfer",
+        "cashout",
+        "cashout_reversal",
+        "reversal",
+        "adjustment",
       ],
       work_arrangement: ["remote", "hybrid", "onsite"],
     },

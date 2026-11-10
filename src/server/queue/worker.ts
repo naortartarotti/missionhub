@@ -4,6 +4,7 @@ import { createAdminClient } from "@/server/supabase/admin";
 import { recomputeForCandidate, recomputeForJob } from "@/features/matching/infrastructure/matching-service";
 import { scanDocument } from "./handlers/documents";
 import { copyReferralDocuments, purgeReferralDocuments } from "./handlers/referral-documents";
+import { processPspEvent, releasePlacementCharge, sendCashout } from "./handlers/payments";
 
 type Job = { id: string; kind: string; payload: Record<string, unknown>; attempts: number };
 
@@ -13,6 +14,9 @@ const handlers: Record<string, (job: Job) => Promise<unknown>> = {
   "document.scan": (j) => scanDocument(createAdminClient(), String(j.payload.document_id)),
   "referral.copy_documents": (j) => copyReferralDocuments(createAdminClient(), String(j.payload.referral_id)),
   "referral.purge_documents": (j) => purgeReferralDocuments(createAdminClient(), String(j.payload.referral_id)),
+  "psp.event": (j) => processPspEvent(createAdminClient(), String(j.payload.event_id)),
+  "wallet.release": (j) => releasePlacementCharge(createAdminClient(), String(j.payload.charge_id)),
+  "wallet.cashout": (j) => sendCashout(createAdminClient(), String(j.payload.cashout_id)),
 };
 
 const workerId = `worker-${randomUUID().slice(0, 8)}`;

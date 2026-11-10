@@ -12,6 +12,9 @@ export const PERMISSIONS = [
   "referrals:review",
   "commissions:read",
   "commissions:record",
+  "wallet:read",
+  "wallet:transfer",
+  "wallet:cashout",
   "team:read",
   "team:manage",
   "audit:read",
@@ -28,6 +31,7 @@ const RECRUITER: Permission[] = [
   "referrals:review",
   "commissions:read",
   "commissions:record",
+  "wallet:read", // every member sees the balance; only org admins move money
   "team:read",
 ];
 

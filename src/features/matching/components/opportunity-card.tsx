@@ -19,6 +19,7 @@ import { DISMISS_REASONS, isSubmitted, type DismissReason, type TriageState } fr
 import { ScoreRing } from "./score-ring";
 import { useFormatter, useGlobalT, useT } from "@/i18n/client";
 import { evidenceText, type StoredEvidence } from "../evidence";
+import { InternalBadge } from "./internal-badge";
 
 type Evidence = StoredEvidence;
 export type OpportunityView = {
@@ -57,6 +58,7 @@ export type OpportunityView = {
   triage_state: TriageState;
   dismiss_reason: DismissReason | null;
   is_new: boolean;
+  internal: boolean;
 };
 
 
@@ -138,7 +140,10 @@ function MatchDetail({ opp, orgSlug, headerAction, inPanel = false }: { opp: Opp
         <ScoreRing score={opp.score} className="size-16 [&_span]:text-base" />
         <div className="min-w-0 flex-1">
           <h2 className="text-xl font-semibold leading-tight tracking-tight">{opp.job_title}</h2>
-          <p className="mt-1 truncate text-sm text-muted-foreground">{opp.job_org_name} · {opp.client_label}</p>
+          <p className="mt-1 flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
+            <span className="truncate">{opp.job_org_name} · {opp.client_label}</span>
+            {opp.internal ? <InternalBadge org={opp.job_org_name} /> : null}
+          </p>
           <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
             <span className="inline-flex items-center gap-1.5 font-medium">
               <span className={cn("size-2 rounded-full", bandDot)} aria-hidden />
@@ -387,6 +392,7 @@ export function OpportunityCard({
   const jobMeta = (
     <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
       <span className="inline-flex items-center gap-1"><Building2 className="size-3.5" aria-hidden />{t("card.via", { client: opp.client_label, org: opp.job_org_name })}</span>
+      {opp.internal ? <InternalBadge org={opp.job_org_name} /> : null}
       <span className="inline-flex items-center gap-1"><MapPin className="size-3.5" aria-hidden />{tg(`labels.arrangement.${opp.work_arrangement}`)}{opp.location ? ` · ${opp.location}` : ""}</span>
     </p>
   );

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useFormatter, useGlobalT, useT } from "@/i18n/client";
+import { InternalBadge } from "./internal-badge";
 import { REFERRAL_STATUS } from "@/lib/labels";
 import { cn } from "@/lib/utils";
 import { isSubmitted } from "../triage";
@@ -71,6 +72,7 @@ export function JobMatchRow({
             <span className={cn("size-1.5 rounded-full", BAND_DOT[opp.band])} aria-hidden />
             {tg(`labels.band.${opp.band}`)}
           </span>
+          {subject === "job" && opp.internal ? <InternalBadge org={opp.job_org_name} /> : null}
         </div>
         <p className="mt-0.5 flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
           <span className="truncate">{sub}</span>
