@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
@@ -9,13 +10,13 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { useT } from "@/i18n/client";
 import { cn } from "@/lib/utils";
-
-const SECTIONS = ["how", "privacy", "commissions", "faq"] as const;
+import { NAV_PAGES } from "./shared";
 
 export function LandingNav() {
   const t = useT("landing");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -46,10 +47,15 @@ export function LandingNav() {
         </Link>
 
         <nav aria-label={t("nav.label")} className="mx-auto hidden items-center gap-1 lg:flex">
-          {SECTIONS.map((s) => (
-            <a key={s} href={`#${s}`} className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
-              {t(`nav.${s}`)}
-            </a>
+          {NAV_PAGES.map((p) => (
+            <Link
+              key={p.key}
+              href={p.href}
+              aria-current={pathname === p.href ? "page" : undefined}
+              className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground aria-[current=page]:bg-accent aria-[current=page]:text-foreground"
+            >
+              {t(`nav.${p.key}`)}
+            </Link>
           ))}
         </nav>
 
@@ -87,10 +93,16 @@ export function LandingNav() {
         className="mx-auto mt-2 max-w-7xl rounded-[2rem] border border-border/70 bg-card/95 p-3 shadow-[0_20px_60px_-30px_rgb(0_0_0/0.4)] backdrop-blur-xl lg:hidden"
       >
         <nav aria-label={t("nav.label")} className="grid">
-          {SECTIONS.map((s) => (
-            <a key={s} href={`#${s}`} onClick={() => setOpen(false)} className="rounded-2xl px-4 py-3 text-lg font-medium tracking-tight hover:bg-accent">
-              {t(`nav.${s}`)}
-            </a>
+          {NAV_PAGES.map((p) => (
+            <Link
+              key={p.key}
+              href={p.href}
+              aria-current={pathname === p.href ? "page" : undefined}
+              onClick={() => setOpen(false)}
+              className="rounded-2xl px-4 py-3 text-lg font-medium tracking-tight hover:bg-accent aria-[current=page]:bg-accent"
+            >
+              {t(`nav.${p.key}`)}
+            </Link>
           ))}
           <Link href="/sign-in" className="rounded-2xl px-4 py-3 text-lg font-medium tracking-tight hover:bg-accent md:hidden">
             {t("nav.signIn")}

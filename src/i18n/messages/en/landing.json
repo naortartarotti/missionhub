@@ -52,6 +52,29 @@
   "statement": {
     "text": "Every recruiter has great candidates that don't fit any of their own open roles. Every recruiter has roles they can't fill fast enough. MissionHub connects the two, without anyone giving away their network."
   },
+  "explore": {
+    "eyebrow": "Explore MissionHub",
+    "title": "Everything you need to know, one page at a time.",
+    "more": "Learn more",
+    "items": {
+      "how": {
+        "title": "How it works",
+        "body": "Four permissioned steps, from a private candidate to a shared placement, for both sides of the referral."
+      },
+      "privacy": {
+        "title": "Privacy by design",
+        "body": "Partners see anonymized match counts, never identities, until you authorize a submission."
+      },
+      "commissions": {
+        "title": "Commissions",
+        "body": "A 45/45/10 split agreed up front and tracked in an auditable ledger."
+      },
+      "faq": {
+        "title": "FAQ",
+        "body": "Straight answers to the questions recruiters ask before they join."
+      }
+    }
+  },
   "how": {
     "eyebrow": "How it works",
     "title": "From a quiet pipeline to a shared placement.",
@@ -154,10 +177,22 @@
     "configurable": "Split rules are configurable and versioned."
   },
   "facts": {
-    "a": { "value": "0", "label": "candidate details shared before authorization" },
-    "b": { "value": "45/45/10", "label": "default commission split, versioned" },
-    "c": { "value": "3", "label": "languages: English, Français, Português" },
-    "d": { "value": "100%", "label": "of ledger entries auditable" }
+    "a": {
+      "value": "0",
+      "label": "candidate details shared before authorization"
+    },
+    "b": {
+      "value": "45/45/10",
+      "label": "default commission split, versioned"
+    },
+    "c": {
+      "value": "3",
+      "label": "languages: English, Français, Português"
+    },
+    "d": {
+      "value": "100%",
+      "label": "of ledger entries auditable"
+    }
   },
   "faq": {
     "eyebrow": "FAQ",
@@ -201,5 +236,23 @@
     "legal": "Terms and Privacy Policy are drafts pending legal review.",
     "rights": "© {year} MissionHub",
     "photos": "Photos: Unsplash"
+  },
+  "pages": {
+    "how": {
+      "title": "How it works",
+      "description": "See how MissionHub takes a candidate from your private pipeline to a partner's open role in four permissioned steps, and what it offers both the candidate's and the job's recruiter."
+    },
+    "privacy": {
+      "title": "Privacy by design",
+      "description": "Job owners see anonymized match counts, never identities. Learn how MissionHub isolates each agency's data, records consent and keeps a full audit trail."
+    },
+    "commissions": {
+      "title": "Commissions",
+      "description": "How the default 45/45/10 split works, how placements move from projected to payable to paid, and why no funds pass through MissionHub."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "description": "Answers to what recruiters ask first about MissionHub: candidate privacy, commission splits, payments, matching and team access."
+    }
   }
 }

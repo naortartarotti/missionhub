@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 /**
- * Mounted once on the landing page. Marks every server-rendered `[data-reveal]` element with
+ * Mounted once in the marketing layout and re-run on every client navigation, since the layout
+ * (and this component) persists between pages. Marks every server-rendered `[data-reveal]` element with
  * `data-shown` the first time it scrolls into view; the CSS in globals.css does the animation.
  * Keeps the page itself a Server Component, and without JS (or with reduced motion) the content
  * is simply visible.
  */
 export function RevealObserver() {
+  const pathname = usePathname();
   useEffect(() => {
     const root = document.documentElement;
     const nodes = document.querySelectorAll<HTMLElement>("[data-reveal]");
@@ -29,6 +32,6 @@ export function RevealObserver() {
     nodes.forEach((n) => io.observe(n));
     root.setAttribute("data-reveal-ready", "");
     return () => io.disconnect();
-  }, []);
+  }, [pathname]);
   return null;
 }

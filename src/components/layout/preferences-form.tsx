@@ -16,8 +16,7 @@ function applyTheme(theme: Theme) {
   const dark = theme === "dark" || (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
   document.documentElement.classList.toggle("dark", dark);
   try {
-    if (theme === "system") localStorage.removeItem(THEME_KEY);
-    else localStorage.setItem(THEME_KEY, theme);
+    localStorage.setItem(THEME_KEY, theme);
   } catch {}
 }
 
@@ -48,7 +47,7 @@ export function PreferencesForm() {
   const locale = useLocale();
   const router = useRouter();
   const [pending, start] = useTransition();
-  const [theme, setTheme] = useState<Theme>("system");
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
     let stored: string | null = null;
@@ -57,7 +56,7 @@ export function PreferencesForm() {
     } catch {}
     // Reading the browser's saved choice after mount; there's no server value to start from.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTheme(stored === "light" || stored === "dark" ? stored : "system");
+    setTheme(stored === "dark" || stored === "system" ? stored : "light"); // light is the default
   }, []);
 
   const chooseLocale = (l: Locale) =>

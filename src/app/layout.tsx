@@ -16,8 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// Applies the stored/system theme before paint to avoid a flash.
-const themeScript = `try{var t=localStorage.getItem('mh-theme');var d=t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d)}catch(e){}`;
+// Applies the stored theme before paint to avoid a flash. Light is the default;
+// "system" follows the OS only when the user picked it explicitly.
+const themeScript = `try{var t=localStorage.getItem('mh-theme');var d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d)}catch(e){}`;
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const nonce = (await headers()).get("x-nonce") ?? undefined;

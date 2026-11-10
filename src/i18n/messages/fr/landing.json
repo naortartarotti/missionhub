@@ -52,6 +52,29 @@
   "statement": {
     "text": "Chaque recruteur a d'excellents candidats qui ne conviennent à aucun de ses postes. Chaque recruteur a des postes qu'il n'arrive pas à pourvoir assez vite. MissionHub relie les deux, sans que personne ne cède son réseau."
   },
+  "explore": {
+    "eyebrow": "Découvrir MissionHub",
+    "title": "Tout ce qu'il faut savoir, une page à la fois.",
+    "more": "En savoir plus",
+    "items": {
+      "how": {
+        "title": "Comment ça marche",
+        "body": "Quatre étapes autorisées, d'un candidat privé à un placement partagé, pour les deux côtés de la recommandation."
+      },
+      "privacy": {
+        "title": "Confidentialité dès la conception",
+        "body": "Vos partenaires voient des nombres de correspondances anonymisés, jamais d'identités, tant que vous n'autorisez pas une soumission."
+      },
+      "commissions": {
+        "title": "Commissions",
+        "body": "Un partage 45/45/10 convenu d'avance et suivi dans un registre vérifiable."
+      },
+      "faq": {
+        "title": "FAQ",
+        "body": "Des réponses claires aux questions que les recruteurs posent avant de se joindre à nous."
+      }
+    }
+  },
   "how": {
     "eyebrow": "Fonctionnement",
     "title": "D'un bassin dormant à un placement partagé.",
@@ -154,10 +177,22 @@
     "configurable": "Les règles de partage sont configurables et versionnées."
   },
   "facts": {
-    "a": { "value": "0", "label": "donnée de candidat partagée avant autorisation" },
-    "b": { "value": "45/45/10", "label": "partage de commission par défaut, versionné" },
-    "c": { "value": "3", "label": "langues : English, Français, Português" },
-    "d": { "value": "100 %", "label": "des écritures du registre vérifiables" }
+    "a": {
+      "value": "0",
+      "label": "donnée de candidat partagée avant autorisation"
+    },
+    "b": {
+      "value": "45/45/10",
+      "label": "partage de commission par défaut, versionné"
+    },
+    "c": {
+      "value": "3",
+      "label": "langues : English, Français, Português"
+    },
+    "d": {
+      "value": "100 %",
+      "label": "des écritures du registre vérifiables"
+    }
   },
   "faq": {
     "eyebrow": "FAQ",
@@ -201,5 +236,23 @@
     "legal": "Les conditions et la politique de confidentialité sont des ébauches en attente de révision juridique.",
     "rights": "© {year} MissionHub",
     "photos": "Photos : Unsplash"
+  },
+  "pages": {
+    "how": {
+      "title": "Comment ça marche",
+      "description": "Découvrez comment MissionHub mène un candidat de votre bassin privé jusqu'au poste ouvert d'un partenaire en quatre étapes autorisées, et ce que la plateforme offre à chaque recruteur."
+    },
+    "privacy": {
+      "title": "Confidentialité dès la conception",
+      "description": "Les responsables de poste voient des nombres de correspondances anonymisés, jamais d'identités. Voyez comment MissionHub isole les données de chaque agence, consigne le consentement et garde une piste d'audit complète."
+    },
+    "commissions": {
+      "title": "Commissions",
+      "description": "Fonctionnement du partage par défaut 45/45/10, passage d'un placement de prévu à payable puis payé, et pourquoi aucun fonds ne transite par MissionHub."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "description": "Les réponses aux premières questions des recruteurs sur MissionHub : confidentialité des candidats, partage des commissions, paiements, correspondances et accès d'équipe."
+    }
   }
 }

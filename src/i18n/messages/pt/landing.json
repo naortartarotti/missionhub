@@ -52,6 +52,29 @@
   "statement": {
     "text": "Todo recrutador tem ótimos candidatos que não servem para nenhuma das próprias vagas. Todo recrutador tem vagas que não consegue fechar rápido o bastante. O MissionHub conecta os dois, sem que ninguém precise entregar sua rede."
   },
+  "explore": {
+    "eyebrow": "Conheça o MissionHub",
+    "title": "Tudo o que você precisa saber, uma página de cada vez.",
+    "more": "Saiba mais",
+    "items": {
+      "how": {
+        "title": "Como funciona",
+        "body": "Quatro etapas autorizadas, de um candidato privado a uma colocação compartilhada, para os dois lados da indicação."
+      },
+      "privacy": {
+        "title": "Privacidade desde a concepção",
+        "body": "Parceiros veem apenas contagens anônimas de compatibilidade, nunca identidades, até você autorizar um envio."
+      },
+      "commissions": {
+        "title": "Comissões",
+        "body": "Uma divisão 45/45/10 combinada desde o início e registrada em um livro-razão auditável."
+      },
+      "faq": {
+        "title": "Perguntas frequentes",
+        "body": "Respostas diretas às perguntas que recrutadores fazem antes de entrar."
+      }
+    }
+  },
   "how": {
     "eyebrow": "Como funciona",
     "title": "De um pipeline parado a uma contratação compartilhada.",
@@ -154,10 +177,22 @@
     "configurable": "As regras de divisão são configuráveis e versionadas."
   },
   "facts": {
-    "a": { "value": "0", "label": "dados de candidatos compartilhados antes da autorização" },
-    "b": { "value": "45/45/10", "label": "divisão padrão da comissão, versionada" },
-    "c": { "value": "3", "label": "idiomas: English, Français, Português" },
-    "d": { "value": "100%", "label": "dos lançamentos do ledger auditáveis" }
+    "a": {
+      "value": "0",
+      "label": "dados de candidatos compartilhados antes da autorização"
+    },
+    "b": {
+      "value": "45/45/10",
+      "label": "divisão padrão da comissão, versionada"
+    },
+    "c": {
+      "value": "3",
+      "label": "idiomas: English, Français, Português"
+    },
+    "d": {
+      "value": "100%",
+      "label": "dos lançamentos do ledger auditáveis"
+    }
   },
   "faq": {
     "eyebrow": "Dúvidas",
@@ -201,5 +236,23 @@
     "legal": "Termos e Política de Privacidade são rascunhos em revisão jurídica.",
     "rights": "© {year} MissionHub",
     "photos": "Fotos: Unsplash"
+  },
+  "pages": {
+    "how": {
+      "title": "Como funciona",
+      "description": "Veja como o MissionHub leva um candidato do seu pipeline privado até a vaga aberta de um parceiro em quatro etapas autorizadas, e o que oferece ao recrutador do candidato e ao da vaga."
+    },
+    "privacy": {
+      "title": "Privacidade desde a concepção",
+      "description": "Donos de vagas veem contagens anônimas de compatibilidade, nunca identidades. Saiba como o MissionHub isola os dados de cada agência, registra o consentimento e mantém uma trilha de auditoria completa."
+    },
+    "commissions": {
+      "title": "Comissões",
+      "description": "Como funciona a divisão padrão 45/45/10, como uma colocação passa de prevista a pagável e paga, e por que nenhum valor passa pelo MissionHub."
+    },
+    "faq": {
+      "title": "Perguntas frequentes",
+      "description": "Respostas ao que recrutadores perguntam primeiro sobre o MissionHub: privacidade dos candidatos, divisão de comissões, pagamentos, compatibilidade e acesso da equipe."
+    }
   }
 }
