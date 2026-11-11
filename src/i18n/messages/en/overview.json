@@ -28,7 +28,9 @@
       "title": "Submit a candidate to a partner job",
       "description": "Review a match, check the fit, and submit when your candidate agrees.",
       "cta": "See opportunities"
-    }
+    },
+    "open": "Open setup guide",
+    "minimize": "Minimize setup guide"
   },
   "stats": {
     "label": "Summary",

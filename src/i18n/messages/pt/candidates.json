@@ -140,7 +140,18 @@
     "privacyNotice": "O candidato recebeu nosso aviso de privacidade",
     "notes": "Notas privadas",
     "notesHint": "Somente sua organização vê estas notas. Nunca são compartilhadas com parceiros.",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "skillsPlaceholder": "Digite uma skill e pressione Enter",
+    "languagesPlaceholder": "Digite um idioma e pressione Enter",
+    "decrease": "Menos anos",
+    "increase": "Mais anos",
+    "years": "anos",
+    "moreDetails": "Salário, disponibilidade e resumo",
+    "moreDetailsHint": "Opcional — melhora o ranking dos matches",
+    "salaryRange": "Pretensão salarial",
+    "salaryFrom": "Mín.",
+    "salaryTo": "Máx.",
+    "moreSource": "Detalhe da origem, base legal e notas"
   },
   "setup": {
     "toast": {
@@ -318,6 +329,7 @@
     "subtitleAi": "Envie um currículo ou cole o texto (inclusive PDF escaneado). A IA preenche o perfil — você revisa tudo antes de salvar.",
     "tabs": {
       "file": "Arquivo do currículo",
+      "url": "Link",
       "text": "Colar texto"
     },
     "textLabel": "Texto do currículo",
@@ -328,7 +340,7 @@
     "fileChosen": "{name} · {size}",
     "submit": "Preencher o perfil",
     "working": "Lendo…",
-    "skip": "ou preencha manualmente abaixo",
+    "skip": "ou preencha o formulário manualmente",
     "done": {
       "one": "{count} campo preenchido. Confira abaixo antes de salvar.",
       "other": "{count} campos preenchidos. Confira abaixo antes de salvar."
@@ -341,7 +353,15 @@
       "fileSize": "O arquivo tem mais de 10 MB.",
       "noText": "Não encontramos texto legível. Se for um PDF escaneado, cole o texto.",
       "tooShort": "Cole o currículo completo — pelo menos algumas linhas.",
-      "tooLong": "O texto é longo demais."
-    }
+      "tooLong": "O texto é longo demais.",
+      "invalidUrl": "Informe um link público válido (https://).",
+      "blockedSite": "Este site bloqueia leitura automática. Baixe o currículo e envie o arquivo.",
+      "fetchFailed": "Não conseguimos abrir esse link. Confira se ele é público, ou envie o arquivo.",
+      "notHtml": "Esse link não é uma página nem um PDF. Baixe e envie o arquivo.",
+      "linkedin": "O LinkedIn bloqueia leitura automática. No perfil, clique em Mais → Salvar como PDF e envie esse arquivo na aba “Arquivo do currículo”."
+    },
+    "urlLabel": "Link do currículo ou perfil",
+    "urlPlaceholder": "https://joaosilva.dev ou link de um PDF",
+    "urlHint": "Portfólio, site pessoal, GitHub, um PDF hospedado ou arquivo compartilhado do Google Drive. O LinkedIn bloqueia leitura automática — use “Salvar como PDF” no perfil e envie o arquivo."
   }
 }

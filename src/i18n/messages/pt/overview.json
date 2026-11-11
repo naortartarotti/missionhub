@@ -28,7 +28,9 @@
       "title": "Envie um candidato para uma vaga de parceiro",
       "description": "Analise um match, confira se combina e envie quando o candidato concordar.",
       "cta": "Ver oportunidades"
-    }
+    },
+    "open": "Abrir guia de primeiros passos",
+    "minimize": "Minimizar guia"
   },
   "stats": {
     "label": "Resumo",

@@ -60,7 +60,13 @@ export function normalizeUrl(raw: string): URL {
   }
 }
 
-export async function fetchPage(raw: string): Promise<{ html: string; url: URL }> {
+export type FetchedDocument = { kind: "html"; html: string; url: URL } | { kind: "pdf"; bytes: Uint8Array; url: URL };
+
+/**
+ * Fetches a public page (or, with `allowPdf`, a PDF) through the SSRF checks above.
+ * HTML is capped at 3 MB (the content is near the top); a PDF must fit `maxPdfBytes` whole.
+ */
+export async function fetchDocument(raw: string, opts: { allowPdf?: boolean; maxPdfBytes?: number } = {}): Promise<FetchedDocument> {
   let url = normalizeUrl(raw);
   // Note: fetch re-resolves DNS, so a rebinding host could still slip between check and connect.
   // Acceptable here: responses are only parsed as text, never returned raw, and private hosts fail the check.
@@ -70,8 +76,11 @@ export async function fetchPage(raw: string): Promise<{ html: string; url: URL }
     try {
       res = await fetch(url, {
         redirect: "manual",
-        signal: AbortSignal.timeout(8000),
-        headers: { "user-agent": "MissionHub-JobImport/1.0", accept: "text/html,application/xhtml+xml,text/plain;q=0.8" },
+        signal: AbortSignal.timeout(opts.allowPdf ? 15000 : 8000),
+        headers: {
+          "user-agent": "MissionHub-Import/1.0",
+          accept: `text/html,application/xhtml+xml,text/plain;q=0.8${opts.allowPdf ? ",application/pdf;q=0.9" : ""}`,
+        },
         cache: "no-store",
       });
     } catch {
@@ -90,16 +99,30 @@ export async function fetchPage(raw: string): Promise<{ html: string; url: URL }
     }
     if (!res.ok || !res.body) throw new ImportError("fetchFailed");
     const type = res.headers.get("content-type") ?? "";
+    if (opts.allowPdf && /application\/pdf/i.test(type)) {
+      const max = opts.maxPdfBytes ?? MAX_IMPORT_FILE_BYTES;
+      const { bytes, truncated } = await readBytes(res.body, max);
+      if (truncated) throw new ImportError("fileSize");
+      if (String.fromCharCode(...bytes.subarray(0, 5)) !== "%PDF-") throw new ImportError("notHtml");
+      return { kind: "pdf", bytes, url };
+    }
     if (!/text\/html|application\/xhtml|text\/plain/i.test(type)) {
       await res.body.cancel();
       throw new ImportError("notHtml");
     }
-    return { html: await readCapped(res.body), url };
+    const { bytes } = await readBytes(res.body, MAX_PAGE_BYTES); // keep what we have: the posting is near the top
+    return { kind: "html", html: new TextDecoder("utf-8", { fatal: false }).decode(bytes), url };
   }
   throw new ImportError("fetchFailed");
 }
 
-async function readCapped(body: ReadableStream<Uint8Array>): Promise<string> {
+export async function fetchPage(raw: string): Promise<{ html: string; url: URL }> {
+  const doc = await fetchDocument(raw);
+  if (doc.kind !== "html") throw new ImportError("notHtml");
+  return doc;
+}
+
+async function readBytes(body: ReadableStream<Uint8Array>, max: number): Promise<{ bytes: Uint8Array; truncated: boolean }> {
   const reader = body.getReader();
   const chunks: Uint8Array[] = [];
   let size = 0;
@@ -107,13 +130,13 @@ async function readCapped(body: ReadableStream<Uint8Array>): Promise<string> {
     const { done, value } = await reader.read();
     if (done) break;
     size += value.byteLength;
-    if (size > MAX_PAGE_BYTES) {
+    if (size > max) {
       await reader.cancel();
-      break; // keep what we have: the posting is near the top of the page
+      return { bytes: new Uint8Array(Buffer.concat(chunks)), truncated: true };
     }
     chunks.push(value);
   }
-  return new TextDecoder("utf-8", { fatal: false }).decode(Buffer.concat(chunks));
+  return { bytes: new Uint8Array(Buffer.concat(chunks)), truncated: false };
 }
 
 // ---------------------------------------------------------------------------------------------

@@ -28,7 +28,9 @@
       "title": "Soumettez un candidat à un poste partenaire",
       "description": "Examinez une correspondance, vérifiez l'adéquation et soumettez lorsque votre candidat est d'accord.",
       "cta": "Voir les opportunités"
-    }
+    },
+    "open": "Ouvrir le guide de démarrage",
+    "minimize": "Réduire le guide"
   },
   "stats": {
     "label": "Résumé",

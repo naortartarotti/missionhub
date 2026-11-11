@@ -140,7 +140,18 @@
     "privacyNotice": "The candidate received our privacy notice",
     "notes": "Private notes",
     "notesHint": "Only your organization sees these. Never shared with partners.",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "skillsPlaceholder": "Type a skill and press Enter",
+    "languagesPlaceholder": "Type a language and press Enter",
+    "decrease": "Fewer years",
+    "increase": "More years",
+    "years": "yrs",
+    "moreDetails": "Salary, availability & summary",
+    "moreDetailsHint": "Optional — helps rank matches",
+    "salaryRange": "Salary expectation",
+    "salaryFrom": "Min",
+    "salaryTo": "Max",
+    "moreSource": "Source detail, legal basis & notes"
   },
   "setup": {
     "toast": {
@@ -318,6 +329,7 @@
     "subtitleAi": "Upload a resume or paste its text (scanned PDFs too). AI fills in the profile — you review everything before saving.",
     "tabs": {
       "file": "Resume file",
+      "url": "Link",
       "text": "Paste text"
     },
     "textLabel": "Resume text",
@@ -328,7 +340,7 @@
     "fileChosen": "{name} · {size}",
     "submit": "Fill the profile",
     "working": "Reading…",
-    "skip": "or fill it in manually below",
+    "skip": "or fill in the form yourself",
     "done": {
       "one": "{count} field filled. Check it below before saving.",
       "other": "{count} fields filled. Check them below before saving."
@@ -341,7 +353,15 @@
       "fileSize": "The file is larger than 10 MB.",
       "noText": "We couldn't find readable text. If it's a scanned PDF, paste the text instead.",
       "tooShort": "Paste the full resume — at least a few lines.",
-      "tooLong": "The text is too long."
-    }
+      "tooLong": "The text is too long.",
+      "invalidUrl": "Enter a valid public https:// link.",
+      "blockedSite": "This site blocks automatic reading. Download the resume and upload the file instead.",
+      "fetchFailed": "We couldn't open that link. Check that it's public, or upload the file instead.",
+      "notHtml": "That link isn't a web page or a PDF. Download it and upload the file instead.",
+      "linkedin": "LinkedIn blocks automatic reading. On the profile, click More → Save to PDF, then upload that file in the “Resume file” tab."
+    },
+    "urlLabel": "Link to the resume or profile",
+    "urlPlaceholder": "https://janedoe.dev or a link to a PDF",
+    "urlHint": "Portfolio, personal site, GitHub, a hosted PDF or a shared Google Drive file. LinkedIn blocks automatic reading — use “Save to PDF” on the profile and upload it instead."
   }
 }

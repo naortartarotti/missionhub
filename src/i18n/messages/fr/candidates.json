@@ -140,7 +140,18 @@
     "privacyNotice": "Le candidat a reçu notre avis de confidentialité",
     "notes": "Notes privées",
     "notesHint": "Seule votre organisation les voit. Jamais partagées avec les partenaires.",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "skillsPlaceholder": "Saisissez une compétence puis Entrée",
+    "languagesPlaceholder": "Saisissez une langue puis Entrée",
+    "decrease": "Moins d'années",
+    "increase": "Plus d'années",
+    "years": "ans",
+    "moreDetails": "Salaire, disponibilité et résumé",
+    "moreDetailsHint": "Facultatif — améliore le classement des matchs",
+    "salaryRange": "Prétentions salariales",
+    "salaryFrom": "Min",
+    "salaryTo": "Max",
+    "moreSource": "Détail de la source, base légale et notes"
   },
   "setup": {
     "toast": {
@@ -318,6 +329,7 @@
     "subtitleAi": "Importez un CV ou collez son texte (PDF numérisés compris). L'IA remplit le profil — vous vérifiez tout avant d'enregistrer.",
     "tabs": {
       "file": "Fichier du CV",
+      "url": "Lien",
       "text": "Coller le texte"
     },
     "textLabel": "Texte du CV",
@@ -328,7 +340,7 @@
     "fileChosen": "{name} · {size}",
     "submit": "Remplir le profil",
     "working": "Lecture…",
-    "skip": "ou remplissez-le manuellement ci-dessous",
+    "skip": "ou remplissez le formulaire vous-même",
     "done": {
       "one": "{count} champ rempli. Vérifiez-le ci-dessous avant d'enregistrer.",
       "other": "{count} champs remplis. Vérifiez-les ci-dessous avant d'enregistrer."
@@ -341,7 +353,15 @@
       "fileSize": "Le fichier dépasse 10 Mo.",
       "noText": "Aucun texte lisible trouvé. S'il s'agit d'un PDF numérisé, collez le texte.",
       "tooShort": "Collez le CV complet — au moins quelques lignes.",
-      "tooLong": "Le texte est trop long."
-    }
+      "tooLong": "Le texte est trop long.",
+      "invalidUrl": "Saisissez un lien public valide (https://).",
+      "blockedSite": "Ce site bloque la lecture automatique. Téléchargez le CV et importez le fichier.",
+      "fetchFailed": "Impossible d'ouvrir ce lien. Vérifiez qu'il est public, ou importez le fichier.",
+      "notHtml": "Ce lien n'est ni une page web ni un PDF. Téléchargez-le et importez le fichier.",
+      "linkedin": "LinkedIn bloque la lecture automatique. Sur le profil, cliquez sur Plus → Enregistrer au format PDF, puis importez ce fichier dans l'onglet « Fichier du CV »."
+    },
+    "urlLabel": "Lien vers le CV ou le profil",
+    "urlPlaceholder": "https://janedoe.dev ou un lien vers un PDF",
+    "urlHint": "Portfolio, site personnel, GitHub, un PDF en ligne ou un fichier Google Drive partagé. LinkedIn bloque la lecture automatique — utilisez « Enregistrer au format PDF » sur le profil et importez le fichier."
   }
 }
