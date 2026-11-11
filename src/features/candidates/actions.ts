@@ -64,8 +64,8 @@ export async function createCandidate(orgSlug: string, _: ActionResult | null, f
       .select("id")
       .single();
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/candidates`);
-    redirect(`/w/${orgSlug}/candidates/${data.id}?created=1`);
+    revalidatePath(`/workspace/${orgSlug}/candidates`);
+    redirect(`/workspace/${orgSlug}/candidates/${data.id}?created=1`);
   });
 }
 
@@ -85,8 +85,8 @@ export async function updateCandidate(orgSlug: string, candidateId: string, _: A
       .select("id");
     if (error) return toActionError(error);
     if (!data?.length) return { ok: false, error: msg("candidates.errors.notFound") };
-    revalidatePath(`/w/${orgSlug}/candidates/${candidateId}`);
-    redirect(`/w/${orgSlug}/candidates/${candidateId}?updated=1`);
+    revalidatePath(`/workspace/${orgSlug}/candidates/${candidateId}`);
+    redirect(`/workspace/${orgSlug}/candidates/${candidateId}?updated=1`);
   });
 }
 
@@ -116,8 +116,8 @@ export async function setCandidateStatus(orgSlug: string, input: { candidateId: 
       .select("id");
     if (error) return toActionError(error);
     if (!data?.length) return { ok: false, error: msg("candidates.errors.notFound") };
-    revalidatePath(`/w/${orgSlug}/candidates/${parsed.data.candidateId}`);
-    revalidatePath(`/w/${orgSlug}/candidates`);
+    revalidatePath(`/workspace/${orgSlug}/candidates/${parsed.data.candidateId}`);
+    revalidatePath(`/workspace/${orgSlug}/candidates`);
     return {
       ok: true,
       message: parsed.data.status === "active_for_matching" ? msg("candidates.success.activated") : msg("candidates.success.statusUpdated"),
@@ -144,8 +144,8 @@ export async function recordConsent(orgSlug: string, _: ActionResult | null, for
       recorded_by: ctx.userId,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/candidates/${parsed.data.candidateId}`);
-    revalidatePath(`/w/${orgSlug}/opportunities`, "layout");
+    revalidatePath(`/workspace/${orgSlug}/candidates/${parsed.data.candidateId}`);
+    revalidatePath(`/workspace/${orgSlug}/opportunities`, "layout");
     return { ok: true, message: msg("candidates.success.consentRecorded") };
   });
 }
@@ -164,7 +164,7 @@ export async function revokeConsent(orgSlug: string, input: { consentId: string;
       .select("candidate_id");
     if (error) return toActionError(error);
     if (!data?.length) return { ok: false, error: msg("candidates.errors.consentNotFound") };
-    revalidatePath(`/w/${orgSlug}/candidates/${data[0].candidate_id}`);
+    revalidatePath(`/workspace/${orgSlug}/candidates/${data[0].candidate_id}`);
     return { ok: true, message: msg("candidates.success.consentRevoked") };
   });
 }
@@ -202,7 +202,7 @@ export async function uploadDocument(orgSlug: string, candidateId: string, _: Ac
       uploaded_by: ctx.userId,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/candidates/${candidateId}`);
+    revalidatePath(`/workspace/${orgSlug}/candidates/${candidateId}`);
     return { ok: true, message: msg("candidates.success.uploaded") };
   });
 }
@@ -245,7 +245,7 @@ export async function deleteDocument(orgSlug: string, documentId: string): Promi
     if (!data?.length) return { ok: false, error: msg("candidates.errors.documentNotFound") };
     // Physically remove the object (service role; tenant ownership verified above).
     await createAdminClient().storage.from("candidate-documents").remove([data[0].storage_path]);
-    revalidatePath(`/w/${orgSlug}/candidates/${data[0].candidate_id}`);
+    revalidatePath(`/workspace/${orgSlug}/candidates/${data[0].candidate_id}`);
     return { ok: true, message: msg("candidates.success.documentDeleted") };
   });
 }
@@ -257,7 +257,7 @@ export async function anonymizeCandidate(orgSlug: string, input: { candidateId: 
     const v = parse(z.object({ candidateId: id, reason: text(5, 500, msg("candidates.errors.anonymizeReason")) }), input);
     const { error } = await ctx.db.rpc("anonymize_candidate", { p_candidate: v.candidateId, p_reason: v.reason });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/candidates`);
-    redirect(`/w/${orgSlug}/candidates?anonymized=1`);
+    revalidatePath(`/workspace/${orgSlug}/candidates`);
+    redirect(`/workspace/${orgSlug}/candidates?anonymized=1`);
   });
 }

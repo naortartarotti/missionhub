@@ -4,7 +4,7 @@ import { env } from "@/server/env";
 export default function robots(): MetadataRoute.Robots {
   const base = env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
   return {
-    rules: { userAgent: "*", allow: "/", disallow: ["/w/", "/admin", "/onboarding", "/invite", "/auth/"] },
+    rules: { userAgent: "*", allow: "/", disallow: ["/workspace/", "/admin", "/onboarding", "/invite", "/auth/"] },
     sitemap: `${base}/sitemap.xml`,
   };
 }

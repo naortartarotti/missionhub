@@ -1,28 +1,48 @@
 {
   "title": "Platform admin",
   "backToWorkspace": "Back to workspace",
-  "page": {
-    "title": "Platform operations",
-    "description": "Aggregated metrics and operational queues. Platform admins have no access to candidate records."
-  },
   "kpi": {
     "organizations": "Organizations",
-    "excludingDemo": "Excluding demo",
     "placements": "Placements",
-    "evidence": "Evidence to verify",
-    "disputes": "Open disputes"
+    "users": "Users",
+    "newThisMonth": "+{count} in the last 30 days",
+    "attention": "Needs attention",
+    "attentionHint": "Evidence, disputes and wallets",
+    "activeJobs": "Active jobs",
+    "activeCandidates": "Candidates open to matching",
+    "referrals": "Referrals"
   },
   "evidence": {
     "title": "Payment evidence queue",
     "empty": "Nothing awaiting verification.",
     "ref": "ref {reference}",
     "fees": "fees {amount}",
-    "ownRecord": "You recorded this; another admin must verify it."
+    "ownRecord": "You recorded this; another admin must verify it.",
+    "description": "Client payments, refunds and remittances recorded by organizations. A second person must verify each one.",
+    "emptyHint": "New evidence shows up here as soon as it's recorded.",
+    "placement": "Placement",
+    "history": "Recently reviewed",
+    "noHistory": "Nothing reviewed yet.",
+    "kind": "Type",
+    "organization": "Recorded by",
+    "amount": "Amount",
+    "reviewed": "Reviewed",
+    "status": {
+      "verified": "Verified",
+      "rejected": "Rejected"
+    }
   },
   "disputes": {
     "title": "Disputes",
     "empty": "No open disputes.",
-    "openedBy": "Opened by {org} · {date}"
+    "openedBy": "Opened by {org} · {date}",
+    "description": "Disagreements about a placement or its payment. Resolving one returns the placement to its prior status.",
+    "emptyHint": "Organizations open disputes from a placement's page.",
+    "between": "{source} ↔ {target}",
+    "open": "Open",
+    "history": "Recently closed",
+    "noHistory": "No closed disputes yet.",
+    "resolution": "Closed {date}: {text}"
   },
   "revenue": {
     "title": "Platform revenue (verified ledger)",
@@ -31,12 +51,21 @@
   },
   "rules": {
     "title": "Commission rules",
-    "current": "Current default: v{version} — {sourcing} / {jobOwner} / {platform}. Accepted referrals keep their frozen snapshot.",
-    "currentTag": "(current)",
     "sourcing": "Sourcing %",
     "jobOwner": "Job owner %",
     "platform": "Platform %",
-    "publish": "Publish new version"
+    "publish": "Publish new version",
+    "description": "The default split for new collaboration agreements. Each change publishes a new version.",
+    "currentTitle": "Current split · v{version}",
+    "none": "No default rule yet",
+    "snapshotNote": "Accepted referrals keep the split that was in force when they were accepted.",
+    "publishTitle": "Publish a new version",
+    "history": "Version history",
+    "version": "Version",
+    "split": "Candidate / Job / Platform",
+    "effective": "In force",
+    "retired": "Retired",
+    "inForce": "Current"
   },
   "orgs": {
     "title": "Organizations",
@@ -51,7 +80,20 @@
     "kind": {
       "agency": "agency",
       "independent": "independent"
-    }
+    },
+    "description": "Every workspace on the platform: members, region and access status.",
+    "search": "Search by name or slug",
+    "filter": {
+      "all": "All organizations",
+      "active": "Active",
+      "suspended": "Suspended",
+      "demo": "Demo"
+    },
+    "empty": "No organizations found",
+    "emptyHint": "Try another search or filter.",
+    "members": "Members",
+    "region": "Region",
+    "membersCount": "{count} members"
   },
   "suspension": {
     "reinstate": "Reinstate",
@@ -90,8 +132,6 @@
     "cashoutsDisabled": "Withdrawals disabled."
   },
   "wallets": {
-    "link": "Wallets",
-    "back": "Back to operations",
     "title": "Wallets",
     "description": "Balances held for organizations, ledger health and outgoing-movement controls.",
     "kpi": {
@@ -198,5 +238,100 @@
         "refunded": "refunded at the provider"
       }
     }
+  },
+  "badge": "Admin",
+  "nav": {
+    "label": "Admin navigation",
+    "operations": "Operations",
+    "overview": "Overview",
+    "organizations": "Organizations",
+    "users": "Users",
+    "finance": "Finance",
+    "evidence": "Payment evidence",
+    "disputes": "Disputes",
+    "wallets": "Wallets",
+    "rules": "Commission rules",
+    "compliance": "Compliance",
+    "audit": "Audit log",
+    "pending": "pending"
+  },
+  "overview": {
+    "title": "Overview",
+    "description": "Platform health at a glance. Admins never see candidate records, only aggregates.",
+    "attention": "Needs attention",
+    "pending": "Pending",
+    "clear": "All clear",
+    "queues": {
+      "evidence": "Evidence to verify",
+      "disputes": "Open disputes",
+      "wallets": "Wallet issues"
+    },
+    "marketplace": "Marketplace",
+    "privacyNote": "Counts only. Candidate details stay with their organization.",
+    "seeAll": "See all",
+    "newOrgs": "Newest organizations",
+    "recentActivity": "Recent activity"
+  },
+  "filters": {
+    "apply": "Apply"
+  },
+  "orgDetail": {
+    "slug": "Slug",
+    "country": "Country",
+    "currency": "Currency",
+    "locale": "Language",
+    "suspendedSince": "Suspended since {date}: {reason}",
+    "details": "Details",
+    "wallet": "Wallet",
+    "noWallet": "No wallet balance yet.",
+    "balance": "{available} available · {pending} pending",
+    "activity": "Recent activity",
+    "members": "Members ({count})",
+    "membersCaption": "Organization members",
+    "role": "Role",
+    "joined": "Joined",
+    "memberSuspended": "Suspended",
+    "placements": "Latest placements",
+    "noPlacements": "No placements yet.",
+    "side": "Side",
+    "partner": "Partner",
+    "fee": "Fee",
+    "start": "Start date",
+    "sourcing": "Candidate recruiter",
+    "jobOwner": "Job recruiter"
+  },
+  "users": {
+    "title": "Users",
+    "description": "Everyone with an account, the organizations they belong to and their role in each.",
+    "search": "Search by name or email",
+    "filterLabel": "Filter users",
+    "filter": {
+      "all": "All users",
+      "admins": "Platform admins",
+      "notOnboarded": "Onboarding not finished"
+    },
+    "empty": "No users found",
+    "name": "Name",
+    "organizations": "Organizations",
+    "onboarding": "Onboarding",
+    "joined": "Signed up",
+    "platformAdmin": "Platform admin",
+    "onboarded": "Done",
+    "pending": "Pending"
+  },
+  "audit": {
+    "title": "Audit log",
+    "description": "Every sensitive action across the platform, newest first.",
+    "search": "Filter by action, e.g. referral. or organization.suspended",
+    "filteredBy": "Showing events for {org}.",
+    "clear": "Show all",
+    "empty": "No events",
+    "when": "When",
+    "action": "Action",
+    "actor": "Who",
+    "organization": "Organization",
+    "entity": "Record",
+    "system": "System",
+    "platform": "Platform"
   }
 }

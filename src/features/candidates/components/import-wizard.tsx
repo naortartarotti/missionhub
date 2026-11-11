@@ -35,7 +35,7 @@ export function ImportWizard({ orgSlug }: { orgSlug: string }) {
       <Panel className="grid gap-4 p-6">
         <FormMessage state={commit} />
         <div className="flex gap-2">
-          <Button asChild><Link href={`/w/${orgSlug}/candidates?status=draft`}>{t("import.reviewDrafts")}</Link></Button>
+          <Button asChild><Link href={`/workspace/${orgSlug}/candidates?status=draft`}>{t("import.reviewDrafts")}</Link></Button>
           <Button variant="outline" onClick={() => window.location.reload()}>{t("import.another")}</Button>
         </div>
       </Panel>

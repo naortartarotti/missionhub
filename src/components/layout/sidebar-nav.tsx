@@ -20,7 +20,7 @@ export function SidebarNav({ orgSlug, badges }: { orgSlug: string; badges: Badge
   const hintedTab = useNavHint(pathname);
 
   const isActive = (link: NavLink) => {
-    const href = `/w/${orgSlug}/${link.href}`;
+    const href = `/workspace/${orgSlug}/${link.href}`;
     if (pathname !== href && !pathname.startsWith(`${href}/`)) return false;
     if (!link.tab) return true;
     // Detail pages (e.g. /referrals/<id>) can't be told apart by URL: the page hints its tab (see NavHint).
@@ -73,7 +73,7 @@ function NavItemLink({ orgSlug, link, label, active, badges, nested = false }: {
   const Icon = link.icon;
   return (
     <Link
-      href={`/w/${orgSlug}/${link.href}${link.tab ? `?tab=${link.tab}` : ""}`}
+      href={`/workspace/${orgSlug}/${link.href}${link.tab ? `?tab=${link.tab}` : ""}`}
       aria-current={active ? "page" : undefined}
       className={cn(itemClass, nested && "py-2 pl-[46px] text-sm", active && "bg-sidebar-accent text-foreground")}
     >

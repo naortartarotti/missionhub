@@ -27,7 +27,7 @@ export async function updateProfile(_: ActionResult | null, formData: FormData):
       .eq("id", user.id);
     if (error) return toActionError(error);
     // The name shows in the sidebar, the account menu and on records across every workspace.
-    revalidatePath("/w", "layout");
+    revalidatePath("/workspace", "layout");
     return { ok: true, message: msg("profile.messages.saved") };
   });
 }

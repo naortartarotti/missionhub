@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { CircleDollarSign, Landmark, ShieldCheck, Snowflake } from "lucide-react";
 import { createClient } from "@/server/supabase/server";
 import { integrations } from "@/server/env";
@@ -7,7 +6,6 @@ import { KpiTile } from "@/components/shared/kpi-tile";
 import { Panel } from "@/components/shared/card";
 import { PageHeader, SectionTitle } from "@/components/shared/page-header";
 import { StatusPill } from "@/components/shared/status-pill";
-import { Button } from "@/components/ui/button";
 import { WalletCashoutsSwitch, WalletFreezeButton, WalletTransfersSwitch } from "@/features/admin/components/admin-controls";
 import { getFormatter, getT } from "@/i18n/server";
 
@@ -72,7 +70,6 @@ export default async function AdminWalletsPage() {
       <PageHeader
         title={t("wallets.title")}
         description={t("wallets.description")}
-        actions={<Button variant="outline" asChild><Link href="/admin">{t("wallets.back")}</Link></Button>}
       />
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KpiTile label={t("wallets.kpi.held")} hint={t("wallets.kpi.heldHint", { currency: mainCurrency })} value={f.money(main.available + main.pending, mainCurrency)} tone="green" icon={Landmark} />
@@ -87,10 +84,10 @@ export default async function AdminWalletsPage() {
           {!checkAvailable ? (
             <p className="text-sm text-muted-foreground">{t("wallets.health.unavailable")}</p>
           ) : healthy ? (
-            <StatusPill tone="success" label={t("wallets.health.ok")} />
+            <StatusPill tone="success" label={t("wallets.health.ok")} wrap />
           ) : (
             <div role="alert" className="grid gap-2 text-sm">
-              <StatusPill tone="danger" label={t("wallets.health.bad")} />
+              <StatusPill tone="danger" label={t("wallets.health.bad")} wrap />
               <ul className="grid gap-1 text-muted-foreground">
                 {issues.map((i, n) => (
                   <li key={i.account_id ?? `book-${n}`} className="tabular-nums">
@@ -106,7 +103,7 @@ export default async function AdminWalletsPage() {
         </Panel>
         <Panel>
           <SectionTitle>{t("wallets.attention.title")}</SectionTitle>
-          <StatusPill tone={integrations.payments ? "success" : "warning"} label={integrations.payments ? t("wallets.provider.connected") : t("wallets.provider.missing")} />
+          <StatusPill tone={integrations.payments ? "success" : "warning"} label={integrations.payments ? t("wallets.provider.connected") : t("wallets.provider.missing")} wrap />
           {attention === 0 ? <p className="mt-3 text-sm text-muted-foreground">{t("wallets.attention.empty")}</p> : (
             <ul className="mt-3 grid gap-3 text-sm">
               {(flaggedCharges.data ?? []).map((c) => (
@@ -127,11 +124,11 @@ export default async function AdminWalletsPage() {
         </Panel>
         <Panel>
           <SectionTitle action={<WalletTransfersSwitch enabled={transfersEnabled} />}>{t("wallets.transfers.title")}</SectionTitle>
-          <StatusPill tone={transfersEnabled ? "warning" : "neutral"} label={transfersEnabled ? t("wallets.transfers.on") : t("wallets.transfers.off")} />
+          <StatusPill tone={transfersEnabled ? "warning" : "neutral"} label={transfersEnabled ? t("wallets.transfers.on") : t("wallets.transfers.off")} wrap />
         </Panel>
         <Panel>
           <SectionTitle action={<WalletCashoutsSwitch enabled={cashoutsEnabled} />}>{t("wallets.cashouts.title")}</SectionTitle>
-          <StatusPill tone={cashoutsEnabled ? "warning" : "neutral"} label={cashoutsEnabled ? t("wallets.cashouts.on") : t("wallets.cashouts.off")} />
+          <StatusPill tone={cashoutsEnabled ? "warning" : "neutral"} label={cashoutsEnabled ? t("wallets.cashouts.on") : t("wallets.cashouts.off")} wrap />
         </Panel>
       </div>
 

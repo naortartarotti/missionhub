@@ -27,7 +27,7 @@ export async function setSuspension(input: { orgId: string; suspend: boolean; re
     const v = parse(suspensionSchema, input);
     const { error } = await db.rpc("set_organization_suspension", { p_org: v.orgId, p_suspend: v.suspend, p_reason: v.reason });
     if (error) return toActionError(error);
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     return { ok: true, message: v.suspend ? msg("admin.messages.suspended") : msg("admin.messages.reinstated") };
   });
 }
@@ -40,7 +40,7 @@ export async function resolveDispute(input: { disputeId: string; upheld: boolean
     const v = parse(disputeSchema, input);
     const { error } = await db.rpc("resolve_dispute", { p_dispute: v.disputeId, p_resolution: v.resolution, p_upheld: v.upheld });
     if (error) return toActionError(error);
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     return { ok: true, message: msg("admin.messages.disputeClosed") };
   });
 }
@@ -61,7 +61,7 @@ export async function publishRule(_: ActionResult | null, formData: FormData): P
       p_platform: v.platform,
     });
     if (error) return toActionError(error);
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     return { ok: true, message: msg("admin.messages.rulePublished") };
   });
 }
@@ -78,7 +78,7 @@ export async function setWalletFrozen(input: { orgId: string; frozen: boolean; r
     const v = parse(freezeSchema, input);
     const { error } = await db.rpc("set_wallet_frozen", { p_org: v.orgId, p_frozen: v.frozen, p_reason: v.reason });
     if (error) return toActionError(error);
-    revalidatePath("/admin/wallets");
+    revalidatePath("/admin", "layout");
     return { ok: true, message: v.frozen ? msg("admin.messages.walletFrozen") : msg("admin.messages.walletUnfrozen") };
   });
 }
@@ -92,7 +92,7 @@ export async function setWalletTransfersEnabled(input: { enabled: boolean }): Pr
     const v = parse(transfersSchema, input);
     const { error } = await db.rpc("set_wallet_transfers_enabled", { p_enabled: v.enabled });
     if (error) return toActionError(error);
-    revalidatePath("/admin/wallets");
+    revalidatePath("/admin", "layout");
     return { ok: true, message: v.enabled ? msg("admin.messages.transfersEnabled") : msg("admin.messages.transfersDisabled") };
   });
 }
@@ -104,7 +104,7 @@ export async function setWalletCashoutsEnabled(input: { enabled: boolean }): Pro
     const v = parse(transfersSchema, input);
     const { error } = await db.rpc("set_wallet_cashouts_enabled", { p_enabled: v.enabled });
     if (error) return toActionError(error);
-    revalidatePath("/admin/wallets");
+    revalidatePath("/admin", "layout");
     return { ok: true, message: v.enabled ? msg("admin.messages.cashoutsEnabled") : msg("admin.messages.cashoutsDisabled") };
   });
 }

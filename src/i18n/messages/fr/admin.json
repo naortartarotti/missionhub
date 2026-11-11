@@ -1,28 +1,48 @@
 {
   "title": "Administration de la plateforme",
   "backToWorkspace": "Retour à l'espace de travail",
-  "page": {
-    "title": "Opérations de la plateforme",
-    "description": "Indicateurs agrégés et files de traitement. Les administrateurs de la plateforme n'ont aucun accès aux dossiers des candidats."
-  },
   "kpi": {
     "organizations": "Organisations",
-    "excludingDemo": "Hors démo",
     "placements": "Placements",
-    "evidence": "Preuves à vérifier",
-    "disputes": "Litiges ouverts"
+    "users": "Utilisateurs",
+    "newThisMonth": "+{count} ces 30 derniers jours",
+    "attention": "À traiter",
+    "attentionHint": "Preuves, litiges et portefeuilles",
+    "activeJobs": "Postes actifs",
+    "activeCandidates": "Candidats ouverts aux correspondances",
+    "referrals": "Recommandations"
   },
   "evidence": {
     "title": "File des preuves de paiement",
     "empty": "Rien en attente de vérification.",
     "ref": "réf. {reference}",
     "fees": "frais {amount}",
-    "ownRecord": "Vous avez consigné cette preuve; un autre administrateur doit la vérifier."
+    "ownRecord": "Vous avez consigné cette preuve; un autre administrateur doit la vérifier.",
+    "description": "Paiements clients, remboursements et versements consignés par les organisations. Une deuxième personne doit vérifier chacun.",
+    "emptyHint": "Les nouvelles preuves apparaissent ici dès qu'elles sont consignées.",
+    "placement": "Placement",
+    "history": "Vérifiées récemment",
+    "noHistory": "Rien de vérifié pour l'instant.",
+    "kind": "Type",
+    "organization": "Consignée par",
+    "amount": "Montant",
+    "reviewed": "Vérifiée le",
+    "status": {
+      "verified": "Vérifiée",
+      "rejected": "Rejetée"
+    }
   },
   "disputes": {
     "title": "Litiges",
     "empty": "Aucun litige ouvert.",
-    "openedBy": "Ouvert par {org} · {date}"
+    "openedBy": "Ouvert par {org} · {date}",
+    "description": "Désaccords sur un placement ou son paiement. Résoudre un litige remet le placement à son statut précédent.",
+    "emptyHint": "Les organisations ouvrent un litige depuis la page d'un placement.",
+    "between": "{source} ↔ {target}",
+    "open": "Ouvert",
+    "history": "Fermés récemment",
+    "noHistory": "Aucun litige fermé pour l'instant.",
+    "resolution": "Fermé le {date} : {text}"
   },
   "revenue": {
     "title": "Revenus de la plateforme (registre vérifié)",
@@ -31,12 +51,21 @@
   },
   "rules": {
     "title": "Règles de commission",
-    "current": "Règle par défaut actuelle : v{version} — {sourcing} / {jobOwner} / {platform}. Les recommandations acceptées conservent leur instantané figé.",
-    "currentTag": "(actuelle)",
     "sourcing": "Recrutement %",
     "jobOwner": "Titulaire du poste %",
     "platform": "Plateforme %",
-    "publish": "Publier une nouvelle version"
+    "publish": "Publier une nouvelle version",
+    "description": "Le partage par défaut des nouvelles ententes de collaboration. Chaque changement publie une nouvelle version.",
+    "currentTitle": "Partage actuel · v{version}",
+    "none": "Aucune règle par défaut",
+    "snapshotNote": "Les recommandations acceptées gardent le partage en vigueur au moment de leur acceptation.",
+    "publishTitle": "Publier une nouvelle version",
+    "history": "Historique des versions",
+    "version": "Version",
+    "split": "Candidat / Poste / Plateforme",
+    "effective": "En vigueur",
+    "retired": "Retirée",
+    "inForce": "En vigueur"
   },
   "orgs": {
     "title": "Organisations",
@@ -51,7 +80,20 @@
     "kind": {
       "agency": "agence",
       "independent": "indépendant"
-    }
+    },
+    "description": "Tous les espaces de travail de la plateforme : membres, région et statut d'accès.",
+    "search": "Rechercher par nom ou identifiant",
+    "filter": {
+      "all": "Toutes les organisations",
+      "active": "Actives",
+      "suspended": "Suspendues",
+      "demo": "Démo"
+    },
+    "empty": "Aucune organisation trouvée",
+    "emptyHint": "Essayez une autre recherche ou un autre filtre.",
+    "members": "Membres",
+    "region": "Région",
+    "membersCount": "{count} membres"
   },
   "suspension": {
     "reinstate": "Rétablir",
@@ -90,8 +132,6 @@
     "cashoutsDisabled": "Retraits désactivés."
   },
   "wallets": {
-    "link": "Portefeuilles",
-    "back": "Retour aux opérations",
     "title": "Portefeuilles",
     "description": "Soldes détenus pour les organisations, santé du grand livre et contrôle des mouvements sortants.",
     "kpi": {
@@ -198,5 +238,100 @@
         "refunded": "remboursé chez le fournisseur"
       }
     }
+  },
+  "badge": "Admin",
+  "nav": {
+    "label": "Navigation admin",
+    "operations": "Opérations",
+    "overview": "Vue d'ensemble",
+    "organizations": "Organisations",
+    "users": "Utilisateurs",
+    "finance": "Finances",
+    "evidence": "Preuves de paiement",
+    "disputes": "Litiges",
+    "wallets": "Portefeuilles",
+    "rules": "Règles de commission",
+    "compliance": "Conformité",
+    "audit": "Journal d'audit",
+    "pending": "en attente"
+  },
+  "overview": {
+    "title": "Vue d'ensemble",
+    "description": "L'état de la plateforme en un coup d'œil. Les admins ne voient jamais les dossiers des candidats, seulement des agrégats.",
+    "attention": "À traiter",
+    "pending": "En attente",
+    "clear": "À jour",
+    "queues": {
+      "evidence": "Preuves à vérifier",
+      "disputes": "Litiges ouverts",
+      "wallets": "Problèmes de portefeuille"
+    },
+    "marketplace": "Marché",
+    "privacyNote": "Des nombres seulement. Les détails des candidats restent dans leur organisation.",
+    "seeAll": "Tout voir",
+    "newOrgs": "Nouvelles organisations",
+    "recentActivity": "Activité récente"
+  },
+  "filters": {
+    "apply": "Appliquer"
+  },
+  "orgDetail": {
+    "slug": "Identifiant",
+    "country": "Pays",
+    "currency": "Devise",
+    "locale": "Langue",
+    "suspendedSince": "Suspendue depuis le {date} : {reason}",
+    "details": "Détails",
+    "wallet": "Portefeuille",
+    "noWallet": "Aucun solde pour l'instant.",
+    "balance": "{available} disponible · {pending} en attente",
+    "activity": "Activité récente",
+    "members": "Membres ({count})",
+    "membersCaption": "Membres de l'organisation",
+    "role": "Rôle",
+    "joined": "Arrivée",
+    "memberSuspended": "Suspendu",
+    "placements": "Derniers placements",
+    "noPlacements": "Aucun placement pour l'instant.",
+    "side": "Rôle",
+    "partner": "Partenaire",
+    "fee": "Honoraires",
+    "start": "Date de début",
+    "sourcing": "Recruteur du candidat",
+    "jobOwner": "Recruteur du poste"
+  },
+  "users": {
+    "title": "Utilisateurs",
+    "description": "Toutes les personnes ayant un compte, leurs organisations et leur rôle dans chacune.",
+    "search": "Rechercher par nom ou courriel",
+    "filterLabel": "Filtrer les utilisateurs",
+    "filter": {
+      "all": "Tous les utilisateurs",
+      "admins": "Admins de la plateforme",
+      "notOnboarded": "Intégration non terminée"
+    },
+    "empty": "Aucun utilisateur trouvé",
+    "name": "Nom",
+    "organizations": "Organisations",
+    "onboarding": "Intégration",
+    "joined": "Inscription",
+    "platformAdmin": "Admin de la plateforme",
+    "onboarded": "Terminée",
+    "pending": "En attente"
+  },
+  "audit": {
+    "title": "Journal d'audit",
+    "description": "Toutes les actions sensibles de la plateforme, des plus récentes aux plus anciennes.",
+    "search": "Filtrer par action, ex. referral. ou organization.suspended",
+    "filteredBy": "Événements de {org}.",
+    "clear": "Tout afficher",
+    "empty": "Aucun événement",
+    "when": "Quand",
+    "action": "Action",
+    "actor": "Qui",
+    "organization": "Organisation",
+    "entity": "Élément",
+    "system": "Système",
+    "platform": "Plateforme"
   }
 }

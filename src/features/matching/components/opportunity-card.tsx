@@ -223,12 +223,12 @@ function MatchDetail({ opp, orgSlug, headerAction, inPanel = false }: { opp: Opp
           {canAct ? <TriageActions opp={opp} orgSlug={orgSlug} compact /> : null}
           {canAct && opp.triage_state !== "dismissed" ? (
             <Button className="ml-auto flex-1" asChild>
-              <Link href={`/w/${orgSlug}/opportunities/${opp.match_id}`}>{t("card.reviewSubmit")} <ArrowRight className="size-4" aria-hidden /></Link>
+              <Link href={`/workspace/${orgSlug}/opportunities/${opp.match_id}`}>{t("card.reviewSubmit")} <ArrowRight className="size-4" aria-hidden /></Link>
             </Button>
           ) : null}
           {submitted && opp.referral_id ? (
             <Button variant="outline" className="flex-1" asChild>
-              <Link href={`/w/${orgSlug}/referrals/${opp.referral_id}`}>{tg(`labels.referralStatus.${opp.referral_status!}`)}</Link>
+              <Link href={`/workspace/${orgSlug}/referrals/${opp.referral_id}`}>{tg(`labels.referralStatus.${opp.referral_status!}`)}</Link>
             </Button>
           ) : null}
         </div>
@@ -414,7 +414,7 @@ export function OpportunityCard({
         <div className="flex flex-wrap items-center gap-2">
           {ctx === "job" ? (
             <h4 className="text-[15px] font-semibold">
-              <Link href={`/w/${orgSlug}/candidates/${opp.candidate_id}`} className="underline-offset-4 hover:underline">{opp.candidate_name}</Link>
+              <Link href={`/workspace/${orgSlug}/candidates/${opp.candidate_id}`} className="underline-offset-4 hover:underline">{opp.candidate_name}</Link>
             </h4>
           ) : (
             <h3 className={cn("font-semibold", nested ? "text-[15px]" : "text-base")}>{opp.job_title}</h3>
@@ -436,7 +436,7 @@ export function OpportunityCard({
           <p className="mt-2 inline-flex items-center gap-1.5 text-sm">
             <User className="size-3.5 text-muted-foreground" aria-hidden />
             <span className="text-muted-foreground">{t("card.yourCandidate")} </span>
-            <Link href={`/w/${orgSlug}/candidates/${opp.candidate_id}`} className="font-medium underline-offset-4 hover:underline">{opp.candidate_name}</Link>
+            <Link href={`/workspace/${orgSlug}/candidates/${opp.candidate_id}`} className="font-medium underline-offset-4 hover:underline">{opp.candidate_name}</Link>
             {opp.candidate_headline ? <span className="text-muted-foreground"> · {opp.candidate_headline}</span> : null}
           </p>
         ) : null}
@@ -448,7 +448,7 @@ export function OpportunityCard({
       <div className="flex flex-wrap items-center gap-1.5 @4xl:justify-end">
         {submitted && opp.referral_id ? (
           <Button variant="outline" size="sm" asChild>
-            <Link href={`/w/${orgSlug}/referrals/${opp.referral_id}`}>{tg(`labels.referralStatus.${opp.referral_status!}`)}</Link>
+            <Link href={`/workspace/${orgSlug}/referrals/${opp.referral_id}`}>{tg(`labels.referralStatus.${opp.referral_status!}`)}</Link>
           </Button>
         ) : null}
         {canAct ? <TriageActions opp={opp} orgSlug={orgSlug} /> : null}
@@ -461,7 +461,7 @@ export function OpportunityCard({
         )}
         {canAct && opp.triage_state !== "dismissed" ? (
           <Button size="sm" asChild>
-            <Link href={`/w/${orgSlug}/opportunities/${opp.match_id}`}>{t("card.reviewSubmit")}</Link>
+            <Link href={`/workspace/${orgSlug}/opportunities/${opp.match_id}`}>{t("card.reviewSubmit")}</Link>
           </Button>
         ) : null}
       </div>

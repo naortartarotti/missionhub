@@ -131,7 +131,7 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
               </FormField>
               <FormField id="slug" label={t("workspace.url")} error={errors.slug} hint={t("workspace.urlHint")} required>
                 <div className={cn("flex h-10 items-center overflow-hidden rounded-xl border border-input bg-background focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50", errors.slug && "border-danger")}>
-                  <span className="shrink-0 border-r border-input bg-muted px-3 text-sm leading-10 text-muted-foreground">missionhub.app/w/</span>
+                  <span className="shrink-0 border-r border-input bg-muted px-3 text-sm leading-10 text-muted-foreground">missionhub.app/workspace/</span>
                   <input
                     id="slug"
                     value={data.slug}
@@ -182,7 +182,7 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
             <Summary label={t("review.organization")} editLabel={t("review.editOrganization")} onEdit={() => setStep(0)}>{isAgency ? t("review.agency") : t("review.independent")}</Summary>
             <Summary label={t("review.workspace")} editLabel={t("review.editWorkspace")} onEdit={() => setStep(1)}>
               <span className="block font-medium">{data.name}</span>
-              <span className="block text-muted-foreground">missionhub.app/w/{data.slug} · {data.currency}</span>
+              <span className="block text-muted-foreground">missionhub.app/workspace/{data.slug} · {data.currency}</span>
             </Summary>
             <Summary label={t("review.profile")} editLabel={t("review.editProfile")} onEdit={() => setStep(2)}>
               {data.headline || data.specialties.length || data.regions.length ? (

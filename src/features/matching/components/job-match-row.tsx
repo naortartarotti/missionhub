@@ -91,13 +91,13 @@ export function JobMatchRow({
       <div className="flex shrink-0 items-center gap-1">
         {submitted && opp.referral_id ? (
           <Button variant="outline" size="sm" asChild className="relative z-10">
-            <Link href={`/w/${orgSlug}/referrals/${opp.referral_id}`}>{tg(`labels.referralStatus.${opp.referral_status as keyof typeof REFERRAL_STATUS}`)}</Link>
+            <Link href={`/workspace/${orgSlug}/referrals/${opp.referral_id}`}>{tg(`labels.referralStatus.${opp.referral_status as keyof typeof REFERRAL_STATUS}`)}</Link>
           </Button>
         ) : null}
         {canAct ? <TriageActions opp={opp} orgSlug={orgSlug} compact /> : null}
         {canAct && opp.triage_state !== "dismissed" ? (
           <Button size="sm" asChild className="relative z-10 ml-1">
-            <Link href={`/w/${orgSlug}/opportunities/${opp.match_id}`} aria-label={t("row.submitAria", { name: opp.candidate_name })}>
+            <Link href={`/workspace/${orgSlug}/opportunities/${opp.match_id}`} aria-label={t("row.submitAria", { name: opp.candidate_name })}>
               {t("row.submit")}
             </Link>
           </Button>

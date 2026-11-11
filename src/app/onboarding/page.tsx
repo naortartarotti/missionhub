@@ -12,7 +12,7 @@ export default async function OnboardingPage({ searchParams }: PageProps<"/onboa
   const user = await requireUser();
   const sp = await searchParams;
   const memberships = await listMemberships();
-  if (memberships.length > 0 && sp.new !== "1") redirect(`/w/${memberships[0].slug}/overview`);
+  if (memberships.length > 0 && sp.new !== "1") redirect(`/workspace/${memberships[0].slug}/overview`);
   const t = await getT("onboarding");
   return (
     <AuthShell wide footer={t("footer")}>

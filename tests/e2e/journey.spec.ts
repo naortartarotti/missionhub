@@ -31,7 +31,7 @@ test.beforeAll(async () => {
 
 test("A finds the partner opportunity and submits with a recorded authorization", async ({ browser }) => {
   const { ctx, page } = await asUser(browser, a);
-  await page.goto(`/w/${orgA.slug}/opportunities`);
+  await page.goto(`/workspace/${orgA.slug}/opportunities`);
   const card = page.locator("article, li, div").filter({ hasText: JOB_TITLE }).filter({ has: page.getByRole("link", { name: /Review/ }) }).last();
   await expect(card).toContainText(CANDIDATE_NAME);
   await card.getByRole("link", { name: /Review/ }).first().click();
@@ -53,7 +53,7 @@ test("A finds the partner opportunity and submits with a recorded authorization"
 
 test("B sees only the approved snapshot, then accepts", async ({ browser }) => {
   const { ctx, page } = await asUser(browser, b);
-  await page.goto(`/w/${orgB.slug}/referrals`);
+  await page.goto(`/workspace/${orgB.slug}/referrals`);
   // Pending submissions make "Received" the default tab.
   await expect(page.getByRole("link", { name: "Received" })).toHaveAttribute("aria-current", "page");
   // Received referrals are grouped by job: one region per job, one list item per referral.
@@ -74,7 +74,7 @@ test("B sees only the approved snapshot, then accepts", async ({ browser }) => {
   await page.getByRole("button", { name: "Accept" }).click();
   // Accepting moves the referral out of "To review" (the panel closes); the full page shows the agreement status.
   await expect(page.getByRole("link", { name: /In process/ })).toContainText("1");
-  await page.goto(`/w/${orgB.slug}/referrals/${referralId}`);
+  await page.goto(`/workspace/${orgB.slug}/referrals/${referralId}`);
   await expect(page.getByText("Accepted").first()).toBeVisible();
   await expect(page.getByText("Awaiting sourcing recruiter")).toBeVisible();
   await ctx.close();
@@ -82,9 +82,9 @@ test("B sees only the approved snapshot, then accepts", async ({ browser }) => {
 
 test("B cannot open A's candidate record or A's workspace", async ({ browser }) => {
   const { ctx, page } = await asUser(browser, b);
-  await page.goto(`/w/${orgB.slug}/candidates/${candidateId}`);
+  await page.goto(`/workspace/${orgB.slug}/candidates/${candidateId}`);
   await expect(page.getByText("This page isn't available")).toBeVisible();
-  await page.goto(`/w/${orgA.slug}/overview`);
+  await page.goto(`/workspace/${orgA.slug}/overview`);
   await expect(page.getByText("This page isn't available")).toBeVisible();
   await ctx.close();
 });
@@ -128,7 +128,7 @@ const recordEvidence = async (page: import("@playwright/test").Page, button: str
 
 test("B moves the candidate to offer, reports the hire and invoices the client", async ({ browser }) => {
   const { ctx, page } = await asUser(browser, b);
-  await page.goto(referralUrl.replace(`/w/${orgA.slug}/`, `/w/${orgB.slug}/`));
+  await page.goto(referralUrl.replace(`/workspace/${orgA.slug}/`, `/workspace/${orgB.slug}/`));
   await page.getByRole("button", { name: "Move to interviewing" }).click();
   await expect(page.getByText("Interviewing").first()).toBeVisible();
   await page.getByRole("button", { name: "Record offer" }).click();
@@ -158,7 +158,7 @@ test("B moves the candidate to offer, reports the hire and invoices the client",
 test("a platform admin verifies the client payment; shares become payable to the cent", async ({ browser }) => {
   await verifyInAdmin(browser, "E2E-WIRE-CLIENT");
   const { ctx, page } = await asUser(browser, a);
-  await page.goto(placementPath.replace(`/w/${orgB.slug}/`, `/w/${orgA.slug}/`));
+  await page.goto(placementPath.replace(`/workspace/${orgB.slug}/`, `/workspace/${orgA.slug}/`));
   await expect(page.getByText("Commission payable").first()).toBeVisible();
   await expect(page.getByRole("main")).toContainText("9,000.00");
   await expect(page.getByRole("main")).toContainText("2,000.00");
@@ -174,7 +174,7 @@ test("payouts need verification by someone other than the recorder, then the pla
   await recordEvidence(owner.page, "Record payout / remittance", "Platform share remittance", "2000", "E2E-WIRE-PLATFORM");
 
   const sourcer = await asUser(browser, a);
-  await sourcer.page.goto(placementPath.replace(`/w/${orgB.slug}/`, `/w/${orgA.slug}/`));
+  await sourcer.page.goto(placementPath.replace(`/workspace/${orgB.slug}/`, `/workspace/${orgA.slug}/`));
   const payout = sourcer.page.getByRole("listitem").filter({ hasText: "E2E-WIRE-PAYOUT" });
   await payout.getByRole("button", { name: "Verify" }).click();
   await sourcer.page.getByRole("dialog").getByRole("button", { name: "Verify" }).click();

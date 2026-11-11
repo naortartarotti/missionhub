@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils";
 const THEME_ICONS: Record<Theme, LucideIcon> = { light: Sun, dark: Moon, system: Monitor };
 
 /** The signed-in person: profile, language and theme (per browser), platform admin and sign out. */
-export function AccountMenu({ orgSlug, user }: { orgSlug: string; user: { fullName: string; email: string; isPlatformAdmin: boolean } }) {
+export function AccountMenu({ orgSlug, user }: { orgSlug?: string; user: { fullName: string; email: string; isPlatformAdmin: boolean } }) {
   const t = useT("common");
   const ts = useT("settings");
   const tp = useT("profile");
@@ -71,7 +71,7 @@ export function AccountMenu({ orgSlug, user }: { orgSlug: string; user: { fullNa
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="rounded-xl">
-          <Link href={`/w/${orgSlug}/profile`}>
+          <Link href={`/workspace/${orgSlug}/profile`}>
             <UserRound className="size-4" aria-hidden /> {tp("menu")}
           </Link>
         </DropdownMenuItem>

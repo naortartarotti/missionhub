@@ -37,7 +37,7 @@ export function OrgSwitcher({
         <DropdownMenuLabel className="text-xs text-muted-foreground">{t("account.organizations")}</DropdownMenuLabel>
         {memberships.map((m) => (
           <DropdownMenuItem key={m.slug} asChild className="rounded-xl">
-            <Link href={`/w/${m.slug}/overview`}>
+            <Link href={`/workspace/${m.slug}/overview`}>
               <InitialsAvatar name={m.name} className="size-6 rounded-lg text-[10px]" />
               <span className="flex-1 truncate">{m.name}</span>
               {m.isDemo ? <span className="rounded-full bg-tile-yellow px-1.5 text-[10px] font-semibold text-tile-foreground">{t("account.demo")}</span> : null}
@@ -55,12 +55,12 @@ export function OrgSwitcher({
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="rounded-xl">
-          <Link href={`/w/${current.slug}/settings`}>
+          <Link href={`/workspace/${current.slug}/settings`}>
             <Settings className="size-4" aria-hidden /> {t("account.orgSettings")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="rounded-xl">
-          <Link href={`/w/${current.slug}/settings/team`}>
+          <Link href={`/workspace/${current.slug}/settings/team`}>
             <Users className="size-4" aria-hidden /> {t("account.team")}
           </Link>
         </DropdownMenuItem>

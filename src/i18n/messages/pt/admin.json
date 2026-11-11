@@ -1,28 +1,48 @@
 {
   "title": "Admin da plataforma",
   "backToWorkspace": "Voltar ao workspace",
-  "page": {
-    "title": "Operações da plataforma",
-    "description": "Métricas agregadas e filas operacionais. Administradores da plataforma não têm acesso aos registros de candidatos."
-  },
   "kpi": {
     "organizations": "Organizações",
-    "excludingDemo": "Excluindo demo",
     "placements": "Contratações",
-    "evidence": "Comprovantes a verificar",
-    "disputes": "Disputas abertas"
+    "users": "Usuários",
+    "newThisMonth": "+{count} nos últimos 30 dias",
+    "attention": "Precisa de atenção",
+    "attentionHint": "Comprovantes, disputas e carteiras",
+    "activeJobs": "Vagas ativas",
+    "activeCandidates": "Candidatos abertos a matching",
+    "referrals": "Indicações"
   },
   "evidence": {
     "title": "Fila de comprovantes de pagamento",
     "empty": "Nada aguardando verificação.",
     "ref": "ref. {reference}",
     "fees": "taxas {amount}",
-    "ownRecord": "Você registrou este comprovante; outro administrador precisa verificá-lo."
+    "ownRecord": "Você registrou este comprovante; outro administrador precisa verificá-lo.",
+    "description": "Pagamentos de clientes, reembolsos e repasses registrados pelas organizações. Uma segunda pessoa precisa verificar cada um.",
+    "emptyHint": "Novos comprovantes aparecem aqui assim que forem registrados.",
+    "placement": "Colocação",
+    "history": "Revisados recentemente",
+    "noHistory": "Nada revisado ainda.",
+    "kind": "Tipo",
+    "organization": "Registrado por",
+    "amount": "Valor",
+    "reviewed": "Revisado em",
+    "status": {
+      "verified": "Verificado",
+      "rejected": "Rejeitado"
+    }
   },
   "disputes": {
     "title": "Disputas",
     "empty": "Nenhuma disputa aberta.",
-    "openedBy": "Aberta por {org} · {date}"
+    "openedBy": "Aberta por {org} · {date}",
+    "description": "Divergências sobre uma colocação ou o pagamento dela. Resolver uma disputa devolve a colocação ao status anterior.",
+    "emptyHint": "As organizações abrem disputas na página da colocação.",
+    "between": "{source} ↔ {target}",
+    "open": "Aberta",
+    "history": "Encerradas recentemente",
+    "noHistory": "Nenhuma disputa encerrada ainda.",
+    "resolution": "Encerrada em {date}: {text}"
   },
   "revenue": {
     "title": "Receita da plataforma (livro-razão verificado)",
@@ -31,12 +51,21 @@
   },
   "rules": {
     "title": "Regras de comissão",
-    "current": "Padrão atual: v{version} — {sourcing} / {jobOwner} / {platform}. Indicações aceitas mantêm seu snapshot congelado.",
-    "currentTag": "(atual)",
     "sourcing": "Captação %",
     "jobOwner": "Dono da vaga %",
     "platform": "Plataforma %",
-    "publish": "Publicar nova versão"
+    "publish": "Publicar nova versão",
+    "description": "A divisão padrão para novos acordos de colaboração. Cada mudança publica uma nova versão.",
+    "currentTitle": "Divisão atual · v{version}",
+    "none": "Nenhuma regra padrão ainda",
+    "snapshotNote": "Indicações aceitas mantêm a divisão vigente no momento do aceite.",
+    "publishTitle": "Publicar nova versão",
+    "history": "Histórico de versões",
+    "version": "Versão",
+    "split": "Candidato / Vaga / Plataforma",
+    "effective": "Vigência",
+    "retired": "Encerrada",
+    "inForce": "Vigente"
   },
   "orgs": {
     "title": "Organizações",
@@ -51,7 +80,20 @@
     "kind": {
       "agency": "agência",
       "independent": "independente"
-    }
+    },
+    "description": "Todos os workspaces da plataforma: membros, região e status de acesso.",
+    "search": "Buscar por nome ou slug",
+    "filter": {
+      "all": "Todas as organizações",
+      "active": "Ativas",
+      "suspended": "Suspensas",
+      "demo": "Demo"
+    },
+    "empty": "Nenhuma organização encontrada",
+    "emptyHint": "Tente outra busca ou filtro.",
+    "members": "Membros",
+    "region": "Região",
+    "membersCount": "{count} membros"
   },
   "suspension": {
     "reinstate": "Reativar",
@@ -90,8 +132,6 @@
     "cashoutsDisabled": "Saques desativados."
   },
   "wallets": {
-    "link": "Carteiras",
-    "back": "Voltar às operações",
     "title": "Carteiras",
     "description": "Saldos mantidos para as organizações, saúde do ledger e controle das saídas.",
     "kpi": {
@@ -198,5 +238,100 @@
         "refunded": "estornado no provedor"
       }
     }
+  },
+  "badge": "Admin",
+  "nav": {
+    "label": "Navegação do admin",
+    "operations": "Operação",
+    "overview": "Visão geral",
+    "organizations": "Organizações",
+    "users": "Usuários",
+    "finance": "Financeiro",
+    "evidence": "Comprovantes",
+    "disputes": "Disputas",
+    "wallets": "Carteiras",
+    "rules": "Regras de comissão",
+    "compliance": "Conformidade",
+    "audit": "Auditoria",
+    "pending": "pendentes"
+  },
+  "overview": {
+    "title": "Visão geral",
+    "description": "A saúde da plataforma num relance. Admins nunca veem dados de candidatos, apenas agregados.",
+    "attention": "Precisa de atenção",
+    "pending": "Pendente",
+    "clear": "Em dia",
+    "queues": {
+      "evidence": "Comprovantes a verificar",
+      "disputes": "Disputas abertas",
+      "wallets": "Problemas em carteiras"
+    },
+    "marketplace": "Marketplace",
+    "privacyNote": "Somente contagens. Os dados dos candidatos ficam com a organização deles.",
+    "seeAll": "Ver tudo",
+    "newOrgs": "Organizações recentes",
+    "recentActivity": "Atividade recente"
+  },
+  "filters": {
+    "apply": "Aplicar"
+  },
+  "orgDetail": {
+    "slug": "Slug",
+    "country": "País",
+    "currency": "Moeda",
+    "locale": "Idioma",
+    "suspendedSince": "Suspensa desde {date}: {reason}",
+    "details": "Detalhes",
+    "wallet": "Carteira",
+    "noWallet": "Sem saldo na carteira ainda.",
+    "balance": "{available} disponível · {pending} pendente",
+    "activity": "Atividade recente",
+    "members": "Membros ({count})",
+    "membersCaption": "Membros da organização",
+    "role": "Papel",
+    "joined": "Entrou em",
+    "memberSuspended": "Suspenso",
+    "placements": "Últimas colocações",
+    "noPlacements": "Nenhuma colocação ainda.",
+    "side": "Lado",
+    "partner": "Parceiro",
+    "fee": "Fee",
+    "start": "Início",
+    "sourcing": "Recrutador do candidato",
+    "jobOwner": "Recrutador da vaga"
+  },
+  "users": {
+    "title": "Usuários",
+    "description": "Todas as pessoas com conta, as organizações de que fazem parte e o papel em cada uma.",
+    "search": "Buscar por nome ou e-mail",
+    "filterLabel": "Filtrar usuários",
+    "filter": {
+      "all": "Todos os usuários",
+      "admins": "Admins da plataforma",
+      "notOnboarded": "Onboarding pendente"
+    },
+    "empty": "Nenhum usuário encontrado",
+    "name": "Nome",
+    "organizations": "Organizações",
+    "onboarding": "Onboarding",
+    "joined": "Cadastro",
+    "platformAdmin": "Admin da plataforma",
+    "onboarded": "Concluído",
+    "pending": "Pendente"
+  },
+  "audit": {
+    "title": "Auditoria",
+    "description": "Todas as ações sensíveis da plataforma, das mais recentes para as mais antigas.",
+    "search": "Filtrar por ação, ex.: referral. ou organization.suspended",
+    "filteredBy": "Mostrando eventos de {org}.",
+    "clear": "Mostrar tudo",
+    "empty": "Nenhum evento",
+    "when": "Quando",
+    "action": "Ação",
+    "actor": "Quem",
+    "organization": "Organização",
+    "entity": "Registro",
+    "system": "Sistema",
+    "platform": "Plataforma"
   }
 }

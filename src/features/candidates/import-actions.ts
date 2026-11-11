@@ -100,7 +100,7 @@ export async function commitImport(orgSlug: string, _: ActionResult<{ inserted: 
     if (!rows.length) return { ok: false, error: msg("candidates.errors.csvNothing") };
     const { error } = await ctx.db.from("candidates").insert(rows);
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/candidates`);
+    revalidatePath(`/workspace/${orgSlug}/candidates`);
     return { ok: true, data: { inserted: rows.length }, message: msg("candidates.success.imported", { count: rows.length }) };
   });
 }

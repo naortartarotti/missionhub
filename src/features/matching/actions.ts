@@ -28,7 +28,7 @@ export async function setMatchTriage(orgSlug: string, input: { matchId: string; 
       p_reason: v.state === "dismissed" ? (v.reason ?? "other") : undefined,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}`, "layout");
+    revalidatePath(`/workspace/${orgSlug}`, "layout");
     return { ok: true };
   });
 }

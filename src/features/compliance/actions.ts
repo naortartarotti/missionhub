@@ -30,7 +30,7 @@ export async function logPrivacyRequest(orgSlug: string, _: ActionResult | null,
     created_by: ctx.userId,
   });
   if (error) return toActionError(error);
-  revalidatePath(`/w/${orgSlug}/settings/privacy`);
+  revalidatePath(`/workspace/${orgSlug}/settings/privacy`);
   return { ok: true, message: msg("settings.privacy.messages.logged") };
   });
 }
@@ -54,7 +54,7 @@ export async function updatePrivacyRequest(orgSlug: string, input: { id: string;
       .select("id");
     if (error) return toActionError(error);
     if (!data?.length) return { ok: false, error: msg("settings.privacy.errors.notFound") };
-    revalidatePath(`/w/${orgSlug}/settings/privacy`);
+    revalidatePath(`/workspace/${orgSlug}/settings/privacy`);
     return { ok: true, message: msg("settings.privacy.messages.updated") };
   });
 }

@@ -13,7 +13,7 @@
 ## Modular monolith
 ```
 src/
-  app/                 routes only (thin); /w/[orgSlug]/… workspace, /admin platform area
+  app/                 routes only (thin); /workspace/[orgSlug]/… workspace, /admin platform area
   components/          ui (shadcn), layout, shared
   features/<domain>/   schemas · actions (server) · queries (server) · domain (pure) · components (client) · infrastructure
   server/              env, auth/context, authorization, supabase clients, queue, integrations

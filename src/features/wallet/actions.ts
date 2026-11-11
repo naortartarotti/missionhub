@@ -41,7 +41,7 @@ export async function payPlacementCommission(orgSlug: string, input: { placement
     const { data: charge, error: cErr } = await ctx.db.from("placement_charges").select("id, placement_id, sourcing_minor, platform_minor, currency").eq("id", chargeId).single();
     if (cErr) return toActionError(cErr);
 
-    const back = `${env.NEXT_PUBLIC_APP_URL}/w/${ctx.organizationSlug}/wallet/placements/${charge.placement_id}`;
+    const back = `${env.NEXT_PUBLIC_APP_URL}/workspace/${ctx.organizationSlug}/wallet/placements/${charge.placement_id}`;
     try {
       const session = await createCheckoutSession({
         chargeId: charge.id,
@@ -80,7 +80,7 @@ export async function startPayoutSetup(orgSlug: string): Promise<ActionResult<{ 
         if (sErr) return toActionError(sErr);
         accountId = stored;
       }
-      const wallet = `${env.NEXT_PUBLIC_APP_URL}/w/${ctx.organizationSlug}/wallet`;
+      const wallet = `${env.NEXT_PUBLIC_APP_URL}/workspace/${ctx.organizationSlug}/wallet`;
       const link = await createAccountOnboardingLink(accountId, `${wallet}?payouts=return`, `${wallet}?payouts=refresh`);
       return { ok: true, data: { url: link.url } };
     } catch (e) {
@@ -112,7 +112,7 @@ export async function requestCashout(orgSlug: string, _: ActionResult | null, fo
       p_org: ctx.organizationId, p_currency: v.currency, p_amount_minor: amount, p_idempotency_key: v.idempotencyKey,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/wallet`);
+    revalidatePath(`/workspace/${orgSlug}/wallet`);
     return { ok: true, message: msg("wallet.payouts.requested") };
   });
 }

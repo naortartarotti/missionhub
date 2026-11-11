@@ -48,7 +48,7 @@ export async function createOrganization(_: ActionResult | null, formData: FormD
       const { error: cErr } = await supabase.from("organizations").update({ default_currency: parsed.data.currency }).eq("id", orgId as string);
       if (cErr) return toActionError(cErr);
     }
-    redirect(`/w/${parsed.data.slug}/overview`);
+    redirect(`/workspace/${parsed.data.slug}/overview`);
   });
 }
 
@@ -69,7 +69,7 @@ export async function inviteMember(
       p_role: parsed.data.role,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/settings/team`);
+    revalidatePath(`/workspace/${orgSlug}/settings/team`);
     const link = `${env.NEXT_PUBLIC_APP_URL}/invite/${token}`;
     if (!integrations.email) {
       return { ok: true, data: { link, emailed: false }, message: msg("onboarding.messages.invitationCreated") };
@@ -111,7 +111,7 @@ export async function revokeInvitation(orgSlug: string, invitationId: string): P
       .eq("organization_id", ctx.organizationId)
       .eq("status", "pending");
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/settings/team`);
+    revalidatePath(`/workspace/${orgSlug}/settings/team`);
     return { ok: true, message: msg("onboarding.messages.invitationRevoked") };
   });
 }
@@ -135,7 +135,7 @@ export async function updateMember(orgSlug: string, input: { membershipId: strin
     if (parsed.data.status) patch.status = parsed.data.status;
     const { error } = await ctx.db.from("organization_memberships").update(patch).eq("id", parsed.data.membershipId).eq("organization_id", ctx.organizationId);
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/settings/team`);
+    revalidatePath(`/workspace/${orgSlug}/settings/team`);
     return { ok: true, message: msg("onboarding.messages.memberUpdated") };
   });
 }
@@ -148,7 +148,7 @@ export async function acceptInvitation(token: string): Promise<ActionResult> {
     await rateLimit(supabase, "org.accept_invitation", 10, 600);
     const { data: slug, error } = await supabase.rpc("accept_invitation", { p_token: t });
     if (error) return toActionError(error);
-    redirect(`/w/${slug}/overview`);
+    redirect(`/workspace/${slug}/overview`);
   });
 }
 
@@ -162,7 +162,7 @@ export async function updateOrganization(orgSlug: string, _: ActionResult | null
     if (!/^[A-Z]{3}$/.test(currency)) return { ok: false, error: msg("onboarding.errors.currencyInvalid") };
     const { error } = await ctx.db.from("organizations").update({ name, default_currency: currency }).eq("id", ctx.organizationId);
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}`, "layout");
+    revalidatePath(`/workspace/${orgSlug}`, "layout");
     return { ok: true, message: msg("onboarding.messages.organizationUpdated") };
   });
 }

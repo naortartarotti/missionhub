@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("protected workspace routes redirect to sign-in", async ({ page }) => {
-  await page.goto("/w/anything/overview");
+  await page.goto("/workspace/anything/overview");
   await expect(page).toHaveURL(/\/sign-in/);
 });
 

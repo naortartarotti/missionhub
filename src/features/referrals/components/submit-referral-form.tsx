@@ -177,7 +177,7 @@ export function SubmitReferralForm({
                 </span>
               )}
               {!preview ? (
-                <Link href={`/w/${orgSlug}/candidates/${c.id}`} className="mb-1 text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+                <Link href={`/workspace/${orgSlug}/candidates/${c.id}`} className="mb-1 text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
                   {t("composer.openProfile")}
                 </Link>
               ) : null}

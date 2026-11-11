@@ -58,7 +58,7 @@ test("new users set up a workspace through the step-by-step onboarding", async (
   await expect(page.getByLabel("Headline")).toHaveValue(/Data recruiter/);
   await page.getByRole("button", { name: "Continue" }).click();
   await page.getByRole("button", { name: "Create workspace" }).click();
-  await page.waitForURL(`**/w/${slug}/overview`);
+  await page.waitForURL(`**/workspace/${slug}/overview`);
 
   const db = admin();
   const { data: org } = await db.from("organizations").select("kind, default_currency, name").eq("slug", slug).single();

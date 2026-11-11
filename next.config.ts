@@ -25,9 +25,15 @@ const nextConfig: NextConfig = {
   async redirects() {
     // Commissions moved into the Wallet page. Notifications already stored in the database link
     // to /commissions/<placement>, so these must stay. Query strings are passed through.
+    // The workspace moved from /w/… to /workspace/…; old links (emails, bookmarks, Stripe return
+    // URLs of in-flight checkouts) keep working through the catch-all below. Order matters:
+    // the specific /w/…/commissions rules go first so they resolve in a single hop.
     return [
-      { source: "/w/:orgSlug/commissions", destination: "/w/:orgSlug/wallet", permanent: true },
-      { source: "/w/:orgSlug/commissions/:placementId", destination: "/w/:orgSlug/wallet/placements/:placementId", permanent: true },
+      { source: "/w/:orgSlug/commissions", destination: "/workspace/:orgSlug/wallet", permanent: true },
+      { source: "/w/:orgSlug/commissions/:placementId", destination: "/workspace/:orgSlug/wallet/placements/:placementId", permanent: true },
+      { source: "/workspace/:orgSlug/commissions", destination: "/workspace/:orgSlug/wallet", permanent: true },
+      { source: "/workspace/:orgSlug/commissions/:placementId", destination: "/workspace/:orgSlug/wallet/placements/:placementId", permanent: true },
+      { source: "/w/:path*", destination: "/workspace/:path*", permanent: true },
     ];
   },
   async headers() {

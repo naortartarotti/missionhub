@@ -64,8 +64,8 @@ export async function createJob(orgSlug: string, _: ActionResult | null, formDat
       .select("id")
       .single();
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/jobs`);
-    redirect(`/w/${orgSlug}/jobs/${data.id}?created=1`);
+    revalidatePath(`/workspace/${orgSlug}/jobs`);
+    redirect(`/workspace/${orgSlug}/jobs/${data.id}?created=1`);
   });
 }
 
@@ -79,8 +79,8 @@ export async function updateJob(orgSlug: string, jobId: string, _: ActionResult 
     const { data, error } = await ctx.db.from("jobs").update(toRow(parsed.data)).eq("id", jobId).eq("organization_id", ctx.organizationId).select("id");
     if (error) return toActionError(error);
     if (!data?.length) return { ok: false, error: msg("jobs.errors.notFound") };
-    revalidatePath(`/w/${orgSlug}/jobs/${jobId}`);
-    redirect(`/w/${orgSlug}/jobs/${jobId}?updated=1`);
+    revalidatePath(`/workspace/${orgSlug}/jobs/${jobId}`);
+    redirect(`/workspace/${orgSlug}/jobs/${jobId}?updated=1`);
   });
 }
 
@@ -104,10 +104,10 @@ export async function setJobStatus(orgSlug: string, input: { jobId: string; stat
       const { data: n, error: dErr } = await ctx.db.rpc("decline_pending_for_job", { p_job: parsed.data.jobId });
       if (dErr) return toActionError(dErr);
       released = n ?? 0;
-      if (released) revalidatePath(`/w/${orgSlug}/referrals`);
+      if (released) revalidatePath(`/workspace/${orgSlug}/referrals`);
     }
-    revalidatePath(`/w/${orgSlug}/jobs/${parsed.data.jobId}`);
-    revalidatePath(`/w/${orgSlug}/jobs`);
+    revalidatePath(`/workspace/${orgSlug}/jobs/${parsed.data.jobId}`);
+    revalidatePath(`/workspace/${orgSlug}/jobs`);
     return {
       ok: true,
       message:

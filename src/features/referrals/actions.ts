@@ -56,9 +56,9 @@ export async function submitReferral(orgSlug: string, _: ActionResult | null, fo
       p_note: v.note || undefined,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/opportunities`);
-    revalidatePath(`/w/${orgSlug}/referrals`);
-    redirect(`/w/${orgSlug}/referrals/${referralId}?submitted=1`);
+    revalidatePath(`/workspace/${orgSlug}/opportunities`);
+    revalidatePath(`/workspace/${orgSlug}/referrals`);
+    redirect(`/workspace/${orgSlug}/referrals/${referralId}?submitted=1`);
   });
 }
 
@@ -76,9 +76,9 @@ export async function transitionReferral(orgSlug: string, input: { referralId: s
       p_acting_org: ctx.organizationId,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/referrals/${parsed.data.referralId}`);
-    revalidatePath(`/w/${orgSlug}/referrals`);
-    revalidatePath(`/w/${orgSlug}/pipeline`);
+    revalidatePath(`/workspace/${orgSlug}/referrals/${parsed.data.referralId}`);
+    revalidatePath(`/workspace/${orgSlug}/referrals`);
+    revalidatePath(`/workspace/${orgSlug}/pipeline`);
     return { ok: true, message: msg("referrals.success.statusUpdated") };
   });
 }
@@ -103,9 +103,9 @@ export async function reviewReferral(
       p_acting_org: ctx.organizationId,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/referrals`);
-    revalidatePath(`/w/${orgSlug}/referrals/${v.referralId}`);
-    revalidatePath(`/w/${orgSlug}/pipeline`);
+    revalidatePath(`/workspace/${orgSlug}/referrals`);
+    revalidatePath(`/workspace/${orgSlug}/referrals/${v.referralId}`);
+    revalidatePath(`/workspace/${orgSlug}/pipeline`);
     return { ok: true, message: msg(`referrals.queue.done.${v.to}`) };
   });
 }
@@ -120,7 +120,7 @@ export async function declineReferrals(orgSlug: string, input: { ids: string[]; 
     await rateLimit(ctx.db, "referral.bulk_decline", 30, 600);
     const { data, error } = await ctx.db.rpc("decline_referrals", { p_ids: parsed.data.ids, p_reason_code: parsed.data.reasonCode, p_note: parsed.data.note });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/referrals`);
+    revalidatePath(`/workspace/${orgSlug}/referrals`);
     return { ok: true, data: { count: data ?? 0 }, message: msg("referrals.queue.done.bulk", { count: data ?? 0 }) };
   });
 }
@@ -137,7 +137,7 @@ export async function sendReferralMessage(orgSlug: string, referralId: string, _
     if (!side) return { ok: false, error: msg("errors.forbidden") };
     const { error } = await ctx.db.from("referral_messages").insert({ referral_id: referralId, author_id: ctx.userId, author_side: side, body: parsed.data.body });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/referrals/${referralId}`);
+    revalidatePath(`/workspace/${orgSlug}/referrals/${referralId}`);
     return { ok: true };
   });
 }
@@ -149,7 +149,7 @@ export async function confirmAgreement(orgSlug: string, referralId: string): Pro
     parse(id, referralId);
     const { error } = await ctx.db.rpc("confirm_agreement", { p_referral: referralId });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/referrals/${referralId}`);
+    revalidatePath(`/workspace/${orgSlug}/referrals/${referralId}`);
     return { ok: true, message: msg("referrals.success.agreementConfirmed") };
   });
 }
@@ -171,8 +171,8 @@ export async function reportHire(orgSlug: string, _: ActionResult | null, formDa
       p_guarantee_days: parsed.data.guaranteeDays,
     });
     if (error) return toActionError(error);
-    revalidatePath(`/w/${orgSlug}/referrals/${parsed.data.referralId}`);
-    redirect(`/w/${orgSlug}/wallet/placements/${placementId}?created=1`);
+    revalidatePath(`/workspace/${orgSlug}/referrals/${parsed.data.referralId}`);
+    redirect(`/workspace/${orgSlug}/wallet/placements/${placementId}?created=1`);
   });
 }
 

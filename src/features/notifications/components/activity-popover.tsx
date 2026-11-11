@@ -72,7 +72,7 @@ export function ActivityPopover({
         )}
         <div className="border-t border-border/60 p-2">
           <Button variant="ghost" className="w-full" asChild>
-            <Link href={`/w/${orgSlug}/notifications`} onClick={() => setOpen(false)}>{t("viewAll")}</Link>
+            <Link href={`/workspace/${orgSlug}/notifications`} onClick={() => setOpen(false)}>{t("viewAll")}</Link>
           </Button>
         </div>
       </PopoverContent>

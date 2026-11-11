@@ -282,7 +282,7 @@ function Card({
     >
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
-          <Link href={`/w/${orgSlug}/referrals/${card.id}`} className="block text-[15px] font-semibold leading-snug break-words underline-offset-4 hover:underline">
+          <Link href={`/workspace/${orgSlug}/referrals/${card.id}`} className="block text-[15px] font-semibold leading-snug break-words underline-offset-4 hover:underline">
             {card.candidateName}
           </Link>
           {subtitle ? <p className="mt-1 text-sm leading-snug break-words text-muted-foreground">{subtitle}</p> : null}
@@ -301,14 +301,14 @@ function Card({
                 </DropdownMenuItem>
               ) : null}
               <DropdownMenuItem asChild>
-                <Link href={`/w/${orgSlug}/referrals/${card.id}`}>
+                <Link href={`/workspace/${orgSlug}/referrals/${card.id}`}>
                   <ExternalLink className="size-4" aria-hidden />
                   {t("openReferral")}
                 </Link>
               </DropdownMenuItem>
               {card.placementId ? (
                 <DropdownMenuItem asChild>
-                  <Link href={`/w/${orgSlug}/wallet/placements/${card.placementId}`}>
+                  <Link href={`/workspace/${orgSlug}/wallet/placements/${card.placementId}`}>
                     <PartyPopper className="size-4" aria-hidden />
                     {t("openPlacement")}
                   </Link>

@@ -11,5 +11,5 @@ export default async function Home() {
   if (!user) return <HomePage />;
   const memberships = await listMemberships();
   if (memberships.length === 0) redirect("/onboarding");
-  redirect(`/w/${memberships[0].slug}/overview`);
+  redirect(`/workspace/${memberships[0].slug}/overview`);
 }

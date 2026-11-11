@@ -82,7 +82,7 @@ export async function waitForMatch(candidateId: string, jobId: string) {
     .toBeTruthy();
 }
 
-export async function signIn(page: Page, acct: Account, landing: RegExp = /\/w\/[^/]+\/overview/) {
+export async function signIn(page: Page, acct: Account, landing: RegExp = /\/workspace\/[^/]+\/overview/) {
   await page.goto("/sign-in");
   await page.getByLabel("Work email").fill(acct.email);
   await page.getByLabel("Password").fill(acct.password);
