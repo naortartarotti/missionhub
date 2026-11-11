@@ -93,7 +93,38 @@
     "arrangement": "Modalités",
     "more": "Plus d'actions",
     "privacyRecord": "Dossier de confidentialité",
-    "about": "À propos"
+    "about": "À propos",
+    "tabs": {
+      "label": "Sections du candidat",
+      "profile": "Profil",
+      "opportunities": "Opportunités",
+      "referrals": "Recommandations",
+      "documents": "Documents",
+      "privacy": "Confidentialité"
+    },
+    "showMore": "Voir plus",
+    "showLess": "Voir moins",
+    "noSummary": "Aucun résumé professionnel pour l'instant.",
+    "noSummaryEdit": "Aucun résumé professionnel pour l'instant. Ajoutez-en un depuis Modifier ; il aide les partenaires à comprendre le profil.",
+    "workPreferences": "Préférences de travail",
+    "back": "Retour aux candidats",
+    "pageTitle": "Profil du candidat",
+    "contactTitle": "Coordonnées",
+    "country": "Pays",
+    "ownedBy": "Recruteur : {name}",
+    "contactName": "Contacter {name}",
+    "bestMatch": "Meilleure correspondance {score}",
+    "mobilityTitle": "Mobilité et postes à l'international",
+    "travel": "Déplacements",
+    "relocation": "Déménagement",
+    "destinations": "Préférences : {list}",
+    "passport": "Passeport",
+    "workAuthorization": "Autorisé à travailler au/en",
+    "mobilityPrivacy": "Visible par votre organisation seulement. Non utilisé pour les correspondances et jamais partagé sans votre choix.",
+    "experience": "Expérience",
+    "noExperience": "Aucune expérience consignée. L'import d'un CV la remplit.",
+    "present": "aujourd'hui",
+    "workAuthorizationLine": "Autorisé à travailler : {list}"
   },
   "form": {
     "identityTitle": "Identité et coordonnées",
@@ -151,7 +182,21 @@
     "salaryRange": "Prétentions salariales",
     "salaryFrom": "Min",
     "salaryTo": "Max",
-    "moreSource": "Détail de la source, base légale et notes"
+    "moreSource": "Détail de la source, base légale et notes",
+    "linkedin": "LinkedIn",
+    "postalCode": "Code postal",
+    "postalCodeHint": "Seulement pour afficher une adresse abrégée. Jamais partagé.",
+    "mobilityTitle": "Mobilité et postes à l'international",
+    "mobilityBody": "Pour savoir qui peut accepter un poste avec déplacements, déménagement ou travail à l'étranger. Visible par votre organisation seulement; non utilisé pour les correspondances.",
+    "travel": "Disponible pour voyager",
+    "relocation": "Prêt à déménager",
+    "destinations": "Destinations souhaitées",
+    "destinationsHint": "Pays où il déménagerait. Laissez vide si tout lui convient.",
+    "passport": "Passeport",
+    "passportCountries": "Passeport délivré par",
+    "passportCountriesHint": "Utile pour les visas. Laissez vide si vous ne savez pas.",
+    "workAuthorization": "Autorisé à travailler au/en",
+    "workAuthorizationHint": "Pays où il peut travailler sans parrainage."
   },
   "setup": {
     "toast": {
@@ -243,7 +288,7 @@
       "confirm": "Confirmer"
     },
     "fileLabel": "Fichier CSV (500 lignes max., 2 Mo)",
-    "columnsHint": "Colonnes : {columns}. Utilisez des points-virgules dans une cellule pour les listes (p. ex. {example}). Seule la colonne {required} est obligatoire.",
+    "columnsHint": "Colonnes : {columns}. Utilisez des points-virgules dans une cellule pour les listes (p. ex. {example}). Seule la colonne {required} est obligatoire. travel : none/occasional/frequent · relocation : none/region/country/international · pays en codes ISO (CA;PT) · has_passport : yes/no.",
     "validating": "Validation…",
     "preview": "Prévisualiser l'importation",
     "ready": {
@@ -287,7 +332,8 @@
     "invalidOption": "Choisissez l'une des options proposées",
     "currency": "Utilisez un code de devise à 3 lettres (p. ex. CAD)",
     "scope": "Décrivez la portée",
-    "evidence": "Décrivez comment et quand l'autorisation a été obtenue"
+    "evidence": "Décrivez comment et quand l'autorisation a été obtenue",
+    "linkedin": "Utilisez un lien de profil LinkedIn (https://www.linkedin.com/…)."
   },
   "errors": {
     "notFound": "Candidat introuvable.",
@@ -309,7 +355,9 @@
     "csvEmpty": "Le fichier est vide.",
     "csvFullName": "Une colonne « full_name » est obligatoire.",
     "csvTooMany": "Importez au plus {max} lignes à la fois.",
-    "csvDuplicate": "Doublon possible : un candidat avec ce courriel existe déjà dans votre organisation"
+    "csvDuplicate": "Doublon possible : un candidat avec ce courriel existe déjà dans votre organisation",
+    "photoType": "Utilisez une image JPG, PNG ou WebP.",
+    "photoSize": "La photo doit faire 2 Mo ou moins."
   },
   "success": {
     "activated": "Candidat activé. Le jumelage s'exécute en arrière-plan.",
@@ -321,7 +369,9 @@
     "imported": {
       "one": "{count} candidat importé comme brouillon. Vérifiez-le et consignez l'autorisation avant de l'activer.",
       "other": "{count} candidats importés comme brouillons. Vérifiez chacun et consignez les autorisations avant de les activer."
-    }
+    },
+    "photoUpdated": "Photo mise à jour.",
+    "photoRemoved": "Photo retirée."
   },
   "resume": {
     "title": "Partir d'un CV",
@@ -363,5 +413,30 @@
     "urlLabel": "Lien vers le CV ou le profil",
     "urlPlaceholder": "https://janedoe.dev ou un lien vers un PDF",
     "urlHint": "Portfolio, site personnel, GitHub, un PDF en ligne ou un fichier Google Drive partagé. LinkedIn bloque la lecture automatique — utilisez « Enregistrer au format PDF » sur le profil et importez le fichier."
+  },
+  "mobility": {
+    "travel": {
+      "none": "Pas disponible pour voyager",
+      "occasional": "Déplacements occasionnels",
+      "frequent": "Déplacements fréquents"
+    },
+    "relocation": {
+      "none": "Ne souhaite pas déménager",
+      "region": "Une autre province ou un autre État",
+      "country": "Partout dans son pays",
+      "international": "Un autre pays"
+    },
+    "passport": {
+      "yes": "A un passeport valide",
+      "no": "Pas de passeport valide"
+    }
+  },
+  "photo": {
+    "alt": "Photo de {name}",
+    "add": "Ajouter une photo",
+    "change": "Changer la photo",
+    "remove": "Retirer la photo",
+    "updated": "Photo mise à jour.",
+    "removed": "Photo retirée."
   }
 }

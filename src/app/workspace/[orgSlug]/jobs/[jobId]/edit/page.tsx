@@ -52,6 +52,9 @@ export default async function EditJobPage({ params }: PageProps<"/workspace/[org
           shareDescription: j.share_description,
           shareSalary: j.share_salary,
           shareLocation: j.share_location,
+          travelRequirement: j.travel_requirement ?? "",
+          visaSponsorship: j.visa_sponsorship,
+          relocationSupport: j.relocation_support,
           shareFee: j.share_fee,
         }}
       />

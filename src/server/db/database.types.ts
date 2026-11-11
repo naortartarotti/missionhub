@@ -319,6 +319,15 @@ export type Database = {
       }
       candidates: {
         Row: {
+          has_passport: boolean | null
+          linkedin_url: string | null
+          passport_countries: string[]
+          photo_path: string | null
+          postal_code: string | null
+          relocation_destinations: string[]
+          relocation_scope: string | null
+          travel_availability: string | null
+          work_authorization: string[]
           anonymized_at: string | null
           available_from: string | null
           created_at: string
@@ -356,6 +365,15 @@ export type Database = {
           years_experience: number | null
         }
         Insert: {
+          has_passport?: boolean | null
+          linkedin_url?: string | null
+          passport_countries?: string[]
+          photo_path?: string | null
+          postal_code?: string | null
+          relocation_destinations?: string[]
+          relocation_scope?: string | null
+          travel_availability?: string | null
+          work_authorization?: string[]
           anonymized_at?: string | null
           available_from?: string | null
           created_at?: string
@@ -393,6 +411,15 @@ export type Database = {
           years_experience?: number | null
         }
         Update: {
+          has_passport?: boolean | null
+          linkedin_url?: string | null
+          passport_countries?: string[]
+          photo_path?: string | null
+          postal_code?: string | null
+          relocation_destinations?: string[]
+          relocation_scope?: string | null
+          travel_availability?: string | null
+          work_authorization?: string[]
           anonymized_at?: string | null
           available_from?: string | null
           created_at?: string
@@ -797,6 +824,9 @@ export type Database = {
       }
       jobs: {
         Row: {
+          relocation_support: boolean
+          travel_requirement: string | null
+          visa_sponsorship: boolean
           accepts_external_referrals: boolean
           client_confidential: boolean
           client_name: string | null
@@ -830,6 +860,9 @@ export type Database = {
           work_arrangement: Database["public"]["Enums"]["work_arrangement"]
         }
         Insert: {
+          relocation_support?: boolean
+          travel_requirement?: string | null
+          visa_sponsorship?: boolean
           accepts_external_referrals?: boolean
           client_confidential?: boolean
           client_name?: string | null
@@ -863,6 +896,9 @@ export type Database = {
           work_arrangement?: Database["public"]["Enums"]["work_arrangement"]
         }
         Update: {
+          relocation_support?: boolean
+          travel_requirement?: string | null
+          visa_sponsorship?: boolean
           accepts_external_referrals?: boolean
           client_confidential?: boolean
           client_name?: string | null
@@ -1769,21 +1805,21 @@ export type Database = {
       referral_candidate_links: {
         Row: {
           candidate_id: string
-          consent_id: string
+          consent_id: string | null
           created_at: string
           organization_id: string
           referral_id: string
         }
         Insert: {
           candidate_id: string
-          consent_id: string
+          consent_id?: string | null
           created_at?: string
           organization_id: string
           referral_id: string
         }
         Update: {
           candidate_id?: string
-          consent_id?: string
+          consent_id?: string | null
           created_at?: string
           organization_id?: string
           referral_id?: string
@@ -1812,6 +1848,113 @@ export type Database = {
           },
           {
             foreignKeyName: "referral_candidate_links_referral_id_fkey"
+            columns: ["referral_id"]
+            isOneToOne: true
+            referencedRelation: "referrals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      referral_candidate_requests: {
+        Row: {
+          candidate_id: string
+          channel: string
+          confirmed_at: string | null
+          consent_id: string | null
+          created_at: string
+          decline_reason: string | null
+          declined_at: string | null
+          destination: string
+          expires_at: string
+          last_attempt_at: string | null
+          last_send_error: string | null
+          note: string | null
+          organization_id: string
+          profile_changes: string[]
+          referral_id: string
+          requested_document_ids: string[]
+          requested_fields: string[]
+          response_meta: Json
+          send_count: number
+          sent_at: string | null
+          token_hash: string
+          updated_at: string
+          viewed_at: string | null
+        }
+        Insert: {
+          candidate_id: string
+          channel?: string
+          confirmed_at?: string | null
+          consent_id?: string | null
+          created_at?: string
+          decline_reason?: string | null
+          declined_at?: string | null
+          destination: string
+          expires_at: string
+          last_attempt_at?: string | null
+          last_send_error?: string | null
+          note?: string | null
+          organization_id: string
+          profile_changes?: string[]
+          referral_id: string
+          requested_document_ids?: string[]
+          requested_fields: string[]
+          response_meta?: Json
+          send_count?: number
+          sent_at?: string | null
+          token_hash: string
+          updated_at?: string
+          viewed_at?: string | null
+        }
+        Update: {
+          candidate_id?: string
+          channel?: string
+          confirmed_at?: string | null
+          consent_id?: string | null
+          created_at?: string
+          decline_reason?: string | null
+          declined_at?: string | null
+          destination?: string
+          expires_at?: string
+          last_attempt_at?: string | null
+          last_send_error?: string | null
+          note?: string | null
+          organization_id?: string
+          profile_changes?: string[]
+          referral_id?: string
+          requested_document_ids?: string[]
+          requested_fields?: string[]
+          response_meta?: Json
+          send_count?: number
+          sent_at?: string | null
+          token_hash?: string
+          updated_at?: string
+          viewed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referral_candidate_requests_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_candidate_requests_consent_id_fkey"
+            columns: ["consent_id"]
+            isOneToOne: false
+            referencedRelation: "candidate_consents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_candidate_requests_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_candidate_requests_referral_id_fkey"
             columns: ["referral_id"]
             isOneToOne: true
             referencedRelation: "referrals"
@@ -2415,6 +2558,7 @@ export type Database = {
         Args: { p_error: string; p_id: string }
         Returns: undefined
       }
+      get_candidate_request: { Args: { p_token: string }; Returns: Json }
       get_job_match_summary: {
         Args: { p_job: string }
         Returns: {
@@ -2517,6 +2661,10 @@ export type Database = {
         }
         Returns: string
       }
+      record_candidate_request_delivery: {
+        Args: { p_error?: string; p_ok: boolean; p_referral: string }
+        Returns: undefined
+      }
       record_invoice: {
         Args: {
           p_amount_minor: number
@@ -2565,6 +2713,16 @@ export type Database = {
         Args: { p_dispute: string; p_resolution: string; p_upheld: boolean }
         Returns: undefined
       }
+      respond_candidate_request: {
+        Args: {
+          p_accept: boolean
+          p_meta?: Json
+          p_profile?: Json
+          p_reason?: string
+          p_token: string
+        }
+        Returns: string
+      }
       review_payment_evidence: {
         Args: { p_approve: boolean; p_evidence: string; p_note: string }
         Returns: undefined
@@ -2579,6 +2737,10 @@ export type Database = {
           p_to: Database["public"]["Enums"]["referral_status"]
         }
         Returns: number
+      }
+      rotate_candidate_request_token: {
+        Args: { p_referral: string; p_token_hash: string; p_ttl_days?: number }
+        Returns: string
       }
       set_match_triage: {
         Args: {
@@ -2616,6 +2778,23 @@ export type Database = {
           p_note?: string
         }
         Returns: string
+      }
+      submit_referral_for_candidate: {
+        Args: {
+          p_candidate: string
+          p_document_ids: string[]
+          p_fields: string[]
+          p_idempotency_key: string
+          p_job: string
+          p_note?: string
+          p_token_hash: string
+          p_ttl_days?: number
+        }
+        Returns: {
+          created: boolean
+          destination: string
+          referral_id: string
+        }[]
       }
       transition_referral: {
         Args: {
@@ -2785,6 +2964,8 @@ export type Database = {
         | "cancelled"
       referral_side: "source" | "target"
       referral_status:
+        | "awaiting_candidate"
+        | "candidate_declined"
         | "submitted"
         | "under_review"
         | "info_requested"
@@ -3025,6 +3206,8 @@ export const Constants = {
       ],
       referral_side: ["source", "target"],
       referral_status: [
+        "awaiting_candidate",
+        "candidate_declined",
         "submitted",
         "under_review",
         "info_requested",

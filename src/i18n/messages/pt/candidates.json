@@ -93,7 +93,38 @@
     "arrangement": "Modalidade",
     "more": "Mais ações",
     "privacyRecord": "Registro de privacidade",
-    "about": "Sobre"
+    "about": "Sobre",
+    "tabs": {
+      "label": "Seções do candidato",
+      "profile": "Perfil",
+      "opportunities": "Oportunidades",
+      "referrals": "Indicações",
+      "documents": "Documentos",
+      "privacy": "Privacidade"
+    },
+    "showMore": "Ver mais",
+    "showLess": "Ver menos",
+    "noSummary": "Nenhum resumo profissional ainda.",
+    "noSummaryEdit": "Nenhum resumo profissional ainda. Adicione um em Editar; ele ajuda os parceiros a entender o perfil.",
+    "workPreferences": "Preferências de trabalho",
+    "back": "Voltar para candidatos",
+    "pageTitle": "Perfil do candidato",
+    "contactTitle": "Contato",
+    "country": "País",
+    "ownedBy": "Recrutador: {name}",
+    "contactName": "Contatar {name}",
+    "bestMatch": "Melhor match {score}",
+    "mobilityTitle": "Mobilidade e vagas internacionais",
+    "travel": "Viagens",
+    "relocation": "Mudança",
+    "destinations": "Preferência: {list}",
+    "passport": "Passaporte",
+    "workAuthorization": "Autorizado a trabalhar em",
+    "mobilityPrivacy": "Visível só para sua organização. Não é usado no matching e nunca é compartilhado sem sua escolha.",
+    "experience": "Experiência",
+    "noExperience": "Nenhuma experiência registrada. Importar um currículo preenche isso.",
+    "present": "atual",
+    "workAuthorizationLine": "Autorizado a trabalhar em: {list}"
   },
   "form": {
     "identityTitle": "Identidade e contato",
@@ -151,7 +182,21 @@
     "salaryRange": "Pretensão salarial",
     "salaryFrom": "Mín.",
     "salaryTo": "Máx.",
-    "moreSource": "Detalhe da origem, base legal e notas"
+    "moreSource": "Detalhe da origem, base legal e notas",
+    "linkedin": "LinkedIn",
+    "postalCode": "CEP / código postal",
+    "postalCodeHint": "Só para mostrar um endereço resumido. Nunca é compartilhado.",
+    "mobilityTitle": "Mobilidade e vagas internacionais",
+    "mobilityBody": "Ajuda a saber quem pode aceitar vagas com viagens, mudança ou trabalho no exterior. Só sua organização vê; não é usado no matching.",
+    "travel": "Disponível para viajar",
+    "relocation": "Aceita se mudar",
+    "destinations": "Destinos preferidos",
+    "destinationsHint": "Países para onde se mudaria. Deixe vazio se qualquer um serve.",
+    "passport": "Passaporte",
+    "passportCountries": "Passaporte emitido por",
+    "passportCountriesHint": "Importa para vistos. Deixe vazio se não souber.",
+    "workAuthorization": "Autorizado a trabalhar em",
+    "workAuthorizationHint": "Países onde pode trabalhar sem patrocínio de visto."
   },
   "setup": {
     "toast": {
@@ -243,7 +288,7 @@
       "confirm": "Confirmar"
     },
     "fileLabel": "Arquivo CSV (máx. 500 linhas, 2 MB)",
-    "columnsHint": "Colunas: {columns}. Use ponto e vírgula dentro de uma célula para listas (ex.: {example}). Somente {required} é obrigatório.",
+    "columnsHint": "Colunas: {columns}. Use ponto e vírgula dentro de uma célula para listas (ex.: {example}). Somente {required} é obrigatório. travel: none/occasional/frequent · relocation: none/region/country/international · países em códigos ISO (CA;PT) · has_passport: yes/no.",
     "validating": "Validando…",
     "preview": "Pré-visualizar importação",
     "ready": {
@@ -287,7 +332,8 @@
     "invalidOption": "Escolha uma das opções listadas",
     "currency": "Use um código de moeda de 3 letras (ex.: BRL)",
     "scope": "Descreva o escopo",
-    "evidence": "Descreva como e quando a autorização foi obtida"
+    "evidence": "Descreva como e quando a autorização foi obtida",
+    "linkedin": "Use um link de perfil do LinkedIn (https://www.linkedin.com/…)."
   },
   "errors": {
     "notFound": "Candidato não encontrado.",
@@ -309,7 +355,9 @@
     "csvEmpty": "O arquivo está vazio.",
     "csvFullName": "A coluna 'full_name' é obrigatória.",
     "csvTooMany": "Importe no máximo {max} linhas por vez.",
-    "csvDuplicate": "Possível duplicado: já existe um candidato com este e-mail na sua organização"
+    "csvDuplicate": "Possível duplicado: já existe um candidato com este e-mail na sua organização",
+    "photoType": "Use uma imagem JPG, PNG ou WebP.",
+    "photoSize": "A foto deve ter até 2 MB."
   },
   "success": {
     "activated": "Candidato ativado. O matching roda em segundo plano.",
@@ -321,7 +369,9 @@
     "imported": {
       "one": "{count} candidato importado como rascunho. Revise-o e registre a autorização antes de ativar.",
       "other": "{count} candidatos importados como rascunhos. Revise cada um e registre as autorizações antes de ativar."
-    }
+    },
+    "photoUpdated": "Foto atualizada.",
+    "photoRemoved": "Foto removida."
   },
   "resume": {
     "title": "Comece por um currículo",
@@ -363,5 +413,30 @@
     "urlLabel": "Link do currículo ou perfil",
     "urlPlaceholder": "https://joaosilva.dev ou link de um PDF",
     "urlHint": "Portfólio, site pessoal, GitHub, um PDF hospedado ou arquivo compartilhado do Google Drive. O LinkedIn bloqueia leitura automática — use “Salvar como PDF” no perfil e envie o arquivo."
+  },
+  "mobility": {
+    "travel": {
+      "none": "Não disponível para viajar",
+      "occasional": "Viagens ocasionais",
+      "frequent": "Viagens frequentes"
+    },
+    "relocation": {
+      "none": "Não pretende se mudar",
+      "region": "Outro estado ou província",
+      "country": "Qualquer lugar do país",
+      "international": "Outro país"
+    },
+    "passport": {
+      "yes": "Tem passaporte válido",
+      "no": "Sem passaporte válido"
+    }
+  },
+  "photo": {
+    "alt": "Foto de {name}",
+    "add": "Adicionar foto",
+    "change": "Trocar foto",
+    "remove": "Remover foto",
+    "updated": "Foto atualizada.",
+    "removed": "Foto removida."
   }
 }

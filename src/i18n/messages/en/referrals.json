@@ -106,8 +106,21 @@
       "closedBy": "{status} by {who}",
       "closedByYou": "{status} by you",
       "noReason": "No reason given.",
-      "hired": "Hired · the placement is now tracked in your wallet."
-    }
+      "hired": "Hired · the placement is now tracked in your wallet.",
+      "awaitingCandidate": "Awaiting candidate approval",
+      "awaitingSent": "Email sent to {email} {time}. The link expires on {date}. {partner} only sees the referral after confirmation.",
+      "awaitingViewed": "The candidate opened the link {time}.",
+      "awaitingNotSent": "The email to {email} has not been sent yet.",
+      "awaitingExpired": "The link sent to {email} expired on {date}. Resend to create a new one.",
+      "candidateDeclined": "The candidate declined the referral",
+      "candidateDeclinedBody": "{partner} was not notified and never had access to any information."
+    },
+    "awaitingFlash": "Referral created. We emailed {email}; it will be delivered to {partner} as soon as the candidate confirms.",
+    "awaitingNotSentFlash": "Referral created, but the email to the candidate was not sent. Use “Resend email” below.",
+    "resend": "Resend email",
+    "resending": "Resending…",
+    "candidateActor": "Candidate",
+    "profileUpdated": "The candidate updated: {fields}"
   },
   "actions": {
     "under_review": "Start review",
@@ -189,7 +202,13 @@
     "anonymous": "The candidate stays anonymous to the partner unless you add identifying fields.",
     "revocation": "If the authorization is revoked later, the partner immediately loses access to the snapshot and documents.",
     "submitting": "Submitting…",
-    "submit": "Submit candidate"
+    "submit": "Submit candidate",
+    "authMethod": "How the candidate authorizes",
+    "methodEmail": "Ask the candidate to confirm by email",
+    "methodEmailHint": "We email a private link to {email}. The referral stays “Awaiting candidate approval” and is delivered to {partner} automatically once they confirm. Through the link, the candidate can also update their own profile.",
+    "methodEmailMissing": "No email on the candidate's profile. Add one to ask for confirmation.",
+    "methodRecorded": "I already have the candidate's authorization",
+    "methodRecordedHint": "Record how and when the candidate authorized it (e.g. by phone)."
   },
   "disclosure": {
     "headline": "Headline",
@@ -204,7 +223,8 @@
     "salary_expectation": "Salary expectation",
     "full_name": "Full name",
     "email": "Email",
-    "phone": "Phone"
+    "phone": "Phone",
+    "mobility": "Travel & relocation"
   },
   "validation": {
     "selectField": "Select at least one field to share",
@@ -220,11 +240,14 @@
   },
   "errors": {
     "opportunityGone": "This opportunity is no longer available.",
-    "notFound": "Referral not found."
+    "notFound": "Referral not found.",
+    "candidateEmailFailed": "We couldn't email the candidate. Try again in a few minutes.",
+    "emailNotConfigured": "Email delivery is not configured in this environment."
   },
   "success": {
     "statusUpdated": "Status updated. The partner has been notified.",
-    "agreementConfirmed": "Agreement confirmed. Commission terms are now frozen for this referral."
+    "agreementConfirmed": "Agreement confirmed. Commission terms are now frozen for this referral.",
+    "candidateEmailResent": "Email resent to {email}."
   },
   "queue": {
     "bucketNav": "Referral stage",

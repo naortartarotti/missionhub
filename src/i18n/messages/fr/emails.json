@@ -1,0 +1,110 @@
+{
+  "chrome": {
+    "linkFallback": "Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :",
+    "footer": "Vous recevez ce courriel à la suite d’une action sur MissionHub.",
+    "hello": "Bonjour {name},",
+    "helloAnonymous": "Bonjour,"
+  },
+  "signup": {
+    "subject": "Confirmez votre courriel pour MissionHub",
+    "preheader": "Plus qu’une étape pour activer votre compte.",
+    "heading": "Confirmez votre courriel",
+    "body": "Plus qu’une étape avant d’utiliser MissionHub. Confirmez que {email} est bien votre adresse.",
+    "cta": "Confirmer le courriel",
+    "note": "Le lien expire dans 1 heure. Si vous n'avez pas créé de compte, ignorez ce courriel."
+  },
+  "recovery": {
+    "subject": "Réinitialisez votre mot de passe MissionHub",
+    "preheader": "Utilisez le lien pour choisir un nouveau mot de passe.",
+    "heading": "Réinitialisez votre mot de passe",
+    "body": "Nous avons reçu une demande de réinitialisation du mot de passe pour {email}. Cliquez sur le bouton pour en choisir un nouveau.",
+    "cta": "Choisir un nouveau mot de passe",
+    "note": "Le lien expire dans 1 heure. Si vous n'avez rien demandé, ignorez ce courriel; votre mot de passe reste le même."
+  },
+  "magiclink": {
+    "subject": "Votre lien de connexion MissionHub",
+    "preheader": "Connectez-vous en un clic.",
+    "heading": "Connectez-vous à MissionHub",
+    "body": "Utilisez le bouton ci-dessous pour vous connecter avec {email}.",
+    "cta": "Se connecter",
+    "note": "Le lien expire dans 1 heure et ne fonctionne qu'une fois. Si vous ne l'avez pas demandé, ignorez ce courriel."
+  },
+  "invite": {
+    "subject": "Vous êtes invité sur MissionHub",
+    "preheader": "Acceptez l’invitation et créez votre compte.",
+    "heading": "Vous êtes invité",
+    "body": "Vous êtes invité à créer un compte MissionHub avec {email}.",
+    "cta": "Accepter l'invitation",
+    "note": "Si vous n'attendiez pas cette invitation, ignorez ce courriel."
+  },
+  "emailChangeCurrent": {
+    "subject": "Confirmez le changement de courriel de votre compte",
+    "preheader": "Confirmez que vous avez demandé ce changement.",
+    "heading": "Confirmez le changement de courriel",
+    "body": "Nous avons reçu une demande pour remplacer le courriel de votre compte {email} par {newEmail}. Confirmez pour continuer.",
+    "cta": "Confirmer le changement",
+    "note": "Si ce n'était pas vous, ignorez ce courriel et changez votre mot de passe."
+  },
+  "emailChangeNew": {
+    "subject": "Confirmez votre nouveau courriel MissionHub",
+    "preheader": "Confirmez la nouvelle adresse de votre compte.",
+    "heading": "Confirmez votre nouveau courriel",
+    "body": "Confirmez que {newEmail} est le nouveau courriel de votre compte MissionHub.",
+    "cta": "Confirmer le nouveau courriel",
+    "note": "Le lien expire dans 1 heure. Si vous n'avez pas demandé ce changement, ignorez ce courriel."
+  },
+  "reauthentication": {
+    "subject": "{code} est votre code de vérification",
+    "preheader": "Utilisez ce code pour confirmer l’action.",
+    "heading": "Votre code de vérification",
+    "body": "Utilisez le code ci-dessous pour confirmer l’action sur votre compte.",
+    "codeLabel": "Code",
+    "note": "Le code expire dans 1 heure. Ne le partagez jamais."
+  },
+  "passwordChanged": {
+    "subject": "Votre mot de passe MissionHub a été modifié",
+    "preheader": "Si ce n'était pas vous, réinitialisez-le maintenant.",
+    "heading": "Votre mot de passe a été modifié",
+    "body": "Le mot de passe de {email} vient d’être modifié.",
+    "cta": "Ce n'était pas moi, réinitialiser",
+    "note": "Si c'était vous, vous n'avez rien à faire."
+  },
+  "emailChanged": {
+    "subject": "Le courriel de votre compte MissionHub a été modifié",
+    "preheader": "Si ce n'était pas vous, prévenez-nous.",
+    "heading": "Votre courriel a été modifié",
+    "body": "Le courriel de votre compte est passé de {oldEmail} à {email}.",
+    "note": "Si vous n'avez pas fait ce changement, réinitialisez votre mot de passe et répondez à ce courriel."
+  },
+  "securityNotice": {
+    "subject": "Changement de sécurité sur votre compte MissionHub",
+    "preheader": "Vérifiez que c’était vous.",
+    "heading": "Votre compte a changé",
+    "body": "Nous avons enregistré un changement de sécurité sur {email} ({event}).",
+    "note": "Si ce n'était pas vous, réinitialisez votre mot de passe immédiatement."
+  },
+  "teamInvite": {
+    "subject": "{inviter} vous invite à rejoindre {org} sur MissionHub",
+    "preheader": "Rejoignez {org} en tant que {role}.",
+    "heading": "Rejoignez {org} sur MissionHub",
+    "body": "{inviter} vous invite à rejoindre {org}. Connectez-vous ou créez un compte avec {email} pour accepter.",
+    "org": "Organisation",
+    "role": "Rôle",
+    "invitedBy": "Invité par",
+    "cta": "Accepter l'invitation",
+    "note": "Cette invitation expire dans 7 jours. Si vous ne l'attendiez pas, ignorez ce courriel."
+  },
+  "candidateRequest": {
+    "subject": "{recruiter} souhaite vous proposer pour {job}",
+    "preheader": "Rien n'est partagé sans votre confirmation.",
+    "heading": "Confirmez votre candidature pour {job}",
+    "body": "{recruiter} ({org}) souhaite présenter votre profil à {partner} pour ce poste. Rien n'est partagé sans votre confirmation.",
+    "body2": "Le lien montre exactement ce qui sera transmis; vous pouvez mettre à jour votre profil, puis confirmer ou refuser.",
+    "job": "Poste",
+    "partner": "Recruteur du poste",
+    "recruiter": "Proposé par",
+    "expires": "Lien valide jusqu'au",
+    "cta": "Vérifier et confirmer",
+    "note": "Ce lien est personnel, ne le transférez pas. Si vous ne reconnaissez pas cette demande, ignorez ce courriel."
+  }
+}

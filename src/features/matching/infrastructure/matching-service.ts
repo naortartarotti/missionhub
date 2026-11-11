@@ -11,9 +11,9 @@ import { createHash } from "node:crypto";
  * get_job_match_summary). Nothing here is logged with personal data.
  */
 const CANDIDATE_FIELDS =
-  "id, organization_id, status, skills, seniority, years_experience, work_arrangements, location_country, location_region, open_to_relocation, languages, salary_expectation_min, salary_currency";
+  "id, organization_id, status, skills, seniority, years_experience, work_arrangements, location_country, location_region, open_to_relocation, relocation_scope, relocation_destinations, work_authorization, travel_availability, languages, salary_expectation_min, salary_currency";
 const JOB_FIELDS =
-  "id, organization_id, status, accepts_external_referrals, required_skills, preferred_skills, seniority, min_years_experience, work_arrangement, location_country, location_region, languages, salary_max, salary_currency";
+  "id, organization_id, status, accepts_external_referrals, required_skills, preferred_skills, seniority, min_years_experience, work_arrangement, location_country, location_region, languages, salary_max, salary_currency, travel_requirement, visa_sponsorship, relocation_support";
 
 async function orgFlags(db: AdminClient, orgId: string) {
   const { data, error } = await db.from("organizations").select("is_demo, suspended_at").eq("id", orgId).single();

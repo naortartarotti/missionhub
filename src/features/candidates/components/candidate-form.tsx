@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/shared/form-field";
 import { LocationFields } from "@/components/shared/location-fields";
+import { CountryMultiSelect } from "@/components/shared/country-multi-select";
 import { SubmitButton } from "@/components/shared/submit-button";
 import { FormMessage } from "@/components/shared/form-message";
 import { Panel } from "@/components/shared/card";
@@ -25,6 +26,8 @@ import { useGlobalT, useT } from "@/i18n/client";
 const SOURCES = ["manual", "resume_upload", "csv_import", "referral", "other"] as const;
 const CURRENCIES = ["CAD", "USD", "EUR", "GBP", "BRL"];
 const LANGUAGE_SUGGESTIONS = ["english", "french", "portuguese", "spanish"];
+const TRAVEL = ["none", "occasional", "frequent"] as const;
+const RELOCATION = ["none", "region", "country", "international"] as const;
 
 export type CandidateDefaults = Partial<{
   fullName: string;
@@ -36,6 +39,14 @@ export type CandidateDefaults = Partial<{
   locationRegion: string;
   locationCountry: string;
   openToRelocation: boolean;
+  linkedinUrl: string;
+  postalCode: string;
+  travelAvailability: string;
+  relocationScope: string;
+  relocationDestinations: string;
+  hasPassport: string;
+  passportCountries: string;
+  workAuthorization: string;
   workArrangements: string[];
   seniority: string;
   yearsExperience: string;
@@ -221,6 +232,12 @@ export function CandidateForm({
           <FormField id="phone" label={t("form.phone")} error={fe?.phone}>
             <Input id="phone" name="phone" type="tel" defaultValue={d.phone} autoComplete="off" />
           </FormField>
+          <FormField id="linkedinUrl" label={t("form.linkedin")} error={fe?.linkedinUrl}>
+            <Input id="linkedinUrl" name="linkedinUrl" type="url" inputMode="url" defaultValue={d.linkedinUrl} placeholder="https://www.linkedin.com/in/…" autoComplete="off" />
+          </FormField>
+          <FormField id="postalCode" label={t("form.postalCode")} hint={t("form.postalCodeHint")} error={fe?.postalCode}>
+            <Input id="postalCode" name="postalCode" defaultValue={d.postalCode} autoComplete="off" />
+          </FormField>
         </div>
       </Panel>
 
@@ -259,9 +276,6 @@ export function CandidateForm({
             labels={{ country: t("form.country"), region: t("form.region"), city: t("form.city") }}
             errors={{ country: fe?.locationCountry, region: fe?.locationRegion, city: fe?.locationCity }}
           />
-          <ToggleRow name="openToRelocation" defaultChecked={d.openToRelocation}>
-            {t("form.openToRelocation")}
-          </ToggleRow>
         </div>
 
         <More title={t("form.moreDetails")} hint={t("form.moreDetailsHint")} open={detailsOpen}>
@@ -292,6 +306,42 @@ export function CandidateForm({
             <Textarea id="summary" name="summary" rows={4} defaultValue={d.summary} />
           </FormField>
         </More>
+      </Panel>
+
+      <Panel className="grid gap-6 p-6">
+        <div>
+          <h2 className="text-base font-semibold">{t("form.mobilityTitle")}</h2>
+          <p className="mt-1 text-sm text-muted-foreground">{t("form.mobilityBody")}</p>
+        </div>
+        <ChoiceChips
+          name="travelAvailability"
+          label={t("form.travel")}
+          clearable
+          defaultValue={d.travelAvailability}
+          options={TRAVEL.map((v) => ({ value: v, label: t(`mobility.travel.${v}`) }))}
+        />
+        <ChoiceChips
+          name="relocationScope"
+          label={t("form.relocation")}
+          clearable
+          defaultValue={d.relocationScope}
+          options={RELOCATION.map((v) => ({ value: v, label: t(`mobility.relocation.${v}`) }))}
+        />
+        <CountryMultiSelect id="relocationDestinations" name="relocationDestinations" label={t("form.destinations")} hint={t("form.destinationsHint")} error={fe?.relocationDestinations} defaultValue={splitList(d.relocationDestinations)} />
+        <div className="grid gap-6 border-t border-border/60 pt-6">
+          <ChoiceChips
+            name="hasPassport"
+            label={t("form.passport")}
+            clearable
+            defaultValue={d.hasPassport}
+            options={[
+              { value: "yes", label: t("mobility.passport.yes") },
+              { value: "no", label: t("mobility.passport.no") },
+            ]}
+          />
+          <CountryMultiSelect id="passportCountries" name="passportCountries" label={t("form.passportCountries")} hint={t("form.passportCountriesHint")} error={fe?.passportCountries} defaultValue={splitList(d.passportCountries)} max={10} />
+          <CountryMultiSelect id="workAuthorization" name="workAuthorization" label={t("form.workAuthorization")} hint={t("form.workAuthorizationHint")} error={fe?.workAuthorization} defaultValue={splitList(d.workAuthorization)} />
+        </div>
       </Panel>
 
       <Panel className="grid gap-5 p-6">

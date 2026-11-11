@@ -33,6 +33,18 @@ const optNumber = z
     return n;
   });
 
+/** Comma-separated ISO 3166-1 alpha-2 codes ("CA, PT") → unique upper-case codes. */
+const countryList = (max: number) =>
+  z
+    .string()
+    .optional()
+    .transform((s) => [...new Set((s ?? "").split(",").map((x) => x.trim().toUpperCase()).filter(Boolean))])
+    .refine((xs) => xs.every((x) => /^[A-Z]{2}$/.test(x)), msg("candidates.validation.countryCode"))
+    .transform((xs) => xs.slice(0, max));
+
+export const TRAVEL_VALUES = ["none", "occasional", "frequent"] as const;
+export const RELOCATION_VALUES = ["none", "region", "country", "international"] as const;
+
 export const SENIORITY_VALUES = ["intern", "junior", "mid", "senior", "lead", "principal", "executive"] as const;
 export const ARRANGEMENT_VALUES = ["remote", "hybrid", "onsite"] as const;
 
@@ -53,6 +65,20 @@ export const candidateFormSchema = z
       .refine((v) => !v || /^[A-Z]{2}$/.test(v), msg("candidates.validation.countryCode"))
       .transform((v) => v || null),
     openToRelocation: z.string().optional().transform((v) => v === "on"),
+    linkedinUrl: z
+      .string()
+      .trim()
+      .max(300, tooLong(300))
+      .optional()
+      .refine((v) => !v || /^https:\/\/([a-z0-9-]+\.)?linkedin\.com\//i.test(v), msg("candidates.validation.linkedin"))
+      .transform((v) => v || null),
+    postalCode: optText(20),
+    travelAvailability: z.enum(TRAVEL_VALUES, invalidOption).optional().or(z.literal("")).transform((v) => v || null),
+    relocationScope: z.enum(RELOCATION_VALUES, invalidOption).optional().or(z.literal("")).transform((v) => v || null),
+    relocationDestinations: countryList(30),
+    hasPassport: z.enum(["yes", "no"], invalidOption).optional().or(z.literal("")).transform((v) => (v === "yes" ? true : v === "no" ? false : null)),
+    passportCountries: countryList(10),
+    workAuthorization: countryList(30),
     workArrangements: z.array(z.enum(ARRANGEMENT_VALUES, invalidOption)).default([]),
     seniority: z.enum(SENIORITY_VALUES, invalidOption).optional().or(z.literal("")).transform((v) => v || null),
     yearsExperience: optNumber.refine((v) => v === null || v <= 70, msg("candidates.validation.maxYears")),
@@ -95,3 +121,6 @@ export const ALLOWED_DOC_TYPES = {
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
 } as const;
 export const MAX_DOC_BYTES = 10 * 1024 * 1024;
+
+export const ALLOWED_PHOTO_TYPES = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" } as const;
+export const MAX_PHOTO_BYTES = 2 * 1024 * 1024;

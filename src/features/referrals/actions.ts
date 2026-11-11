@@ -11,6 +11,7 @@ import { msg } from "@/i18n/translate";
 import { formToObject } from "@/lib/validation/form-data";
 import { parseMajorToMinor } from "@/lib/money/format";
 import { listOpportunities } from "@/features/matching/queries";
+import { CANDIDATE_REQUEST_TTL_DAYS, emailCandidateRequest, newCandidateToken } from "./candidate-request";
 import { bulkDeclineSchema, messageSchema, reportHireSchema, reviewSchema, submitReferralSchema, transitionSchema } from "./schemas";
 
 export async function submitReferral(orgSlug: string, _: ActionResult | null, formData: FormData): Promise<ActionResult> {
@@ -25,6 +26,34 @@ export async function submitReferral(orgSlug: string, _: ActionResult | null, fo
     // Resolve candidate & job from the authorized projection, never from client-supplied ids.
     const [opp] = await listOpportunities(ctx, { matchId: v.matchId });
     if (!opp) return { ok: false, error: msg("referrals.errors.opportunityGone") };
+
+    if (v.authMethod === "candidate_email") {
+      // The referral waits in "awaiting_candidate", invisible to the partner, until the candidate
+      // confirms through the private link emailed here. Confirming delivers it automatically.
+      const { token, hash } = newCandidateToken();
+      const { data, error } = await ctx.db
+        .rpc("submit_referral_for_candidate", {
+          p_candidate: opp.candidate_id,
+          p_job: opp.job_id,
+          p_fields: v.fields,
+          p_document_ids: v.documentIds,
+          p_idempotency_key: v.idempotencyKey,
+          p_token_hash: hash,
+          p_note: v.note || undefined,
+          p_ttl_days: CANDIDATE_REQUEST_TTL_DAYS,
+        })
+        .single();
+      if (error || !data) return toActionError(error);
+      let flag = "awaiting";
+      // A replayed submission (same idempotency key) already emailed its own link.
+      if (data.created && data.destination) {
+        const r = await emailCandidateRequest(ctx, { referralId: data.referral_id, token, to: data.destination, jobTitle: opp.job_title, partner: opp.job_org_name, candidateName: opp.candidate_name });
+        if (!r.sent) flag = "notSent";
+      }
+      revalidatePath(`/workspace/${orgSlug}/opportunities`);
+      revalidatePath(`/workspace/${orgSlug}/referrals`);
+      redirect(`/workspace/${orgSlug}/referrals/${data.referral_id}?${flag}=1`);
+    }
 
     let consentId = v.consentId && v.consentId !== "new" ? v.consentId : null;
     if (!consentId) {
@@ -188,5 +217,29 @@ export async function getReferralDocumentUrl(orgSlug: string, grantId: string): 
     const { data, error: sErr } = await createAdminClient().storage.from("referral-documents").createSignedUrl(path, 60, { download: true });
     if (sErr || !data) return toActionError(sErr);
     return { ok: true, data: { url: data.signedUrl } };
+  });
+}
+
+/** Sends the candidate a fresh private link (the previous one stops working). */
+export async function resendCandidateRequest(orgSlug: string, referralId: string): Promise<ActionResult> {
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "referrals:submit");
+    parse(id, referralId);
+    await rateLimit(ctx.db, "referral.candidate_resend", 10, 3600);
+    const { data: ref } = await ctx.db
+      .from("referrals")
+      .select("job_title_snapshot, target_org:organizations!referrals_target_org_id_fkey(name)")
+      .eq("id", referralId)
+      .eq("source_org_id", ctx.organizationId)
+      .maybeSingle();
+    if (!ref) return { ok: false, error: msg("referrals.errors.notFound") };
+    const { token, hash } = newCandidateToken();
+    const { data: to, error } = await ctx.db.rpc("rotate_candidate_request_token", { p_referral: referralId, p_token_hash: hash, p_ttl_days: CANDIDATE_REQUEST_TTL_DAYS });
+    if (error || !to) return toActionError(error);
+    const r = await emailCandidateRequest(ctx, { referralId, token, to, jobTitle: ref.job_title_snapshot, partner: ref.target_org?.name ?? "" });
+    revalidatePath(`/workspace/${orgSlug}/referrals/${referralId}`);
+    if (!r.sent) return { ok: false, error: msg(r.reason === "not_configured" ? "referrals.errors.emailNotConfigured" : "referrals.errors.candidateEmailFailed") };
+    return { ok: true, message: msg("referrals.success.candidateEmailResent", { email: to }) };
   });
 }

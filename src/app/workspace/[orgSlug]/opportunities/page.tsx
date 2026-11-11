@@ -272,7 +272,7 @@ function CandidateGroups({
                 {/* Track record so far: how often this person was already sent out, and how that went. */}
                 <p className="mt-1.5 text-xs text-muted-foreground">
                   {refs ? (
-                    <Link href={`/workspace/${orgSlug}/candidates/${c.candidate_id}#referrals`} className="underline-offset-4 hover:text-foreground hover:underline">
+                    <Link href={`/workspace/${orgSlug}/candidates/${c.candidate_id}?tab=referrals`} className="underline-offset-4 hover:text-foreground hover:underline">
                       <span className="font-medium text-foreground">{t("candidateGroup.referrals", { count: refs.total })}</span>
                       {refDetail ? ` · ${refDetail}` : null}
                     </Link>

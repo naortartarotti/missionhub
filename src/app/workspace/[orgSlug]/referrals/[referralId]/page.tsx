@@ -28,7 +28,7 @@ import { PIPELINE_STAGES, type PipelineStage } from "@/features/pipeline/stages"
 import { getPipelineOwnership } from "@/features/pipeline/queries";
 import { getRequestContext } from "@/server/auth/context";
 import { getReferralDetail } from "@/features/referrals/queries";
-import { ConfirmAgreementButton, GrantDownload, MessageForm, ReportHireDialog, TransitionButtons } from "@/features/referrals/components/referral-actions";
+import { ConfirmAgreementButton, GrantDownload, MessageForm, ReportHireDialog, ResendCandidateButton, TransitionButtons } from "@/features/referrals/components/referral-actions";
 import { DISCLOSURE_FIELDS, type DisclosureKey } from "@/features/referrals/disclosure";
 import { CLOSED_STATUSES, REFERRAL_STAGES, STAGE_INDEX, isDeclineReason, skillCoverage, type FitEvidence } from "@/features/referrals/review";
 import { DirectionBadge } from "@/features/referrals/components/direction-badge";
@@ -46,11 +46,40 @@ import { Button } from "@/components/ui/button";
 import { REFERRAL_STATUS, type ARRANGEMENT, type SENIORITY } from "@/lib/labels";
 import { bpsToPercent, minorToMajorString } from "@/lib/money/format";
 import { cn } from "@/lib/utils";
-import { getFormatter, getGlobalT, getT } from "@/i18n/server";
+import { getFormatter, getGlobalT, getLocale, getT } from "@/i18n/server";
+import { INTL_LOCALE } from "@/i18n/config";
+import { countryNamer, mobilityLines } from "@/features/candidates/mobility";
 
 export async function generateMetadata() {
   return { title: (await getT("referrals"))("detail.title") };
 }
+
+/** Server-rendered per request, so reading the clock here is fine. */
+const isPast = (iso: string) => new Date(iso).getTime() < Date.now();
+
+/** Candidate column → label key in the `candidate.profile` namespace (fields they may edit). */
+const PROFILE_FIELD_LABEL: Record<string, "fullName" | "phone" | "headline" | "summary" | "city" | "region" | "country" | "openToRelocation" | "workArrangements" | "skills" | "languages" | "salaryMin" | "salaryMax" | "currency" | "availableFrom" | "travel" | "relocation" | "destinations" | "workAuthorization" | "passport"> = {
+  full_name: "fullName",
+  phone: "phone",
+  headline: "headline",
+  summary: "summary",
+  location_city: "city",
+  location_region: "region",
+  location_country: "country",
+  open_to_relocation: "openToRelocation",
+  work_arrangements: "workArrangements",
+  skills: "skills",
+  languages: "languages",
+  salary_expectation_min: "salaryMin",
+  salary_expectation_max: "salaryMax",
+  salary_currency: "currency",
+  available_from: "availableFrom",
+  travel_availability: "travel",
+  relocation_scope: "relocation",
+  relocation_destinations: "destinations",
+  work_authorization: "workAuthorization",
+  has_passport: "passport",
+};
 
 const isDisclosureKey = (k: string): k is DisclosureKey => DISCLOSURE_FIELDS.some((f) => f.key === k);
 
@@ -71,6 +100,7 @@ type Snapshot = Partial<{
   salary_expectation_max: number;
   salary_currency: string;
   available_from: string;
+  mobility: { travel: string | null; relocation: string | null; destinations: string[]; work_authorization: string[]; has_passport: boolean | null };
   experience: { title: string; company: string | null; start_date: string | null; end_date: string | null; description: string | null }[];
 }>;
 
@@ -112,10 +142,22 @@ export default async function ReferralPage({ params, searchParams }: PageProps<"
   const { orgSlug, referralId } = await params;
   const sp = await searchParams;
   const ctx = await getRequestContext(orgSlug);
-  const [t, tg, f, tp] = await Promise.all([getT("referrals"), getGlobalT(), getFormatter(), getT("pipeline")]);
+  const [t, tg, f, tp, tc] = await Promise.all([getT("referrals"), getGlobalT(), getFormatter(), getT("pipeline"), getT("candidate")]);
   const d = await getReferralDetail(ctx, referralId);
   if (!d) notFound();
   const { referral: r, side, agreement } = d;
+  // Candidate-confirmed referrals: delivery status of the private link (sourcing side only, via RLS).
+  const { data: request } =
+    side === "source"
+      ? await ctx.db
+          .from("referral_candidate_requests")
+          .select("destination, expires_at, sent_at, last_attempt_at, viewed_at, confirmed_at, profile_changes")
+          .eq("referral_id", r.id)
+          .maybeSingle()
+      : { data: null };
+  const profileChanges = request?.confirmed_at && request.profile_changes.length
+    ? request.profile_changes.map((k) => tc(`profile.${PROFILE_FIELD_LABEL[k] ?? "summary"}`)).join(", ")
+    : null;
   const snap = (d.profile?.snapshot ?? null) as Snapshot | null;
   const partner = (side === "source" ? r.target_org?.name : r.source_org?.name) ?? "";
   const st = REFERRAL_STATUS[r.status];
@@ -130,7 +172,8 @@ export default async function ReferralPage({ params, searchParams }: PageProps<"
   const lastEvent = d.events.at(-1);
   const reasonText = (reason: string | null | undefined) =>
     reason ? (isDeclineReason(reason) ? t(`declineReasons.${reason}`) : t("detail.reasonQuote", { reason })) : null;
-  const who = (actorSide: string | null) => (actorSide === side ? t("detail.you") : partner);
+  // Events without a side were recorded by the candidate (confirmation / refusal through their link).
+  const who = (actorSide: string | null) => (actorSide === null ? t("detail.candidateActor") : actorSide === side ? t("detail.you") : partner);
 
   // ---- Progress through the hiring pipeline. A closed referral stops at the furthest stage it reached.
   const reachedAt = new Map<number, string>();
@@ -146,8 +189,21 @@ export default async function ReferralPage({ params, searchParams }: PageProps<"
   const inPipeline = side === "target" && PIPELINE_STAGES.includes(r.status as PipelineStage) && r.status !== "hired";
   const ownership = inPipeline ? await getPipelineOwnership(ctx, r.id) : null;
   const lockedToOwner = !!ownership && !ownership.canMove;
-  const hasActions = !lockedToOwner && (d.transitions.length > 0 || (side === "target" && r.status === "offer") || (side === "source" && agreement?.status === "pending_source"));
-  const next: { tone: Tone; icon: LucideIcon; title: string; body: string | null } = r.status === "hired"
+  const awaiting = r.status === "awaiting_candidate" && side === "source";
+  const hasActions = !lockedToOwner && (awaiting || d.transitions.length > 0 || (side === "target" && r.status === "offer") || (side === "source" && agreement?.status === "pending_source"));
+  const awaitingBody = () => {
+    if (!request) return null;
+    const email = request.destination;
+    if (isPast(request.expires_at)) return t("detail.next.awaitingExpired", { email, date: f.date(request.expires_at) });
+    if (!request.sent_at) return t("detail.next.awaitingNotSent", { email });
+    const sent = t("detail.next.awaitingSent", { email, time: f.relative(request.sent_at), date: f.date(request.expires_at), partner });
+    return request.viewed_at ? `${sent} ${t("detail.next.awaitingViewed", { time: f.relative(request.viewed_at) })}` : sent;
+  };
+  const next: { tone: Tone; icon: LucideIcon; title: string; body: string | null } = awaiting
+    ? { tone: "warning", icon: Mail, title: t("detail.next.awaitingCandidate"), body: awaitingBody() }
+    : r.status === "candidate_declined"
+    ? { tone: "neutral", icon: X, title: t("detail.next.candidateDeclined"), body: reasonText(lastEvent?.reason) ?? t("detail.next.candidateDeclinedBody", { partner }) }
+    : r.status === "hired"
     ? { tone: "success", icon: Trophy, title: statusLabel, body: t("detail.next.hired") }
     : closed
       ? {
@@ -181,6 +237,19 @@ export default async function ReferralPage({ params, searchParams }: PageProps<"
   const arrangements = snap?.work_arrangements
     ? [...snap.work_arrangements.map((a) => tg(`labels.arrangement.${a}`)), ...(snap.open_to_relocation ? [t("detail.fields.openToRelocation")] : [])]
     : null;
+  const mobility = snap?.mobility
+    ? mobilityLines(
+        {
+          travel: snap.mobility.travel,
+          relocation: snap.mobility.relocation,
+          destinations: snap.mobility.destinations ?? [],
+          workAuthorization: snap.mobility.work_authorization ?? [],
+          hasPassport: snap.mobility.has_passport,
+        },
+        tg,
+        countryNamer(INTL_LOCALE[await getLocale()]),
+      )
+    : null;
   const coverage = job && job.required_skills.length ? skillCoverage(snap as Parameters<typeof skillCoverage>[0], job) : null;
   const rawEvidence = (r.fit_evidence ?? null) as FitEvidence | null;
   // Skill coverage is already shown as chips in the profile, so the fit panel keeps the other reasons.
@@ -206,6 +275,17 @@ export default async function ReferralPage({ params, searchParams }: PageProps<"
         actions={<StatusPill tone={st.tone} label={statusLabel} />}
       />
       {sp.submitted ? <Flash message={t("detail.submittedFlash", { partner })} /> : null}
+      {sp.awaiting && request ? <Flash message={t("detail.awaitingFlash", { email: request.destination, partner })} /> : null}
+      {sp.notSent ? (
+        <div role="alert" className="flex items-start gap-2 rounded-2xl bg-warning-soft px-4 py-3 text-sm text-warning">
+          <CircleAlert className="mt-0.5 size-4 shrink-0" aria-hidden /> {t("detail.awaitingNotSentFlash")}
+        </div>
+      ) : null}
+      {profileChanges ? (
+        <p className="flex items-start gap-2 rounded-2xl bg-muted/50 px-4 py-3 text-sm text-muted-foreground">
+          <UserRound className="mt-0.5 size-4 shrink-0" aria-hidden /> {t("detail.profileUpdated", { fields: profileChanges })}
+        </p>
+      ) : null}
 
       {r.sharing_revoked_at ? (
         <div role="status" className="flex items-start gap-2 rounded-2xl bg-danger-soft px-4 py-3 text-sm text-danger">
@@ -257,6 +337,7 @@ export default async function ReferralPage({ params, searchParams }: PageProps<"
           {hasActions ? (
             <div className="flex flex-wrap gap-2">
               {side === "source" && agreement?.status === "pending_source" ? <ConfirmAgreementButton orgSlug={orgSlug} referralId={r.id} /> : null}
+              {awaiting ? <ResendCandidateButton orgSlug={orgSlug} referralId={r.id} primary={!request?.sent_at || isPast(request.expires_at)} /> : null}
               <TransitionButtons orgSlug={orgSlug} referralId={r.id} version={r.version} transitions={d.transitions} side={side} status={r.status} />
               {side === "target" && r.status === "offer" && agreement?.status === "active" ? (
                 <ReportHireDialog orgSlug={orgSlug} referralId={r.id} version={r.version} currency={job?.fee_currency ?? ctx.currency} defaultFee={job?.expected_fee_minor ? minorToMajorString(job.expected_fee_minor, job.fee_currency) : ""} />
@@ -342,6 +423,16 @@ export default async function ReferralPage({ params, searchParams }: PageProps<"
                       <div>
                         <Label>{t("detail.fields.arrangement")}</Label>
                         <SkillChips skills={arrangements} />
+                      </div>
+                    ) : null}
+                    {mobility ? (
+                      <div>
+                        <Label>{t("disclosure.mobility")}</Label>
+                        {mobility.length ? (
+                          <ul className="grid gap-1 text-sm">{mobility.map((l) => <li key={l}>{l}</li>)}</ul>
+                        ) : (
+                          <p className="text-sm text-muted-foreground">—</p>
+                        )}
                       </div>
                     ) : null}
                     {snap.full_name || snap.email || snap.phone ? (

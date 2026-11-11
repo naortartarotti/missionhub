@@ -12,6 +12,7 @@ export function evidenceText(e: StoredEvidence, t: GlobalTranslator): string {
   const vars: Record<string, string | number> = {};
   for (const [name, value] of Object.entries(e.vars ?? {})) {
     if (SENIORITY_VARS.has(name)) vars[name] = t(`labels.seniority.${value}` as Paths<Messages>);
+    else if (name === "travel") vars[name] = t(`labels.travel.${value}` as Paths<Messages>);
     else if (name === "jobArrangement") vars[name] = t(`labels.arrangement.${value}` as Paths<Messages>);
     else if (name === "candidateArrangements")
       vars[name] = String(value).split("/").map((a) => t(`labels.arrangement.${a}` as Paths<Messages>)).join("/");

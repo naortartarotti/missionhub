@@ -1,0 +1,110 @@
+{
+  "chrome": {
+    "linkFallback": "Se o botão não funcionar, copie e cole este link no navegador:",
+    "footer": "Você recebeu este e-mail por causa de uma ação no MissionHub.",
+    "hello": "Olá, {name}!",
+    "helloAnonymous": "Olá!"
+  },
+  "signup": {
+    "subject": "Confirme seu e-mail no MissionHub",
+    "preheader": "Falta só um passo para ativar sua conta.",
+    "heading": "Confirme seu e-mail",
+    "body": "Falta só um passo para começar a usar o MissionHub. Confirme que {email} é o seu e-mail.",
+    "cta": "Confirmar e-mail",
+    "note": "O link expira em 1 hora. Se você não criou uma conta, ignore este e-mail."
+  },
+  "recovery": {
+    "subject": "Redefina sua senha do MissionHub",
+    "preheader": "Use o link para criar uma nova senha.",
+    "heading": "Redefina sua senha",
+    "body": "Recebemos um pedido para redefinir a senha da conta {email}. Clique no botão para criar uma nova senha.",
+    "cta": "Criar nova senha",
+    "note": "O link expira em 1 hora. Se você não pediu isso, ignore este e-mail; sua senha continua a mesma."
+  },
+  "magiclink": {
+    "subject": "Seu link de acesso ao MissionHub",
+    "preheader": "Entre com um clique.",
+    "heading": "Entre no MissionHub",
+    "body": "Use o botão abaixo para entrar com {email}.",
+    "cta": "Entrar",
+    "note": "O link expira em 1 hora e só pode ser usado uma vez. Se você não pediu, ignore este e-mail."
+  },
+  "invite": {
+    "subject": "Você foi convidado para o MissionHub",
+    "preheader": "Aceite o convite e crie sua conta.",
+    "heading": "Você foi convidado",
+    "body": "Você recebeu um convite para criar uma conta no MissionHub com {email}.",
+    "cta": "Aceitar convite",
+    "note": "Se você não esperava este convite, ignore este e-mail."
+  },
+  "emailChangeCurrent": {
+    "subject": "Confirme a troca de e-mail da sua conta",
+    "preheader": "Confirme que foi você quem pediu a troca.",
+    "heading": "Confirme a troca de e-mail",
+    "body": "Recebemos um pedido para trocar o e-mail da sua conta de {email} para {newEmail}. Confirme para continuar.",
+    "cta": "Confirmar troca",
+    "note": "Se não foi você, ignore este e-mail e troque sua senha."
+  },
+  "emailChangeNew": {
+    "subject": "Confirme seu novo e-mail no MissionHub",
+    "preheader": "Confirme o novo endereço da sua conta.",
+    "heading": "Confirme seu novo e-mail",
+    "body": "Confirme que {newEmail} é o novo e-mail da sua conta MissionHub.",
+    "cta": "Confirmar novo e-mail",
+    "note": "O link expira em 1 hora. Se você não pediu essa troca, ignore este e-mail."
+  },
+  "reauthentication": {
+    "subject": "{code} é seu código de verificação",
+    "preheader": "Use este código para confirmar a ação.",
+    "heading": "Seu código de verificação",
+    "body": "Use o código abaixo para confirmar a ação na sua conta.",
+    "codeLabel": "Código",
+    "note": "O código expira em 1 hora. Nunca compartilhe este código com ninguém."
+  },
+  "passwordChanged": {
+    "subject": "Sua senha do MissionHub foi alterada",
+    "preheader": "Se não foi você, redefina a senha agora.",
+    "heading": "Sua senha foi alterada",
+    "body": "A senha da conta {email} acabou de ser alterada.",
+    "cta": "Não fui eu, redefinir senha",
+    "note": "Se foi você, não precisa fazer nada."
+  },
+  "emailChanged": {
+    "subject": "O e-mail da sua conta MissionHub foi alterado",
+    "preheader": "Se não foi você, fale com a gente.",
+    "heading": "Seu e-mail foi alterado",
+    "body": "O e-mail da sua conta foi alterado de {oldEmail} para {email}.",
+    "note": "Se você não fez essa alteração, redefina sua senha e responda este e-mail."
+  },
+  "securityNotice": {
+    "subject": "Alteração de segurança na sua conta MissionHub",
+    "preheader": "Confira se foi você.",
+    "heading": "Houve uma alteração na sua conta",
+    "body": "Registramos uma alteração de segurança na conta {email} ({event}).",
+    "note": "Se não foi você, redefina sua senha imediatamente."
+  },
+  "teamInvite": {
+    "subject": "{inviter} convidou você para {org} no MissionHub",
+    "preheader": "Entre em {org} como {role}.",
+    "heading": "Entre em {org} no MissionHub",
+    "body": "{inviter} convidou você para entrar em {org}. Entre ou crie uma conta com {email} para aceitar.",
+    "org": "Organização",
+    "role": "Papel",
+    "invitedBy": "Convidado por",
+    "cta": "Aceitar convite",
+    "note": "Este convite expira em 7 dias. Se você não esperava por ele, pode ignorar este e-mail."
+  },
+  "candidateRequest": {
+    "subject": "{recruiter} quer indicar você para {job}",
+    "preheader": "Nada é compartilhado sem a sua confirmação.",
+    "heading": "Confirme sua indicação para {job}",
+    "body": "{recruiter} ({org}) gostaria de apresentar seu perfil a {partner} para esta vaga. Nada é compartilhado sem a sua confirmação.",
+    "body2": "Pelo link você vê exatamente o que será enviado, pode atualizar seu perfil e confirmar ou recusar.",
+    "job": "Vaga",
+    "partner": "Recrutador da vaga",
+    "recruiter": "Indicado por",
+    "expires": "Link válido até",
+    "cta": "Revisar e confirmar",
+    "note": "Este link é pessoal, não o encaminhe. Se você não reconhece este pedido, ignore este e-mail."
+  }
+}

@@ -65,5 +65,9 @@
     "useCustom": "Usar “{value}”",
     "more": "Continue digitando para filtrar a lista"
   },
-  "moreItems": "mais {count}"
+  "moreItems": "mais {count}",
+  "countries": {
+    "add": "Adicionar país",
+    "remove": "Remover {country}"
+  }
 }

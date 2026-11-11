@@ -1,9 +1,10 @@
 import { normalizeSkills } from "./skills";
 
-// v2: evidence carries i18n keys. Bumping the version changes every input hash, so all matches get re-scored.
-export const MODEL_VERSION = "deterministic-v2";
+// v3: mobility (relocation scope & destinations, work authorization, travel, visa sponsorship).
+// Bumping the version changes every input hash, so all matches get re-scored.
+export const MODEL_VERSION = "deterministic-v3";
 /** Recorded instead when an AI-derived skill relation contributed to the score. */
-export const MODEL_VERSION_AI = "deterministic-v2+ai-skills";
+export const MODEL_VERSION_AI = "deterministic-v3+ai-skills";
 /** Credit for a requirement satisfied through a related skill rather than the exact one. */
 export const RELATED_SKILL_CREDIT = 0.75;
 
@@ -21,6 +22,8 @@ export type WorkArrangement = "remote" | "hybrid" | "onsite";
  * The ONLY candidate attributes the engine may see. Identity, contact details, photos, names,
  * gender, age, nationality, religion, disability and other protected characteristics are
  * structurally excluded: they are not part of this type and `toMatchCandidate` drops them.
+ * Passports (which reveal nationality) are excluded too; only work authorization, a job-related
+ * legal question, is used.
  */
 export type MatchCandidate = {
   skills: string[];
@@ -30,6 +33,13 @@ export type MatchCandidate = {
   country: string | null;
   region: string | null;
   openToRelocation: boolean;
+  /** null = not recorded (falls back to `openToRelocation`). */
+  relocationScope: RelocationScope | null;
+  /** ISO 3166-1 alpha-2 codes; empty = no preference. */
+  relocationDestinations: string[];
+  /** ISO codes of countries the candidate can work in without sponsorship. */
+  workAuthorization: string[];
+  travelAvailability: Travel | null;
   languages: string[];
   salaryMin: number | null;
   salaryCurrency: string | null;
@@ -49,7 +59,13 @@ export type MatchJob = {
   salaryMax: number | null;
   salaryCurrency: string | null;
   isOpenForReferrals: boolean;
+  travelRequirement: Travel | null;
+  visaSponsorship: boolean;
+  relocationSupport: boolean;
 };
+
+export type Travel = "none" | "occasional" | "frequent";
+export type RelocationScope = "none" | "region" | "country" | "international";
 
 /**
  * One reason / gap / blocker. `key` + `vars` let the UI render it in the viewer's language
@@ -63,7 +79,9 @@ export type EvidenceKey =
   | "seniorityAligns" | "seniorityOneAbove" | "seniorityOneBelow" | "seniorityFar" | "seniorityUnknown"
   | "experienceMeets" | "experienceBelow" | "experienceUnknown"
   | "remoteCompatible" | "basedIn" | "relocationOpen" | "locationUnknown"
-  | "speaks" | "languagesMissing" | "salaryFits" | "salaryAbove" | "currencyMismatch" | "belowThreshold";
+  | "speaks" | "languagesMissing" | "salaryFits" | "salaryAbove" | "currencyMismatch" | "belowThreshold"
+  | "travelUnavailable" | "travelLimited" | "travelOk" | "regionMoveNeeded"
+  | "authorizedToWork" | "visaSponsored" | "visaNeeded" | "relocationSupport";
 export type Factor = "skills" | "preferred_skills" | "seniority" | "experience" | "location" | "languages" | "compensation" | "status";
 export type Band = "strong" | "potential" | "not_eligible";
 
@@ -100,6 +118,10 @@ type CandidateRow = {
   location_country: string | null;
   location_region: string | null;
   open_to_relocation: boolean | null;
+  relocation_scope?: string | null;
+  relocation_destinations?: string[] | null;
+  work_authorization?: string[] | null;
+  travel_availability?: string | null;
   languages: string[] | null;
   salary_expectation_min: number | null;
   salary_currency: string | null;
@@ -116,6 +138,10 @@ export function toMatchCandidate(row: CandidateRow, hasProcessingAuthorization: 
     country: row.location_country ?? null,
     region: row.location_region ?? null,
     openToRelocation: Boolean(row.open_to_relocation),
+    relocationScope: (row.relocation_scope as RelocationScope | null | undefined) ?? null,
+    relocationDestinations: [...(row.relocation_destinations ?? [])].map((x) => x.toUpperCase()).sort(),
+    workAuthorization: [...(row.work_authorization ?? [])].map((x) => x.toUpperCase()).sort(),
+    travelAvailability: (row.travel_availability as Travel | null | undefined) ?? null,
     languages: normalizeSkills(row.languages ?? []),
     salaryMin: row.salary_expectation_min ?? null,
     salaryCurrency: row.salary_currency ?? null,
@@ -137,6 +163,9 @@ type JobRow = {
   languages: string[] | null;
   salary_max: number | null;
   salary_currency: string | null;
+  travel_requirement?: string | null;
+  visa_sponsorship?: boolean | null;
+  relocation_support?: boolean | null;
   [key: string]: unknown;
 };
 
@@ -154,6 +183,9 @@ export function toMatchJob(row: JobRow): MatchJob {
     salaryMax: row.salary_max ?? null,
     salaryCurrency: row.salary_currency ?? null,
     isOpenForReferrals: row.status === "active" && row.accepts_external_referrals,
+    travelRequirement: (row.travel_requirement as Travel | null | undefined) ?? null,
+    visaSponsorship: Boolean(row.visa_sponsorship),
+    relocationSupport: Boolean(row.relocation_support),
   };
 }
 
@@ -170,6 +202,16 @@ export function relatedHits(c: MatchCandidate, skills: readonly string[], relati
     if (via) hits.set(s, via);
   }
   return hits;
+}
+
+/**
+ * Whether the candidate would move to another country for a role there. Uses the relocation scope
+ * when recorded ("international", and the country is among the preferred destinations if any),
+ * otherwise the older open-to-relocation flag.
+ */
+export function canMoveTo(c: MatchCandidate, country: string): boolean {
+  if (c.relocationScope === null) return c.openToRelocation;
+  return c.relocationScope === "international" && (c.relocationDestinations.length === 0 || c.relocationDestinations.includes(country));
 }
 
 /** Two-stage evaluation: hard eligibility filters, then weighted deterministic ranking. */
@@ -192,8 +234,12 @@ export function evaluateMatch(c: MatchCandidate, j: MatchJob, relations?: SkillR
       label: `Job is ${j.workArrangement}; candidate prefers ${c.workArrangements.join("/")}`,
     });
   }
-  if (j.workArrangement !== "remote" && j.country && c.country && j.country !== c.country && !c.openToRelocation) {
-    blockers.push({ factor: "location", key: "relocationRequired", vars: { country: j.country }, label: `Job requires presence in ${j.country}; candidate is not open to relocation` });
+  const abroad = j.workArrangement !== "remote" && Boolean(j.country && c.country && j.country !== c.country);
+  if (abroad && !canMoveTo(c, j.country!)) {
+    blockers.push({ factor: "location", key: "relocationRequired", vars: { country: j.country! }, label: `Job requires presence in ${j.country}; candidate is not open to relocation` });
+  }
+  if (j.travelRequirement === "frequent" && c.travelAvailability === "none") {
+    blockers.push({ factor: "location", key: "travelUnavailable", label: "Role requires frequent travel; candidate is not available to travel" });
   }
 
   // ---- Stage 2: ranking ----
@@ -257,16 +303,43 @@ export function evaluateMatch(c: MatchCandidate, j: MatchJob, relations?: SkillR
     if (locationScore === 1) reasons.push({ factor: "location", key: "remoteCompatible", label: "Remote role compatible with candidate preferences" });
   } else if (j.country && c.country) {
     if (j.country === c.country) {
-      locationScore = j.region && c.region && j.region === c.region ? 1 : 0.8;
-      reasons.push({ factor: "location", key: "basedIn", vars: { place: [c.region, c.country].filter(Boolean).join(", ") }, label: `Based in ${[c.region, c.country].filter(Boolean).join(", ")}` });
-    } else if (c.openToRelocation) {
-      locationScore = 0.5;
+      const otherRegion = Boolean(j.region && c.region && j.region !== c.region);
+      if (otherRegion && c.relocationScope === "none") {
+        locationScore = 0.4;
+        gaps.push({ factor: "location", key: "regionMoveNeeded", vars: { region: j.region! }, label: `Role is in ${j.region}; candidate prefers not to move` });
+      } else {
+        locationScore = otherRegion ? 0.8 : 1;
+        reasons.push({ factor: "location", key: "basedIn", vars: { place: [c.region, c.country].filter(Boolean).join(", ") }, label: `Based in ${[c.region, c.country].filter(Boolean).join(", ")}` });
+      }
+    } else if (canMoveTo(c, j.country)) {
       gaps.push({ factor: "location", key: "relocationOpen", label: "Would require relocation (candidate is open to it)" });
+      if (c.workAuthorization.includes(j.country)) {
+        locationScore = 0.7;
+        reasons.push({ factor: "location", key: "authorizedToWork", vars: { country: j.country }, label: `Authorized to work in ${j.country}` });
+      } else if (j.visaSponsorship) {
+        locationScore = 0.55;
+        gaps.push({ factor: "location", key: "visaSponsored", vars: { country: j.country }, label: `Would need a visa for ${j.country} (the role sponsors one)` });
+      } else {
+        locationScore = 0.3;
+        gaps.push({ factor: "location", key: "visaNeeded", vars: { country: j.country }, label: `Work authorization for ${j.country} not recorded and the role doesn't sponsor visas` });
+      }
+      if (j.relocationSupport) reasons.push({ factor: "location", key: "relocationSupport", label: "The role offers relocation support" });
     } else {
       locationScore = 0;
     }
   } else {
     gaps.push({ factor: "location", key: "locationUnknown", label: "Location information incomplete" });
+  }
+
+  // Travel: only when the role involves some and the candidate's availability is known.
+  if (j.travelRequirement && j.travelRequirement !== "none" && c.travelAvailability) {
+    const fits = c.travelAvailability === "frequent" || (c.travelAvailability === "occasional" && j.travelRequirement === "occasional");
+    if (fits) {
+      reasons.push({ factor: "location", key: "travelOk", vars: { travel: j.travelRequirement }, label: `Available for ${j.travelRequirement} travel` });
+    } else if (c.travelAvailability !== "none" || j.travelRequirement === "occasional") {
+      locationScore *= 0.7;
+      gaps.push({ factor: "location", key: "travelLimited", vars: { travel: j.travelRequirement }, label: `Role involves ${j.travelRequirement} travel; candidate's availability is more limited` });
+    }
   }
 
   let languagesScore = 1;

@@ -187,7 +187,15 @@
     "salaryFits": "Salary expectation fits the compensation band",
     "salaryAbove": "Salary expectation is ~{percent}% above the band",
     "currencyMismatch": "Compensation in different currencies; not compared",
-    "belowThreshold": "Overall relevance below the {threshold}/100 threshold"
+    "belowThreshold": "Overall relevance below the {threshold}/100 threshold",
+    "travelUnavailable": "Role requires frequent travel; candidate is not available to travel",
+    "travelLimited": "Role involves {travel}; candidate's availability is more limited",
+    "travelOk": "Available for {travel}",
+    "regionMoveNeeded": "Role is in {region}; candidate prefers not to move",
+    "authorizedToWork": "Authorized to work in {country}",
+    "visaSponsored": "Would need a visa for {country} (the role sponsors one)",
+    "visaNeeded": "No work authorization recorded for {country}, and the role doesn't sponsor visas",
+    "relocationSupport": "The role offers relocation support"
   },
   "panel": {
     "close": "Close details",

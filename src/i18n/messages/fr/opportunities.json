@@ -187,7 +187,15 @@
     "salaryFits": "Les attentes salariales correspondent à la fourchette",
     "salaryAbove": "Les attentes salariales dépassent la fourchette d'environ {percent} %",
     "currencyMismatch": "Rémunérations en devises différentes; non comparées",
-    "belowThreshold": "Pertinence globale sous le seuil de {threshold}/100"
+    "belowThreshold": "Pertinence globale sous le seuil de {threshold}/100",
+    "travelUnavailable": "Le poste exige des déplacements fréquents; le candidat n'est pas disponible pour voyager",
+    "travelLimited": "Le poste implique des {travel}; la disponibilité du candidat est plus limitée",
+    "travelOk": "Disponible pour des {travel}",
+    "regionMoveNeeded": "Le poste est en {region}; le candidat préfère ne pas déménager",
+    "authorizedToWork": "Autorisé à travailler en {country}",
+    "visaSponsored": "Aurait besoin d'un visa pour {country} (le poste le parraine)",
+    "visaNeeded": "Aucune autorisation de travail consignée pour {country}, et le poste ne parraine pas de visa",
+    "relocationSupport": "Le poste offre une aide à la relocalisation"
   },
   "panel": {
     "close": "Fermer les détails",

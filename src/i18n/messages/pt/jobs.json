@@ -86,7 +86,10 @@
     "showMore": "Mostrar mais",
     "showLess": "Mostrar menos",
     "details": "Detalhes",
-    "submittedEmptyBody": "Você será avisado assim que um parceiro enviar alguém."
+    "submittedEmptyBody": "Você será avisado assim que um parceiro enviar alguém.",
+    "mobility": "Viagens e mobilidade",
+    "visaSponsorship": "Patrocina visto",
+    "relocationSupport": "Apoio à mudança"
   },
   "status": {
     "publish": "Publicar",
@@ -144,7 +147,10 @@
     "cancel": "Cancelar",
     "saveDraft": "Salvar como rascunho",
     "publish": "Publicar vaga",
-    "saveChanges": "Salvar alterações"
+    "saveChanges": "Salvar alterações",
+    "travel": "Viagens",
+    "visaSponsorship": "Patrocina visto de trabalho",
+    "relocationSupport": "Oferece apoio à mudança"
   },
   "messages": {
     "activated": "A vaga está ativa. A correspondência é executada em segundo plano.",

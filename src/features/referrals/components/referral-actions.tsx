@@ -4,7 +4,7 @@ import { ActionForm } from "@/components/shared/action-form";
 
 import { useActionState, useEffect, useRef, useTransition } from "react";
 import { toast } from "sonner";
-import { Download, FileText } from "lucide-react";
+import { Download, FileText, Loader2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,7 +16,7 @@ import { SubmitButton } from "@/components/shared/submit-button";
 import { NativeSelect } from "@/components/shared/native-select";
 import type { REFERRAL_STATUS } from "@/lib/labels";
 import { useT } from "@/i18n/client";
-import { confirmAgreement, getReferralDocumentUrl, reportHire, sendReferralMessage, transitionReferral } from "../actions";
+import { confirmAgreement, getReferralDocumentUrl, reportHire, resendCandidateRequest, sendReferralMessage, transitionReferral } from "../actions";
 
 /** Statuses with a button label in `referrals.actions.<status>`. */
 const ACTION_STATUSES = ["under_review", "accepted", "declined", "info_requested", "withdrawn", "interviewing", "offer", "rejected", "cancelled"] as const;
@@ -80,6 +80,28 @@ export function TransitionButtons({
         );
       })}
     </div>
+  );
+}
+
+/** Emails the candidate a fresh confirmation link (the previous one stops working). */
+export function ResendCandidateButton({ orgSlug, referralId, primary }: { orgSlug: string; referralId: string; primary?: boolean }) {
+  const t = useT("referrals");
+  const [pending, start] = useTransition();
+  return (
+    <Button
+      variant={primary ? "default" : "secondary"}
+      disabled={pending}
+      onClick={() =>
+        start(async () => {
+          const r = await resendCandidateRequest(orgSlug, referralId);
+          if (r.ok) toast.success(r.message);
+          else toast.error(r.error);
+        })
+      }
+    >
+      {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <Mail className="size-4" aria-hidden />}
+      {pending ? t("detail.resending") : t("detail.resend")}
+    </Button>
   );
 }
 

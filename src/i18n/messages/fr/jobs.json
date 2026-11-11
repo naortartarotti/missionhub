@@ -86,7 +86,10 @@
     "showMore": "Afficher plus",
     "showLess": "Afficher moins",
     "details": "Détails",
-    "submittedEmptyBody": "Vous serez averti dès qu'un partenaire soumettra un candidat."
+    "submittedEmptyBody": "Vous serez averti dès qu'un partenaire soumettra un candidat.",
+    "mobility": "Déplacements et mobilité",
+    "visaSponsorship": "Parraine les visas",
+    "relocationSupport": "Aide à la relocalisation"
   },
   "status": {
     "publish": "Publier",
@@ -144,7 +147,10 @@
     "cancel": "Annuler",
     "saveDraft": "Enregistrer comme brouillon",
     "publish": "Publier le poste",
-    "saveChanges": "Enregistrer les modifications"
+    "saveChanges": "Enregistrer les modifications",
+    "travel": "Déplacements",
+    "visaSponsorship": "Parraine les visas de travail",
+    "relocationSupport": "Offre une aide à la relocalisation"
   },
   "messages": {
     "activated": "Le poste est actif. Le jumelage s'exécute en arrière-plan.",

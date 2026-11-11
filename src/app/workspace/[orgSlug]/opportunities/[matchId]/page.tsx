@@ -5,7 +5,9 @@ import { getCandidate } from "@/features/candidates/queries";
 import { PageHeader } from "@/components/shared/page-header";
 import { SubmitReferralForm, type ComposerCandidate, type ComposerJob } from "@/features/referrals/components/submit-referral-form";
 import { BAND } from "@/lib/labels";
-import { getFormatter, getGlobalT, getT } from "@/i18n/server";
+import { getFormatter, getGlobalT, getLocale, getT } from "@/i18n/server";
+import { INTL_LOCALE } from "@/i18n/config";
+import { countryNamer, mobilityLines } from "@/features/candidates/mobility";
 import { evidenceText } from "@/features/matching/evidence";
 
 export async function generateMetadata() {
@@ -43,6 +45,18 @@ export default async function ReviewMatchPage({ params }: PageProps<"/workspace/
   const money = (v: number | null, cur: string) => (v != null ? f.money(v, cur, { whole: true }) : null);
   const range = (min: number | null, max: number | null, cur: string) => [money(min, cur), money(max, cur)].filter(Boolean).join(" – ") || null;
 
+  const countryName = countryNamer(INTL_LOCALE[await getLocale()]);
+  const mobility = mobilityLines(
+    {
+      travel: candidate.travel_availability,
+      relocation: candidate.relocation_scope ?? (candidate.open_to_relocation ? "country" : null),
+      destinations: candidate.relocation_destinations,
+      workAuthorization: candidate.work_authorization,
+      hasPassport: candidate.has_passport,
+    },
+    tg,
+    countryName,
+  );
   const profile: ComposerCandidate = {
     id: candidate.id,
     name: candidate.full_name,
@@ -60,6 +74,7 @@ export default async function ReviewMatchPage({ params }: PageProps<"/workspace/
     arrangements: [...candidate.work_arrangements.map((a) => tg(`labels.arrangement.${a}`)), ...(candidate.open_to_relocation ? [tr("composer.relocation")] : [])],
     email: candidate.email,
     phone: candidate.phone,
+    mobility,
     experience: (experiences ?? []).map((e) => ({
       title: e.title,
       company: e.company,

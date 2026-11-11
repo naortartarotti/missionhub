@@ -275,6 +275,14 @@ max_frequency = "5s"
 # Force log out if the user has been inactive longer than the specified duration.
 # inactivity_timeout = "8h"
 
+# Auth emails (signup, recovery, email change…) rendered by the app and sent through Resend.
+# Local: run `next dev`, put the same secret in .env.local as SEND_EMAIL_HOOK_SECRET, set enabled = true,
+# then restart Supabase. Hosted projects configure this in the dashboard (Authentication → Hooks).
+[auth.hook.send_email]
+enabled = false
+uri = "http://host.docker.internal:3000/api/auth/send-email"
+secrets = "env(SEND_EMAIL_HOOK_SECRET)"
+
 # This hook runs before a new user is created and allows developers to reject the request based on the incoming user object.
 # [auth.hook.before_user_created]
 # enabled = true

@@ -106,8 +106,21 @@
       "closedBy": "{status} par {who}",
       "closedByYou": "{status} par vous",
       "noReason": "Aucune raison indiquée.",
-      "hired": "Embauché · le placement est maintenant suivi dans votre portefeuille."
-    }
+      "hired": "Embauché · le placement est maintenant suivi dans votre portefeuille.",
+      "awaitingCandidate": "En attente du candidat",
+      "awaitingSent": "Courriel envoyé à {email} {time}. Le lien expire le {date}. {partner} ne voit la candidature qu'après confirmation.",
+      "awaitingViewed": "Le candidat a ouvert le lien {time}.",
+      "awaitingNotSent": "Le courriel à {email} n'a pas encore été envoyé.",
+      "awaitingExpired": "Le lien envoyé à {email} a expiré le {date}. Renvoyez-le pour en créer un nouveau.",
+      "candidateDeclined": "Le candidat a refusé la candidature",
+      "candidateDeclinedBody": "{partner} n'a pas été averti et n'a eu accès à aucune information."
+    },
+    "awaitingFlash": "Candidature créée. Nous avons écrit à {email}; elle sera transmise à {partner} dès que le candidat confirmera.",
+    "awaitingNotSentFlash": "Candidature créée, mais le courriel au candidat n'a pas été envoyé. Utilisez « Renvoyer le courriel » ci-dessous.",
+    "resend": "Renvoyer le courriel",
+    "resending": "Envoi…",
+    "candidateActor": "Candidat",
+    "profileUpdated": "Le candidat a mis à jour : {fields}"
   },
   "actions": {
     "under_review": "Commencer l'examen",
@@ -189,7 +202,13 @@
     "anonymous": "Le candidat reste anonyme pour le partenaire, sauf si vous ajoutez des champs identifiants.",
     "revocation": "Si l'autorisation est révoquée plus tard, le partenaire perd immédiatement l'accès à l'instantané et aux documents.",
     "submitting": "Soumission…",
-    "submit": "Soumettre le candidat"
+    "submit": "Soumettre le candidat",
+    "authMethod": "Comment le candidat autorise",
+    "methodEmail": "Demander la confirmation du candidat par courriel",
+    "methodEmailHint": "Nous envoyons un lien privé à {email}. La candidature reste « En attente du candidat » et est transmise automatiquement à {partner} dès sa confirmation. Par ce lien, le candidat peut aussi mettre à jour son profil.",
+    "methodEmailMissing": "Aucun courriel sur la fiche du candidat. Ajoutez-en un pour demander la confirmation.",
+    "methodRecorded": "J'ai déjà l'autorisation du candidat",
+    "methodRecordedHint": "Indiquez comment et quand le candidat a donné son accord (ex. : par téléphone)."
   },
   "disclosure": {
     "headline": "Titre",
@@ -204,7 +223,8 @@
     "salary_expectation": "Attentes salariales",
     "full_name": "Nom complet",
     "email": "Courriel",
-    "phone": "Téléphone"
+    "phone": "Téléphone",
+    "mobility": "Déplacements et relocalisation"
   },
   "validation": {
     "selectField": "Sélectionnez au moins un champ à partager",
@@ -220,11 +240,14 @@
   },
   "errors": {
     "opportunityGone": "Cette occasion n'est plus disponible.",
-    "notFound": "Recommandation introuvable."
+    "notFound": "Recommandation introuvable.",
+    "candidateEmailFailed": "Impossible d'écrire au candidat. Réessayez dans quelques minutes.",
+    "emailNotConfigured": "L'envoi de courriels n'est pas configuré dans cet environnement."
   },
   "success": {
     "statusUpdated": "Statut mis à jour. Le partenaire a été avisé.",
-    "agreementConfirmed": "Entente confirmée. Les conditions de commission sont maintenant figées pour cette recommandation."
+    "agreementConfirmed": "Entente confirmée. Les conditions de commission sont maintenant figées pour cette recommandation.",
+    "candidateEmailResent": "Courriel renvoyé à {email}."
   },
   "queue": {
     "bucketNav": "Étape de la recommandation",

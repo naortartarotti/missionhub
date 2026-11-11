@@ -42,6 +42,9 @@ export const jobFormSchema = z
       .refine((v) => !v || /^[A-Z]{2}$/.test(v), msg("jobs.validation.countryCode"))
       .transform((v) => v || null),
     languages: list,
+    travelRequirement: z.enum(["none", "occasional", "frequent"]).optional().or(z.literal("")).transform((v) => v || null),
+    visaSponsorship: bool,
+    relocationSupport: bool,
     contractType: z.enum(["permanent", "contract", "temporary", "contract_to_hire"]),
     salaryMin: optMoney,
     salaryMax: optMoney,

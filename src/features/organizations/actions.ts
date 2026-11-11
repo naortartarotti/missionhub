@@ -9,8 +9,9 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/server/supabase/server";
 import { assertCan, getRequestContext, requireUser } from "@/server/auth/context";
 import { env, integrations } from "@/server/env";
-import { renderActionEmail, sendEmail } from "@/server/integrations/email";
-import { getGlobalT, getT } from "@/i18n/server";
+import { sendEmail } from "@/server/integrations/email";
+import { teamInviteEmail } from "@/server/email/templates";
+import { getGlobalT, getLocale } from "@/i18n/server";
 import { fromZodError, toActionError, type ActionResult } from "@/lib/actions/result";
 import { createOrganizationSchema, inviteSchema, memberUpdateSchema, splitList } from "./schemas";
 import { msg } from "@/i18n/translate";
@@ -75,24 +76,15 @@ export async function inviteMember(
       return { ok: true, data: { link, emailed: false }, message: msg("onboarding.messages.invitationCreated") };
     }
     // The link stays visible in the UI either way, so a delivery failure never loses the invite.
-    const [t, tg] = await Promise.all([getT("onboarding"), getGlobalT()]);
-    const vars = {
+    const [tg, locale] = await Promise.all([getGlobalT(), getLocale()]);
+    const email = await teamInviteEmail(locale, {
       inviter: ctx.user.fullName || ctx.user.email,
       org: ctx.organizationName,
       role: tg(`labels.role.${parsed.data.role}`),
       email: parsed.data.email,
-    };
-    const result = await sendEmail({
-      to: parsed.data.email,
-      subject: t("inviteEmail.subject", vars),
-      ...renderActionEmail({
-        heading: t("inviteEmail.heading", vars),
-        body: t("inviteEmail.body", vars),
-        cta: t("inviteEmail.cta"),
-        url: link,
-        footer: t("inviteEmail.footer"),
-      }),
+      url: link,
     });
+    const result = await sendEmail({ to: parsed.data.email, ...email });
     return result.sent
       ? { ok: true, data: { link, emailed: true }, message: msg("onboarding.messages.invitationSent", { email: parsed.data.email }) }
       : { ok: true, data: { link, emailed: false }, message: msg("onboarding.messages.invitationEmailFailed") };

@@ -17,6 +17,8 @@ import onboarding from "./onboarding.json";
 import admin from "./admin.json";
 import landing from "./landing.json";
 import pipeline from "./pipeline.json";
+import candidate from "./candidate.json";
+import emails from "./emails.json";
 
-const messages = { common, nav, labels, errors, activity, overview, opportunities, candidates, jobs, referrals, commissions, wallet, settings, profile, auth, onboarding, admin, landing, pipeline };
+const messages = { common, nav, labels, errors, activity, overview, opportunities, candidates, jobs, referrals, commissions, wallet, settings, profile, auth, onboarding, admin, landing, pipeline, candidate, emails };
 export default messages;

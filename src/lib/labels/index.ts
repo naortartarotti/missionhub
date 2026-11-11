@@ -26,6 +26,8 @@ export const JOB_STATUS: Record<E["job_status"], { tone: Tone }> = {
 };
 
 export const REFERRAL_STATUS: Record<E["referral_status"], { tone: Tone }> = {
+  awaiting_candidate: { tone: "warning" },
+  candidate_declined: { tone: "neutral" },
   submitted: { tone: "info" },
   under_review: { tone: "warning" },
   info_requested: { tone: "warning" },

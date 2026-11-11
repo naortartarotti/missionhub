@@ -8,6 +8,7 @@ import { createClient } from "@/server/supabase/server";
 import { env } from "@/server/env";
 import { fromZodError, type ActionResult } from "@/lib/actions/result";
 import { msg } from "@/i18n/translate";
+import { getLocale } from "@/i18n/server";
 import { forgotSchema, resetSchema, safeNext, signInSchema, signUpSchema } from "./schemas";
 
 const GENERIC_AUTH_ERROR = msg("auth.errors.invalidCredentials");
@@ -33,7 +34,8 @@ export async function signUp(_: ActionResult | null, formData: FormData): Promis
       email: parsed.data.email,
       password: parsed.data.password,
       options: {
-        data: { full_name: parsed.data.fullName },
+        // locale: language of the account emails (sent by the Supabase Send Email Hook).
+        data: { full_name: parsed.data.fullName, locale: await getLocale() },
         emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent(safeNext(parsed.data.next, "/onboarding"))}`,
       },
     });

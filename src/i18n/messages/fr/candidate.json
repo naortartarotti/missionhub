@@ -1,0 +1,81 @@
+{
+  "metaTitle": "Confirmez votre candidature",
+  "privateBadge": "Page privée · accessible uniquement par ce lien",
+  "title": "{recruiter} souhaite vous proposer pour un poste",
+  "intro": "Vérifiez le poste et ce qui sera partagé avec {partner}. Rien n'est envoyé sans votre confirmation.",
+  "expires": "Ce lien expire le {date}.",
+  "job": {
+    "heading": "Le poste",
+    "hiringOrg": "Recruteur responsable : {partner}",
+    "confidentialClient": "Client confidentiel",
+    "description": "Description"
+  },
+  "shared": {
+    "heading": "Ce qui sera partagé avec {partner}",
+    "body": "Seulement ces informations de votre profil, telles quelles après vos modifications ci-dessous. Tout le reste reste privé.",
+    "documents": "Documents",
+    "note": "Message de {org} à {partner}"
+  },
+  "profile": {
+    "heading": "Votre profil",
+    "body": "Corrigez ce qui n’est plus à jour. Vos modifications sont enregistrées dans votre fiche chez {org}.",
+    "fullName": "Nom complet",
+    "email": "Courriel",
+    "emailHint": "Pour changer de courriel, contactez {org}.",
+    "phone": "Téléphone",
+    "headline": "Titre professionnel",
+    "summary": "Résumé",
+    "city": "Ville",
+    "region": "Province / État",
+    "country": "Pays (code à 2 lettres)",
+    "workArrangements": "Modes de travail",
+    "skills": "Compétences",
+    "skillsHint": "Séparez par des virgules.",
+    "languages": "Langues",
+    "salaryMin": "Attente minimale",
+    "salaryMax": "Attente maximale",
+    "currency": "Devise",
+    "availableFrom": "Disponible à partir du",
+    "mobilityHint": "Aide {org} à trouver des postes adaptés à votre mobilité. Partagé seulement si vous confirmez, et jamais le pays qui a émis votre passeport.",
+    "openToRelocation": "Ouvert à la relocalisation",
+    "travel": "Déplacements",
+    "relocation": "Déménagement",
+    "destinations": "Destinations souhaitées",
+    "workAuthorization": "Autorisation de travail",
+    "passport": "Passeport"
+  },
+  "consent": "J'autorise {org} à partager les informations ci-dessus avec {partner} pour le poste {job}. Je sais que je peux retirer cette autorisation à tout moment en contactant {org}.",
+  "consentRequired": "Cochez l'autorisation pour confirmer.",
+  "confirm": "Confirmer et autoriser",
+  "confirming": "Confirmation…",
+  "decline": "Ça ne m’intéresse pas",
+  "declineTitle": "Refuser cette candidature?",
+  "declineBody": "{partner} ne sera pas averti. Seul {org} saura que vous avez refusé.",
+  "declineReason": "Motif (facultatif)",
+  "declineConfirm": "Refuser la candidature",
+  "declining": "Refus…",
+  "cancel": "Annuler",
+  "states": {
+    "confirmed": {
+      "title": "Candidature confirmée",
+      "body": "{org} a transmis votre profil à {partner} pour le poste {job}. Vous serez contacté pour la suite."
+    },
+    "declined": {
+      "title": "Candidature refusée",
+      "body": "Nous avons averti {org}. Rien n'a été partagé avec {partner}."
+    },
+    "expired": {
+      "title": "Ce lien a expiré",
+      "body": "Demandez un nouveau lien à {org}."
+    },
+    "closed": {
+      "title": "Cette demande n'est plus active",
+      "body": "{org} a fermé cette demande. Rien n'a été partagé avec {partner}."
+    },
+    "invalid": {
+      "title": "Lien invalide",
+      "body": "Vérifiez que vous avez ouvert le lien complet du courriel."
+    }
+  },
+  "nameRequired": "Indiquez votre nom"
+}

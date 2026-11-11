@@ -9,6 +9,10 @@ const candidate = (over: Partial<MatchCandidate> = {}): MatchCandidate => ({
   country: "CA",
   region: "ON",
   openToRelocation: false,
+  relocationScope: null,
+  relocationDestinations: [],
+  workAuthorization: [],
+  travelAvailability: null,
   languages: ["english", "french"],
   salaryMin: 13_000_000,
   salaryCurrency: "CAD",
@@ -29,6 +33,9 @@ const job = (over: Partial<MatchJob> = {}): MatchJob => ({
   salaryMax: 15_000_000,
   salaryCurrency: "CAD",
   isOpenForReferrals: true,
+  travelRequirement: null,
+  visaSponsorship: false,
+  relocationSupport: false,
   ...over,
 });
 
@@ -131,8 +138,8 @@ describe("evaluateMatch with AI skill relations", () => {
     expect(related.factorScores.skills).toBeLessThan(1);
     expect(related.reasons.find((r) => r.key === "relatedSkills")?.vars?.skills).toContain("react ← next.js");
     expect(related.gaps.find((g) => g.key === "requiredSkillsMissing")).toBeUndefined();
-    expect(related.modelVersion).toBe("deterministic-v2+ai-skills");
-    expect(exact.modelVersion).toBe("deterministic-v2");
+    expect(related.modelVersion).toBe("deterministic-v3+ai-skills");
+    expect(exact.modelVersion).toBe("deterministic-v3");
   });
 
   it("lifts the no-required-skills blocker when only related skills are present", () => {
@@ -147,5 +154,47 @@ describe("evaluateMatch with AI skill relations", () => {
     expect(inputFingerprint(c, job(), relations)).toBe(inputFingerprint(c, job()));
     const c2 = candidate({ skills: ["typescript", "next.js", "postgresql"] });
     expect(inputFingerprint(c2, job(), relations)).not.toBe(inputFingerprint(c2, job()));
+  });
+});
+
+describe("evaluateMatch with mobility", () => {
+  const abroad = job({ country: "PT", region: "11" });
+
+  it("blocks a role abroad when the candidate only moves within their country", () => {
+    const r = evaluateMatch(candidate({ relocationScope: "country" }), abroad);
+    expect(r.eligible).toBe(false);
+    expect(r.blockers.map((b) => b.key)).toContain("relocationRequired");
+  });
+
+  it("respects preferred destinations", () => {
+    expect(evaluateMatch(candidate({ relocationScope: "international", relocationDestinations: ["ES"] }), abroad).eligible).toBe(false);
+    expect(evaluateMatch(candidate({ relocationScope: "international", relocationDestinations: ["PT"] }), abroad).eligible).toBe(true);
+  });
+
+  it("ranks work authorization above sponsorship above neither", () => {
+    const base = { relocationScope: "international" as const };
+    const authorized = evaluateMatch(candidate({ ...base, workAuthorization: ["PT"] }), abroad);
+    const sponsored = evaluateMatch(candidate(base), job({ country: "PT", region: "11", visaSponsorship: true }));
+    const neither = evaluateMatch(candidate(base), abroad);
+    expect(authorized.factorScores.location).toBeGreaterThan(sponsored.factorScores.location);
+    expect(sponsored.factorScores.location).toBeGreaterThan(neither.factorScores.location);
+    expect(authorized.reasons.map((x) => x.key)).toContain("authorizedToWork");
+    expect(neither.gaps.map((x) => x.key)).toContain("visaNeeded");
+  });
+
+  it("falls back to the legacy relocation flag when no scope is recorded", () => {
+    expect(evaluateMatch(candidate({ openToRelocation: true }), abroad).eligible).toBe(true);
+  });
+
+  it("blocks frequent travel for a candidate who can't travel, and flags limited travel", () => {
+    expect(evaluateMatch(candidate({ travelAvailability: "none" }), job({ travelRequirement: "frequent" })).blockers.map((b) => b.key)).toContain("travelUnavailable");
+    const limited = evaluateMatch(candidate({ travelAvailability: "occasional" }), job({ travelRequirement: "frequent" }));
+    expect(limited.eligible).toBe(true);
+    expect(limited.gaps.map((g) => g.key)).toContain("travelLimited");
+  });
+
+  it("flags a move to another province when the candidate prefers not to move", () => {
+    const r = evaluateMatch(candidate({ relocationScope: "none" }), job({ region: "QC" }));
+    expect(r.gaps.map((g) => g.key)).toContain("regionMoveNeeded");
   });
 });

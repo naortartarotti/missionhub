@@ -57,5 +57,8 @@
     "body": "Elle n'existe pas, ou vous n'y avez pas accès.",
     "home": "Aller à mon espace de travail"
   },
-  "not_pipeline_owner": "Seule la personne qui a accepté cette recommandation peut la faire avancer dans le pipeline."
+  "not_pipeline_owner": "Seule la personne qui a accepté cette recommandation peut la faire avancer dans le pipeline.",
+  "candidate_email_missing": "Ajoutez un courriel à la fiche du candidat pour demander sa confirmation par courriel.",
+  "request_closed": "Cette demande n'est plus active.",
+  "request_expired": "Ce lien a expiré. Demandez-en un nouveau au recruteur."
 }

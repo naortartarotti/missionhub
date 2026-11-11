@@ -187,7 +187,15 @@
     "salaryFits": "A pretensão salarial cabe na faixa da vaga",
     "salaryAbove": "A pretensão salarial está ~{percent}% acima da faixa",
     "currencyMismatch": "Remuneração em moedas diferentes; não comparada",
-    "belowThreshold": "Relevância geral abaixo do mínimo de {threshold}/100"
+    "belowThreshold": "Relevância geral abaixo do mínimo de {threshold}/100",
+    "travelUnavailable": "A vaga exige viagens frequentes; o candidato não está disponível para viajar",
+    "travelLimited": "A vaga envolve {travel}; a disponibilidade do candidato é mais limitada",
+    "travelOk": "Disponível para {travel}",
+    "regionMoveNeeded": "A vaga é em {region}; o candidato prefere não se mudar",
+    "authorizedToWork": "Autorizado a trabalhar em {country}",
+    "visaSponsored": "Precisaria de visto para {country} (a vaga patrocina)",
+    "visaNeeded": "Sem autorização de trabalho registrada para {country}, e a vaga não patrocina visto",
+    "relocationSupport": "A vaga oferece apoio à mudança"
   },
   "panel": {
     "close": "Fechar detalhes",

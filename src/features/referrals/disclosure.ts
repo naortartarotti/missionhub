@@ -10,6 +10,7 @@ export const DISCLOSURE_FIELDS = [
   { key: "location", identifying: false, default: true },
   { key: "availability", identifying: false, default: true },
   { key: "salary_expectation", identifying: false, default: false },
+  { key: "mobility", identifying: false, default: false },
   { key: "full_name", identifying: true, default: false },
   { key: "email", identifying: true, default: false },
   { key: "phone", identifying: true, default: false },

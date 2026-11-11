@@ -86,7 +86,10 @@
     "showMore": "Show more",
     "showLess": "Show less",
     "details": "Details",
-    "submittedEmptyBody": "You'll be notified as soon as a partner submits someone."
+    "submittedEmptyBody": "You'll be notified as soon as a partner submits someone.",
+    "mobility": "Travel & mobility",
+    "visaSponsorship": "Sponsors visas",
+    "relocationSupport": "Relocation support"
   },
   "status": {
     "publish": "Publish",
@@ -144,7 +147,10 @@
     "cancel": "Cancel",
     "saveDraft": "Save as draft",
     "publish": "Publish job",
-    "saveChanges": "Save changes"
+    "saveChanges": "Save changes",
+    "travel": "Travel",
+    "visaSponsorship": "Sponsors work visas",
+    "relocationSupport": "Offers relocation support"
   },
   "messages": {
     "activated": "Job is active. Matching runs in the background.",

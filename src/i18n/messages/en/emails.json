@@ -1,0 +1,110 @@
+{
+  "chrome": {
+    "linkFallback": "If the button doesn't work, copy and paste this link into your browser:",
+    "footer": "You received this email because of an action on MissionHub.",
+    "hello": "Hi {name},",
+    "helloAnonymous": "Hi,"
+  },
+  "signup": {
+    "subject": "Confirm your email for MissionHub",
+    "preheader": "One step left to activate your account.",
+    "heading": "Confirm your email",
+    "body": "One step left before you can use MissionHub. Confirm that {email} is your email address.",
+    "cta": "Confirm email",
+    "note": "The link expires in 1 hour. If you didn't create an account, ignore this email."
+  },
+  "recovery": {
+    "subject": "Reset your MissionHub password",
+    "preheader": "Use the link to choose a new password.",
+    "heading": "Reset your password",
+    "body": "We received a request to reset the password for {email}. Click the button to choose a new one.",
+    "cta": "Choose a new password",
+    "note": "The link expires in 1 hour. If you didn't ask for this, ignore this email; your password stays the same."
+  },
+  "magiclink": {
+    "subject": "Your MissionHub sign-in link",
+    "preheader": "Sign in with one click.",
+    "heading": "Sign in to MissionHub",
+    "body": "Use the button below to sign in as {email}.",
+    "cta": "Sign in",
+    "note": "The link expires in 1 hour and works once. If you didn't ask for it, ignore this email."
+  },
+  "invite": {
+    "subject": "You've been invited to MissionHub",
+    "preheader": "Accept the invitation and create your account.",
+    "heading": "You've been invited",
+    "body": "You've been invited to create a MissionHub account with {email}.",
+    "cta": "Accept invitation",
+    "note": "If you weren't expecting this invitation, ignore this email."
+  },
+  "emailChangeCurrent": {
+    "subject": "Confirm the email change on your account",
+    "preheader": "Confirm that you asked for this change.",
+    "heading": "Confirm your email change",
+    "body": "We received a request to change your account email from {email} to {newEmail}. Confirm to continue.",
+    "cta": "Confirm change",
+    "note": "If this wasn't you, ignore this email and change your password."
+  },
+  "emailChangeNew": {
+    "subject": "Confirm your new MissionHub email",
+    "preheader": "Confirm the new address for your account.",
+    "heading": "Confirm your new email",
+    "body": "Confirm that {newEmail} is the new email for your MissionHub account.",
+    "cta": "Confirm new email",
+    "note": "The link expires in 1 hour. If you didn't ask for this change, ignore this email."
+  },
+  "reauthentication": {
+    "subject": "{code} is your verification code",
+    "preheader": "Use this code to confirm the action.",
+    "heading": "Your verification code",
+    "body": "Use the code below to confirm the action on your account.",
+    "codeLabel": "Code",
+    "note": "The code expires in 1 hour. Never share it with anyone."
+  },
+  "passwordChanged": {
+    "subject": "Your MissionHub password was changed",
+    "preheader": "If this wasn't you, reset it now.",
+    "heading": "Your password was changed",
+    "body": "The password for {email} was just changed.",
+    "cta": "This wasn't me, reset password",
+    "note": "If it was you, there's nothing to do."
+  },
+  "emailChanged": {
+    "subject": "Your MissionHub email was changed",
+    "preheader": "If this wasn't you, let us know.",
+    "heading": "Your email was changed",
+    "body": "Your account email was changed from {oldEmail} to {email}.",
+    "note": "If you didn't make this change, reset your password and reply to this email."
+  },
+  "securityNotice": {
+    "subject": "Security change on your MissionHub account",
+    "preheader": "Check that it was you.",
+    "heading": "Your account changed",
+    "body": "We recorded a security change on {email} ({event}).",
+    "note": "If this wasn't you, reset your password right away."
+  },
+  "teamInvite": {
+    "subject": "{inviter} invited you to {org} on MissionHub",
+    "preheader": "Join {org} as {role}.",
+    "heading": "Join {org} on MissionHub",
+    "body": "{inviter} invited you to join {org}. Sign in or create an account with {email} to accept.",
+    "org": "Organization",
+    "role": "Role",
+    "invitedBy": "Invited by",
+    "cta": "Accept invitation",
+    "note": "This invitation expires in 7 days. If you weren't expecting it, you can ignore this email."
+  },
+  "candidateRequest": {
+    "subject": "{recruiter} would like to put you forward for {job}",
+    "preheader": "Nothing is shared without your confirmation.",
+    "heading": "Confirm your referral for {job}",
+    "body": "{recruiter} ({org}) would like to present your profile to {partner} for this role. Nothing is shared without your confirmation.",
+    "body2": "The link shows exactly what will be sent; you can update your profile, then confirm or decline.",
+    "job": "Role",
+    "partner": "Hiring recruiter",
+    "recruiter": "Referred by",
+    "expires": "Link valid until",
+    "cta": "Review and confirm",
+    "note": "This link is personal, don't forward it. If you don't recognize this request, ignore this email."
+  }
+}

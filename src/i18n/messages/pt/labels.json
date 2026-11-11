@@ -1,7 +1,22 @@
 {
-  "candidateStatus": { "draft": "Matching desligado", "active_for_matching": "Matching ligado", "unavailable": "Indisponível", "archived": "Arquivado", "deleted": "Excluído" },
-  "jobStatus": { "draft": "Rascunho", "active": "Ativa", "paused": "Pausada", "closed": "Encerrada", "filled": "Preenchida", "cancelled": "Cancelada" },
+  "candidateStatus": {
+    "draft": "Matching desligado",
+    "active_for_matching": "Matching ligado",
+    "unavailable": "Indisponível",
+    "archived": "Arquivado",
+    "deleted": "Excluído"
+  },
+  "jobStatus": {
+    "draft": "Rascunho",
+    "active": "Ativa",
+    "paused": "Pausada",
+    "closed": "Encerrada",
+    "filled": "Preenchida",
+    "cancelled": "Cancelada"
+  },
   "referralStatus": {
+    "awaiting_candidate": "Aguardando aprovação do candidato",
+    "candidate_declined": "Recusada pelo candidato",
     "submitted": "Enviada",
     "under_review": "Em análise",
     "info_requested": "Informações solicitadas",
@@ -38,10 +53,45 @@
     "platform_remittance": "Repasse da parte da plataforma",
     "client_refund": "Reembolso ao cliente"
   },
-  "band": { "strong": "Match forte", "potential": "Match parcial", "not_eligible": "Não elegível" },
-  "seniority": { "intern": "Estágio", "junior": "Júnior", "mid": "Pleno", "senior": "Sênior", "lead": "Líder", "principal": "Principal", "executive": "Executivo" },
-  "arrangement": { "remote": "Remoto", "hybrid": "Híbrido", "onsite": "Presencial" },
-  "contract": { "permanent": "Efetivo", "contract": "Contrato", "temporary": "Temporário", "contract_to_hire": "Contrato com efetivação" },
-  "legalBasis": { "consent": "Consentimento", "contract": "Contrato / pré-contrato", "legitimate_interest": "Interesse legítimo", "other_documented": "Outro (documentado)" },
-  "role": { "org_admin": "Administrador da organização", "recruiter_manager": "Gerente de recrutamento", "recruiter": "Recrutador" }
+  "band": {
+    "strong": "Match forte",
+    "potential": "Match parcial",
+    "not_eligible": "Não elegível"
+  },
+  "seniority": {
+    "intern": "Estágio",
+    "junior": "Júnior",
+    "mid": "Pleno",
+    "senior": "Sênior",
+    "lead": "Líder",
+    "principal": "Principal",
+    "executive": "Executivo"
+  },
+  "arrangement": {
+    "remote": "Remoto",
+    "hybrid": "Híbrido",
+    "onsite": "Presencial"
+  },
+  "contract": {
+    "permanent": "Efetivo",
+    "contract": "Contrato",
+    "temporary": "Temporário",
+    "contract_to_hire": "Contrato com efetivação"
+  },
+  "legalBasis": {
+    "consent": "Consentimento",
+    "contract": "Contrato / pré-contrato",
+    "legitimate_interest": "Interesse legítimo",
+    "other_documented": "Outro (documentado)"
+  },
+  "role": {
+    "org_admin": "Administrador da organização",
+    "recruiter_manager": "Gerente de recrutamento",
+    "recruiter": "Recrutador"
+  },
+  "travel": {
+    "none": "sem viagens",
+    "occasional": "viagens ocasionais",
+    "frequent": "viagens frequentes"
+  }
 }

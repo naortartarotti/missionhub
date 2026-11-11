@@ -47,6 +47,9 @@ export type JobDefaults = Partial<{
   shareDescription: boolean;
   shareSalary: boolean;
   shareLocation: boolean;
+  travelRequirement: string;
+  visaSponsorship: boolean;
+  relocationSupport: boolean;
   shareFee: boolean;
 }>;
 
@@ -189,6 +192,20 @@ export function JobForm({
           errors={{ country: fe?.locationCountry, region: fe?.locationRegion, city: fe?.locationCity }}
           badges={{ country: auto("locationCountry"), region: auto("locationRegion"), city: auto("locationCity") }}
         />
+        <div className="grid gap-4 sm:grid-cols-3 sm:items-end">
+          <FormField id="travelRequirement" label={t("form.travel")}>
+            <NativeSelect id="travelRequirement" name="travelRequirement" defaultValue={d.travelRequirement ?? ""}>
+              <option value="">{t("form.notSpecified")}</option>
+              {(["none", "occasional", "frequent"] as const).map((v) => <option key={v} value={v}>{tg(`labels.travel.${v}`)}</option>)}
+            </NativeSelect>
+          </FormField>
+          <Label className="flex h-10 items-center gap-2 font-normal">
+            <Checkbox name="visaSponsorship" defaultChecked={d.visaSponsorship ?? false} /> {t("form.visaSponsorship")}
+          </Label>
+          <Label className="flex h-10 items-center gap-2 font-normal">
+            <Checkbox name="relocationSupport" defaultChecked={d.relocationSupport ?? false} /> {t("form.relocationSupport")}
+          </Label>
+        </div>
         <div className="grid gap-4 sm:grid-cols-3">
           <FormField badge={auto("salaryMin")} id="salaryMin" label={t("form.salaryMin")} error={fe?.salaryMin}><Input id="salaryMin" name="salaryMin" inputMode="decimal" defaultValue={d.salaryMin} /></FormField>
           <FormField badge={auto("salaryMax")} id="salaryMax" label={t("form.salaryMax")} error={fe?.salaryMax}><Input id="salaryMax" name="salaryMax" inputMode="decimal" defaultValue={d.salaryMax} /></FormField>

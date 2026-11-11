@@ -65,5 +65,9 @@
     "useCustom": "Use “{value}”",
     "more": "Keep typing to narrow the list"
   },
-  "moreItems": "{count} more"
+  "moreItems": "{count} more",
+  "countries": {
+    "add": "Add a country",
+    "remove": "Remove {country}"
+  }
 }

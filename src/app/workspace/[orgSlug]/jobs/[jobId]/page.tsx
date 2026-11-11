@@ -13,6 +13,7 @@ import {
   MapPin,
   KanbanSquare,
   Pencil,
+  Plane,
   Radio,
   Sparkles,
   UserRound,
@@ -86,6 +87,18 @@ export default async function JobPage({ params, searchParams }: PageProps<"/work
     { icon: MapPin, label: t("detail.location"), value: location || "—" },
     { icon: Wallet, label: t("detail.compensation"), value: salary },
     { icon: Languages, label: t("detail.languages"), value: job.languages.join(", ") || "—", className: "capitalize" },
+    {
+      icon: Plane,
+      label: t("detail.mobility"),
+      value:
+        [
+          job.travel_requirement ? tg(`labels.travel.${job.travel_requirement as "none" | "occasional" | "frequent"}`) : null,
+          job.visa_sponsorship ? t("detail.visaSponsorship") : null,
+          job.relocation_support ? t("detail.relocationSupport") : null,
+        ]
+          .filter(Boolean)
+          .join(" · ") || "—",
+    },
     { icon: UserRound, label: t("detail.owner"), value: job.owner?.full_name || "—" },
     { icon: CalendarDays, label: t("detail.posted"), value: f.date(job.created_at) },
   ];

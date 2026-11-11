@@ -26,6 +26,29 @@ const norm = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").to
 
 export type LocationValue = { country: string; region: string; city: string };
 
+/** Every country as a combobox option (ISO code → name in the viewer's language), sorted by name. */
+export function useCountryOptions(): { options: ComboboxOption[]; loading: boolean } {
+  const locale = useLocale();
+  const [countries, setCountries] = useState<CountryRow[] | null>(null);
+  useEffect(() => {
+    let live = true;
+    load<CountryRow[]>("/geo/countries.json").then((rows) => live && setCountries(rows)).catch(() => live && setCountries([]));
+    return () => {
+      live = false;
+    };
+  }, []);
+  const options = useMemo<ComboboxOption[]>(() => {
+    let names: Intl.DisplayNames | null = null;
+    try {
+      names = new Intl.DisplayNames([INTL_LOCALE[locale]], { type: "region" });
+    } catch {}
+    return (countries ?? [])
+      .map(([code, en]) => ({ value: code, label: names?.of(code) ?? en }))
+      .sort((a, b) => a.label.localeCompare(b.label, INTL_LOCALE[locale]));
+  }, [countries, locale]);
+  return { options, loading: !countries };
+}
+
 /**
  * Country → province/state → city, linked and world-wide. Posts `locationCountry` (ISO 3166-1
  * alpha-2), `locationRegion` (ISO 3166-2 subdivision code, e.g. "ON", which matching compares by

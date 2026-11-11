@@ -14,6 +14,8 @@ const schema = z.object({
   RESEND_API_KEY: z.string().min(10).optional(),
   // Until a domain is verified in Resend, onboarding@resend.dev can only deliver to the account owner.
   EMAIL_FROM: z.string().min(3).default("MissionHub <onboarding@resend.dev>"),
+  // Supabase Auth "Send Email Hook" secret ("v1,whsec_…"). Set => auth emails go through /api/auth/send-email + Resend.
+  SEND_EMAIL_HOOK_SECRET: z.string().startsWith("v1,whsec_").optional(),
   // Stripe (wallet payments). Both must be set for payments to switch on.
   STRIPE_SECRET_KEY: z.string().min(10).optional(),
   STRIPE_WEBHOOK_SECRET: z.string().min(10).optional(),
@@ -48,6 +50,7 @@ function load(): Env {
     OPENAI_REASONING_EFFORT: process.env.OPENAI_REASONING_EFFORT || undefined,
     RESEND_API_KEY: process.env.RESEND_API_KEY || undefined,
     EMAIL_FROM: process.env.EMAIL_FROM || undefined,
+    SEND_EMAIL_HOOK_SECRET: process.env.SEND_EMAIL_HOOK_SECRET || undefined,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || undefined,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET || undefined,
   });

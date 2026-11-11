@@ -1,0 +1,81 @@
+{
+  "metaTitle": "Confirm your referral",
+  "privateBadge": "Private page · only reachable through this link",
+  "title": "{recruiter} would like to put you forward for a role",
+  "intro": "Review the role and what will be shared with {partner}. Nothing is sent without your confirmation.",
+  "expires": "This link expires on {date}.",
+  "job": {
+    "heading": "The role",
+    "hiringOrg": "Hiring recruiter: {partner}",
+    "confidentialClient": "Confidential client",
+    "description": "Description"
+  },
+  "shared": {
+    "heading": "What will be shared with {partner}",
+    "body": "Only this information from your profile, as it stands after your edits below. Everything else stays private.",
+    "documents": "Documents",
+    "note": "Message from {org} to {partner}"
+  },
+  "profile": {
+    "heading": "Your profile",
+    "body": "Fix anything that is out of date. Your changes are saved to your profile at {org}.",
+    "fullName": "Full name",
+    "email": "Email",
+    "emailHint": "To change your email, contact {org}.",
+    "phone": "Phone",
+    "headline": "Professional headline",
+    "summary": "Summary",
+    "city": "City",
+    "region": "State / province",
+    "country": "Country (2-letter code)",
+    "workArrangements": "Work arrangements",
+    "skills": "Skills",
+    "skillsHint": "Separate with commas.",
+    "languages": "Languages",
+    "salaryMin": "Minimum expectation",
+    "salaryMax": "Maximum expectation",
+    "currency": "Currency",
+    "availableFrom": "Available from",
+    "mobilityHint": "Helps {org} find roles that fit how far you'd go. Only shared if you confirm, and never which country issued your passport.",
+    "openToRelocation": "Open to relocation",
+    "travel": "Travel",
+    "relocation": "Relocation",
+    "destinations": "Preferred destinations",
+    "workAuthorization": "Work authorization",
+    "passport": "Passport"
+  },
+  "consent": "I authorize {org} to share the information above with {partner} for the {job} role. I know I can withdraw this authorization at any time by contacting {org}.",
+  "consentRequired": "Tick the authorization to confirm.",
+  "confirm": "Confirm and authorize",
+  "confirming": "Confirming…",
+  "decline": "I'm not interested",
+  "declineTitle": "Decline this referral?",
+  "declineBody": "{partner} will not be told. Only {org} will know you declined.",
+  "declineReason": "Reason (optional)",
+  "declineConfirm": "Decline referral",
+  "declining": "Declining…",
+  "cancel": "Cancel",
+  "states": {
+    "confirmed": {
+      "title": "Referral confirmed",
+      "body": "{org} has sent your profile to {partner} for the {job} role. You will be contacted about next steps."
+    },
+    "declined": {
+      "title": "Referral declined",
+      "body": "We let {org} know. Nothing was shared with {partner}."
+    },
+    "expired": {
+      "title": "This link has expired",
+      "body": "Ask {org} for a new link."
+    },
+    "closed": {
+      "title": "This request is no longer active",
+      "body": "{org} closed this request. Nothing was shared with {partner}."
+    },
+    "invalid": {
+      "title": "Invalid link",
+      "body": "Make sure you opened the full link from the email."
+    }
+  },
+  "nameRequired": "Enter your name"
+}

@@ -15,6 +15,8 @@
     "cancelled": "Cancelled"
   },
   "referralStatus": {
+    "awaiting_candidate": "Awaiting candidate approval",
+    "candidate_declined": "Declined by candidate",
     "submitted": "Submitted",
     "under_review": "Under review",
     "info_requested": "Info requested",
@@ -86,5 +88,10 @@
     "org_admin": "Organization admin",
     "recruiter_manager": "Recruiter manager",
     "recruiter": "Recruiter"
+  },
+  "travel": {
+    "none": "no travel",
+    "occasional": "occasional travel",
+    "frequent": "frequent travel"
   }
 }

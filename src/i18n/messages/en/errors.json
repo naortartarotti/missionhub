@@ -57,5 +57,8 @@
     "body": "It doesn't exist, or you don't have access to it.",
     "home": "Go to my workspace"
   },
-  "not_pipeline_owner": "Only the person who accepted this referral can move it through the pipeline."
+  "not_pipeline_owner": "Only the person who accepted this referral can move it through the pipeline.",
+  "candidate_email_missing": "Add an email to the candidate's profile to ask for confirmation by email.",
+  "request_closed": "This request is no longer active.",
+  "request_expired": "This link has expired. Ask the recruiter for a new one."
 }

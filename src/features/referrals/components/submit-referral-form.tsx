@@ -23,6 +23,7 @@ import {
   TrendingUp,
   Wallet,
   type LucideIcon,
+  Plane,
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -57,6 +58,8 @@ export type ComposerCandidate = {
   arrangements: string[];
   email: string | null;
   phone: string | null;
+  /** Readable mobility lines (travel, relocation, work authorization, passport yes/no). */
+  mobility: string[];
   experience: { title: string; company: string | null; period: string }[];
 };
 
@@ -112,6 +115,8 @@ export function SubmitReferralForm({
   const [selected, setSelected] = useState<Set<DisclosureKey>>(() => new Set(DISCLOSURE_FIELDS.filter((f) => f.default).map((f) => f.key)));
   const [docs, setDocs] = useState<string[]>([]);
   const [consentId, setConsentId] = useState(consents[0]?.id ?? "new");
+  // Default: the candidate confirms by email (needs an address); the recorded path stays available.
+  const [authMethod, setAuthMethod] = useState<"candidate_email" | "recorded">(c.email ? "candidate_email" : "recorded");
   const [preview, setPreview] = useState(false);
 
   const on = (k: DisclosureKey) => selected.has(k);
@@ -246,6 +251,7 @@ export function SubmitReferralForm({
             {detailRow("languages", Globe, c.languages.length ? <SkillChips skills={c.languages} /> : "—")}
             {detailRow("work_arrangements", Laptop, c.arrangements.length ? <SkillChips skills={c.arrangements} /> : "—")}
             {detailRow("salary_expectation", Wallet, c.salary ?? "—")}
+            {detailRow("mobility", Plane, c.mobility.length ? <span className="grid gap-0.5">{c.mobility.map((l) => <span key={l}>{l}</span>)}</span> : "—")}
           </dl>
         </Panel>
 
@@ -330,31 +336,53 @@ export function SubmitReferralForm({
                 {t("form.authBefore")} <strong>{recipient}</strong> {t("form.authAnd")} <strong>{jobTitle}</strong>{t("form.authAfter")}
               </p>
             </div>
-            {consents.length ? (
-              <FormField id="consentId" label={t("form.authorization")}>
-                <NativeSelect id="consentId" name="consentId" value={consentId} onChange={(e) => setConsentId(e.target.value)}>
-                  {consents.map((x) => <option key={x.id} value={x.id}>{t("form.recorded", { date: fmt.date(x.obtained_at), evidence: x.evidence.slice(0, 60) })}</option>)}
-                  <option value="new">{t("form.newAuthorization")}</option>
-                </NativeSelect>
-              </FormField>
-            ) : <input type="hidden" name="consentId" value="new" />}
-            {consentId === "new" ? (
+            <input type="hidden" name="authMethod" value={authMethod} />
+            <div role="radiogroup" aria-label={t("form.authMethod")} className="grid gap-2">
+              <AuthOption
+                selected={authMethod === "candidate_email"}
+                disabled={!c.email}
+                icon={Mail}
+                title={t("form.methodEmail")}
+                body={c.email ? t("form.methodEmailHint", { email: c.email, partner: recipient }) : t("form.methodEmailMissing")}
+                onSelect={() => setAuthMethod("candidate_email")}
+              />
+              <AuthOption
+                selected={authMethod === "recorded"}
+                icon={ShieldCheck}
+                title={t("form.methodRecorded")}
+                body={t("form.methodRecordedHint")}
+                onSelect={() => setAuthMethod("recorded")}
+              />
+            </div>
+            {authMethod === "recorded" ? (
               <>
-                <FormField id="newConsentBasis" label={t("form.legalBasis")} hint={t("form.legalBasisHint")}>
-                  <NativeSelect id="newConsentBasis" name="newConsentBasis" defaultValue="consent">
-                    {(Object.keys(LEGAL_BASIS) as (keyof typeof LEGAL_BASIS)[]).map((v) => <option key={v} value={v}>{tg(`labels.legalBasis.${v}`)}</option>)}
-                  </NativeSelect>
-                </FormField>
-                <FormField id="newConsentEvidence" label={t("form.evidence")} error={fe?.newConsentEvidence} hint={t("form.evidenceHint")}>
-                  <Textarea id="newConsentEvidence" name="newConsentEvidence" rows={3} />
-                </FormField>
+                {consents.length ? (
+                  <FormField id="consentId" label={t("form.authorization")}>
+                    <NativeSelect id="consentId" name="consentId" value={consentId} onChange={(e) => setConsentId(e.target.value)}>
+                      {consents.map((x) => <option key={x.id} value={x.id}>{t("form.recorded", { date: fmt.date(x.obtained_at), evidence: x.evidence.slice(0, 60) })}</option>)}
+                      <option value="new">{t("form.newAuthorization")}</option>
+                    </NativeSelect>
+                  </FormField>
+                ) : <input type="hidden" name="consentId" value="new" />}
+                {consentId === "new" ? (
+                  <>
+                    <FormField id="newConsentBasis" label={t("form.legalBasis")} hint={t("form.legalBasisHint")}>
+                      <NativeSelect id="newConsentBasis" name="newConsentBasis" defaultValue="consent">
+                        {(Object.keys(LEGAL_BASIS) as (keyof typeof LEGAL_BASIS)[]).map((v) => <option key={v} value={v}>{tg(`labels.legalBasis.${v}`)}</option>)}
+                      </NativeSelect>
+                    </FormField>
+                    <FormField id="newConsentEvidence" label={t("form.evidence")} error={fe?.newConsentEvidence} hint={t("form.evidenceHint")}>
+                      <Textarea id="newConsentEvidence" name="newConsentEvidence" rows={3} />
+                    </FormField>
+                  </>
+                ) : null}
+                <Label className="flex items-start gap-2.5 rounded-2xl bg-muted/50 p-3 leading-5 font-normal">
+                  <Checkbox name="confirmInterest" className="mt-0.5" />
+                  <span className="text-sm">{t("form.confirmInterest")}</span>
+                </Label>
+                {fe?.confirmInterest ? <p role="alert" className="text-xs font-medium text-danger">{fe.confirmInterest[0]}</p> : null}
               </>
             ) : null}
-            <Label className="flex items-start gap-2.5 rounded-2xl bg-muted/50 p-3 leading-5 font-normal">
-              <Checkbox name="confirmInterest" className="mt-0.5" />
-              <span className="text-sm">{t("form.confirmInterest")}</span>
-            </Label>
-            {fe?.confirmInterest ? <p role="alert" className="text-xs font-medium text-danger">{fe.confirmInterest[0]}</p> : null}
           </div>
 
           <FormField id="note" label={t("composer.noteTitle")}>
@@ -459,6 +487,31 @@ function ShareToggle({ on, identifying, field, onClick }: { on: boolean; identif
       {on ? <Eye className="size-3.5" aria-hidden /> : <EyeOff className="size-3.5" aria-hidden />}
       {on ? t("composer.shared") : t("composer.hidden")}
       {identifying ? <span className="sr-only">· {t("form.identifying")}</span> : null}
+    </button>
+  );
+}
+
+/** One way of authorizing the share, as a selectable card (radio semantics). */
+function AuthOption({ selected, disabled, icon: Icon, title, body, onSelect }: { selected: boolean; disabled?: boolean; icon: LucideIcon; title: string; body: string; onSelect: () => void }) {
+  return (
+    <button
+      type="button"
+      role="radio"
+      aria-checked={selected}
+      disabled={disabled}
+      onClick={onSelect}
+      className={cn(
+        "flex items-start gap-3 rounded-2xl border p-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-60",
+        selected ? "border-foreground bg-muted/40" : "border-border/60 hover:border-foreground/30",
+      )}
+    >
+      <span className={cn("mt-0.5 grid size-4 shrink-0 place-items-center rounded-full border-2", selected ? "border-foreground" : "border-border")} aria-hidden>
+        {selected ? <span className="size-1.5 rounded-full bg-foreground" /> : null}
+      </span>
+      <span className="min-w-0">
+        <span className="flex items-center gap-1.5 text-sm font-medium"><Icon className="size-4 shrink-0 text-muted-foreground" aria-hidden />{title}</span>
+        <span className="mt-1 block text-xs text-muted-foreground">{body}</span>
+      </span>
     </button>
   );
 }

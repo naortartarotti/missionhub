@@ -93,7 +93,38 @@
     "arrangement": "Works",
     "more": "More actions",
     "privacyRecord": "Privacy record",
-    "about": "About"
+    "about": "About",
+    "tabs": {
+      "label": "Candidate sections",
+      "profile": "Profile",
+      "opportunities": "Opportunities",
+      "referrals": "Referrals",
+      "documents": "Documents",
+      "privacy": "Privacy"
+    },
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "noSummary": "No professional summary yet.",
+    "noSummaryEdit": "No professional summary yet. Add one from Edit; it helps partners understand the profile.",
+    "workPreferences": "Work preferences",
+    "back": "Back to candidates",
+    "pageTitle": "Candidate profile",
+    "contactTitle": "Contact",
+    "country": "Country",
+    "ownedBy": "Recruiter: {name}",
+    "contactName": "Contact {name}",
+    "bestMatch": "Best match {score}",
+    "mobilityTitle": "Mobility & international roles",
+    "travel": "Travel",
+    "relocation": "Relocation",
+    "destinations": "Preferred: {list}",
+    "passport": "Passport",
+    "workAuthorization": "Authorized to work in",
+    "mobilityPrivacy": "Visible to your organization only. Not used for matching and never shared unless you choose to.",
+    "experience": "Experience",
+    "noExperience": "No experience recorded yet. Importing a resume fills this in.",
+    "present": "present",
+    "workAuthorizationLine": "Authorized to work in {list}"
   },
   "form": {
     "identityTitle": "Identity & contact",
@@ -151,7 +182,21 @@
     "salaryRange": "Salary expectation",
     "salaryFrom": "Min",
     "salaryTo": "Max",
-    "moreSource": "Source detail, legal basis & notes"
+    "moreSource": "Source detail, legal basis & notes",
+    "linkedin": "LinkedIn",
+    "postalCode": "Postal code",
+    "postalCodeHint": "Only to show a short address. Never shared.",
+    "mobilityTitle": "Mobility & international roles",
+    "mobilityBody": "Helps you know who can take roles that involve travel, a move or work abroad. Only your organization sees this; it is not used for matching.",
+    "travel": "Available to travel",
+    "relocation": "Open to relocating",
+    "destinations": "Preferred destinations",
+    "destinationsHint": "Countries they'd move to. Leave empty if anywhere works.",
+    "passport": "Passport",
+    "passportCountries": "Passport issued by",
+    "passportCountriesHint": "Matters for visas. Leave empty if you don't know.",
+    "workAuthorization": "Authorized to work in",
+    "workAuthorizationHint": "Countries where they can work without sponsorship."
   },
   "setup": {
     "toast": {
@@ -243,7 +288,7 @@
       "confirm": "Confirm"
     },
     "fileLabel": "CSV file (max 500 rows, 2 MB)",
-    "columnsHint": "Columns: {columns}. Use semicolons inside a cell for lists (e.g. {example}). Only {required} is required.",
+    "columnsHint": "Columns: {columns}. Use semicolons inside a cell for lists (e.g. {example}). Only {required} is required. travel: none/occasional/frequent · relocation: none/region/country/international · countries as ISO codes (CA;PT) · has_passport: yes/no.",
     "validating": "Validating…",
     "preview": "Preview import",
     "ready": {
@@ -287,7 +332,8 @@
     "invalidOption": "Choose one of the listed options",
     "currency": "Use a 3-letter currency code (e.g. CAD)",
     "scope": "Describe the scope",
-    "evidence": "Describe how and when the authorization was obtained"
+    "evidence": "Describe how and when the authorization was obtained",
+    "linkedin": "Use a LinkedIn profile link (https://www.linkedin.com/…)."
   },
   "errors": {
     "notFound": "Candidate not found.",
@@ -309,7 +355,9 @@
     "csvEmpty": "The file is empty.",
     "csvFullName": "A 'full_name' column is required.",
     "csvTooMany": "Import up to {max} rows at a time.",
-    "csvDuplicate": "Possible duplicate: a candidate with this email already exists in your organization"
+    "csvDuplicate": "Possible duplicate: a candidate with this email already exists in your organization",
+    "photoType": "Use a JPG, PNG or WebP image.",
+    "photoSize": "The photo must be 2 MB or smaller."
   },
   "success": {
     "activated": "Candidate activated. Matching runs in the background.",
@@ -321,7 +369,9 @@
     "imported": {
       "one": "{count} candidate imported as a draft. Review it and record authorization before activating.",
       "other": "{count} candidates imported as drafts. Review each and record authorizations before activating."
-    }
+    },
+    "photoUpdated": "Photo updated.",
+    "photoRemoved": "Photo removed."
   },
   "resume": {
     "title": "Start from a resume",
@@ -363,5 +413,30 @@
     "urlLabel": "Link to the resume or profile",
     "urlPlaceholder": "https://janedoe.dev or a link to a PDF",
     "urlHint": "Portfolio, personal site, GitHub, a hosted PDF or a shared Google Drive file. LinkedIn blocks automatic reading — use “Save to PDF” on the profile and upload it instead."
+  },
+  "mobility": {
+    "travel": {
+      "none": "Not available to travel",
+      "occasional": "Occasional travel",
+      "frequent": "Frequent travel"
+    },
+    "relocation": {
+      "none": "Not open to relocating",
+      "region": "Another province or state",
+      "country": "Anywhere in their country",
+      "international": "Another country"
+    },
+    "passport": {
+      "yes": "Has a valid passport",
+      "no": "No valid passport"
+    }
+  },
+  "photo": {
+    "alt": "Photo of {name}",
+    "add": "Add photo",
+    "change": "Change photo",
+    "remove": "Remove photo",
+    "updated": "Photo updated.",
+    "removed": "Photo removed."
   }
 }

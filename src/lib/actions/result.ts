@@ -27,7 +27,7 @@ const CODES: ErrorCode[] = [
   "remittance_exceeds_balance", "dispute_not_open", "owner_not_member", "tenant_mismatch", "immutable_record",
   "insufficient_funds", "wallet_frozen", "wallet_transfers_disabled", "wallet_cashouts_disabled",
   "payout_destination_required", "nothing_to_pay", "invalid_recipient", "invalid_amount",
-  "not_pipeline_owner",
+  "not_pipeline_owner", "candidate_email_missing", "request_closed", "request_expired",
 ];
 
 export function toActionError(error: unknown): ActionResult<never> {

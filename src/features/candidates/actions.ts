@@ -13,7 +13,7 @@ import { fromZodError, toActionError, type ActionResult } from "@/lib/actions/re
 import { formToObject } from "@/lib/validation/form-data";
 import { parseMajorToMinor } from "@/lib/money/format";
 import { msg } from "@/i18n/translate";
-import { ALLOWED_DOC_TYPES, MAX_DOC_BYTES, candidateFormSchema, consentSchema, statusSchema, type CandidateFormValues } from "./schemas";
+import { ALLOWED_DOC_TYPES, ALLOWED_PHOTO_TYPES, MAX_DOC_BYTES, MAX_PHOTO_BYTES, candidateFormSchema, consentSchema, statusSchema, type CandidateFormValues } from "./schemas";
 
 function toRow(v: CandidateFormValues) {
   const toMinor = (n: number | null) => (n === null ? null : parseMajorToMinor(String(n), v.salaryCurrency));
@@ -26,7 +26,16 @@ function toRow(v: CandidateFormValues) {
     location_city: v.locationCity,
     location_region: v.locationRegion,
     location_country: v.locationCountry,
-    open_to_relocation: v.openToRelocation,
+    // The scope is the source of truth when set; the matching engine still reads the boolean.
+    open_to_relocation: v.relocationScope ? v.relocationScope !== "none" : v.openToRelocation,
+    relocation_scope: v.relocationScope,
+    relocation_destinations: v.relocationScope && v.relocationScope !== "none" ? v.relocationDestinations : [],
+    travel_availability: v.travelAvailability,
+    has_passport: v.hasPassport,
+    passport_countries: v.hasPassport ? v.passportCountries : [],
+    work_authorization: v.workAuthorization,
+    linkedin_url: v.linkedinUrl,
+    postal_code: v.postalCode,
     work_arrangements: v.workArrangements,
     seniority: v.seniority,
     years_experience: v.yearsExperience,
@@ -255,9 +264,57 @@ export async function anonymizeCandidate(orgSlug: string, input: { candidateId: 
     const ctx = await getRequestContext(orgSlug);
     assertCan(ctx, "candidates:anonymize");
     const v = parse(z.object({ candidateId: id, reason: text(5, 500, msg("candidates.errors.anonymizeReason")) }), input);
+    // Remove the photo file first; the RPC clears the path along with the other personal fields.
+    const { data: cand } = await ctx.db.from("candidates").select("photo_path").eq("id", v.candidateId).eq("organization_id", ctx.organizationId).maybeSingle();
+    if (cand?.photo_path) await ctx.db.storage.from("candidate-photos").remove([cand.photo_path]);
     const { error } = await ctx.db.rpc("anonymize_candidate", { p_candidate: v.candidateId, p_reason: v.reason });
     if (error) return toActionError(error);
     revalidatePath(`/workspace/${orgSlug}/candidates`);
     redirect(`/workspace/${orgSlug}/candidates?anonymized=1`);
+  });
+}
+
+/** Sets or replaces the candidate's photo (JPEG, PNG or WebP, up to 2 MB). The old file is deleted. */
+export async function uploadCandidatePhoto(orgSlug: string, candidateId: string, _: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "candidates:write");
+    parse(id, candidateId);
+    await rateLimit(ctx.db, "candidate.photo", 30, 3600);
+    const file = formData.get("photo");
+    if (!(file instanceof File) || file.size === 0) return { ok: false, error: msg("candidates.errors.chooseFile") };
+    const ext = ALLOWED_PHOTO_TYPES[file.type as keyof typeof ALLOWED_PHOTO_TYPES];
+    if (!ext) return { ok: false, error: msg("candidates.errors.photoType") };
+    if (file.size > MAX_PHOTO_BYTES) return { ok: false, error: msg("candidates.errors.photoSize") };
+
+    const { data: cand } = await ctx.db.from("candidates").select("id, photo_path").eq("id", candidateId).eq("organization_id", ctx.organizationId).maybeSingle();
+    if (!cand) return { ok: false, error: msg("candidates.errors.notFound") };
+
+    const path = `${ctx.organizationId}/${candidateId}/${randomUUID()}.${ext}`;
+    const { error: upErr } = await ctx.db.storage.from("candidate-photos").upload(path, new Uint8Array(await file.arrayBuffer()), { contentType: file.type, upsert: false });
+    if (upErr) return toActionError(upErr);
+    const { error } = await ctx.db.from("candidates").update({ photo_path: path }).eq("id", candidateId).eq("organization_id", ctx.organizationId);
+    if (error) {
+      await ctx.db.storage.from("candidate-photos").remove([path]);
+      return toActionError(error);
+    }
+    if (cand.photo_path) await ctx.db.storage.from("candidate-photos").remove([cand.photo_path]);
+    revalidatePath(`/workspace/${orgSlug}/candidates/${candidateId}`);
+    return { ok: true, message: msg("candidates.success.photoUpdated") };
+  });
+}
+
+export async function removeCandidatePhoto(orgSlug: string, candidateId: string): Promise<ActionResult> {
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "candidates:write");
+    parse(id, candidateId);
+    const { data: cand } = await ctx.db.from("candidates").select("photo_path").eq("id", candidateId).eq("organization_id", ctx.organizationId).maybeSingle();
+    if (!cand?.photo_path) return { ok: true };
+    const { error } = await ctx.db.from("candidates").update({ photo_path: null }).eq("id", candidateId).eq("organization_id", ctx.organizationId);
+    if (error) return toActionError(error);
+    await ctx.db.storage.from("candidate-photos").remove([cand.photo_path]);
+    revalidatePath(`/workspace/${orgSlug}/candidates/${candidateId}`);
+    return { ok: true, message: msg("candidates.success.photoRemoved") };
   });
 }

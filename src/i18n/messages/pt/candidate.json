@@ -1,0 +1,81 @@
+{
+  "metaTitle": "Confirme sua indicação",
+  "privateBadge": "Página privada · acessível só por este link",
+  "title": "{recruiter} quer apresentar você para uma vaga",
+  "intro": "Revise a vaga e o que será compartilhado com {partner}. Nada é enviado sem a sua confirmação.",
+  "expires": "Este link expira em {date}.",
+  "job": {
+    "heading": "A vaga",
+    "hiringOrg": "Recrutador responsável: {partner}",
+    "confidentialClient": "Cliente confidencial",
+    "description": "Descrição"
+  },
+  "shared": {
+    "heading": "O que será compartilhado com {partner}",
+    "body": "Somente estas informações do seu perfil, como estiverem depois das suas alterações abaixo. Todo o restante continua privado.",
+    "documents": "Documentos",
+    "note": "Mensagem de {org} para {partner}"
+  },
+  "profile": {
+    "heading": "Seu perfil",
+    "body": "Corrija o que estiver desatualizado. As alterações ficam salvas na sua ficha em {org}.",
+    "fullName": "Nome completo",
+    "email": "E-mail",
+    "emailHint": "Para alterar o e-mail, fale com {org}.",
+    "phone": "Telefone",
+    "headline": "Título profissional",
+    "summary": "Resumo",
+    "city": "Cidade",
+    "region": "Estado / província",
+    "country": "País (código de 2 letras)",
+    "workArrangements": "Modelos de trabalho",
+    "skills": "Habilidades",
+    "skillsHint": "Separe por vírgulas.",
+    "languages": "Idiomas",
+    "salaryMin": "Pretensão mínima",
+    "salaryMax": "Pretensão máxima",
+    "currency": "Moeda",
+    "availableFrom": "Disponível a partir de",
+    "mobilityHint": "Ajuda {org} a encontrar vagas que combinam com sua mobilidade. Só é compartilhado se você confirmar, e nunca o país que emitiu seu passaporte.",
+    "openToRelocation": "Aberto a mudança",
+    "travel": "Viagens",
+    "relocation": "Mudança",
+    "destinations": "Destinos preferidos",
+    "workAuthorization": "Autorização de trabalho",
+    "passport": "Passaporte"
+  },
+  "consent": "Autorizo {org} a compartilhar as informações acima com {partner} para a vaga {job}. Sei que posso revogar essa autorização a qualquer momento falando com {org}.",
+  "consentRequired": "Marque a autorização para confirmar.",
+  "confirm": "Confirmar e autorizar",
+  "confirming": "Confirmando…",
+  "decline": "Não tenho interesse",
+  "declineTitle": "Recusar esta indicação?",
+  "declineBody": "{partner} não será avisado. Apenas {org} saberá que você recusou.",
+  "declineReason": "Motivo (opcional)",
+  "declineConfirm": "Recusar indicação",
+  "declining": "Recusando…",
+  "cancel": "Cancelar",
+  "states": {
+    "confirmed": {
+      "title": "Indicação confirmada",
+      "body": "{org} já enviou seu perfil a {partner} para a vaga {job}. Você será contatado sobre os próximos passos."
+    },
+    "declined": {
+      "title": "Indicação recusada",
+      "body": "Avisamos {org}. Nada foi compartilhado com {partner}."
+    },
+    "expired": {
+      "title": "Este link expirou",
+      "body": "Peça um novo link a {org}."
+    },
+    "closed": {
+      "title": "Este pedido não está mais ativo",
+      "body": "{org} encerrou este pedido. Nada foi compartilhado com {partner}."
+    },
+    "invalid": {
+      "title": "Link inválido",
+      "body": "Verifique se você abriu o link completo do e-mail."
+    }
+  },
+  "nameRequired": "Informe seu nome"
+}

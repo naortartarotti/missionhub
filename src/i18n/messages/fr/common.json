@@ -65,5 +65,9 @@
     "useCustom": "Utiliser « {value} »",
     "more": "Continuez à taper pour affiner la liste"
   },
-  "moreItems": "{count} de plus"
+  "moreItems": "{count} de plus",
+  "countries": {
+    "add": "Ajouter un pays",
+    "remove": "Retirer {country}"
+  }
 }

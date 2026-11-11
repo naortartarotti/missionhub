@@ -57,5 +57,8 @@
     "body": "Ela não existe ou você não tem acesso a ela.",
     "home": "Ir para meu workspace"
   },
-  "not_pipeline_owner": "Só quem aceitou esta indicação pode movê-la pelo pipeline."
+  "not_pipeline_owner": "Só quem aceitou esta indicação pode movê-la pelo pipeline.",
+  "candidate_email_missing": "Adicione um e-mail na ficha do candidato para pedir a confirmação por e-mail.",
+  "request_closed": "Este pedido não está mais ativo.",
+  "request_expired": "Este link expirou. Peça um novo ao recrutador."
 }

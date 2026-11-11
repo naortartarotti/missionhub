@@ -49,7 +49,23 @@ export const CSV_COLUMNS = [
   "salary_max",
   "salary_currency",
   "source_detail",
+  "linkedin_url",
+  "postal_code",
+  "travel",
+  "relocation",
+  "relocation_countries",
+  "work_authorization",
+  "has_passport",
 ] as const;
+
+/** Lenient spreadsheet values for mobility columns ("yes"/"sim"/"oui", "frequent", "international"…). */
+const yesNo = (v?: string) => {
+  const s = (v ?? "").trim().toLowerCase();
+  if (["yes", "y", "true", "1", "sim", "s", "oui"].includes(s)) return "yes";
+  if (["no", "n", "false", "0", "não", "nao", "non"].includes(s)) return "no";
+  return s ? s : "";
+};
+const isoCodes = (v?: string) => (v ?? "").split(/[;,|]/).map((x) => x.trim().toUpperCase()).filter(Boolean).join(", ");
 
 export type CsvRowResult = { line: number; values: Record<string, string>; errors: string[]; parsed?: ReturnType<typeof candidateFormSchema.parse> };
 
@@ -87,6 +103,13 @@ export function validateCsv(text: string, maxRows = 500, t?: GlobalTranslator): 
       salaryCurrency: values.salary_currency || "CAD",
       source: "csv_import",
       sourceDetail: values.source_detail,
+      linkedinUrl: values.linkedin_url,
+      postalCode: values.postal_code,
+      travelAvailability: values.travel?.toLowerCase(),
+      relocationScope: values.relocation?.toLowerCase(),
+      relocationDestinations: isoCodes(values.relocation_countries),
+      workAuthorization: isoCodes(values.work_authorization),
+      hasPassport: yesNo(values.has_passport),
       legalBasis: "consent",
     });
     return {
