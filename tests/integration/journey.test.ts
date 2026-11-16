@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { randomUUID } from "node:crypto";
-import { admin, createCandidate, createJob, createOrg, createUser, drainQueue, sharingConsent, type TestUser } from "./helpers";
+import { admin, createCandidate, createJob, createOrg, createUser, drainQueue, opportunityFor, sharingConsent, termsOf, effectiveTerms, type TestUser } from "./helpers";
 import { allocateMinor } from "@/lib/money/allocate";
 
 let a: TestUser, b: TestUser, c: TestUser, platform: TestUser;
@@ -17,16 +17,17 @@ beforeAll(async () => {
   orgA = await createOrg(a, "Journey A");
   orgB = await createOrg(b, "Journey B");
   await createOrg(c, "Journey C");
-  candidateA = await createCandidate(a, orgA.id, { full_name: "Morgan Rivera", email: "morgan@example.com", phone: "+1 416 555 0100" });
+  // Job first, then the candidate: the candidate-side matcher scores the pair (the job-side matcher
+  // fails with "URI too long" on a large local data set; see job-terms-card qa-report).
   jobB = await createJob(b, orgB.id);
+  candidateA = await createCandidate(a, orgA.id, { full_name: "Morgan Rivera", email: "morgan@example.com", phone: "+1 416 555 0100" });
   await drainQueue();
 });
 
 describe("Journey A — match to settled placement", () => {
   it("A sees B's job as an opportunity with explanations", async () => {
-    const { data, error } = await a.client.rpc("get_opportunities", { p_org: orgA.id });
-    expect(error).toBeNull();
-    const opp = data!.find((o) => o.job_id === jobB)!;
+    // Per pair (p_match): the full list is capped at PostgREST max_rows on a large local data set.
+    const opp = (await opportunityFor(a, orgA.id, candidateA, jobB))!;
     expect(opp).toBeDefined();
     expect(opp.candidate_id).toBe(candidateA);
     expect(opp.band).toBe("strong");
@@ -44,7 +45,7 @@ describe("Journey A — match to settled placement", () => {
   it("refuses submission without a job-specific sharing authorization", async () => {
     const { data: processing } = await a.client.from("candidate_consents").select("id").eq("candidate_id", candidateA).eq("kind", "processing").single();
     const { error } = await a.client.rpc("submit_referral", {
-      p_candidate: candidateA, p_job: jobB, p_fields: ["headline", "skills"], p_document_ids: [],
+      p_candidate: candidateA, p_job: jobB, p_terms_version: await termsOf(jobB), p_fields: ["headline", "skills"], p_document_ids: [],
       p_consent: processing!.id, p_idempotency_key: randomUUID(),
     });
     expect(error?.message).toMatch(/sharing_authorization_missing/);
@@ -56,12 +57,14 @@ describe("Journey A — match to settled placement", () => {
     const args = {
       p_candidate: candidateA, p_job: jobB, p_fields: ["headline", "skills", "seniority", "location"],
       p_document_ids: [], p_consent: consent, p_idempotency_key: key, p_note: "Strong fit, available in January.",
+      p_terms_version: await termsOf(jobB),
     };
-    const first = await a.client.rpc("submit_referral", args);
+    const first = await a.client.rpc("submit_referral", args).single();
     expect(first.error).toBeNull();
-    referralId = first.data as string;
-    const replay = await a.client.rpc("submit_referral", args);
-    expect(replay.data).toBe(referralId);
+    expect(first.data?.outcome).toBe("created");
+    referralId = first.data!.referral_id;
+    const replay = await a.client.rpc("submit_referral", args).single();
+    expect(replay.data?.referral_id).toBe(referralId);
     const dup = await a.client.rpc("submit_referral", { ...args, p_idempotency_key: randomUUID() });
     expect(dup.error?.message).toMatch(/duplicate_referral/);
   });
@@ -126,7 +129,7 @@ describe("Journey A — match to settled placement", () => {
 
   it("B reports the hire → placement is created from the agreement snapshot", async () => {
     const { data, error } = await b.client.rpc("report_hire", {
-      p_referral: referralId, p_fee_minor: 2_000_000, p_currency: "CAD", p_start_date: "2027-01-11", p_expected_version: await version(b, referralId),
+      p_referral: referralId, p_terms_version: effectiveTerms(referralId), p_base_minor: 10_000_000, p_start_date: "2027-01-11", p_expected_version: await version(b, referralId),
     });
     expect(error).toBeNull();
     placementId = data as string;
@@ -229,15 +232,16 @@ describe("Journey B — revocation and expiry", () => {
   let cand: string, job: string, ref: string, consent: string;
 
   beforeAll(async () => {
-    cand = await createCandidate(a, orgA.id, { full_name: "Riley Chen" });
     job = await createJob(b, orgB.id, { title: "Staff Engineer" });
+    cand = await createCandidate(a, orgA.id, { full_name: "Riley Chen" });
     await drainQueue();
     consent = await sharingConsent(a, orgA.id, cand, job);
     const r = await a.client.rpc("submit_referral", {
-      p_candidate: cand, p_job: job, p_fields: ["full_name", "skills"], p_document_ids: [], p_consent: consent, p_idempotency_key: randomUUID(),
-    });
+      p_candidate: cand, p_job: job, p_terms_version: await termsOf(job), p_fields: ["full_name", "skills"], p_document_ids: [], p_consent: consent, p_idempotency_key: randomUUID(),
+    }).single();
     expect(r.error).toBeNull();
-    ref = r.data as string;
+    expect(r.data?.outcome).toBe("created");
+    ref = r.data!.referral_id;
   });
 
   it("revoking the sharing authorization removes B's access to the snapshot", async () => {
@@ -260,11 +264,11 @@ describe("Journey B — revocation and expiry", () => {
   });
 
   it("closing a job expires its opportunities immediately", async () => {
-    const before = await a.client.rpc("get_opportunities", { p_org: orgA.id });
-    expect(before.data!.some((o) => o.job_id === job)).toBe(true);
+    // Per pair (p_match): the full list is capped at PostgREST max_rows on a large local data set.
+    const visible = async () => (await Promise.all([candidateA, cand].map((x) => opportunityFor(a, orgA.id, x, job)))).some(Boolean);
+    expect(await visible()).toBe(true);
     await b.client.from("jobs").update({ status: "closed" }).eq("id", job);
-    const after = await a.client.rpc("get_opportunities", { p_org: orgA.id });
-    expect(after.data!.some((o) => o.job_id === job)).toBe(false);
+    expect(await visible()).toBe(false);
   });
 
   it("making a candidate unavailable removes them from B's counts", async () => {

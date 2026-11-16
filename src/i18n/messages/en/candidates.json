@@ -9,7 +9,7 @@
       "one": "{count} candidate isn't matching yet.",
       "other": "{count} candidates aren't matching yet."
     },
-    "notMatchingHint": "Record their permission and turn on matching to find partner jobs for them.",
+    "notMatchingHint": "Record their authorization and turn on matching to find partner jobs for them.",
     "showThem": "Show them",
     "searchPlaceholder": "Search by name, headline or exact skill",
     "searchLabel": "Search candidates",
@@ -25,14 +25,14 @@
       "candidate": "Candidate",
       "seniority": "Seniority",
       "skills": "Top skills",
-      "owner": "Recruiter",
+      "owner": "Owner",
       "updated": "Updated",
       "status": "Status"
     }
   },
   "new": {
     "title": "Add candidate",
-    "description": "Only professional details are used for matching. After saving, you'll record the candidate's permission and turn on matching.",
+    "description": "Only professional details are used for matching. After saving, you'll record the candidate's authorization and turn on matching.",
     "submit": "Save candidate"
   },
   "edit": {
@@ -43,8 +43,8 @@
   },
   "detail": {
     "metaTitle": "Candidate",
-    "created": "Candidate saved. Next: record their permission, then turn on matching.",
-    "updated": "Changes saved. Opportunities will refresh in a moment.",
+    "created": "Candidate saved. Next: record their authorization, then turn on matching.",
+    "updated": "Changes saved. Suggestions will refresh in a moment.",
     "noHeadline": "No headline yet",
     "edit": "Edit",
     "profile": "Profile",
@@ -63,14 +63,14 @@
     "salary": "Salary expectation",
     "salaryRange": "{min} – {max}",
     "availableFrom": "Available from",
-    "owner": "Recruiter",
-    "opportunities": "Opportunities",
-    "allOpportunities": "All opportunities",
+    "owner": "Owner",
+    "opportunities": "Suggestions",
+    "allOpportunities": "All suggestions",
     "matchingOff": "Turn on matching to see partner jobs that fit.",
     "noOpportunities": "No partner jobs fit yet. We re-check automatically.",
     "referrals": "Referrals",
     "noReferrals": "Not submitted to any partner job yet.",
-    "permission": "Candidate permission",
+    "permission": "Candidate authorization",
     "resume": "Resume",
     "sourcePrivacy": "Source & privacy",
     "source": "Source",
@@ -97,7 +97,7 @@
     "tabs": {
       "label": "Candidate sections",
       "profile": "Profile",
-      "opportunities": "Opportunities",
+      "opportunities": "Suggestions",
       "referrals": "Referrals",
       "documents": "Documents",
       "privacy": "Privacy"
@@ -111,7 +111,7 @@
     "pageTitle": "Candidate profile",
     "contactTitle": "Contact",
     "country": "Country",
-    "ownedBy": "Recruiter: {name}",
+    "ownedBy": "Owner: {name}",
     "contactName": "Contact {name}",
     "bestMatch": "Best match {score}",
     "mobilityTitle": "Mobility & international roles",
@@ -200,7 +200,7 @@
   },
   "setup": {
     "toast": {
-      "active_for_matching": "Matching is on. New opportunities usually appear within a minute.",
+      "active_for_matching": "Matching is on. New suggestions usually appear within a minute.",
       "unavailable": "Marked unavailable. Matching is paused until you turn it back on.",
       "archived": "Candidate archived. Matching is off."
     },
@@ -216,18 +216,18 @@
     "getMatchedTitle": "Get {name} matched with partner jobs",
     "getMatchedBody": "Two quick steps. Partners never see your candidate unless you decide to submit them.",
     "stepProfile": "Profile saved",
-    "stepPermission": "Candidate's permission recorded",
+    "stepPermission": "Candidate's authorization recorded",
     "stepPermissionHint": "Note how they agreed to be represented (e.g. an email or signed intake form).",
-    "stepPermissionLink": "Record permission",
+    "stepPermissionLink": "Record authorization",
     "stepMatching": "Matching turned on",
     "stepMatchingReady": "MissionHub will start looking for partner jobs that fit.",
-    "stepMatchingLocked": "Available once permission is recorded.",
+    "stepMatchingLocked": "Available once authorization is recorded.",
     "turnOn": "Turn on matching"
   },
   "consent": {
-    "none": "No permission on file yet.",
-    "processing": "Permission to represent and match",
-    "jobSharing": "Permission to share for one job",
+    "none": "No authorization on file yet.",
+    "processing": "Matching authorization",
+    "jobSharing": "Sharing authorization (one job)",
     "revokedOn": "Revoked {date}",
     "active": "Active",
     "basis": "Basis:",
@@ -237,12 +237,12 @@
     "expires": "expires {date}",
     "revocationReason": "Revocation reason:",
     "revoke": "Revoke",
-    "revokeTitle": "Revoke this permission?",
+    "revokeTitle": "Revoke this authorization?",
     "revokeJobSharing": "The partner recruiter immediately loses access to the shared profile and documents for this referral. This can't be undone; a new authorization would be needed.",
     "revokeProcessing": "Matching stops for this candidate right away. Past records are kept for your audit trail.",
-    "revokeConfirm": "Revoke permission",
+    "revokeConfirm": "Revoke authorization",
     "reason": "Reason",
-    "recordTitle": "Record the candidate's permission",
+    "recordTitle": "Record the candidate's authorization",
     "basisLabel": "Basis",
     "basisHint": "Most recruiters use Consent. Confirm the right basis with your privacy counsel.",
     "scope": "What they agreed to",
@@ -250,7 +250,7 @@
     "evidenceLabel": "How and when they agreed",
     "evidenceHint": "e.g. “Confirmed by email on Nov 3” or “Signed intake form”",
     "expiresAt": "Expires (optional)",
-    "save": "Save permission",
+    "save": "Save authorization",
     "details": "Details"
   },
   "documents": {
@@ -337,7 +337,7 @@
   },
   "errors": {
     "notFound": "Candidate not found.",
-    "permissionRequired": "Record the candidate's permission before turning on matching.",
+    "permissionRequired": "Record the candidate's authorization before turning on matching.",
     "selectJob": "Select the job this authorization covers.",
     "revokeReason": "Provide a reason for the revocation.",
     "consentNotFound": "Authorization not found or already revoked.",
@@ -360,7 +360,7 @@
     "photoSize": "The photo must be 2 MB or smaller."
   },
   "success": {
-    "activated": "Candidate activated. Matching runs in the background.",
+    "activated": "Matching is on. New suggestions usually appear within a minute.",
     "statusUpdated": "Status updated.",
     "consentRecorded": "Authorization recorded.",
     "consentRevoked": "Authorization revoked. Any partner access based on it has been removed.",

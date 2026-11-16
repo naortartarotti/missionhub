@@ -1,6 +1,6 @@
 {
   "title": "Commissions",
-  "description": "Suivez chaque placement de l'embauche au versement. Les montants sont des estimations jusqu'à ce que le client paie. Les parts deviennent dues une fois ce paiement confirmé. Les parts peuvent être payées hors de MissionHub et consignées ici, ou par MissionHub lorsque les paiements en ligne sont offerts.",
+  "description": "Suivez chaque placement de l'embauche au versement. Les montants sont des estimations jusqu'à ce que le client paie. Les parts deviennent dues une fois ce paiement vérifié. Les parts sont payées hors de MissionHub et consignées ici.",
   "kpi": {
     "projected": "Prévu",
     "projectedHint": "Embauches pas encore payées par le client",
@@ -8,7 +8,7 @@
     "payableHint": "Vérifié, en attente de versement",
     "paid": "Versé à vous",
     "paidHint": "Versements vérifiés",
-    "owed": "Dû aux partenaires",
+    "owed": "À verser aux partenaires",
     "owedHint": "Parts vérifiées à remettre"
   },
   "otherCurrencies": "Les totaux n'incluent que les placements en {currency}; les autres devises sont listées ci-dessous et ne sont jamais converties.",
@@ -24,17 +24,18 @@
     "share": "Votre part",
     "start": "Début",
     "status": "Statut",
-    "projected": "prévu"
+    "projected": "prévu",
+    "computedSub": "Calculés : {amount}"
   },
   "party": {
     "client": "Montant distribuable reçu",
-    "sourcing": "Recruteur source",
-    "job_owner": "Propriétaire du poste",
+    "sourcing": "Recruteur d'origine",
+    "job_owner": "Recruteur du poste",
     "platform": "Plateforme"
   },
   "detail": {
     "metaTitle": "Placement",
-    "flashCreated": "Placement créé à partir de l'entente figée. Prochaine étape : enregistrer la facture au client.",
+    "flashCreated": "Placement créé. Prochaine étape : enregistrer la facture au client.",
     "sourcedFor": "Placement · candidat fourni par vous pour {org}",
     "sourcedBy": "Placement · candidat fourni par {org}",
     "subtitle": "{candidate} · début le {start}",
@@ -46,10 +47,10 @@
     "projected": "Prévu — paiement du client non vérifié",
     "outstanding": "Solde dû :",
     "recordClientPayment": "Enregistrer le paiement du client",
-    "recordPayout": "Enregistrer un versement / une remise",
+    "recordPayout": "Enregistrer un versement",
     "openReferral": "Ouvrir la recommandation",
     "agreement": "Entente : {rule} v{version} · {terms}",
-    "invoicesTitle": "Factures et preuves",
+    "invoicesTitle": "Factures et pièces justificatives",
     "nothingRecorded": "Rien d'enregistré pour l'instant.",
     "invoice": "Facture {number}",
     "invoiceLine": "{amount} + {tax} de taxes · émise le {issued}",
@@ -62,10 +63,10 @@
     "evidenceLine": "{amount} · {date} · réf. {reference}",
     "evidenceLineFees": "{amount} (frais {fees}) · {date} · réf. {reference}",
     "review": "Examen : {note}",
-    "sourcingConfirms": "Le recruteur source confirme la réception.",
+    "sourcingConfirms": "Le recruteur d'origine confirme la réception.",
     "platformVerifies": "Vérifiée par un administrateur de la plateforme MissionHub.",
     "ledger": "Registre",
-    "ledgerEmpty": "Vide jusqu'à ce qu'un paiement du client soit vérifié. Les écritures sont immuables; les corrections sont enregistrées comme écritures de contrepassation.",
+    "ledgerEmpty": "Vide jusqu'à ce qu'un paiement du client soit vérifié. Les écritures sont immuables; les corrections sont enregistrées comme écritures de correction.",
     "ledgerCaption": "Registre des commissions",
     "entry": "Écriture",
     "partyColumn": "Partie",
@@ -74,17 +75,36 @@
       "fee_received": "honoraires reçus",
       "allocation": "attribution",
       "payout": "versement",
-      "remittance": "remise",
+      "remittance": "versement à la plateforme",
       "refund": "remboursement",
       "allocation_reversal": "contrepassation d'attribution",
       "adjustment": "ajustement"
     },
     "statusHistory": "Historique des statuts",
-    "payThrough": "Payer {amount} via MissionHub",
-    "payThroughHint": "Paie le recruteur source et la part de la plateforme en une seule étape. Aucune preuve de versement requise.",
-    "paymentReturned": "Merci. Votre paiement est en cours de confirmation; cette page sera mise à jour dès la confirmation du fournisseur.",
-    "paymentCancelled": "Paiement annulé. Rien n'a été débité.",
-    "productName": "Commission de placement"
+    "productName": "Commission de placement",
+    "fee": {
+      "title": "Honoraires",
+      "terms": "Conditions",
+      "version": "Version {version}",
+      "amended": "Modifiées le {date}",
+      "base": "Salaire de base",
+      "bonus": "Prime cible {amount}",
+      "computed": "Honoraires calculés",
+      "invoiced": "Honoraires facturés",
+      "difference": "Écart {amount}",
+      "note": "« {note} »",
+      "noNote": "Aucune note.",
+      "legacyFee": "Honoraires de placement {fee}",
+      "lowerSource": "{partner} a facturé moins que les honoraires calculés. Votre part reste établie sur les honoraires calculés ({computed}) et devient à verser à mesure que les paiements du client sont vérifiés. Si vous n'êtes pas d'accord avec l'écart, vous pouvez ouvrir un litige.",
+      "lowerTarget": "Vous avez facturé moins que les honoraires calculés. La part de {partner} reste établie sur les honoraires calculés : votre part couvre donc l'écart.",
+      "negativeTarget": "Votre part prévue est de {amount}. C'est la portion de la part de {partner} que les honoraires facturés ne couvrent pas. Vous la versez directement à {partner}.",
+      "higher": "Les honoraires facturés dépassent les honoraires calculés. Les parts ne sont jamais établies sur moins que les honoraires calculés : chaque part suit donc les honoraires facturés."
+    },
+    "negativeShareHint": "Négative parce que les honoraires facturés sont inférieurs aux honoraires calculés.",
+    "platformBasis": {
+      "collected": "Établie sur les honoraires encaissés",
+      "frozen": "Établie sur les honoraires calculés"
+    }
   },
   "forms": {
     "recorded": "Enregistré",
@@ -95,7 +115,7 @@
     "due": "Échéance",
     "recordInvoice": "Enregistrer la facture",
     "recordClientInvoice": "Enregistrer la facture au client",
-    "invoiceDescription": "La facture que vous (le propriétaire du poste) avez émise à l'entreprise qui embauche. Montants en {currency}.",
+    "invoiceDescription": "La facture que vous (le recruteur du poste) avez émise à l'entreprise qui embauche. Montants en {currency}.",
     "type": "Type",
     "amount": "Montant ({currency})",
     "processingFees": "Frais de traitement",
@@ -103,26 +123,26 @@
     "occurredOn": "Date de réception / d'envoi",
     "reference": "Référence bancaire ou de virement",
     "notes": "Notes",
-    "recordEvidence": "Enregistrer la preuve",
+    "recordEvidence": "Enregistrer la pièce justificative",
     "evidenceDescription": "Enregistrée comme en attente. Elle ne modifie le registre qu'après qu'une autre personne que vous l'a vérifiée par rapport au relevé bancaire.",
     "verify": "Vérifier",
-    "verifyTitle": "Vérifier cette preuve?",
+    "verifyTitle": "Vérifier cette pièce justificative?",
     "verifyDescription": "Ne vérifiez qu'après avoir consulté le relevé bancaire ou de paiement réel. La vérification crée des écritures immuables au registre.",
     "verifyNote": "Note de vérification",
     "reject": "Rejeter",
-    "rejectTitle": "Rejeter cette preuve?",
-    "rejectDescription": "La personne qui l'a enregistrée devra soumettre une preuve corrigée.",
+    "rejectTitle": "Rejeter cette pièce justificative?",
+    "rejectDescription": "La personne qui l'a enregistrée devra soumettre une pièce justificative corrigée.",
     "reason": "Raison",
     "openDispute": "Ouvrir un litige",
     "disputeTitle": "Ouvrir un litige?",
-    "disputeDescription": "Le placement est gelé (aucune nouvelle preuve ni vérification) jusqu'à ce qu'un administrateur de la plateforme règle le litige. L'historique n'est jamais supprimé.",
+    "disputeDescription": "Le placement est gelé (aucune nouvelle pièce justificative ni vérification) jusqu'à ce qu'un administrateur de la plateforme règle le litige. L'historique n'est jamais supprimé.",
     "disputeReason": "Quel est le problème?"
   },
   "messages": {
     "invoiceRecorded": "Facture enregistrée.",
-    "evidenceRecorded": "Preuve enregistrée. Elle n'affecte le registre qu'après une vérification indépendante.",
+    "evidenceRecorded": "Pièce justificative enregistrée. Elle n'affecte le registre qu'après une vérification indépendante.",
     "verified": "Vérifiée. Registre mis à jour.",
-    "rejected": "Preuve rejetée.",
+    "rejected": "Pièce justificative rejetée.",
     "disputeOpened": "Litige ouvert. Le placement est gelé en attendant l'examen de la plateforme."
   },
   "validation": {
@@ -135,5 +155,26 @@
     "invalidAmount": "Entrez un montant valide",
     "rejectReason": "Indiquez la raison du rejet.",
     "disputeReason": "Décrivez le problème (10 à 2000 caractères)."
-  }
+  },
+  "feeDetails": {
+    "saved": "Détails des honoraires enregistrés. Prochaine étape : enregistrer la facture du client.",
+    "title": "Entrer les détails des honoraires"
+  },
+  "feePending": {
+    "title": "Détails des honoraires attendus du recruteur du poste",
+    "estimate": "Estimation à la soumission : ~{amount}",
+    "rateOnly": "{rate} du salaire à l'embauche",
+    "flat": "Honoraires prévus aux conditions : {amount}",
+    "legacy": "Conditions non enregistrées : le recruteur du poste entre les honoraires.",
+    "established": "Embauche établie le {date} : {how}",
+    "how": {
+      "deemed": "aucune réponse à la déclaration d'embauche",
+      "upheld": "déclaration d'embauche retenue par un administrateur de la plateforme"
+    },
+    "due": "Date limite des détails des honoraires",
+    "overdue": "Les détails des honoraires étaient attendus le {when} HE.",
+    "noAmounts": "Les montants paraîtront quand le recruteur du poste aura entré les détails des honoraires.",
+    "enter": "Entrer les détails des honoraires"
+  },
+  "invoiceOverdue": "Facture en retard"
 }

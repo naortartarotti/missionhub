@@ -24,17 +24,32 @@ async function orgFlags(db: AdminClient, orgId: string) {
 const hash = (s: string) => createHash("sha256").update(s).digest("hex").slice(0, 32);
 const PAGE = 500;
 
+/**
+ * PostgREST puts `in.(…)` filters in the URL; 500 UUIDs (~18 KB) exceed the gateway's URI limit
+ * (QA-PRE-01). Ids are looked up in chunks small enough for any URL limit (~3.7 KB each).
+ */
+export const IN_FILTER_CHUNK = 100;
+
+export function chunk<T>(items: readonly T[], size = IN_FILTER_CHUNK): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
+  return out;
+}
+
 async function hasProcessingAuthorization(db: AdminClient, candidateIds: string[]): Promise<Set<string>> {
-  if (candidateIds.length === 0) return new Set();
-  const { data, error } = await db
-    .from("candidate_consents")
-    .select("candidate_id, expires_at")
-    .in("candidate_id", candidateIds)
-    .eq("kind", "processing")
-    .is("revoked_at", null);
-  if (error) throw error;
+  const authorized = new Set<string>();
   const now = Date.now();
-  return new Set((data ?? []).filter((c) => !c.expires_at || Date.parse(c.expires_at) > now).map((c) => c.candidate_id));
+  for (const ids of chunk(candidateIds)) {
+    const { data, error } = await db
+      .from("candidate_consents")
+      .select("candidate_id, expires_at")
+      .in("candidate_id", ids)
+      .eq("kind", "processing")
+      .is("revoked_at", null);
+    if (error) throw error;
+    for (const c of data ?? []) if (!c.expires_at || Date.parse(c.expires_at) > now) authorized.add(c.candidate_id);
+  }
+  return authorized;
 }
 
 type MatchRow = {

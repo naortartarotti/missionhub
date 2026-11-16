@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Plus, Search, Sparkles, Upload, Users } from "lucide-react";
-import { getRequestContext } from "@/server/auth/context";
+import { canSeeAgency, getRequestContext } from "@/server/auth/context";
 import { listCandidates, CANDIDATE_PAGE_SIZE } from "@/features/candidates/queries";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { NativeSelect } from "@/components/shared/native-select";
 import { CANDIDATE_STATUS } from "@/lib/labels";
 import { Pagination } from "@/components/shared/pagination";
 import { Flash } from "@/components/shared/flash";
+import { SegmentedNav } from "@/components/shared/segmented-nav";
 import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 
 export async function generateMetadata() {
@@ -27,16 +28,21 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
   const q = typeof sp.q === "string" ? sp.q : "";
   const status = typeof sp.status === "string" ? sp.status : "all";
   const page = Number(sp.page ?? 1) || 1;
+  const owner = sp.owner === "me" ? "me" : "team";
   const [{ rows, total }, notMatching, othersOwned] = await Promise.all([
-    listCandidates(ctx, { q, status, page }),
+    listCandidates(ctx, { q, status, page, mine: owner === "me" }),
     ctx.db.from("candidates").select("id", { count: "exact", head: true }).eq("organization_id", ctx.organizationId).eq("status", "draft"),
-    ctx.db.from("candidates").select("id", { count: "exact", head: true }).eq("organization_id", ctx.organizationId).neq("owner_id", ctx.userId),
+    // RD-036: plain recruiters only ever see their own candidates, so there's no one else's to count.
+    canSeeAgency(ctx)
+      ? ctx.db.from("candidates").select("id", { count: "exact", head: true }).eq("organization_id", ctx.organizationId).neq("owner_id", ctx.userId)
+      : Promise.resolve({ count: 0 }),
   ]);
   const draftCount = notMatching.count ?? 0;
   // The recruiter column only adds information when someone else on the team owns candidates.
   const showOwner = (othersOwned.count ?? 0) > 0;
   const base = `/workspace/${orgSlug}/candidates`;
-  const [t, tg, f] = await Promise.all([getT("candidates"), getGlobalT(), getFormatter()]);
+  const [t, tg, tc, f] = await Promise.all([getT("candidates"), getGlobalT(), getT("common"), getFormatter()]);
+  const scopeHref = (o: string) => `${base}?${new URLSearchParams({ ...(q ? { q } : {}), ...(status !== "all" ? { status } : {}), ...(o === "me" ? { owner: "me" } : {}) })}`;
   const statuses = (Object.keys(CANDIDATE_STATUS) as (keyof typeof CANDIDATE_STATUS)[]).filter((k) => k !== "deleted");
 
   return (
@@ -75,7 +81,18 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
         </div>
       ) : null}
 
+      {showOwner || owner === "me" ? (
+        <SegmentedNav
+          label={tc("ownerScope.label")}
+          active={owner}
+          segments={[
+            { key: "team", label: tc("ownerScope.team"), href: scopeHref("team") },
+            { key: "me", label: tc("ownerScope.mine"), href: scopeHref("me") },
+          ]}
+        />
+      ) : null}
       <form className="flex flex-col gap-2 sm:flex-row" role="search" action={base}>
+        {owner === "me" ? <input type="hidden" name="owner" value="me" /> : null}
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
           <Input name="q" defaultValue={q} placeholder={t("list.searchPlaceholder")} className="pl-10" aria-label={t("list.searchLabel")} />
@@ -130,9 +147,12 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
                   <tr key={c.id} className="border-b border-border/60 last:border-0 hover:bg-muted/40">
                     <td className="px-5 py-4">
                       <Link href={`${base}/${c.id}`} className="flex items-center gap-3 rounded-lg focus-visible:outline-2">
-                        <InitialsAvatar name={c.full_name} className="size-10" />
+                        <InitialsAvatar name={c.full_name} className="size-10 bg-[#f7da82] text-black" />
                         <span className="min-w-0">
-                          <span className="block truncate text-base font-semibold">{c.full_name}</span>
+                          <span className="flex items-center gap-2">
+                            <span className="truncate text-base font-semibold">{c.full_name}</span>
+                            {c.source === "integration" || c.source === "api" ? <span className="shrink-0 rounded-full bg-violet-soft px-2 py-0.5 text-xs font-medium text-violet">{tc("imported")}</span> : null}
+                          </span>
                           <span className="block truncate text-sm text-muted-foreground">
                             {[c.headline, [c.location_city, c.location_region].filter(Boolean).join(", ")].filter(Boolean).join(" · ") || "—"}
                           </span>
@@ -155,7 +175,7 @@ export default async function CandidatesPage({ params, searchParams }: PageProps
           </div>
         </Panel>
       )}
-      <Pagination base={base} params={{ q, status }} page={page} total={total} pageSize={CANDIDATE_PAGE_SIZE} />
+      <Pagination base={base} params={{ q, status, ...(owner === "me" ? { owner } : {}) }} page={page} total={total} pageSize={CANDIDATE_PAGE_SIZE} />
     </div>
   );
 }

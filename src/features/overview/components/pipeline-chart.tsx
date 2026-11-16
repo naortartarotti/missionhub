@@ -106,7 +106,7 @@ export function PipelineChart({
                   {/* Hover / focus tooltip */}
                   <span
                     role="tooltip"
-                    className="pointer-events-none absolute bottom-full left-0 z-10 mb-1 rounded-xl bg-foreground px-3 py-1.5 text-xs whitespace-nowrap text-background opacity-0 shadow-md transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+                    className="pointer-events-none absolute bottom-full left-0 z-10 mb-1 w-max max-w-full rounded-xl bg-foreground px-3 py-1.5 text-xs text-pretty text-background opacity-0 shadow-md transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
                   >
                     <span className="font-semibold">{s.label}</span> · {s.value} · {s.share}
                   </span>

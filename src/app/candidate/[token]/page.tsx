@@ -4,6 +4,7 @@ import { Logo } from "@/components/layout/logo";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { Panel } from "@/components/shared/card";
 import { ExpandableText } from "@/components/shared/expandable-text";
+import { FocusHeading } from "@/components/shared/focus-heading";
 import { createClient } from "@/server/supabase/server";
 import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 import { DISCLOSURE_FIELDS, type DisclosureKey } from "@/features/referrals/disclosure";
@@ -16,7 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 type RequestView = {
-  state: "pending" | "confirmed" | "declined" | "expired" | "closed";
+  // `already_sent`: the candidate confirmed, but the hiring partner already had this person (BR-8, EC-1).
+  state: "pending" | "confirmed" | "declined" | "expired" | "closed" | "already_sent";
   expires_at?: string;
   recruiter: { org: string; name: string | null };
   job: {
@@ -82,7 +84,7 @@ export default async function CandidateRequestPage({ params }: PageProps<"/candi
 
   if (!view || view.state !== "pending" || !view.candidate) {
     const state = view?.state ?? "invalid";
-    const icon: Record<string, LucideIcon> = { confirmed: CheckCircle2, declined: XCircle, expired: Clock, closed: Link2Off, invalid: Link2Off, pending: Link2Off };
+    const icon: Record<string, LucideIcon> = { confirmed: CheckCircle2, already_sent: CheckCircle2, declined: XCircle, expired: Clock, closed: Link2Off, invalid: Link2Off, pending: Link2Off };
     const tone = state === "confirmed" ? "bg-success-soft text-success" : "bg-muted text-muted-foreground";
     const Icon = icon[state];
     const vars = { org: view?.recruiter.org ?? "", partner: view?.job.org ?? "", job: view?.job.title ?? "" };
@@ -93,7 +95,12 @@ export default async function CandidateRequestPage({ params }: PageProps<"/candi
           <span className={`grid size-14 place-items-center rounded-full ${tone}`} aria-hidden>
             <Icon className="size-7" />
           </span>
-          <h1 className="text-2xl font-semibold tracking-tight">{t(`states.${key}.title`)}</h1>
+          {key === "already_sent" ? (
+            // Reached right after confirming: move focus to the result (and on every later visit).
+            <FocusHeading className="text-2xl font-semibold tracking-tight outline-none">{t(`states.${key}.title`)}</FocusHeading>
+          ) : (
+            <h1 className="text-2xl font-semibold tracking-tight">{t(`states.${key}.title`)}</h1>
+          )}
           <p className="max-w-md text-[15px] text-pretty text-muted-foreground">{t(`states.${key}.body`, vars)}</p>
         </Panel>
       </Shell>

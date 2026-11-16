@@ -1,6 +1,7 @@
 import "server-only";
 import { assertCan, type RequestContext } from "@/server/auth/context";
 import type { Database } from "@/server/db/database.types";
+import { getReferralTerms } from "@/features/referrals/queries";
 import { PIPELINE_CLOSED, PIPELINE_STAGES, type PipelineCard, type PipelineTransition } from "./stages";
 
 type ReferralStatus = Database["public"]["Enums"]["referral_status"];
@@ -15,7 +16,7 @@ export async function listPipeline(ctx: RequestContext, jobId?: string) {
   let q = ctx.db
     .from("referrals")
     .select(
-      "id, status, version, job_id, job_title_snapshot, candidate_label, fit_score, updated_at, decided_at, source_org:organizations!referrals_source_org_id_fkey(name), profile:referral_shared_profiles(snapshot), agreement:collaboration_agreements(status), placement:placements(id), job:jobs(expected_fee_minor, fee_currency)",
+      "id, status, version, job_id, job_title_snapshot, candidate_label, fit_score, updated_at, decided_at, source_org:organizations!referrals_source_org_id_fkey(name), profile:referral_shared_profiles(snapshot), agreement:collaboration_agreements(status), placement:placements(id), terms:job_terms_versions!referrals_terms_version_id_fkey(fee_basis, rate_bps, flat_fee_minor, currency)",
     )
     .eq("target_org_id", ctx.organizationId)
     .in("status", [...PIPELINE_STAGES, ...PIPELINE_CLOSED] as ReferralStatus[])
@@ -44,7 +45,12 @@ export async function listPipeline(ctx: RequestContext, jobId?: string) {
     since.set(e.referral_id, e.created_at);
     if (e.to_status === "accepted" && e.actor_id) acceptedBy.set(e.referral_id, e.actor_id);
   }
-  const ownership = await resolveOwnership(ctx, acceptedBy);
+  // N2 (BR-21): the hire dialog is driven by each referral's effective terms (snapshot or amendment),
+  // never the live job. Only cards that can be hired (status offer) need them.
+  const [ownership, hireTerms] = await Promise.all([
+    resolveOwnership(ctx, acceptedBy),
+    Promise.all((rows ?? []).filter((r) => r.status === "offer").map(async (r) => [r.id, await getReferralTerms(ctx, r.id)] as const)).then((e) => new Map(e)),
+  ]);
 
   const one = <T,>(v: T | T[] | null): T | null => (Array.isArray(v) ? (v[0] ?? null) : v);
   const cards: PipelineCard[] = (rows ?? []).map((r) => {
@@ -65,8 +71,12 @@ export async function listPipeline(ctx: RequestContext, jobId?: string) {
       canMove: own?.canMove ?? true,
       agreementActive: one(r.agreement)?.status === "active",
       placementId: one(r.placement)?.id ?? null,
-      expectedFeeMinor: one(r.job)?.expected_fee_minor ?? null,
-      feeCurrency: one(r.job)?.fee_currency ?? null,
+      feeTerms: (() => {
+        const h = hireTerms.get(r.id);
+        const t = h?.recorded ? h.effective : one(r.terms);
+        return t ? { feeBasis: t.fee_basis, rateBps: t.rate_bps, flatFeeMinor: t.flat_fee_minor, currency: t.currency } : null;
+      })(),
+      hireTerms: hireTerms.get(r.id) ?? null,
     };
   });
 

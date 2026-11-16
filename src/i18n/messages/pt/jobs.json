@@ -32,8 +32,8 @@
     "clientConfidential": "{client} · confidencial para parceiros",
     "clientNotSet": "Cliente não definido",
     "edit": "Editar",
-    "kpiStrong": "Correspondências fortes",
-    "kpiPartial": "Correspondências parciais",
+    "kpiStrong": "Matches fortes",
+    "kpiPartial": "Matches parciais",
     "kpiPartnerHint": "Candidatos de parceiros · anônimos",
     "submittedTitle": "Candidatos enviados a você",
     "privacyNotPublished": "Esta vaga não está publicada, então não está sendo correspondida. Publique-a para ver quantos candidatos de parceiros se encaixam.",
@@ -45,14 +45,13 @@
     "languages": "Idiomas",
     "location": "Localização",
     "compensation": "Remuneração",
-    "placementFee": "Taxa de colocação",
     "visible": {
       "always": "Título, senioridade, modelo de trabalho e habilidades",
       "description": "Descrição",
       "location": "Localização",
-      "compensation": "Remuneração",
-      "placementFee": "Taxa de colocação",
-      "clientName": "Nome do cliente"
+      "compensation": "Faixa salarial e estimativa da taxa",
+      "clientName": "Nome do cliente",
+      "terms": "Termos para parceiros"
     },
     "statSubmitted": "Enviados",
     "privacyShort": "Os candidatos dos parceiros ficam anônimos até serem enviados.",
@@ -66,6 +65,7 @@
     "matchingClosed": "Fechada para parceiros",
     "editCta": "Editar vaga",
     "pipelineReview": "Em análise",
+    "pipelineAccepted": "Aceitas",
     "pipelineInterviewing": "Entrevistas",
     "pipelineOffer": "Proposta",
     "pipelineHired": "Contratado",
@@ -89,7 +89,11 @@
     "submittedEmptyBody": "Você será avisado assim que um parceiro enviar alguém.",
     "mobility": "Viagens e mobilidade",
     "visaSponsorship": "Patrocina visto",
-    "relocationSupport": "Apoio à mudança"
+    "relocationSupport": "Apoio à mudança",
+    "feeTerms": "Termos da taxa",
+    "termsTitle": "Termos para parceiros",
+    "termsEmpty": "Ainda não há termos. Os parceiros não veem esta vaga até você adicioná-los.",
+    "editTerms": "Editar termos"
   },
   "status": {
     "publish": "Publicar",
@@ -132,6 +136,9 @@
     "salaryMin": "Salário mín.",
     "salaryMax": "Salário máx.",
     "currency": "Moeda",
+    "splitJobOwner": "Você (recrutador da vaga) · {percent}",
+    "splitSourcing": "Recrutador de origem · {percent}",
+    "splitPlatform": "Plataforma · {percent}",
     "partnerReferrals": "Indicações de parceiros",
     "openToPartners": "Abrir esta vaga a recrutadores parceiros",
     "openToPartnersHint": "Recrutadores com candidatos compatíveis verão esta vaga e poderão enviá-los. Você verá quantos se encaixam, mas não quem, até que alguém seja enviado.",
@@ -139,21 +146,84 @@
     "visibleHint": "Título, senioridade, modelo de trabalho e habilidades são sempre exibidos. O nome do cliente segue a configuração acima.",
     "shareDescription": "Descrição da vaga",
     "shareLocation": "Localização",
-    "shareSalary": "Faixa de remuneração",
-    "shareFee": "Taxa de colocação prevista",
-    "expectedFee": "Taxa de colocação prevista",
-    "expectedFeeHint": "O valor total que você prevê faturar ao cliente",
-    "feeCurrency": "Moeda da taxa",
     "cancel": "Cancelar",
     "saveDraft": "Salvar como rascunho",
     "publish": "Publicar vaga",
     "saveChanges": "Salvar alterações",
     "travel": "Viagens",
     "visaSponsorship": "Patrocina visto de trabalho",
-    "relocationSupport": "Oferece apoio à mudança"
+    "relocationSupport": "Oferece apoio à mudança",
+    "clientInternalHint": "Opcional. Os parceiros nunca veem este nome. Os admins da plataforma só o veem para resolver uma disputa. Se você informar, o MissionHub detecta indicações duplicadas em todas as suas vagas deste cliente. Se deixar em branco, a proteção vale só para esta vaga, e você não poderá citar uma indicação recebida para outra vaga numa objeção.",
+    "clientDuplicateHint": "O MissionHub também usa o nome do cliente para detectar indicações duplicadas em todas as suas vagas deste cliente.",
+    "terms": {
+      "title": "Termos para parceiros",
+      "description": "Os parceiros veem estes termos antes de enviar um candidato. Cada indicação mantém os termos vigentes no momento do envio.",
+      "notPublished": "Ainda não publicados",
+      "versionPill": "Versão {version} · {date}",
+      "feeLegend": "Taxa de colocação",
+      "basisHint": {
+        "pct_base": "Calculada na contratação sobre o salário-base do primeiro ano.",
+        "pct_total_cash": "Calculada na contratação sobre o salário-base mais o bônus-alvo. Ações, bônus de contratação, benefícios e auxílio-mudança não entram.",
+        "pct_total_cash_br": "Confira se o seu contrato com o cliente inclui o 13º salário e o 1/3 de férias na remuneração total.",
+        "flat": "Um valor fixo, seja qual for o salário."
+      },
+      "rate": "Percentual da taxa",
+      "ratePlaceholder": "ex.: 20",
+      "minimum": "Taxa mínima (opcional)",
+      "minimumHint": "Vale quando a taxa calculada for menor.",
+      "flatAmount": "Taxa fixa",
+      "currency": "Moeda",
+      "currencyFollowsSalary": "Moeda da taxa: {currency}, a mesma do salário.",
+      "previewTitle": "Estimativa",
+      "previewFee": "Taxa estimada ~{fee}",
+      "previewBonus": "mais {rate} do bônus-alvo",
+      "previewFlat": "Se houver contratação",
+      "previewHint": "Com base no ponto médio da faixa salarial. A taxa é calculada na contratação sobre o salário real.",
+      "previewNoBand": "Adicione uma faixa salarial para ver uma estimativa.",
+      "searchLegend": "Tipo de busca",
+      "guaranteeLegend": "Garantia",
+      "guaranteeLength": "Duração",
+      "guaranteeNone": "Sem garantia",
+      "guaranteeDays": {
+        "one": "{count} dia",
+        "other": "{count} dias"
+      },
+      "remedy": "Se a pessoa contratada sair durante a garantia",
+      "noGuaranteeNote": "Os parceiros verão que não há garantia.",
+      "paymentTerms": "Prazo de pagamento do cliente",
+      "paymentDays": "dias",
+      "paymentHint": "Dias que o cliente tem para pagar após a fatura. A fatura é emitida na data de início.",
+      "window": "Período de titularidade",
+      "windowMonths": {
+        "one": "{count} mês",
+        "other": "{count} meses"
+      },
+      "windowHint": "Por quanto tempo uma indicação entregue mantém a prioridade com este cliente. Não pode ser menor que o período de apresentação do seu contrato com o cliente.",
+      "shareSalary": "Mostrar aos parceiros a faixa salarial e a estimativa da taxa",
+      "shareSalaryHint": "Com taxa em %, a estimativa revela o salário, então a faixa e a estimativa aparecem ou ficam ocultas juntas. Os parceiros sempre veem o percentual.",
+      "splitTitle": "Divisão da comissão",
+      "splitNote": "Definida pelo MissionHub. Cada indicação mantém a divisão vigente no momento do envio.",
+      "attestation": "Temos o contrato de taxa diretamente com o cliente final.",
+      "attestationHint": "Vagas que você atende para outra agência não podem ser abertas a indicações de parceiros.",
+      "attestationRequired": "Obrigatório para publicar",
+      "lastAttested": "Última confirmação por {name} em {date}",
+      "willPublish": "Ao salvar, a versão {version} dos termos será publicada.",
+      "existingReferrals": {
+        "one": "{count} indicação foi enviada com termos anteriores e continua com eles. Os parceiros com indicações em andamento serão avisados da mudança.",
+        "other": "{count} indicações foram enviadas com termos anteriores e continuam com eles. Os parceiros com indicações em andamento serão avisados da mudança."
+      },
+      "permanentOnly": "Só vagas efetivas podem ser abertas a indicações de parceiros. Mude o tipo de contrato ou desative as indicações de parceiros."
+    },
+    "clientRequiredForPartners": "Obrigatório para abrir esta vaga a parceiros. Se você ocultar o nome do cliente, os parceiros nunca o veem.",
+    "restrictedHold": "Configuração salva, mas a vaga fica oculta para parceiros enquanto sua organização estiver com restrição de rede.",
+    "restrictedRules": "Configuração salva, mas a vaga fica oculta para parceiros até um administrador da organização aceitar as Regras da rede em vigor.",
+    "userMustAccept": "Aceite a versão {label} das Regras da rede para abrir vagas para parceiros.",
+    "errors": {
+      "userMustAccept": "Aceite a versão {label} das Regras da rede antes de abrir uma vaga para parceiros. Depois, salve de novo."
+    }
   },
   "messages": {
-    "activated": "A vaga está ativa. A correspondência é executada em segundo plano.",
+    "activated": "Vaga publicada. As contagens de matches aparecem em até um minuto.",
     "statusUpdated": "Status atualizado. As correspondências de vagas inativas expiram imediatamente.",
     "statusUpdatedReleased": {
       "one": "Status atualizado. {count} indicação pendente foi recusada como \"Vaga preenchida\".",
@@ -161,7 +231,8 @@
     }
   },
   "errors": {
-    "notFound": "Vaga não encontrada."
+    "notFound": "Vaga não encontrada.",
+    "termsIncomplete": "Preencha os termos para parceiros para abrir esta vaga a indicações de parceiros."
   },
   "validation": {
     "positiveAmount": "Informe um valor positivo",
@@ -170,7 +241,15 @@
     "countryCode": "Use um código de país de 2 letras",
     "salaryRange": "O máximo deve ser pelo menos igual ao mínimo",
     "clientRequired": "Informe o nome do cliente ou mantenha-o confidencial",
-    "descriptionTooLong": "A descrição é muito longa."
+    "descriptionTooLong": "A descrição é muito longa.",
+    "feeRateRange": "Informe um percentual de 1 a 50, com até 2 casas decimais",
+    "flatAmountRequired": "Informe uma taxa fixa maior que 0",
+    "minimumPositive": "Informe uma taxa mínima maior que 0 ou deixe em branco",
+    "remedyRequired": "Escolha o que acontece se a pessoa contratada sair",
+    "paymentDaysRange": "Informe de 0 a 90 dias",
+    "attestationRequired": "Confirme que você tem o contrato de taxa com o cliente final",
+    "permanentForReferrals": "Escolha Efetivo ou desative as indicações de parceiros",
+    "clientRequiredForPartners": "Informe o nome real do cliente para abrir esta vaga a parceiros"
   },
   "import": {
     "title": "Preencha a vaga em segundos",
@@ -212,5 +291,106 @@
     "subtitleAi": "Cole a vaga, informe um link ou envie um arquivo (inclusive PDF escaneado). A IA lê e preenche o que está escrito — você revisa tudo antes de salvar.",
     "doneAi": "Lido pela IA. Nada foi inventado: campos vazios não constavam na vaga.",
     "fileHintAi": "Até 5 MB. PDFs escaneados são lidos pela IA."
+  },
+  "terms": {
+    "partnerTitle": "Termos desta vaga",
+    "versionLine": "Versão {version} dos termos · {date}",
+    "amendedLine": "Alterados em {date} a pedido das duas organizações",
+    "originalTerms": "Termos originais",
+    "updatedChip": "Termos atualizados em {date}",
+    "changedBadge": "Alterado",
+    "rows": {
+      "fee": "Taxa de colocação",
+      "minimum": "Taxa mínima",
+      "currency": "Moeda da taxa",
+      "searchType": "Tipo de busca",
+      "guarantee": "Garantia",
+      "paymentTerms": "Prazo de pagamento do cliente",
+      "window": "Período de titularidade",
+      "split": "Divisão da comissão",
+      "client": "Cliente",
+      "directClient": "Cliente direto",
+      "expectedShare": "Sua parte esperada",
+      "expectedShareTarget": "Parte esperada do recrutador de origem"
+    },
+    "fee": {
+      "pctBase": "{rate} do salário-base do primeiro ano",
+      "pctTotalCash": "{rate} da remuneração total do primeiro ano (salário-base + bônus-alvo)",
+      "flat": "Taxa fixa de {amount}"
+    },
+    "feeShort": {
+      "pctBase": "{rate} do salário-base",
+      "pctTotalCash": "{rate} da remuneração total",
+      "flat": "{amount} (taxa fixa)"
+    },
+    "currencyPct": "{currency}, a moeda do salário",
+    "searchTypeHint": {
+      "contingent_exclusive": "O cliente trabalha esta vaga só com o recrutador da vaga. A taxa só é devida se houver contratação.",
+      "contingent_shared": "O cliente também pode usar outras agências ou a própria equipe. A taxa só é devida se houver contratação.",
+      "retained": "Parte da taxa é paga antecipadamente (adiantamento). A divisão vale para a taxa total, adiantamento incluído."
+    },
+    "guarantee": {
+      "one": "{count} dia a partir da data de início · {remedy}",
+      "other": "{count} dias a partir da data de início · {remedy}"
+    },
+    "noGuarantee": "Sem garantia",
+    "noGuaranteeHint": "O cliente não tem reposição nem reembolso se a pessoa contratada sair cedo.",
+    "paymentTerms": {
+      "one": "{count} dia após a fatura (emitida na data de início)",
+      "other": "{count} dias após a fatura (emitida na data de início)"
+    },
+    "paymentTermsZero": "À vista, na data da fatura (emitida na data de início)",
+    "window": {
+      "one": "{count} mês a partir da entrega",
+      "other": "{count} meses a partir da entrega"
+    },
+    "split": "Origem {sourcing} · Vaga {hiring} · Plataforma {platform}",
+    "splitRule": "{rule} v{version}",
+    "directClient": "O recrutador da vaga declara ter o contrato de taxa diretamente com o cliente final.",
+    "clientConfidential": "Confidencial",
+    "estimate": "Taxa estimada ~{fee} · Sua parte estimada ~{share} ({percent})",
+    "estimateHint": "Com base no ponto médio da faixa salarial. Na contratação, a taxa é calculada sobre o salário real. As partes são antes de impostos.",
+    "estimateHidden": "{partner} mantém a faixa salarial privada, por isso não mostramos estimativa.",
+    "flatShare": "Sua parte se houver contratação: {share} ({percent})",
+    "flatShareHint": "Antes de impostos. A pagar quando o pagamento do cliente for verificado.",
+    "shareAtHire": {
+      "pctBase": "{percent} da taxa (taxa: {rate} do salário-base na contratação)",
+      "pctTotalCash": "{percent} da taxa (taxa: {rate} da remuneração total na contratação)"
+    },
+    "notRecorded": "Termos não registrados (indicação anterior aos termos da vaga)",
+    "network": {
+      "title": "Regras da rede para todas as vagas",
+      "ownership": "Titularidade: uma indicação entregue mantém a prioridade com este cliente e suas afiliadas, para qualquer vaga, durante o período de titularidade da vaga, contado da entrega.",
+      "priorPresentation": "Apresentação anterior: o recrutador da vaga tem 5 dias úteis após a entrega para registrar uma objeção, com comprovantes.",
+      "response": "Resposta: o recrutador da vaga dá retorno a uma indicação entregue em até 5 dias úteis. Sem retorno após 10 dias úteis, o recrutador de origem pode enviar o candidato para outras vagas, e a indicação mantém a prioridade com este cliente.",
+      "payout": "Repasse: o recrutador da vaga paga a parte do recrutador de origem diretamente, em até 5 dias úteis após receber o pagamento do cliente. A parte não fica retida durante a garantia.",
+      "tax": "Impostos: as partes são antes de impostos. Cada organização inclui os impostos aplicáveis ao faturar.",
+      "draftMarker": "Rascunho das regras da rede, pendente de revisão jurídica.",
+      "summary": "Regras da rede"
+    },
+    "internalShare": "Sem parte para o recrutador de origem (indicação interna)"
+  },
+  "nudge": {
+    "chipTerms": "Oculta para parceiros: adicione os termos",
+    "chipPermanent": "Oculta para parceiros: vaga não efetiva",
+    "chipCurrency": "Oculta para parceiros: confira a moeda",
+    "listBanner": {
+      "one": "{count} vaga ativa está oculta para parceiros. Abra-a para ver o que falta.",
+      "other": "{count} vagas ativas estão ocultas para parceiros. Abra cada uma para ver o que falta."
+    },
+    "title": "Oculta para parceiros",
+    "bodyTerms": "Os parceiros não podem ver esta vaga nem enviar candidatos até você adicionar os termos para parceiros. As indicações já recebidas não são afetadas.",
+    "bodyPermanent": "Só vagas efetivas podem ser abertas a indicações de parceiros. Mude o tipo de contrato ou desative as indicações de parceiros. As indicações já recebidas não são afetadas.",
+    "bodyCurrency": "A moeda da taxa nos termos desta vaga ({termsCurrency}) não corresponde mais à moeda do salário ({salaryCurrency}). Os parceiros não veem esta vaga até você revisar e salvar os termos, o que publica novos termos em {salaryCurrency}. As indicações já recebidas mantêm os termos que tinham.",
+    "ctaTerms": "Adicionar termos",
+    "ctaReview": "Revisar termos",
+    "ctaEdit": "Editar vaga",
+    "chipClientName": "Oculta para parceiros: adicione o nome do cliente",
+    "bodyClientName": "Os parceiros não veem esta vaga até ela ter o nome real do cliente. Se você ocultar o nome do cliente, ele fica interno. As indicações já recebidas não são afetadas.",
+    "ctaClientName": "Adicionar nome do cliente",
+    "bodyHold": "Sua organização está com restrição de rede, então os parceiros não veem esta vaga. As configurações estão salvas, e ela volta a ficar visível quando a restrição terminar. As indicações já recebidas não são afetadas.",
+    "bodyRules": "Sua organização não aceitou as Regras da rede em vigor, então os parceiros não veem esta vaga. Ela volta a ficar visível assim que um administrador da organização aceitar. As indicações já recebidas não são afetadas.",
+    "chipHold": "Oculta para parceiros: restrição de rede",
+    "chipRules": "Oculta para parceiros: regras não aceitas"
   }
 }

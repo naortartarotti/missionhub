@@ -23,6 +23,23 @@ export async function createOrganization(_: ActionResult | null, formData: FormD
     const parsed = createOrganizationSchema.safeParse(Object.fromEntries(formData));
     if (!parsed.success) return fromZodError(parsed.error);
     const supabase = await createClient();
+    // N10 BR-6: the org and both acceptances are created first, in one transaction. The profile update
+    // comes after it: a user who has never accepted the rules can't write anything else (BR-7 gate).
+    const { data: orgId, error } = await supabase.rpc("create_organization", {
+      p_name: parsed.data.name,
+      p_slug: parsed.data.slug,
+      p_kind: "agency",
+      p_rules_version: parsed.data.rulesVersionId,
+      p_rules_locale: parsed.data.rulesLocale,
+      p_accept_org: parsed.data.acceptOrg,
+      p_accept_member: parsed.data.acceptMember,
+    });
+    if (error) {
+      const r = toActionError(error);
+      return error.message.includes("slug_taken") || error.message.includes("duplicate")
+        ? { ok: false, error: msg("onboarding.errors.slugTaken"), fieldErrors: { slug: [msg("onboarding.errors.slugTakenField")] } }
+        : r;
+    }
     const { error: pErr } = await supabase
       .from("profiles")
       .update({
@@ -33,22 +50,12 @@ export async function createOrganization(_: ActionResult | null, formData: FormD
       })
       .eq("id", user.id);
     if (pErr) return toActionError(pErr);
-    const { data: orgId, error } = await supabase.rpc("create_organization", {
-      p_name: parsed.data.name,
-      p_slug: parsed.data.slug,
-      p_kind: parsed.data.kind,
-    });
-    if (error) {
-      const r = toActionError(error);
-      return error.message.includes("slug_taken") || error.message.includes("duplicate")
-        ? { ok: false, error: msg("onboarding.errors.slugTaken"), fieldErrors: { slug: [msg("onboarding.errors.slugTakenField")] } }
-        : r;
-    }
-    if (parsed.data.currency !== "CAD") {
-      // The creator is org_admin now, so RLS allows this column update.
-      const { error: cErr } = await supabase.from("organizations").update({ default_currency: parsed.data.currency }).eq("id", orgId as string);
-      if (cErr) return toActionError(cErr);
-    }
+    // The creator is org_admin now, so RLS allows these column updates.
+    const { error: cErr } = await supabase
+      .from("organizations")
+      .update({ default_currency: parsed.data.currency, country: parsed.data.country })
+      .eq("id", orgId as string);
+    if (cErr) return toActionError(cErr);
     redirect(`/workspace/${parsed.data.slug}/overview`);
   });
 }
@@ -129,6 +136,22 @@ export async function updateMember(orgSlug: string, input: { membershipId: strin
     if (error) return toActionError(error);
     revalidatePath(`/workspace/${orgSlug}/settings/team`);
     return { ok: true, message: msg("onboarding.messages.memberUpdated") };
+  });
+}
+
+const transferSchema = z.object({ fromUserId: id, toUserId: id }).refine((v) => v.fromUserId !== v.toUserId, { path: ["toUserId"], message: msg("onboarding.errors.transferSame") });
+
+/** Hands every candidate, job and connector a member owns to a teammate (e.g. when they leave). */
+export async function transferPortfolio(orgSlug: string, input: { fromUserId: string; toUserId: string }): Promise<ActionResult> {
+  return guard(async () => {
+    const ctx = await getRequestContext(orgSlug);
+    assertCan(ctx, "team:manage");
+    const v = parse(transferSchema, input);
+    const { data, error } = await ctx.db.rpc("transfer_member_portfolio", { p_org: ctx.organizationId, p_from: v.fromUserId, p_to: v.toUserId });
+    if (error) return toActionError(error);
+    const r = (data ?? {}) as { candidates?: number; jobs?: number };
+    revalidatePath(`/workspace/${orgSlug}`, "layout");
+    return { ok: true, message: msg("onboarding.messages.portfolioTransferred", { candidates: r.candidates ?? 0, jobs: r.jobs ?? 0 }) };
   });
 }
 

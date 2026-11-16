@@ -27,16 +27,18 @@
     "offer": "Proposta",
     "hired": "Contratado",
     "rejected": "Não selecionado",
-    "cancelled": "Cancelada"
+    "cancelled": "Cancelada",
+    "already_presented": "Já apresentada"
   },
   "placementStatus": {
-    "hire_reported": "Contratação informada",
+    "hire_reported": "Contratação registrada",
     "invoiced": "Faturado",
     "payment_partially_verified": "Parcialmente pago",
     "commission_payable": "Comissão a pagar",
     "settled": "Quitado",
     "disputed": "Em disputa",
-    "cancelled": "Cancelado"
+    "cancelled": "Cancelado",
+    "fee_pending": "Detalhes da taxa pendentes"
   },
   "placementStatusDescription": {
     "hire_reported": "Comissão prevista — ainda não faturada.",
@@ -45,7 +47,8 @@
     "commission_payable": "Pagamento do cliente verificado; as partes são devidas.",
     "settled": "Todas as obrigações verificadas como pagas.",
     "disputed": "Congelado até a análise da plataforma.",
-    "cancelled": "Colocação cancelada."
+    "cancelled": "Colocação cancelada.",
+    "fee_pending": "A contratação conta. O recrutador da vaga ainda precisa informar a data de início, o salário e a taxa faturada."
   },
   "evidenceKind": {
     "client_payment": "Pagamento do cliente recebido",
@@ -93,5 +96,122 @@
     "none": "sem viagens",
     "occasional": "viagens ocasionais",
     "frequent": "viagens frequentes"
+  },
+  "commissionRule": {
+    "default": "Divisão padrão do MissionHub"
+  },
+  "claimStatus": {
+    "open": "Aberta",
+    "contested": "Contestada",
+    "final": "Definitiva",
+    "upheld": "Mantida",
+    "rejected": "Rejeitada"
+  },
+  "evidenceType": {
+    "file": "Arquivos",
+    "referral": "Indicação anterior pelo MissionHub"
+  },
+  "disputeType": {
+    "placement": "Colocação",
+    "prior_presentation": "Apresentação anterior",
+    "conduct": "Conduta",
+    "hire_report": "Relato de contratação"
+  },
+  "identifierMatch": {
+    "match": "Igual",
+    "no_match": "Diferente",
+    "not_available": "Indisponível"
+  },
+  "feeBasis": {
+    "pct_base": "% do salário-base",
+    "pct_total_cash": "% da remuneração total",
+    "flat": "Taxa fixa"
+  },
+  "searchType": {
+    "contingent_exclusive": "Por sucesso, exclusiva",
+    "contingent_shared": "Por sucesso, não exclusiva",
+    "retained": "Com adiantamento"
+  },
+  "guaranteeRemedy": {
+    "replacement_only": "Somente reposição",
+    "replacement_then_prorata": "Reposição e, depois, reembolso proporcional",
+    "prorata_refund": "Reembolso proporcional",
+    "full_refund": "Reembolso integral"
+  },
+  "feeDifferenceReason": {
+    "client_discount": "O cliente negociou uma taxa menor",
+    "client_contract_rate": "O contrato com o cliente prevê outra taxa",
+    "client_invoiced_other_currency": "Cliente faturado em outra moeda",
+    "invoice_correction": "Correção de fatura ou arredondamento",
+    "other": "Outro",
+    "non_permanent_engagement": "Contratação não permanente (PJ, autônomo, EOR, empresa de folha de pagamento)"
+  },
+  "rulesVersionType": {
+    "initial": "Primeira versão",
+    "material": "Mudança relevante",
+    "non_material": "Mudança menor",
+    "legally_required": "Exigida por lei"
+  },
+  "conductCategory": {
+    "went_around": "Passaram por cima de mim com o candidato ou o cliente",
+    "misused": "Usaram o que compartilhei para outra finalidade",
+    "shared_outside": "Compartilharam minhas informações fora da organização deles",
+    "hire_payout": "Não informaram uma contratação ou não fizeram o repasse da minha parte no prazo",
+    "false_info": "Informações falsas ou falsificadas",
+    "job_terms": "A vaga ou os termos são falsos ou enganosos",
+    "discrimination": "Discriminação",
+    "retaliation": "Retaliação, acusações públicas ou relato de má-fé",
+    "other": "Outro problema"
+  },
+  "sanctionStatus": {
+    "active": "Ativa",
+    "expired": "Expirada em {date}",
+    "lifted": "Encerrada em {date}",
+    "reduced": "Reduzida na revisão",
+    "overturned": "Anulada na revisão"
+  },
+  "sanctionLevel": {
+    "none": "Constatação sem sanção",
+    "warning": "Advertência",
+    "network_hold": "Restrição de rede",
+    "suspension": "Suspensão",
+    "termination": "Exclusão"
+  },
+  "conductOutcome": {
+    "no_breach": "Nenhuma violação constatada",
+    "not_enough": "Comprovantes insuficientes",
+    "breach": "Violação constatada"
+  },
+  "hireLearnedVia": {
+    "candidate": "O candidato me contou",
+    "profile": "Mudança no perfil público",
+    "announcement": "Anúncio da empresa",
+    "contact": "Um contato em comum",
+    "other": "Outro"
+  },
+  "hireEvidenceType": {
+    "candidate_message": "Mensagem escrita do candidato",
+    "company_announcement": "Anúncio ou organograma da empresa",
+    "profile_change": "Mudança no perfil público",
+    "third_party": "Depoimento de terceiro",
+    "other": "Outro"
+  },
+  "hireReportStatus": {
+    "awaiting_answer": "Aguardando resposta",
+    "unanswered": "Em análise",
+    "contested": "Contestado",
+    "in_review": "Em análise",
+    "confirmed": "Confirmado",
+    "closed_by_record": "Confirmado",
+    "deemed_confirmed": "Confirmado (sem resposta)",
+    "upheld": "Mantido",
+    "rejected": "Não mantido",
+    "void": "Encerrado"
+  },
+  "hireContestReason": {
+    "not_hired": "Não contratado pelo cliente, empresas do grupo, agentes, EOR ou empresa de folha de pagamento",
+    "outside_window": "Oferta aceita fora da proteção",
+    "different_person": "Outra pessoa",
+    "not_this_client": "Não é este cliente"
   }
 }

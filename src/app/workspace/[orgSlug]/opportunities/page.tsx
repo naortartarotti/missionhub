@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Inbox, Sparkles } from "lucide-react";
 import { getRequestContext } from "@/server/auth/context";
+import { OpportunitiesRestricted, isPartnerRestricted } from "@/features/network-rules/components/restricted-states";
 import { listOpportunities, needsDecision, type Opportunity } from "@/features/matching/queries";
 import { countReferralsByCandidate, type CandidateReferralStats } from "@/features/candidates/queries";
 import { MarkSeen } from "@/features/matching/components/mark-seen";
@@ -14,6 +15,8 @@ import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 import type { Formatter } from "@/i18n/format";
 import type { GlobalTranslator, Translator } from "@/i18n/translate";
 import { cn } from "@/lib/utils";
+import { RefreshCw } from "lucide-react";
+import { compareEarnings, shareFigure } from "@/features/jobs/terms-display";
 import { InternalBadge } from "@/features/matching/components/internal-badge";
 
 export async function generateMetadata() {
@@ -56,6 +59,8 @@ export default async function OpportunitiesPage({ params, searchParams }: PagePr
   if (sp.view === "submitted") redirect(`/workspace/${orgSlug}/referrals?tab=sent`);
   const ctx = await getRequestContext(orgSlug);
   const [t, tg, f] = await Promise.all([getT("opportunities"), getGlobalT(), getFormatter()]);
+  // N10 S20-c: partner activity paused (hold / rules not accepted): no match lookup at all.
+  if (isPartnerRestricted(ctx)) return <OpportunitiesRestricted ctx={ctx} title={t("title")} />;
   const candidate = typeof sp.candidate === "string" ? sp.candidate : undefined;
   const jobFilter = typeof sp.job === "string" ? sp.job : undefined;
   // `band` is the pre-inbox parameter; keep old links working.
@@ -74,10 +79,8 @@ export default async function OpportunitiesPage({ params, searchParams }: PagePr
   const counts = Object.fromEntries(VIEWS.map((v) => [v.key, all.filter((o) => inView(o, v.key)).length])) as Record<ViewKey, number>;
   const newCount = all.filter((o) => inView(o, "review") && o.is_new).length;
 
-  const earnings = (o: Opportunity) => o.your_share_minor ?? -1;
-  const rows = (all.filter((o) => inView(o, view)) as unknown as OpportunityView[]).sort((a, b) =>
-    sort === "earnings" ? earnings(b as never) - earnings(a as never) || b.score - a.score : b.score - a.score,
-  );
+  // Highest earnings (AC-22): jobs without an amount (band kept private) sort last, then by rate.
+  const rows = (all.filter((o) => inView(o, view)) as unknown as OpportunityView[]).sort((a, b) => (sort === "earnings" ? compareEarnings(a, b) : b.score - a.score));
 
   const byCandidate = group === "candidate" && !candidate && !jobFilter;
   const referralStats = byCandidate ? await countReferralsByCandidate(ctx, [...new Set(rows.map((o) => o.candidate_id))]) : new Map<string, CandidateReferralStats>();
@@ -101,16 +104,17 @@ export default async function OpportunitiesPage({ params, searchParams }: PagePr
   });
 
   return (
-    <div className="grid gap-6">
+    // One shrinkable track below lg: the toolbar and card headers can't widen the page at 375px (AC-72).
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
     <PageHeader title={t("title")} description={t("description")} />
     {/* The panel column animates between 0 and its width, so the list narrows/widens smoothly. */}
     <div
       className={cn(
-        "grid lg:items-start lg:transition-[grid-template-columns] lg:duration-500 lg:ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+        "grid grid-cols-[minmax(0,1fr)] lg:items-start lg:transition-[grid-template-columns] lg:duration-500 lg:ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
         selected ? "lg:grid-cols-[minmax(0,1fr)_30rem]" : "lg:grid-cols-[minmax(0,1fr)_0rem]",
       )}
     >
-    <div className="grid min-w-0 content-start gap-6">
+    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-6">
       <MarkSeen orgSlug={orgSlug} ids={unseen} />
 
       {jobFilter ? (
@@ -192,8 +196,9 @@ function Toggle({ label, items, current }: { label: string; items: { key: string
 function groupBy(rows: OpportunityView[], key: (o: OpportunityView) => string, sort: SortKey) {
   const map = new Map<string, OpportunityView[]>();
   for (const o of rows) map.set(key(o), [...(map.get(key(o)) ?? []), o]);
-  const metric = (items: OpportunityView[]) =>
-    sort === "earnings" ? Math.max(...items.map((o) => o.your_share_minor ?? -1)) : Math.max(...items.map((o) => o.score));
+  // Rows arrive sorted, so each group's first row is its best by the active sort.
+  if (sort === "earnings") return [...map.values()].sort((a, b) => compareEarnings(a[0], b[0]));
+  const metric = (items: OpportunityView[]) => Math.max(...items.map((o) => o.score));
   return [...map.values()].sort((a, b) => metric(b) - metric(a));
 }
 
@@ -201,13 +206,15 @@ type Detail = (o: OpportunityView) => { detailHref: string; selected: boolean };
 
 function JobGroups({ t, tg, f, rows, orgSlug, sort, detail }: { t: T; tg: GlobalTranslator; f: Formatter; rows: OpportunityView[]; orgSlug: string; sort: SortKey; detail: Detail }) {
   return (
-    <div className="grid gap-4">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
       {groupBy(rows, (o) => o.job_id, sort).map((items) => {
         const j = items[0];
         const meta = [j.job_org_name, j.client_label, [tg(`labels.arrangement.${j.work_arrangement}`), j.location].filter(Boolean).join(" · ")];
+        const share = shareFigure(j, tg, f);
         return (
           <section key={j.job_id} aria-label={j.job_title} className="rounded-3xl border border-border/60 bg-card p-2">
-            <header className="flex items-start justify-between gap-4 px-4 pt-3 pb-3">
+            {/* Below sm the share figure sits under the meta line, so the title keeps the full width (B-2). */}
+            <header className="flex flex-col gap-2 px-4 pt-3 pb-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="text-lg font-semibold tracking-tight">{j.job_title}</h3>
@@ -215,15 +222,24 @@ function JobGroups({ t, tg, f, rows, orgSlug, sort, detail }: { t: T; tg: Global
                   {j.internal ? <InternalBadge org={j.job_org_name} /> : null}
                 </div>
                 <p className="mt-0.5 truncate text-sm text-muted-foreground">{meta.join("  ·  ")}</p>
+                {j.terms_updated_at ? (
+                  <span className="mt-1.5 inline-flex max-w-full items-start gap-1.5 rounded-2xl bg-info-soft px-2.5 py-1 text-xs font-medium whitespace-normal text-info">
+                    <RefreshCw className="mt-px size-3.5 shrink-0" aria-hidden />
+                    {tg("jobs.terms.updatedChip", { date: f.date(j.terms_updated_at) })}
+                  </span>
+                ) : null}
               </div>
-              {j.your_share_minor ? (
-                <div className="shrink-0 text-right">
-                  <p className="text-lg font-semibold tabular-nums text-success">{f.money(j.your_share_minor, j.fee_currency ?? "CAD", { whole: true })}</p>
-                  <p className="text-xs text-muted-foreground">{t("jobGroup.share")}</p>
-                </div>
-              ) : null}
+              {/* B-2: a text figure (fr "20 % de la rémunération globale") may shrink and wrap; an amount stays on one line. */}
+              <div className={cn("min-w-0 sm:text-right", share.amount ? "sm:shrink-0" : "sm:max-w-[45%]")}>
+                {share.amount ? (
+                  <p className="text-lg font-semibold tabular-nums text-success">{share.amount}</p>
+                ) : (
+                  <p className="text-sm font-medium text-pretty break-words">{share.text}</p>
+                )}
+                <p className="text-xs text-muted-foreground">{share.label}</p>
+              </div>
             </header>
-            <div className="grid gap-0.5 border-t border-border/60 pt-1.5">
+            <div className="grid grid-cols-[minmax(0,1fr)] gap-0.5 border-t border-border/60 pt-1.5">
               {items.map((o) => <JobMatchRow key={o.match_id} opp={o} orgSlug={orgSlug} {...detail(o)} />)}
             </div>
           </section>
@@ -252,15 +268,17 @@ function CandidateGroups({
   referralStats: Map<string, CandidateReferralStats>;
 }) {
   return (
-    <div className="grid gap-4">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
       {groupBy(rows, (o) => o.candidate_id, sort).map((items) => {
         const c = items[0];
-        const best = items.reduce((m, o) => ((o.your_share_minor ?? 0) > (m.your_share_minor ?? 0) ? o : m), items[0]);
+        const best = items.reduce((m, o) => ((o.estimated_share_minor ?? 0) > (m.estimated_share_minor ?? 0) ? o : m), items[0]);
+        const bestAmount = best.estimated_share_minor !== null ? f.money(best.estimated_share_minor, best.fee_currency ?? "CAD", { code: true, whole: true, approx: best.fee_basis !== "flat" }) : null;
         const refs = referralStats.get(c.candidate_id);
         const refDetail = refs ? [refs.open ? t("candidateGroup.inProgress", { count: refs.open }) : null, refs.hired ? t("candidateGroup.hired", { count: refs.hired }) : null].filter(Boolean).join(" · ") : "";
         return (
           <section key={c.candidate_id} aria-label={c.candidate_name} className="rounded-3xl border border-border/60 bg-card p-2">
-            <header className="flex items-start justify-between gap-4 px-4 pt-3 pb-3">
+            {/* Below sm the share figure sits under the meta line, so the title keeps the full width (B-2). */}
+            <header className="flex flex-col gap-2 px-4 pt-3 pb-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="text-lg font-semibold tracking-tight">
@@ -281,14 +299,14 @@ function CandidateGroups({
                   )}
                 </p>
               </div>
-              {best.your_share_minor ? (
-                <div className="shrink-0 text-right">
-                  <p className="text-lg font-semibold tabular-nums text-success">{f.money(best.your_share_minor, best.fee_currency ?? "CAD", { whole: true })}</p>
+              {bestAmount ? (
+                <div className="sm:shrink-0 sm:text-right">
+                  <p className="text-lg font-semibold tabular-nums text-success">{bestAmount}</p>
                   <p className="text-xs text-muted-foreground">{t("candidateGroup.bestShare")}</p>
                 </div>
               ) : null}
             </header>
-            <div className="grid gap-0.5 border-t border-border/60 pt-1.5">
+            <div className="grid grid-cols-[minmax(0,1fr)] gap-0.5 border-t border-border/60 pt-1.5">
               {items.map((o) => <JobMatchRow key={o.match_id} opp={o} orgSlug={orgSlug} subject="job" {...detail(o)} />)}
             </div>
           </section>

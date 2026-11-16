@@ -9,7 +9,7 @@
       "one": "{count} candidato ainda não está em matching.",
       "other": "{count} candidatos ainda não estão em matching."
     },
-    "notMatchingHint": "Registre a permissão deles e ligue o matching para encontrar vagas de parceiros.",
+    "notMatchingHint": "Registre a autorização deles e ligue o matching para encontrar vagas de parceiros.",
     "showThem": "Mostrar",
     "searchPlaceholder": "Pesquisar por nome, título ou habilidade exata",
     "searchLabel": "Pesquisar candidatos",
@@ -25,14 +25,14 @@
       "candidate": "Candidato",
       "seniority": "Senioridade",
       "skills": "Principais habilidades",
-      "owner": "Recrutador",
+      "owner": "Responsável",
       "updated": "Atualizado",
       "status": "Status"
     }
   },
   "new": {
     "title": "Adicionar candidato",
-    "description": "Apenas dados profissionais são usados no matching. Depois de salvar, você vai registrar a permissão do candidato e ligar o matching.",
+    "description": "Apenas dados profissionais são usados no matching. Depois de salvar, você vai registrar a autorização do candidato e ligar o matching.",
     "submit": "Salvar candidato"
   },
   "edit": {
@@ -43,8 +43,8 @@
   },
   "detail": {
     "metaTitle": "Candidato",
-    "created": "Candidato salvo. Próximo passo: registrar a permissão e depois ligar o matching.",
-    "updated": "Alterações salvas. As oportunidades serão atualizadas em instantes.",
+    "created": "Candidato salvo. Próximo passo: registrar a autorização e depois ligar o matching.",
+    "updated": "Alterações salvas. As sugestões serão atualizadas em instantes.",
     "noHeadline": "Ainda sem título",
     "edit": "Editar",
     "profile": "Perfil",
@@ -63,14 +63,14 @@
     "salary": "Pretensão salarial",
     "salaryRange": "{min} – {max}",
     "availableFrom": "Disponível a partir de",
-    "owner": "Recrutador",
-    "opportunities": "Oportunidades",
-    "allOpportunities": "Todas as oportunidades",
+    "owner": "Responsável",
+    "opportunities": "Sugestões",
+    "allOpportunities": "Todas as sugestões",
     "matchingOff": "Ligue o matching para ver vagas de parceiros compatíveis.",
     "noOpportunities": "Nenhuma vaga de parceiro compatível ainda. Verificamos de novo automaticamente.",
     "referrals": "Indicações",
     "noReferrals": "Ainda não enviado para nenhuma vaga de parceiro.",
-    "permission": "Permissão do candidato",
+    "permission": "Autorização do candidato",
     "resume": "Currículo",
     "sourcePrivacy": "Origem e privacidade",
     "source": "Origem",
@@ -97,7 +97,7 @@
     "tabs": {
       "label": "Seções do candidato",
       "profile": "Perfil",
-      "opportunities": "Oportunidades",
+      "opportunities": "Sugestões",
       "referrals": "Indicações",
       "documents": "Documentos",
       "privacy": "Privacidade"
@@ -111,7 +111,7 @@
     "pageTitle": "Perfil do candidato",
     "contactTitle": "Contato",
     "country": "País",
-    "ownedBy": "Recrutador: {name}",
+    "ownedBy": "Responsável: {name}",
     "contactName": "Contatar {name}",
     "bestMatch": "Melhor match {score}",
     "mobilityTitle": "Mobilidade e vagas internacionais",
@@ -200,7 +200,7 @@
   },
   "setup": {
     "toast": {
-      "active_for_matching": "O matching está ligado. Novas oportunidades costumam aparecer em menos de um minuto.",
+      "active_for_matching": "O matching está ligado. Novas sugestões costumam aparecer em menos de um minuto.",
       "unavailable": "Marcado como indisponível. O matching fica pausado até você ligá-lo de novo.",
       "archived": "Candidato arquivado. O matching está desligado."
     },
@@ -216,18 +216,18 @@
     "getMatchedTitle": "Encontre vagas de parceiros para {name}",
     "getMatchedBody": "Dois passos rápidos. Os parceiros nunca veem seu candidato, a menos que você decida enviá-lo.",
     "stepProfile": "Perfil salvo",
-    "stepPermission": "Permissão do candidato registrada",
+    "stepPermission": "Autorização do candidato registrada",
     "stepPermissionHint": "Anote como a pessoa concordou em ser representada (ex.: um e-mail ou formulário de entrada assinado).",
-    "stepPermissionLink": "Registrar permissão",
+    "stepPermissionLink": "Registrar autorização",
     "stepMatching": "Matching ligado",
     "stepMatchingReady": "O MissionHub vai começar a procurar vagas de parceiros compatíveis.",
-    "stepMatchingLocked": "Disponível depois que a permissão for registrada.",
+    "stepMatchingLocked": "Disponível depois que a autorização for registrada.",
     "turnOn": "Ligar o matching"
   },
   "consent": {
-    "none": "Nenhuma permissão registrada ainda.",
-    "processing": "Permissão para representar e fazer matching",
-    "jobSharing": "Permissão para compartilhar em uma vaga",
+    "none": "Nenhuma autorização registrada ainda.",
+    "processing": "Autorização de matching",
+    "jobSharing": "Autorização de compartilhamento (uma vaga)",
     "revokedOn": "Revogada em {date}",
     "active": "Ativa",
     "basis": "Base legal:",
@@ -237,12 +237,12 @@
     "expires": "expira em {date}",
     "revocationReason": "Motivo da revogação:",
     "revoke": "Revogar",
-    "revokeTitle": "Revogar esta permissão?",
+    "revokeTitle": "Revogar esta autorização?",
     "revokeJobSharing": "O recrutador parceiro perde imediatamente o acesso ao perfil e aos documentos compartilhados nesta indicação. Isso não pode ser desfeito; seria necessária uma nova autorização.",
     "revokeProcessing": "O matching para imediatamente para este candidato. Os registros anteriores são mantidos para sua trilha de auditoria.",
-    "revokeConfirm": "Revogar permissão",
+    "revokeConfirm": "Revogar autorização",
     "reason": "Motivo",
-    "recordTitle": "Registrar a permissão do candidato",
+    "recordTitle": "Registrar a autorização do candidato",
     "basisLabel": "Base legal",
     "basisHint": "A maioria dos recrutadores usa Consentimento. Confirme a base legal correta com seu assessor de privacidade.",
     "scope": "Com o que a pessoa concordou",
@@ -250,7 +250,7 @@
     "evidenceLabel": "Como e quando a pessoa concordou",
     "evidenceHint": "ex.: “Confirmado por e-mail em 3 de nov.” ou “Formulário de entrada assinado”",
     "expiresAt": "Expira em (opcional)",
-    "save": "Salvar permissão",
+    "save": "Salvar autorização",
     "details": "Detalhes"
   },
   "documents": {
@@ -337,7 +337,7 @@
   },
   "errors": {
     "notFound": "Candidato não encontrado.",
-    "permissionRequired": "Registre a permissão do candidato antes de ligar o matching.",
+    "permissionRequired": "Registre a autorização do candidato antes de ligar o matching.",
     "selectJob": "Selecione a vaga coberta por esta autorização.",
     "revokeReason": "Informe um motivo para a revogação.",
     "consentNotFound": "Autorização não encontrada ou já revogada.",
@@ -360,7 +360,7 @@
     "photoSize": "A foto deve ter até 2 MB."
   },
   "success": {
-    "activated": "Candidato ativado. O matching roda em segundo plano.",
+    "activated": "O matching está ligado. Novas sugestões costumam aparecer em menos de um minuto.",
     "statusUpdated": "Status atualizado.",
     "consentRecorded": "Autorização registrada.",
     "consentRevoked": "Autorização revogada. Todo acesso de parceiros baseado nela foi removido.",

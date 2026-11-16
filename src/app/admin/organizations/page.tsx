@@ -10,7 +10,6 @@ import { Pagination } from "@/components/shared/pagination";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SuspendButton } from "@/features/admin/components/admin-controls";
 import { ADMIN_PAGE_SIZE, searchTerm } from "@/features/admin/queries";
 import { getFormatter, getT } from "@/i18n/server";
 
@@ -95,7 +94,7 @@ export default async function AdminOrganizationsPage({ searchParams }: PageProps
                   <td className="px-5 py-3">
                     {o.suspended_at ? <StatusPill tone="danger" label={t("orgs.suspended")} /> : o.is_demo ? <StatusPill tone="neutral" label={t("orgs.demo")} /> : <StatusPill tone="success" label={t("orgs.active")} />}
                   </td>
-                  <td className="px-5 py-3 text-right"><SuspendButton orgId={o.id} suspended={Boolean(o.suspended_at)} /></td>
+                  <td className="px-5 py-3 text-right" />
                 </tr>
               ))}
             </tbody>

@@ -16,7 +16,9 @@ function leaves(tree: Tree, prefix = ""): Map<string, string> {
   }
   return out;
 }
-const placeholders = (s: string) => [...s.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort();
+// Compared as a set: a translation may repeat a placeholder where the grammar needs it
+// (fr/pt name {partner} again instead of using a pronoun).
+const placeholders = (s: string) => [...new Set([...s.matchAll(/\{(\w+)\}/g)].map((m) => m[1]))].sort();
 
 describe.each([
   ["fr", fr],

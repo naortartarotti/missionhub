@@ -6,6 +6,8 @@ import { Combobox } from "./combobox";
 import { FormField } from "./form-field";
 import { useCountryOptions } from "./location-fields";
 import { useT } from "@/i18n/client";
+import { cn } from "@/lib/utils";
+import { TONE, flagEmoji, type Tone } from "./tones";
 
 /**
  * Pick several countries. Posts `name` as comma-separated ISO 3166-1 alpha-2 codes ("CA, PT"),
@@ -19,6 +21,7 @@ export function CountryMultiSelect({
   error,
   defaultValue = [],
   max = 30,
+  tone = "neutral",
 }: {
   id: string;
   name: string;
@@ -27,6 +30,7 @@ export function CountryMultiSelect({
   error?: string | string[];
   defaultValue?: string[];
   max?: number;
+  tone?: Tone;
 }) {
   const t = useT("common");
   const { options, loading } = useCountryOptions();
@@ -41,13 +45,14 @@ export function CountryMultiSelect({
           <ul className="flex flex-wrap gap-1.5">
             {codes.map((c) => (
               <li key={c}>
-                <span className="inline-flex items-center gap-1 rounded-full border border-border bg-muted/50 py-1 pr-1 pl-3 text-sm">
+                <span className={cn("inline-flex items-center gap-1.5 rounded-full py-1 pr-1 pl-2.5 text-sm font-medium", TONE[tone].tag)}>
+                  <span aria-hidden>{flagEmoji(c)}</span>
                   {labelOf(c)}
                   <button
                     type="button"
                     onClick={() => setCodes((xs) => xs.filter((x) => x !== c))}
                     aria-label={t("countries.remove", { country: labelOf(c) })}
-                    className="grid size-5 place-items-center rounded-full text-muted-foreground hover:bg-background hover:text-foreground"
+                    className={cn("grid size-5 place-items-center rounded-full opacity-70 hover:opacity-100", TONE[tone].tagRemove)}
                   >
                     <X className="size-3" aria-hidden />
                   </button>

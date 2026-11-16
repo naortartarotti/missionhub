@@ -4,18 +4,19 @@ import { assertCan } from "@/server/auth/context";
 
 export const CANDIDATE_PAGE_SIZE = 25;
 
-export async function listCandidates(ctx: RequestContext, opts: { q?: string; status?: string; page?: number }) {
+export async function listCandidates(ctx: RequestContext, opts: { q?: string; status?: string; page?: number; mine?: boolean }) {
   assertCan(ctx, "candidates:read");
   const page = Math.max(1, opts.page ?? 1);
   let query = ctx.db
     .from("candidates")
-    .select("id, full_name, headline, status, seniority, location_city, location_region, skills, updated_at, owner_id, owner:profiles!candidates_owner_profile_fk(full_name)", {
+    .select("id, full_name, headline, status, seniority, location_city, location_region, skills, source, updated_at, owner_id, owner:profiles!candidates_owner_profile_fk(full_name)", {
       count: "exact",
     })
     .eq("organization_id", ctx.organizationId)
     .order("updated_at", { ascending: false })
     .range((page - 1) * CANDIDATE_PAGE_SIZE, page * CANDIDATE_PAGE_SIZE - 1);
   if (opts.status && opts.status !== "all") query = query.eq("status", opts.status as never);
+  if (opts.mine) query = query.eq("owner_id", ctx.userId);
   if (opts.q) {
     const q = opts.q.replace(/[%,()]/g, " ").trim().slice(0, 80);
     if (q) query = query.or(`full_name.ilike.%${q}%,headline.ilike.%${q}%,skills.cs.{${q.toLowerCase()}}`);

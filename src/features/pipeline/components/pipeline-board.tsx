@@ -1,16 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useOptimistic, useState, useTransition } from "react";
+import { useEffect, useMemo, useOptimistic, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { ArrowRight, CalendarClock, CheckCircle2, CircleDollarSign, CircleDot, CircleSlash, ExternalLink, Handshake, Lock, MoreHorizontal, PartyPopper, X } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { InitialsAvatar } from "@/components/shared/initials-avatar";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
-import { ReportHireDialog } from "@/features/referrals/components/referral-actions";
+import { ReportHireDialog, type HireDialogState } from "@/features/referrals/components/report-hire-dialog";
+import { HireResultHost } from "@/features/referrals/components/hire-result";
+import type { ReferralTerms } from "@/features/referrals/components/referral-terms";
+import { loadHireDialog } from "@/features/referrals/hire-dialog-data";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Skeleton } from "@/components/ui/skeleton";
+import { feeShort } from "@/features/jobs/terms-display";
 import { transitionReferral } from "@/features/referrals/actions";
-import { minorToMajorString } from "@/lib/money/format";
 import { cn } from "@/lib/utils";
 import { useFormatter, useGlobalT, useT } from "@/i18n/client";
 import type { Paths } from "@/i18n/translate";
@@ -80,8 +85,10 @@ export function PipelineBoard({
     const byFrom = new Map<string, PipelineTransition[]>();
     for (const tr of transitions) byFrom.set(tr.from_status, [...(byFrom.get(tr.from_status) ?? []), tr]);
     return (card: PipelineCard, col: ColumnKey): Move | null => {
+      // N3 (BR-7, PD-077): recording the hire waives the pipeline-owner rule for the `hired` move only, and the
+      // server picks the dialog variant (no confirmed agreement → V3 / V4), so neither blocks the drop.
+      if (col === "hired") return canMove && HIRE_FROM.includes(card.status) ? { kind: "hire", blockedByAgreement: false } : null;
       if (!canMove || !card.canMove) return null;
-      if (col === "hired") return card.status === HIRE_FROM ? { kind: "hire", blockedByAgreement: !card.agreementActive } : null;
       const options = (byFrom.get(card.status) ?? []).filter((tr) => columnOf(tr.to_status) === col);
       // Closing: "not selected" when the stage allows it, otherwise "cancelled".
       const tr = options.find((o) => o.to_status === "rejected") ?? options[0];
@@ -184,16 +191,18 @@ export function PipelineBoard({
         </div>
       </div>
 
+      <HireResultHost />
       {hireFor ? (
-        <ReportHireDialog
+        <PipelineHireDialog
           orgSlug={orgSlug}
-          referralId={hireFor.id}
-          version={hireFor.version}
-          currency={hireFor.feeCurrency ?? currency}
-          defaultFee={hireFor.expectedFeeMinor && hireFor.feeCurrency ? minorToMajorString(hireFor.expectedFeeMinor, hireFor.feeCurrency) : ""}
-          open
-          onOpenChange={(o) => !o && setHireFor(null)}
-          trigger={null}
+          card={hireFor}
+          currency={currency}
+          onClose={() => {
+            // Opened from the card menu or a drop (no trigger): return focus to that card's menu (P-3).
+            const back = hireFor.id;
+            setHireFor(null);
+            requestAnimationFrame(() => document.getElementById(`pipeline-menu-${back}`)?.focus());
+          }}
         />
       ) : null}
 
@@ -289,7 +298,7 @@ function Card({
         </div>
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className="size-8 shrink-0 rounded-lg! text-muted-foreground" aria-label={t("menu", { candidate: card.candidateName })}>
+              <Button id={`pipeline-menu-${card.id}`} variant="outline" size="icon" className="size-8 shrink-0 rounded-lg! text-muted-foreground" aria-label={t("menu", { candidate: card.candidateName })}>
                 <MoreHorizontal className="size-4" aria-hidden />
               </Button>
             </DropdownMenuTrigger>
@@ -308,7 +317,7 @@ function Card({
               </DropdownMenuItem>
               {card.placementId ? (
                 <DropdownMenuItem asChild>
-                  <Link href={`/workspace/${orgSlug}/wallet/placements/${card.placementId}`}>
+                  <Link href={`/workspace/${orgSlug}/commissions/${card.placementId}`}>
                     <PartyPopper className="size-4" aria-hidden />
                     {t("openPlacement")}
                   </Link>
@@ -328,15 +337,13 @@ function Card({
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-foreground/80">
-        {card.expectedFeeMinor && card.feeCurrency ? (
-          <>
-            <span className="inline-flex items-center gap-1.5" title={t("feeHint")}>
-              <CircleDollarSign className="size-4 text-muted-foreground" aria-hidden />
-              <span className="tabular-nums">{f.money(card.expectedFeeMinor, card.feeCurrency, { whole: true })}</span>
-            </span>
-            <span className="text-muted-foreground/60" aria-hidden>·</span>
-          </>
-        ) : null}
+        {/* BR-37: legacy referrals say "Terms not recorded" where the fee terms would be. */}
+        <span className="inline-flex items-center gap-1.5" title={tg("jobs.detail.feeTerms")}>
+              <CircleDollarSign className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+              <span className="sr-only">{tg("jobs.detail.feeTerms")}: </span>
+              <span className={card.feeTerms ? "tabular-nums" : "text-pretty text-muted-foreground"}>{card.feeTerms ? feeShort(card.feeTerms, tg, f) : tg("jobs.terms.notRecorded")}</span>
+        </span>
+        <span className="text-muted-foreground/60" aria-hidden>·</span>
         <span className="inline-flex items-center gap-1.5" title={`${t("inStage")} · ${f.dateTime(card.stageSince)}`}>
           <CalendarClock className="size-4 text-muted-foreground" aria-hidden />
           {/* Relative time can tick between the server render and hydration ("11" vs "12 minutes ago"). */}
@@ -365,5 +372,54 @@ function Card({
         </span>
       </div>
     </article>
+  );
+}
+
+/**
+ * E2 (PD-075): the drop on Hired opens the same dialog as the referral page, in the variant the server picks.
+ * The hire state is read on demand; a skeleton shows meanwhile. Cancelling leaves the card where it was (AC-32).
+ */
+function PipelineHireDialog({ orgSlug, card, currency, onClose }: { orgSlug: string; card: PipelineCard; currency: string; onClose: () => void }) {
+  const tr = useT("referrals");
+  const [data, setData] = useState<{ hire: HireDialogState; terms: ReferralTerms | null } | null>(null);
+  // The parent passes a new closure each render; the load must run once per card.
+  const closeRef = useRef(onClose);
+  useEffect(() => { closeRef.current = onClose; });
+  useEffect(() => {
+    let live = true;
+    loadHireDialog(orgSlug, card.id).then((r) => {
+      if (!live) return;
+      if (r.ok && r.data) setData(r.data);
+      else {
+        toast.error(r.ok ? tr("errors.notFound") : r.error);
+        closeRef.current();
+      }
+    });
+    return () => { live = false; };
+  }, [orgSlug, card.id, tr]);
+  if (!data) {
+    return (
+      <Dialog open onOpenChange={(o) => !o && onClose()}>
+        <DialogContent className="grid gap-4 rounded-3xl p-6 sm:max-w-lg" aria-describedby={undefined} aria-busy>
+          <DialogTitle className="pr-8">{tr("hire.title")}</DialogTitle>
+          <Skeleton className="h-16 w-full rounded-2xl" />
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+  return (
+    <ReportHireDialog
+      orgSlug={orgSlug}
+      referralId={card.id}
+      hire={data.hire}
+      terms={data.terms}
+      partner={card.partner ?? ""}
+      defaultCurrency={currency}
+      open
+      onOpenChange={(o) => { if (!o) onClose(); }}
+      trigger={null}
+    />
   );
 }

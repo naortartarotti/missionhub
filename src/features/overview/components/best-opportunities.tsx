@@ -95,8 +95,13 @@ async function OpportunityRow({ base, o, currency }: { base: string; o: BestOppo
           {t("best.action")}
           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
         </span>
-        {top.your_share_minor ? (
-          <span className="text-xs font-medium text-success tabular-nums">{t("best.share", { amount: f.money(top.your_share_minor, top.fee_currency ?? currency, { whole: true }) })}</span>
+        {/* N2: currency code on every amount (BR-38); a flat fee's share is exact, so no "~". */}
+        {top.estimated_share_minor !== null ? (
+          <span className="text-xs font-medium text-success tabular-nums">
+            {top.fee_basis === "flat"
+              ? f.money(top.estimated_share_minor, top.fee_currency ?? currency, { code: true, whole: true })
+              : t("best.share", { amount: f.money(top.estimated_share_minor, top.fee_currency ?? currency, { code: true, whole: true }) })}
+          </span>
         ) : null}
       </div>
     </div>

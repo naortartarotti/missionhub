@@ -9,6 +9,7 @@ import { FormMessage } from "@/components/shared/form-message";
 import { SubmitButton } from "@/components/shared/submit-button";
 import { NativeSelect } from "@/components/shared/native-select";
 import { updateOrganization } from "../actions";
+import { SUPPORTED_CURRENCIES } from "@/lib/money/currency";
 import { useGlobalT, useT } from "@/i18n/client";
 
 export function OrgSettingsForm({ orgSlug, name, currency, disabled }: { orgSlug: string; name: string; currency: string; disabled: boolean }) {
@@ -20,7 +21,7 @@ export function OrgSettingsForm({ orgSlug, name, currency, disabled }: { orgSlug
     <ActionForm action={action} className="grid max-w-lg gap-4">
       <FormField id="name" label={t("organization.name")} error={fe?.name}><Input id="name" name="name" defaultValue={name} disabled={disabled} /></FormField>
       <FormField id="currency" label={t("organization.currency")} hint={t("organization.currencyHint")}>
-        <NativeSelect id="currency" name="currency" defaultValue={currency} disabled={disabled}>{["CAD", "USD", "EUR", "GBP", "BRL"].map((c) => <option key={c}>{c}</option>)}</NativeSelect>
+        <NativeSelect id="currency" name="currency" defaultValue={currency} disabled={disabled}>{SUPPORTED_CURRENCIES.map((c) => <option key={c}>{c}</option>)}</NativeSelect>
       </FormField>
       <FormMessage state={state} />
       {!disabled ? <SubmitButton className="justify-self-start">{tg("common.actions.save")}</SubmitButton> : <p className="text-sm text-muted-foreground">{t("organization.adminOnly")}</p>}

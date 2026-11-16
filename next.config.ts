@@ -23,16 +23,12 @@ const nextConfig: NextConfig = {
     },
   },
   async redirects() {
-    // Commissions moved into the Wallet page. Notifications already stored in the database link
-    // to /commissions/<placement>, so these must stay. Query strings are passed through.
-    // The workspace moved from /w/… to /workspace/…; old links (emails, bookmarks, Stripe return
-    // URLs of in-flight checkouts) keep working through the catch-all below. Order matters:
-    // the specific /w/…/commissions rules go first so they resolve in a single hop.
+    // The Wallet page was removed; its commissions list and placement pages live under /commissions
+    // again (where notifications stored in the database already link). Old bookmarks keep working.
+    // The workspace moved from /w/… to /workspace/…; old links keep working through the catch-all below.
     return [
-      { source: "/w/:orgSlug/commissions", destination: "/workspace/:orgSlug/wallet", permanent: true },
-      { source: "/w/:orgSlug/commissions/:placementId", destination: "/workspace/:orgSlug/wallet/placements/:placementId", permanent: true },
-      { source: "/workspace/:orgSlug/commissions", destination: "/workspace/:orgSlug/wallet", permanent: true },
-      { source: "/workspace/:orgSlug/commissions/:placementId", destination: "/workspace/:orgSlug/wallet/placements/:placementId", permanent: true },
+      { source: "/workspace/:orgSlug/wallet", destination: "/workspace/:orgSlug/commissions", permanent: true },
+      { source: "/workspace/:orgSlug/wallet/placements/:placementId", destination: "/workspace/:orgSlug/commissions/:placementId", permanent: true },
       { source: "/w/:path*", destination: "/workspace/:path*", permanent: true },
     ];
   },

@@ -45,14 +45,13 @@
     "languages": "Languages",
     "location": "Location",
     "compensation": "Compensation",
-    "placementFee": "Placement fee",
     "visible": {
       "always": "Title, seniority, work arrangement & skills",
       "description": "Description",
       "location": "Location",
-      "compensation": "Compensation",
-      "placementFee": "Placement fee",
-      "clientName": "Client name"
+      "compensation": "Salary band and fee estimate",
+      "clientName": "Client name",
+      "terms": "Terms for partners"
     },
     "statSubmitted": "Submitted",
     "privacyShort": "Partner candidates stay anonymous until they're submitted.",
@@ -66,6 +65,7 @@
     "matchingClosed": "Closed to partners",
     "editCta": "Edit job",
     "pipelineReview": "In review",
+    "pipelineAccepted": "Accepted",
     "pipelineInterviewing": "Interviewing",
     "pipelineOffer": "Offer",
     "pipelineHired": "Hired",
@@ -89,7 +89,11 @@
     "submittedEmptyBody": "You'll be notified as soon as a partner submits someone.",
     "mobility": "Travel & mobility",
     "visaSponsorship": "Sponsors visas",
-    "relocationSupport": "Relocation support"
+    "relocationSupport": "Relocation support",
+    "feeTerms": "Fee terms",
+    "termsTitle": "Terms for partners",
+    "termsEmpty": "No terms yet. Partners can't see this job until you add them.",
+    "editTerms": "Edit terms"
   },
   "status": {
     "publish": "Publish",
@@ -132,6 +136,9 @@
     "salaryMin": "Salary min",
     "salaryMax": "Salary max",
     "currency": "Currency",
+    "splitJobOwner": "You (hiring recruiter) · {percent}",
+    "splitSourcing": "Sourcing recruiter · {percent}",
+    "splitPlatform": "Platform · {percent}",
     "partnerReferrals": "Partner referrals",
     "openToPartners": "Open this job to partner recruiters",
     "openToPartnersHint": "Recruiters with candidates who fit will see this job and can submit them. You'll see how many fit, but not who, until someone is submitted.",
@@ -139,29 +146,93 @@
     "visibleHint": "Title, seniority, work arrangement and skills are always shown. The client's name follows the setting above.",
     "shareDescription": "Job description",
     "shareLocation": "Location",
-    "shareSalary": "Compensation band",
-    "shareFee": "Expected placement fee",
-    "expectedFee": "Expected placement fee",
-    "expectedFeeHint": "The total fee you expect to invoice the client",
-    "feeCurrency": "Fee currency",
     "cancel": "Cancel",
     "saveDraft": "Save as draft",
     "publish": "Publish job",
     "saveChanges": "Save changes",
     "travel": "Travel",
     "visaSponsorship": "Sponsors work visas",
-    "relocationSupport": "Offers relocation support"
+    "relocationSupport": "Offers relocation support",
+    "clientInternalHint": "Optional. Partners never see this name. Platform admins see it only to resolve a dispute. If you add it, MissionHub catches duplicate referrals across all your jobs for this client. If you leave it blank, protection covers this job only, and you can't cite an earlier referral from another job in an objection.",
+    "clientDuplicateHint": "MissionHub also uses the client name to catch duplicate referrals across all your jobs for this client.",
+    "terms": {
+      "title": "Terms for partners",
+      "description": "Partners see these terms before they submit a candidate. Each referral keeps the terms in force when it was submitted.",
+      "notPublished": "Not published yet",
+      "versionPill": "Version {version} · {date}",
+      "feeLegend": "Placement fee",
+      "basisHint": {
+        "pct_base": "Computed at hire from the first-year base salary.",
+        "pct_total_cash": "Computed at hire from base salary plus target bonus. Equity, signing bonus, benefits and relocation aren't included.",
+        "pct_total_cash_br": "Check whether your client contract counts the 13th salary and the 1/3 vacation bonus in total cash.",
+        "flat": "A fixed amount, whatever the salary."
+      },
+      "rate": "Fee rate",
+      "ratePlaceholder": "e.g. 20",
+      "minimum": "Minimum fee (optional)",
+      "minimumHint": "Applies when the computed fee is lower.",
+      "flatAmount": "Flat fee",
+      "currency": "Currency",
+      "currencyFollowsSalary": "Fee currency: {currency}, the same as the salary.",
+      "previewTitle": "Estimate",
+      "previewFee": "Estimated fee ~{fee}",
+      "previewBonus": "plus {rate} of the target bonus",
+      "previewFlat": "If hired",
+      "previewHint": "From the salary band midpoint. The fee is computed at hire from the actual salary.",
+      "previewNoBand": "Add a salary band to see an estimate.",
+      "searchLegend": "Search type",
+      "guaranteeLegend": "Guarantee",
+      "guaranteeLength": "Length",
+      "guaranteeNone": "No guarantee",
+      "guaranteeDays": {
+        "one": "{count} day",
+        "other": "{count} days"
+      },
+      "remedy": "If the hire leaves during the guarantee",
+      "noGuaranteeNote": "Partners will see that there's no guarantee.",
+      "paymentTerms": "Client payment terms",
+      "paymentDays": "days",
+      "paymentHint": "Days the client has to pay after the invoice. The invoice is issued at the start date.",
+      "window": "Ownership window",
+      "windowMonths": {
+        "one": "{count} month",
+        "other": "{count} months"
+      },
+      "windowHint": "How long a delivered referral keeps first position with this client. It can't be shorter than the introduction period in your client contract.",
+      "shareSalary": "Show partners the salary band and fee estimate",
+      "shareSalaryHint": "With a % fee, the estimate reveals the salary, so the band and the estimate are shown or hidden together. Partners always see the rate.",
+      "splitTitle": "Commission split",
+      "splitNote": "Set by MissionHub. Each referral keeps the split in force when it's submitted.",
+      "attestation": "We hold the fee agreement directly with the end client.",
+      "attestationHint": "Jobs you hold for another agency can't be open to partner referrals.",
+      "attestationRequired": "Required to publish",
+      "lastAttested": "Last confirmed by {name} on {date}",
+      "willPublish": "Saving publishes terms version {version}.",
+      "existingReferrals": {
+        "one": "{count} referral was sent under earlier terms and keeps them. Partners with referrals in progress are told the terms changed.",
+        "other": "{count} referrals were sent under earlier terms and keep them. Partners with referrals in progress are told the terms changed."
+      },
+      "permanentOnly": "Only permanent jobs can be open to partner referrals. Change the contract type or turn off partner referrals."
+    },
+    "clientRequiredForPartners": "Required to open this job to partners. If you hide the client's name, partners never see it.",
+    "restrictedHold": "Saved, but hidden from partners while your organization is on a network hold.",
+    "restrictedRules": "Saved, but hidden from partners until an organization admin accepts the current Network Rules.",
+    "userMustAccept": "Accept Network Rules {label} to open jobs to partners.",
+    "errors": {
+      "userMustAccept": "Accept Network Rules {label} before you open a job to partners. Then save again."
+    }
   },
   "messages": {
-    "activated": "Job is active. Matching runs in the background.",
+    "activated": "Job published. Match counts appear within a minute.",
     "statusUpdated": "Status updated. Matches for inactive jobs expire immediately.",
     "statusUpdatedReleased": {
-      "one": "Status updated. {count} pending referral was declined as \"Position filled\".",
-      "other": "Status updated. {count} pending referrals were declined as \"Position filled\"."
+      "one": "Status updated. {count} pending referral was declined as \"Job filled\".",
+      "other": "Status updated. {count} pending referrals were declined as \"Job filled\"."
     }
   },
   "errors": {
-    "notFound": "Job not found."
+    "notFound": "Job not found.",
+    "termsIncomplete": "Complete the terms for partners to open this job to partner referrals."
   },
   "validation": {
     "positiveAmount": "Enter a positive amount",
@@ -170,7 +241,15 @@
     "countryCode": "Use a 2-letter country code",
     "salaryRange": "Maximum must be at least the minimum",
     "clientRequired": "Enter the client name or keep it confidential",
-    "descriptionTooLong": "Description is too long."
+    "descriptionTooLong": "Description is too long.",
+    "feeRateRange": "Enter a rate from 1 to 50, with up to 2 decimals",
+    "flatAmountRequired": "Enter a flat fee above 0",
+    "minimumPositive": "Enter a minimum fee above 0, or leave it empty",
+    "remedyRequired": "Choose what happens if the hire leaves",
+    "paymentDaysRange": "Enter 0 to 90 days",
+    "attestationRequired": "Confirm you hold the fee agreement with the end client",
+    "permanentForReferrals": "Choose Permanent, or turn off partner referrals",
+    "clientRequiredForPartners": "Enter the client's real name to open this job to partners"
   },
   "import": {
     "title": "Fill this job in seconds",
@@ -212,5 +291,106 @@
     "subtitleAi": "Paste the posting, drop a link or upload a file (scanned PDFs too). AI reads it and fills in what it says — you review everything before saving.",
     "doneAi": "Read by AI. Nothing was invented: empty fields weren't stated in the posting.",
     "fileHintAi": "Up to 5 MB. Scanned PDFs are read by AI."
+  },
+  "terms": {
+    "partnerTitle": "Terms for this job",
+    "versionLine": "Terms version {version} · {date}",
+    "amendedLine": "Amended on {date} at both organizations' request",
+    "originalTerms": "Original terms",
+    "updatedChip": "Terms updated on {date}",
+    "changedBadge": "Changed",
+    "rows": {
+      "fee": "Placement fee",
+      "minimum": "Minimum fee",
+      "currency": "Fee currency",
+      "searchType": "Search type",
+      "guarantee": "Guarantee",
+      "paymentTerms": "Client payment terms",
+      "window": "Ownership window",
+      "split": "Commission split",
+      "client": "Client",
+      "directClient": "Direct client",
+      "expectedShare": "Your expected share",
+      "expectedShareTarget": "Sourcing recruiter's expected share"
+    },
+    "fee": {
+      "pctBase": "{rate} of first-year base salary",
+      "pctTotalCash": "{rate} of first-year total cash (base + target bonus)",
+      "flat": "{amount} flat fee"
+    },
+    "feeShort": {
+      "pctBase": "{rate} of base",
+      "pctTotalCash": "{rate} of total cash",
+      "flat": "{amount} flat"
+    },
+    "currencyPct": "{currency}, the salary currency",
+    "searchTypeHint": {
+      "contingent_exclusive": "The client gives this job only to the hiring recruiter. The fee is due only on a hire.",
+      "contingent_shared": "The client may also use other agencies or its own team. The fee is due only on a hire.",
+      "retained": "Part of the fee is paid upfront (retainer). The split applies to the total fee, retainer included."
+    },
+    "guarantee": {
+      "one": "{count} day from the start date · {remedy}",
+      "other": "{count} days from the start date · {remedy}"
+    },
+    "noGuarantee": "No guarantee",
+    "noGuaranteeHint": "The client gets no replacement or refund if the hire leaves early.",
+    "paymentTerms": {
+      "one": "Net {count} day from the invoice (issued at the start date)",
+      "other": "Net {count} days from the invoice (issued at the start date)"
+    },
+    "paymentTermsZero": "Due on the invoice date (issued at the start date)",
+    "window": {
+      "one": "{count} month from delivery",
+      "other": "{count} months from delivery"
+    },
+    "split": "Sourcing {sourcing} · Hiring {hiring} · Platform {platform}",
+    "splitRule": "{rule} v{version}",
+    "directClient": "The hiring recruiter states it holds the fee agreement directly with the end client.",
+    "clientConfidential": "Confidential",
+    "estimate": "Estimated fee ~{fee} · Your estimated share ~{share} ({percent})",
+    "estimateHint": "From the salary band midpoint. At hire, the fee is computed from the actual salary. Shares are before sales tax.",
+    "estimateHidden": "{partner} keeps the salary band private, so no estimate is shown.",
+    "flatShare": "Your share if hired: {share} ({percent})",
+    "flatShareHint": "Before sales tax. Payable once the client's payment is verified.",
+    "shareAtHire": {
+      "pctBase": "{percent} of the fee (fee: {rate} of the base salary at hire)",
+      "pctTotalCash": "{percent} of the fee (fee: {rate} of total cash at hire)"
+    },
+    "notRecorded": "Terms not recorded (sent before the terms card)",
+    "network": {
+      "title": "Network rules for every job",
+      "ownership": "Ownership: a delivered referral keeps first position with this client and its affiliates, for any role, for the job's ownership window from delivery.",
+      "priorPresentation": "Prior presentation: the hiring recruiter has 5 business days after delivery to file an objection, with evidence.",
+      "response": "Response: the hiring recruiter acts on a delivered referral within 5 business days. If there's no action after 10 business days, the sourcing recruiter may submit the candidate to other jobs, and the referral keeps its first position with this client.",
+      "payout": "Payout: the hiring recruiter pays the sourcing recruiter's share directly, within 5 business days of receiving the client's payment. The share isn't held back for the guarantee.",
+      "tax": "Sales tax: shares are before sales tax. Each organization adds the tax that applies when it invoices.",
+      "draftMarker": "Draft network rules, pending legal review.",
+      "summary": "Network rules"
+    },
+    "internalShare": "No sourcing recruiter share (internal referral)"
+  },
+  "nudge": {
+    "chipTerms": "Hidden from partners: add terms",
+    "chipPermanent": "Hidden from partners: not permanent",
+    "chipCurrency": "Hidden from partners: check fee currency",
+    "listBanner": {
+      "one": "{count} active job is hidden from partners. Open it to see what's missing.",
+      "other": "{count} active jobs are hidden from partners. Open each one to see what's missing."
+    },
+    "title": "Hidden from partners",
+    "bodyTerms": "Partners can't see this job or submit to it until you add its terms for partners. Referrals you already received aren't affected.",
+    "bodyPermanent": "Only permanent jobs can be open to partner referrals. Change the contract type, or turn off partner referrals. Referrals you already received aren't affected.",
+    "bodyCurrency": "The fee currency in this job's terms ({termsCurrency}) no longer matches its salary currency ({salaryCurrency}). Partners can't see this job until you review and save its terms, which publishes new terms in {salaryCurrency}. Referrals you already received keep their terms.",
+    "ctaTerms": "Add terms",
+    "ctaReview": "Review terms",
+    "ctaEdit": "Edit job",
+    "chipClientName": "Hidden from partners: add the client's name",
+    "bodyClientName": "Partners can't see this job until it has the client's real name. If you hide the client's name, it stays internal. Referrals already received aren't affected.",
+    "ctaClientName": "Add client name",
+    "bodyHold": "Your organization is on a network hold, so partners can't see this job. Its settings are saved, and it's visible again when the hold ends. Referrals you already received aren't affected.",
+    "bodyRules": "Your organization hasn't accepted the current Network Rules, so partners can't see this job. It's visible again as soon as an organization admin accepts them. Referrals you already received aren't affected.",
+    "chipHold": "Hidden from partners: network hold",
+    "chipRules": "Hidden from partners: rules not accepted"
   }
 }

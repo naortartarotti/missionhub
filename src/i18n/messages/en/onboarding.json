@@ -1,43 +1,39 @@
 {
-  "metaTitle": "Set up your workspace",
-  "footer": "Joining an existing team? Open the invitation link your admin sent you.",
+  "metaTitle": "Set up your organization",
+  "footer": "Joining an existing team? Open the invitation link your organization admin sent you.",
   "steps": {
-    "kind": "How you work",
-    "workspace": "Workspace",
+    "workspace": "Organization",
     "profile": "Your profile",
-    "review": "Review"
+    "review": "Review",
+    "rules": "Network Rules"
   },
   "progress": "Onboarding progress",
   "stepCompleted": "{label} (completed, go back)",
   "stepCurrent": "{label} (current)",
   "stepStatus": "Step {current} of {total}: {label}",
   "titles": {
-    "kind": "Welcome! How do you work?",
-    "kindNamed": "Welcome, {name}! How do you work?",
-    "kindDescription": "This tailors your workspace. You can invite teammates later either way.",
-    "workspace": "Name your workspace",
-    "workspaceDescription": "Candidates and jobs belong to this workspace and are never visible to other organizations.",
+    "workspace": "Name your organization",
+    "workspaceDescription": "Candidates and jobs belong to this organization and are never visible to other organizations.",
     "profile": "Your recruiter profile",
     "profileDescription": "Partners see this when you collaborate on a referral. It's optional; you can fill it in later.",
     "review": "Ready to go?",
-    "reviewDescription": "Check the details below, then create your workspace."
-  },
-  "kind": {
-    "label": "Organization type",
-    "agency": "Agency",
-    "agencyDescription": "A team of recruiters sharing one candidate inventory.",
-    "independent": "Independent",
-    "independentDescription": "A solo recruiter. Bring in collaborators when you grow."
+    "reviewDescription": "Check the details below, then create your organization.",
+    "company": "Set up your organization",
+    "companyNamed": "Welcome, {name}! Set up your organization",
+    "companyDescription": "This is your agency or recruiting business on MissionHub. Your recruiters join it by invitation, and its candidates and jobs are never visible to other organizations.",
+    "rules": "Accept the Network Rules",
+    "rulesDescription": "Every organization accepts these rules to join the network, and so does every member."
   },
   "workspace": {
-    "agencyName": "Agency name",
-    "displayName": "Business or display name",
+    "agencyName": "Organization name",
     "agencyPlaceholder": "e.g. Northbound Talent",
-    "displayPlaceholder": "e.g. Sam Rivera Recruiting",
     "url": "Workspace URL",
     "urlHint": "Lowercase letters, numbers and dashes. You can't change it later.",
     "currency": "Default currency",
-    "currencyHint": "Used for fees and commissions. Each placement can still use its own currency."
+    "currencyHint": "Used for fees and commissions. Each placement can still use its own currency.",
+    "country": "Country",
+    "countryHint": "Where your organization is based.",
+    "countryPlaceholder": "Choose a country"
   },
   "profile": {
     "headline": "Headline",
@@ -60,32 +56,31 @@
       "executive": "Executive search"
     },
     "regions": {
-      "ontario": "Ontario",
-      "quebec": "Quebec",
-      "bc": "British Columbia",
-      "alberta": "Alberta",
-      "remoteCanada": "Remote Canada",
-      "us": "United States",
+      "northAmerica": "North America",
+      "latam": "Latin America",
+      "europe": "Europe",
+      "ukIreland": "UK & Ireland",
+      "mena": "Middle East & Africa",
+      "apac": "Asia-Pacific",
       "remoteWorld": "Remote worldwide"
     }
   },
   "review": {
-    "organization": "Organization",
-    "workspace": "Workspace",
+    "workspace": "Organization",
     "profile": "Profile",
-    "editOrganization": "Edit organization",
-    "editWorkspace": "Edit workspace",
+    "editWorkspace": "Edit organization",
     "editProfile": "Edit profile",
-    "agency": "Agency",
-    "independent": "Independent recruiter",
     "noTags": "No specialties or regions yet",
     "notFilled": "Not filled in yet",
     "protectionTitle": "How your data is protected",
-    "protectionPrivate": "Your candidates and jobs stay private to this workspace.",
+    "protectionPrivate": "Your candidates and jobs stay private to this organization.",
     "protectionAnonymized": "Partners never browse your inventory. They see anonymized match counts only.",
     "protectionConsent": "You choose exactly what to share, per referral, with the candidate's authorization.",
-    "creating": "Creating workspace…",
-    "create": "Create workspace"
+    "creating": "Creating organization…",
+    "create": "Create organization",
+    "rules": "Network Rules",
+    "rulesValue": "Version {label}, accepted in {language}",
+    "editRules": "Review rules"
   },
   "tags": {
     "selected": "Selected",
@@ -96,7 +91,8 @@
     "nameRequired": "Enter your organization name",
     "nameTooLong": "Use at most 120 characters",
     "slugFormat": "3–48 characters: lowercase letters, numbers and dashes",
-    "email": "Enter a valid email"
+    "email": "Enter a valid email",
+    "country": "Choose your country"
   },
   "errors": {
     "slugTaken": "That workspace URL is taken.",
@@ -105,7 +101,8 @@
     "memberNotFound": "Member not found.",
     "selfChange": "You can't change your own role or status.",
     "nameInvalid": "Enter a valid name.",
-    "currencyInvalid": "Invalid currency."
+    "currencyInvalid": "Invalid currency.",
+    "transferSame": "Choose a different teammate."
   },
   "messages": {
     "invitationCreated": "Invitation created. Email delivery isn't configured, so share this one-time link securely.",
@@ -113,7 +110,8 @@
     "memberUpdated": "Member updated.",
     "organizationUpdated": "Organization updated.",
     "invitationSent": "Invitation emailed to {email}. You can also share the link below.",
-    "invitationEmailFailed": "Invitation created, but the email couldn't be sent. Share this one-time link securely."
+    "invitationEmailFailed": "Invitation created, but the email couldn't be sent. Share this one-time link securely.",
+    "portfolioTransferred": "Portfolio transferred: {candidates} candidates and {jobs} jobs."
   },
   "invite": {
     "metaTitle": "Join organization",

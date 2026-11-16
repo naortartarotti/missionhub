@@ -1,6 +1,7 @@
 import "server-only";
+import { getJobsTermsState, type JobTermsState } from "@/features/jobs/queries";
 import { can, type RequestContext } from "@/server/auth/context";
-import { getJobMatchSummary, listOpportunities, needsDecision, type Opportunity } from "@/features/matching/queries";
+import { getJobMatchSummary, isToReview, listOpportunities, needsDecision, type Opportunity } from "@/features/matching/queries";
 import { listPlacements } from "@/features/commissions/queries";
 import { ledgerBalances, summarizeForOrg, type LedgerEntry } from "@/features/commissions/domain";
 import { receivedCounts } from "@/features/referrals/queries";
@@ -55,13 +56,8 @@ export async function loadOverview(ctx: RequestContext) {
   const [activeCandidates, allCandidates, openJobs, opportunities, received, toReview, infoRequested, pendingAgreements, sent, placements, receivedAll] = await Promise.all([
     ctx.db.from("candidates").select("id", { count: "exact", head: true }).eq("organization_id", org).eq("status", "active_for_matching"),
     ctx.db.from("candidates").select("id", { count: "exact", head: true }).eq("organization_id", org).neq("status", "deleted"),
-    ctx.db
-      .from("jobs")
-      .select("id", { count: "exact" })
-      .eq("organization_id", org)
-      .eq("status", "active")
-      .eq("accepts_external_referrals", true)
-      .limit(MAX_JOBS_FOR_FIT_TOTAL + 1),
+    // N2 (QA-N2-04): "open" means partner-visible (BR-3), not just active ∧ open to referrals.
+    can(ctx, "jobs:read") ? getJobsTermsState(ctx).then((rows) => rows.filter((r) => r.partner_visible)) : Promise.resolve([] as JobTermsState[]),
     canMatch ? listOpportunities(ctx) : Promise.resolve([] as Opportunity[]),
     receivedCounts(ctx),
     // Received referrals the job owner can decide on now, longest-waiting first.
@@ -100,12 +96,12 @@ export async function loadOverview(ctx: RequestContext) {
       byJob.set(o.job_id, { jobId: o.job_id, jobTitle: o.job_title, jobOrg: o.job_org_name, clientLabel: o.client_label, internal: o.internal, top: o, candidateCount: 1 });
     } else {
       j.candidateCount += 1;
-      if (o.score > j.top.score || (o.score === j.top.score && (o.your_share_minor ?? 0) > (j.top.your_share_minor ?? 0))) j.top = o;
+      if (o.score > j.top.score || (o.score === j.top.score && (o.estimated_share_minor ?? 0) > (j.top.estimated_share_minor ?? 0))) j.top = o;
     }
   }
-  const bestOpportunities = [...byJob.values()].sort((a, b) => b.top.score - a.top.score || (b.top.your_share_minor ?? 0) - (a.top.your_share_minor ?? 0)).slice(0, 3);
-  // Same set as the Opportunities "To review" tab (saved matches have their own tab), so the numbers agree.
-  const toReviewMatches = undecided.filter((o) => o.triage_state !== "saved");
+  const bestOpportunities = [...byJob.values()].sort((a, b) => b.top.score - a.top.score || (b.top.estimated_share_minor ?? 0) - (a.top.estimated_share_minor ?? 0)).slice(0, 3);
+  // Same set as the Suggestions "To review" tab and the sidebar badge, so the numbers agree.
+  const toReviewMatches = opportunities.filter(isToReview);
   const matches = { count: toReviewMatches.length, fresh: toReviewMatches.filter((o) => o.is_new).length, jobs: new Set(toReviewMatches.map((o) => o.job_id)).size };
 
   // ---- Money: confirmed shares only (client payment received), never projections -----------
@@ -132,8 +128,8 @@ export async function loadOverview(ctx: RequestContext) {
     hired: sentRows.filter((r) => r.status === "hired").length,
   };
 
-  const openJobIds = (openJobs.data ?? []).map((j) => j.id);
-  const openJobCount = openJobs.count ?? openJobIds.length;
+  const openJobIds = openJobs.map((j) => j.job_id);
+  const openJobCount = openJobIds.length;
   let partnerFits: number | null = null;
   if (openJobCount > 0 && openJobCount <= MAX_JOBS_FOR_FIT_TOTAL && can(ctx, "jobs:read")) {
     const summaries = await Promise.all(openJobIds.map((id) => getJobMatchSummary(ctx, id)));

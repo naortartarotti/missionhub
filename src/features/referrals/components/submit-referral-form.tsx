@@ -3,7 +3,7 @@
 import { ActionForm } from "@/components/shared/action-form";
 
 import Link from "next/link";
-import { useActionState, useMemo, useState, type ReactNode } from "react";
+import { useActionState, useEffect, useMemo, useRef, useState, type ReactNode, type Ref } from "react";
 import {
   Briefcase,
   Building2,
@@ -12,8 +12,10 @@ import {
   CircleAlert,
   Eye,
   EyeOff,
+  FileCheck2,
   FileText,
   Globe,
+  Info,
   Laptop,
   Lock,
   Mail,
@@ -24,7 +26,10 @@ import {
   Wallet,
   type LucideIcon,
   Plane,
+  RefreshCw,
 } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -35,13 +40,17 @@ import { SubmitButton } from "@/components/shared/submit-button";
 import { NativeSelect } from "@/components/shared/native-select";
 import { InitialsAvatar } from "@/components/shared/initials-avatar";
 import { SkillChips } from "@/components/shared/skill-chips";
-import { StatusPill, type Tone } from "@/components/shared/status-pill";
+import { type Tone } from "@/components/shared/status-pill";
 import { ScoreRing } from "@/features/matching/components/score-ring";
 import { LEGAL_BASIS } from "@/lib/labels";
 import { cn } from "@/lib/utils";
 import { useFormatter, useGlobalT, useT } from "@/i18n/client";
 import { DISCLOSURE_FIELDS, type DisclosureKey } from "../disclosure";
-import { submitReferral } from "../actions";
+import { submitReferral, type SubmitOutcome } from "../actions";
+import type { ActionResult } from "@/lib/actions/result";
+import type { PartnerTerms } from "@/features/matching/queries";
+import { NetworkRules, TermsSummary } from "@/features/jobs/components/terms-summary";
+import { splitFromPartner, termsFromPartner } from "@/features/jobs/terms-display";
 
 /** The sourcing recruiter's own view of the candidate, pre-formatted on the server. */
 export type ComposerCandidate = {
@@ -58,6 +67,8 @@ export type ComposerCandidate = {
   arrangements: string[];
   email: string | null;
   phone: string | null;
+  /** Whether a LinkedIn URL is on file (the URL itself isn't needed): one of the three identifiers (BR-10). */
+  hasLinkedin: boolean;
   /** Readable mobility lines (travel, relocation, work authorization, passport yes/no). */
   mobility: string[];
   experience: { title: string; company: string | null; period: string }[];
@@ -96,6 +107,9 @@ export function SubmitReferralForm({
   job,
   consents,
   documents,
+  terms: initialTerms,
+  blocked,
+  codeMessages,
 }: {
   orgSlug: string;
   matchId: string;
@@ -105,6 +119,12 @@ export function SubmitReferralForm({
   job: ComposerJob;
   consents: { id: string; evidence: string; obtained_at: string; expires_at: string | null }[];
   documents: { id: string; name: string; ready: boolean }[];
+  /** N2 (BR-8): the job's current terms card, from get_opportunities. Its version id is posted (BR-12). */
+  terms: PartnerTerms;
+  /** N10 (BR-9 b, S20-d): replaces the submit panel when this member must accept the rules first. */
+  blocked?: ReactNode;
+  /** N10 server codes with context copy (partner_activity_restricted, rules_acceptance_required, spec §5.16). */
+  codeMessages?: Record<string, string>;
 }) {
   const t = useT("referrals");
   const tg = useGlobalT();
@@ -118,6 +138,41 @@ export function SubmitReferralForm({
   // Default: the candidate confirms by email (needs an address); the recorded path stays available.
   const [authMethod, setAuthMethod] = useState<"candidate_email" | "recorded">(c.email ? "candidate_email" : "recorded");
   const [preview, setPreview] = useState(false);
+
+  // N1 submit outcomes (EC-1): results rendered as states in the submit panel, never toasts.
+  // "Cancel" on the pending warning dismisses that result; a new submit produces a new one.
+  const [dismissed, setDismissed] = useState<ActionResult<SubmitOutcome> | null>(null);
+  const [acknowledged, setAcknowledged] = useState(false);
+  const outcome = state && state.ok && state.data && state !== dismissed ? state.data : null;
+  const stopped = outcome?.outcome === "stopped" ? outcome : null;
+  const pendingWarning = outcome?.outcome === "pending_warning";
+  // No email, phone or LinkedIn on file: known before submitting (S1-b). The server re-checks.
+  const noIdentifier = !c.email && !c.phone && !c.hasLinkedin;
+  const identifierAlert = noIdentifier || outcome?.outcome === "identifier_required";
+  // N2 `terms_changed` (S5-e): nothing was sent. Re-render the card at the new version with Changed
+  // badges against the one the form showed, keep every field, reset N1's acknowledgement tick and post
+  // the new version id next time (the payload carries the current card, backend.md §4.2).
+  const [card, setCard] = useState<{ terms: PartnerTerms; previous: PartnerTerms | null }>({ terms: initialTerms, previous: null });
+  const [seenState, setSeenState] = useState(state);
+  if (state !== seenState) {
+    setSeenState(state);
+    if (state?.ok && state.data?.outcome === "terms_changed") {
+      const next = state.data.terms;
+      setCard((c) => (c.terms.terms_version_id === next.terms_version_id ? c : { terms: next, previous: c.terms }));
+      setAcknowledged(false);
+    }
+  }
+  const termsChanged = outcome?.outcome === "terms_changed";
+  const resultRef = useRef<HTMLDivElement>(null);
+  const submitRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    // Stop and warning: announce once, move focus there and bring it into view (the aside sits below the profile on mobile).
+    if (!state || !state.ok || !state.data || state.data.outcome === "identifier_required") return;
+    const el = resultRef.current;
+    if (!el) return;
+    el.scrollIntoView({ block: "center", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    el.focus({ preventScroll: true });
+  }, [state]);
 
   const on = (k: DisclosureKey) => selected.has(k);
   const flip = (k: DisclosureKey) =>
@@ -142,15 +197,18 @@ export function SubmitReferralForm({
   const toggle = (k: DisclosureKey) => (preview ? null : <ShareToggle on={on(k)} identifying={IDENTIFYING.has(k)} field={label(k)} onClick={() => flip(k)} />);
 
   return (
-    <ActionForm action={action} className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)]">
+    <ActionForm action={action} className="grid grid-cols-[minmax(0,1fr)] items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)]">
       <input type="hidden" name="matchId" value={matchId} />
       <input type="hidden" name="idempotencyKey" value={idempotencyKey} />
+      <input type="hidden" name="termsVersionId" value={card.terms.terms_version_id} />
       {[...selected].map((k) => <input key={k} type="hidden" name="fields" value={k} />)}
 
       {/* ------------------------------------------------------------------ Candidate profile */}
-      <div className="grid min-w-0 gap-4">
+      {/* One shrinkable track per column: long names in the toggle and cards wrap instead of widening the page (AC-62). */}
+      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div role="radiogroup" aria-label={t("composer.viewOwn")} className="inline-flex rounded-full border border-border/60 bg-card p-1 text-sm">
+          {/* Shrinks and wraps at 375px instead of widening the page (AC-62). */}
+          <div role="radiogroup" aria-label={t("composer.viewOwn")} className="inline-flex max-w-full rounded-3xl border border-border/60 bg-card p-1 text-sm">
             {[false, true].map((p) => (
               <button
                 key={String(p)}
@@ -158,7 +216,7 @@ export function SubmitReferralForm({
                 role="radio"
                 aria-checked={preview === p}
                 onClick={() => setPreview(p)}
-                className={cn("inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 font-medium transition-colors", preview === p ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground")}
+                className={cn("inline-flex min-h-11 min-w-0 items-center gap-1.5 rounded-3xl px-3.5 py-1.5 text-left font-medium transition-colors sm:min-h-0", preview === p ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground")}
               >
                 {p ? <Eye className="size-4" aria-hidden /> : null}
                 {p ? t("composer.viewPartner", { partner: recipient }) : t("composer.viewOwn")}
@@ -258,7 +316,8 @@ export function SubmitReferralForm({
         <Panel className="p-6">
           <h3 className="mb-4 text-lg font-semibold tracking-tight">{t("composer.contact")}</h3>
           {c.email || c.phone ? (
-            <dl className="grid gap-4">
+            // minmax(0,1fr): a long email can't widen the track past the panel at 375px (AC-62).
+            <dl className="grid grid-cols-[minmax(0,1fr)] gap-4">
               {c.email ? detailRow("email", Mail, c.email) : null}
               {c.phone ? detailRow("phone", Phone, c.phone) : null}
             </dl>
@@ -287,7 +346,7 @@ export function SubmitReferralForm({
       </div>
 
       {/* ------------------------------------------------------------------ Job + submission */}
-      <aside className="grid min-w-0 gap-4">
+      <aside className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4">
         <Panel className="p-6">
           <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{t("composer.submittingFor")}</p>
           <div className="mt-3 flex items-start gap-3">
@@ -315,7 +374,6 @@ export function SubmitReferralForm({
               <ScoreRing score={job.score} className="size-12" />
               <div>
                 <p className="text-sm font-semibold">{t("composer.match")}</p>
-                <StatusPill tone={job.band.tone} label={job.band.label} className="mt-1 text-xs" />
               </div>
             </div>
             <ul className="mt-4 grid gap-1.5 text-sm">
@@ -326,8 +384,27 @@ export function SubmitReferralForm({
           </div>
         </Panel>
 
+        <PartnerTermsPanel terms={card.terms} previous={card.previous} partner={recipient} />
+
         <Panel className="grid gap-5 p-6">
           <h2 className="text-lg font-semibold tracking-tight">{t("composer.submitTitle", { partner: recipient })}</h2>
+
+          {stopped ? (
+            <StopState orgSlug={orgSlug} partner={recipient} reference={stopped.reference} supportEmail={stopped.supportEmail} titleRef={resultRef} />
+          ) : (
+          <>
+          {identifierAlert ? (
+            <Alert id="identifier-alert" role={noIdentifier ? "status" : "alert"} className="rounded-2xl border-warning/30 bg-warning-soft text-warning">
+              <CircleAlert aria-hidden />
+              <AlertTitle className={ALERT_TITLE}>{t("form.identifierRequired.title")}</AlertTitle>
+              <AlertDescription className="text-foreground">
+                <p>{t("form.identifierRequired.description")}</p>
+                <Button variant="outline" size="sm" className="mt-1 min-h-11 sm:min-h-8" asChild>
+                  <Link href={`/workspace/${orgSlug}/candidates/${c.id}/edit`}>{t("form.identifierRequired.action")}</Link>
+                </Button>
+              </AlertDescription>
+            </Alert>
+          ) : null}
 
           <div className="grid gap-3">
             <div>
@@ -397,8 +474,71 @@ export function SubmitReferralForm({
             )}
             <p className="flex items-start gap-2 text-sm text-muted-foreground"><ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden /> {t("form.revocation")}</p>
           </div>
-          <FormMessage state={state} />
-          <SubmitButton size="lg" className="w-full" pendingLabel={t("form.submitting")}>{t("form.submit")}</SubmitButton>
+          <p className="flex items-start gap-2 text-sm text-muted-foreground"><ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden /> {t("form.duplicateCheckNote", { partner: recipient })}</p>
+          <FormMessage state={state && !state.ok ? (state.code && codeMessages?.[state.code] ? { ...state, error: codeMessages[state.code] } : state) : null} />
+          {termsChanged ? (
+            <Alert ref={resultRef} id="terms-changed" role="alert" tabIndex={-1} className="rounded-2xl border-warning/30 bg-warning-soft text-warning outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              <RefreshCw aria-hidden />
+              <AlertTitle className={ALERT_TITLE}>{t("termsChanged.title")}</AlertTitle>
+              <AlertDescription className="text-foreground">
+                <p>{t("termsChanged.description", { partner: recipient, date: fmt.date(card.terms.terms_published_at) })}</p>
+              </AlertDescription>
+            </Alert>
+          ) : null}
+          <div className="grid gap-1">
+              <p className="flex items-start gap-2 text-sm">
+                <FileCheck2 className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden />
+                {t("form.termsLine", { version: card.terms.terms_version_no, date: fmt.date(card.terms.terms_published_at) })}
+              </p>
+              {authMethod === "candidate_email" ? <p className="pl-6 text-xs text-muted-foreground">{t("form.termsLineConfirm")}</p> : null}
+          </div>
+          {blocked ? (
+            blocked
+          ) : pendingWarning ? (
+            <div className="grid gap-3">
+              <Alert ref={resultRef} id="pending-warning" tabIndex={-1} className="rounded-2xl border-warning/30 bg-warning-soft text-warning outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <CircleAlert aria-hidden />
+                <AlertTitle className={ALERT_TITLE}>{t("duplicate.pendingTitle", { partner: recipient })}</AlertTitle>
+                <AlertDescription className="text-foreground">
+                  <p>{t("duplicate.pendingDescription", { partner: recipient })}</p>
+                </AlertDescription>
+              </Alert>
+              <Label className="flex min-h-11 items-start gap-2.5 rounded-2xl bg-muted/50 p-3 leading-5 font-normal">
+                <Checkbox checked={acknowledged} onCheckedChange={(v) => setAcknowledged(v === true)} className="mt-0.5" />
+                <span className="text-sm">{t("duplicate.acknowledge")}</span>
+              </Label>
+              {acknowledged ? <input type="hidden" name="acknowledgePendingWarning" value="true" /> : null}
+              <SubmitButton size="lg" className="w-full" disabled={!acknowledged} aria-describedby="pending-warning" pendingLabel={t("form.submitting")}>
+                {t("duplicate.submitAnyway")}
+              </SubmitButton>
+              <Button
+                type="button"
+                variant="ghost"
+                className="min-h-11 w-full sm:min-h-10"
+                onClick={() => {
+                  setDismissed(state);
+                  setAcknowledged(false);
+                  // The warning (and this button) goes away: put focus on the restored submit button.
+                  requestAnimationFrame(() => submitRef.current?.focus());
+                }}
+              >
+                {tg("common.actions.cancel")}
+              </Button>
+            </div>
+          ) : (
+            <SubmitButton
+              ref={submitRef}
+              size="lg"
+              className="w-full"
+              disabled={noIdentifier}
+              aria-describedby={identifierAlert ? "identifier-alert" : termsChanged ? "terms-changed" : undefined}
+              pendingLabel={t("form.submitting")}
+            >
+              {termsChanged ? t("termsChanged.submit") : t("form.submit")}
+            </SubmitButton>
+          )}
+          </>
+          )}
         </Panel>
       </aside>
     </ActionForm>
@@ -424,7 +564,7 @@ export function SubmitReferralForm({
         <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-muted text-muted-foreground" aria-hidden><Icon className="size-4" /></span>
         <div className="min-w-0 flex-1">
           <dt className="text-xs text-muted-foreground">{label(k)}</dt>
-          <dd className={cn("mt-1 text-sm font-medium break-words", !show(k) ? "text-muted-foreground" : !on(k) && "opacity-45")}>
+          <dd className={cn("mt-1 text-sm font-medium [overflow-wrap:anywhere]", !show(k) ? "text-muted-foreground" : !on(k) && "opacity-45")}>
             {show(k) ? children : <span className="inline-flex items-center gap-1.5 font-normal"><EyeOff className="size-3.5" aria-hidden />{t("composer.hiddenSection", { partner: recipient })}</span>}
           </dd>
         </div>
@@ -518,4 +658,105 @@ function AuthOption({ selected, disabled, icon: Icon, title, body, onSelect }: {
 
 function Empty({ children }: { children: ReactNode }) {
   return <p className="text-sm text-muted-foreground">{children}</p>;
+}
+
+/**
+ * S5 "Terms for this job": the current version as partners see it (BR-8), the gated estimate (BR-9:
+ * the server sends no estimate on % jobs that keep the band private) and the network rules.
+ */
+function PartnerTermsPanel({ terms, previous, partner }: { terms: PartnerTerms; previous: PartnerTerms | null; partner: string }) {
+  const tj = useT("jobs");
+  const f = useFormatter();
+  const view = termsFromPartner(terms);
+  const flat = terms.fee_basis === "flat";
+  const percent = f.percent(terms.sourcing_bps);
+  const hasEstimate = terms.estimated_fee_minor !== null && terms.estimated_share_minor !== null;
+  // Internal jobs carry no share (the agreement gives the sourcing part to the job owner): no box.
+  const estimate = flat ? (
+    terms.estimated_share_minor !== null ? (
+      <div className="grid gap-1 rounded-2xl bg-muted/40 p-3">
+        <p className="text-sm font-semibold tabular-nums">{tj("terms.flatShare", { share: f.money(terms.estimated_share_minor, terms.fee_currency, { code: true }), percent })}</p>
+        <p className="text-xs text-muted-foreground">{tj("terms.flatShareHint")}</p>
+      </div>
+    ) : null
+  ) : hasEstimate ? (
+    <div className="grid gap-1 rounded-2xl bg-muted/40 p-3">
+      <p className="text-sm font-semibold text-pretty tabular-nums">
+        {tj("terms.estimate", {
+          fee: f.money(terms.estimated_fee_minor, terms.fee_currency, { code: true, whole: true }),
+          share: f.money(terms.estimated_share_minor, terms.fee_currency, { code: true, whole: true }),
+          percent,
+        })}
+      </p>
+      <p className="text-xs text-muted-foreground">{tj("terms.estimateHint")}</p>
+    </div>
+  ) : terms.internal ? null : (
+    <p className="flex items-start gap-2 rounded-2xl bg-muted/40 p-3 text-sm text-muted-foreground">
+      <EyeOff className="mt-0.5 size-4 shrink-0" aria-hidden />
+      {tj("terms.estimateHidden", { partner })}
+    </p>
+  );
+  return (
+    <Panel role="region" className="grid gap-4 p-6" aria-labelledby="partner-terms-title">
+      <div className="grid gap-1.5">
+        <h2 id="partner-terms-title" className="text-lg font-semibold tracking-tight">{tj("terms.partnerTitle")}</h2>
+        <p className="text-xs text-muted-foreground">{tj("terms.versionLine", { version: terms.terms_version_no, date: f.date(terms.terms_published_at) })}</p>
+        {terms.terms_updated_at ? (
+          <span className="inline-flex w-fit max-w-full items-start gap-1.5 rounded-2xl bg-info-soft px-2.5 py-1 text-xs font-medium whitespace-normal text-info">
+            <RefreshCw className="mt-px size-3.5 shrink-0" aria-hidden />
+            {tj("terms.updatedChip", { date: f.date(terms.terms_updated_at) })}
+          </span>
+        ) : null}
+      </div>
+      <TermsSummary
+        variant="partner"
+        terms={view}
+        split={splitFromPartner(terms)}
+        client={terms.client_label}
+        changedFrom={previous ? termsFromPartner(previous) : null}
+        amountShown={flat || hasEstimate}
+        estimate={estimate}
+      />
+      <NetworkRules />
+    </Panel>
+  );
+}
+
+/** AlertTitle clamps to one line by default; N1 titles must wrap (fr runs ~30% longer). */
+const ALERT_TITLE = "line-clamp-none whitespace-normal text-pretty";
+
+/**
+ * S1-d: the one message for every stop (BR-9, AC-5). Same text for a job- or client-level hit, an
+ * earlier referral from any org and a sticky stop; only {partner} and the opaque reference vary.
+ */
+function StopState({ orgSlug, partner, reference, supportEmail, titleRef }: { orgSlug: string; partner: string; reference: string; supportEmail: string | null; titleRef: Ref<HTMLDivElement> }) {
+  const t = useT("referrals");
+  // The address comes from a server env var; still refuse anything that isn't a plain address.
+  const support = supportEmail && /^[^\s@<>"?&]+@[^\s@<>"?&]+$/.test(supportEmail) ? supportEmail : null;
+  return (
+    <div className="grid gap-4">
+      <Alert className="rounded-2xl bg-muted/40">
+        <Info aria-hidden />
+        <AlertTitle ref={titleRef} tabIndex={-1} className={cn(ALERT_TITLE, "outline-none focus-visible:ring-2 focus-visible:ring-ring")}>
+          {t("duplicate.stopTitle")}
+        </AlertTitle>
+        <AlertDescription className="text-foreground">
+          <p>{t("duplicate.message", { partner })}</p>
+          <p>{t("duplicate.stopNext", { partner })}</p>
+        </AlertDescription>
+      </Alert>
+      <Button variant="outline" size="lg" className="w-full" asChild>
+        <Link href={`/workspace/${orgSlug}/opportunities`}>{t("duplicate.backToOpportunities")}</Link>
+      </Button>
+      {support ? (
+        <p className="text-sm text-muted-foreground">
+          {t("duplicate.supportBefore")}{" "}
+          <a className="font-medium text-foreground underline underline-offset-4" href={`mailto:${support}?subject=${encodeURIComponent(t("duplicate.supportSubject", { reference }))}`}>
+            {t("duplicate.supportLink")}
+          </a>{" "}
+          {t("duplicate.supportAfter", { reference })}
+        </p>
+      ) : null}
+    </div>
+  );
 }

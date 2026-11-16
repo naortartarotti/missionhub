@@ -1,0 +1,2 @@
+external_id,title,client,description,required_skills,preferred_skills,seniority,min_years,work_arrangement,contract_type,city,region,country,languages,salary_min,salary_max,salary_currency,url,status,owner_email
+J-2001,Backend Engineer,,"Build and run our payments APIs.","go; postgresql; kubernetes",terraform,senior,5,hybrid,permanent,Lisbon,,PT,english,60000,80000,EUR,https://example.com/jobs/2001,draft,

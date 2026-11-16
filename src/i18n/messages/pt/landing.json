@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "MissionHub · A rede privada de indicações para recrutadores",
-    "description": "Conecte seus candidatos privados às vagas abertas de outros recrutadores. Nada é compartilhado sem sua autorização, e toda contratação termina em uma divisão de comissão 45/45/10 auditável."
+    "description": "Conecte seus candidatos privados às vagas abertas de outros recrutadores. Nada é compartilhado sem sua autorização, e toda colocação termina em uma divisão de comissão 45/45/10 auditável."
   },
   "nav": {
     "label": "Principal",
@@ -9,7 +9,7 @@
     "how": "Como funciona",
     "privacy": "Privacidade",
     "commissions": "Comissões",
-    "faq": "Dúvidas",
+    "faq": "FAQ",
     "signIn": "Entrar",
     "getStarted": "Começar",
     "openMenu": "Abrir menu",
@@ -20,7 +20,7 @@
     "line1": "Seus candidatos.",
     "line2": "As vagas deles.",
     "line3": "Uma vitória dividida.",
-    "subtitle": "O MissionHub conecta os candidatos parados no seu pipeline às vagas abertas de agências parceiras. Nada sai das suas mãos até você autorizar, e toda contratação termina em uma divisão clara e auditável.",
+    "subtitle": "O MissionHub conecta os candidatos parados no seu pipeline às vagas abertas de agências parceiras. Nada sai das suas mãos até você autorizar, e toda colocação termina em uma divisão clara e auditável.",
     "primary": "Criar seu workspace",
     "secondary": "Ver como funciona",
     "note": "Comece grátis · Nenhum dado de candidato compartilhado sem autorização",
@@ -67,7 +67,7 @@
       },
       "commissions": {
         "title": "Comissões",
-        "body": "Uma divisão 45/45/10 combinada desde o início e registrada em um livro-razão auditável."
+        "body": "Uma divisão 45/45/10 combinada desde o início e registrada em um extrato auditável."
       },
       "faq": {
         "title": "Perguntas frequentes",
@@ -77,24 +77,24 @@
   },
   "how": {
     "eyebrow": "Como funciona",
-    "title": "De um pipeline parado a uma contratação compartilhada.",
+    "title": "De um pipeline parado a uma colocação compartilhada.",
     "subtitle": "Quatro etapas. Cada uma explícita, autorizada e registrada.",
     "steps": {
       "one": {
         "title": "Adicione candidatos com privacidade",
-        "body": "Importe um CSV ou cadastre perfis manualmente. Registre a autorização de tratamento de dados do candidato e ative-o para matching. Só a sua organização vê."
+        "body": "Importe um CSV ou cadastre perfis manualmente. Registre a autorização de matching do candidato e ligue o matching. Só a sua organização vê."
       },
       "two": {
         "title": "Receba matches com vagas parceiras",
-        "body": "O motor compara seus candidatos com vagas de parceiros e classifica em Forte, Potencial e Não elegível, explicando o porquê em linguagem simples."
+        "body": "O motor compara seus candidatos com vagas de parceiros e classifica em forte, parcial ou não elegível, explicando o porquê em linguagem simples."
       },
       "three": {
         "title": "Envie com autorização",
         "body": "Escolha exatamente quais campos e documentos compartilhar, registre a autorização específica da vaga, confirme o interesse do candidato e envie."
       },
       "four": {
-        "title": "Contrate e divida o fee",
-        "body": "Acompanhe entrevistas, propostas e a contratação. A comissão passa por um ledger versionado: projetada, a pagar, paga."
+        "title": "Contrate e divida a taxa",
+        "body": "Acompanhe entrevistas, propostas e a contratação. A comissão passa por um extrato versionado: prevista, a pagar, paga."
       }
     }
   },
@@ -103,7 +103,7 @@
     "title": "Feito para as duas pontas da indicação.",
     "owner": {
       "badge": "Você tem o candidato",
-      "title": "Transforme perfis parados em contratações.",
+      "title": "Transforme perfis parados em colocações.",
       "body": "Candidatos que não servem para as suas vagas muitas vezes são perfeitos para a vaga de outro recrutador. Descubra onde eles se encaixam e receba sua parte quando forem contratados.",
       "points": {
         "a": "Oportunidades ordenadas pela força do match",
@@ -119,7 +119,7 @@
       "points": {
         "a": "Cole a descrição da vaga e receba requisitos sugeridos",
         "b": "Contagem anônima de matches antes das indicações chegarem",
-        "c": "Aceite, recuse com motivo ou peça mais informações"
+        "c": "Aceite, recuse com motivo ou peça informações"
       },
       "imageAlt": "Dois recrutadores trabalhando lado a lado em suas mesas"
     }
@@ -127,27 +127,27 @@
   "privacy": {
     "eyebrow": "Privacidade desde a concepção",
     "title": "Anônimo até ser autorizado.",
-    "subtitle": "Quem tem a vaga vê a quantidade de matches, nunca identidades. Um candidato só é revelado quando o recrutador dele o envia, com consentimento documentado para aquela vaga específica.",
+    "subtitle": "O recrutador da vaga vê a quantidade de matches, nunca identidades. Um candidato só é revelado quando o recrutador dele o envia, com a autorização documentada do candidato para aquela vaga específica.",
     "mock": {
       "job": "Head de Finanças · Montréal",
-      "visible": "O que o dono da vaga vê",
+      "visible": "O que o recrutador da vaga vê",
       "count": "4 candidatos de parceiros compatíveis",
       "strong": "2 fortes",
-      "potential": "2 potenciais",
+      "potential": "2 parciais",
       "hidden": "Nome, contato e currículo continuam ocultos"
     },
     "features": {
       "isolation": {
         "title": "Isolamento por organização",
-        "body": "Segurança em nível de linha mantém os dados de cada agência dentro do próprio workspace."
+        "body": "Segurança em nível de linha mantém os dados de cada organização isolados no seu próprio espaço."
       },
       "consent": {
-        "title": "Consentimento documentado",
+        "title": "Autorização documentada",
         "body": "Autorizações de tratamento e por vaga são registradas antes de qualquer compartilhamento."
       },
       "audit": {
         "title": "Trilha de auditoria completa",
-        "body": "Cada envio, decisão e lançamento no ledger fica registrado e pode ser revisado."
+        "body": "Cada indicação, decisão e lançamento no extrato fica registrado e pode ser revisado."
       },
       "requests": {
         "title": "Solicitações de privacidade",
@@ -158,22 +158,22 @@
   "commissions": {
     "eyebrow": "Comissões",
     "title": "Uma divisão que todos enxergam desde o início.",
-    "subtitle": "Combine os termos antes do trabalho começar. O ledger mostra exatamente quem deve receber o quê, em cada etapa.",
+    "subtitle": "Combine os termos antes do trabalho começar. O extrato mostra exatamente quem deve receber o quê, em cada etapa.",
     "split": {
-      "source": "Recrutador do candidato",
+      "source": "Recrutador de origem",
       "job": "Recrutador da vaga",
       "platform": "MissionHub"
     },
     "ledger": {
-      "title": "Ledger da contratação",
-      "projected": "Projetada",
+      "title": "Extrato da colocação",
+      "projected": "Prevista",
       "payable": "A pagar",
       "paid": "Paga",
-      "projectedBody": "Contratação informada com fee e data de início",
+      "projectedBody": "Contratação informada com taxa de colocação e data de início",
       "payableBody": "Pagamento do cliente verificado pela plataforma",
       "paidBody": "Recebimento confirmado pelo recrutador"
     },
-    "note": "Nenhum dinheiro passa pelo MissionHub. Os pagamentos acontecem entre você e seus parceiros, e a plataforma guarda as evidências.",
+    "note": "Nenhum dinheiro passa pelo MissionHub. Os pagamentos acontecem entre você e seus parceiros, e a plataforma guarda os comprovantes.",
     "configurable": "As regras de divisão são configuráveis e versionadas."
   },
   "facts": {
@@ -191,24 +191,24 @@
     },
     "d": {
       "value": "100%",
-      "label": "dos lançamentos do ledger auditáveis"
+      "label": "dos lançamentos do extrato auditáveis"
     }
   },
   "faq": {
-    "eyebrow": "Dúvidas",
+    "eyebrow": "Perguntas frequentes",
     "title": "O que os recrutadores perguntam primeiro.",
     "items": {
       "a": {
         "q": "Outras agências conseguem ver meus candidatos?",
-        "a": "Não. Seus candidatos são visíveis apenas para a sua organização. Quem tem a vaga vê apenas a contagem anônima de matches. Um candidato só é revelado quando você o envia para uma vaga específica, compartilhando somente os campos e documentos que escolher."
+        "a": "Não. Seus candidatos são visíveis apenas para a sua organização. O recrutador da vaga vê apenas a contagem anônima de matches. Um candidato só é revelado quando você o envia para uma vaga específica, compartilhando somente os campos e documentos que escolher."
       },
       "b": {
         "q": "Como a comissão é dividida?",
-        "a": "Por padrão, 45% para o recrutador que trouxe o candidato, 45% para o recrutador dono da vaga e 10% para o MissionHub. As regras são configuráveis e versionadas, e os dois lados confirmam um acordo de colaboração antes de o processo seguir."
+        "a": "Por padrão, 45% para o recrutador de origem, 45% para o recrutador da vaga e 10% para o MissionHub. As regras são configuráveis e versionadas, e os dois lados confirmam um acordo de colaboração antes de o processo seguir."
       },
       "c": {
         "q": "O MissionHub processa pagamentos?",
-        "a": "Nenhum dinheiro passa pela plataforma. Você fatura seu cliente normalmente e registra as evidências. Os pagamentos do cliente são verificados pela plataforma, e os repasses são confirmados por quem os recebe."
+        "a": "Nenhum dinheiro passa pela plataforma. Você fatura seu cliente normalmente e registra os comprovantes. Os pagamentos do cliente são verificados pela plataforma, e os repasses são confirmados por quem os recebe."
       },
       "d": {
         "q": "Como funciona o matching?",
@@ -216,12 +216,12 @@
       },
       "e": {
         "q": "Posso trazer meu time?",
-        "a": "Sim. Convide colegas com links de uso único, defina papéis e suspenda acessos a qualquer momento em Configurações › Time."
+        "a": "Sim. Convide colegas com links de uso único, defina papéis e suspenda acessos a qualquer momento em Configurações › Equipe."
       }
     }
   },
   "cta": {
-    "title": "Sua próxima contratação já está no pipeline de outra pessoa.",
+    "title": "Sua próxima colocação já está no pipeline de outra pessoa.",
     "subtitle": "Configure seu workspace em minutos. Traga seus candidatos, abra suas vagas e comece a receber matches.",
     "primary": "Criar seu workspace",
     "secondary": "Entrar",
@@ -244,11 +244,11 @@
     },
     "privacy": {
       "title": "Privacidade desde a concepção",
-      "description": "Donos de vagas veem contagens anônimas de compatibilidade, nunca identidades. Saiba como o MissionHub isola os dados de cada agência, registra o consentimento e mantém uma trilha de auditoria completa."
+      "description": "Recrutadores das vagas veem contagens anônimas de compatibilidade, nunca identidades. Saiba como o MissionHub isola os dados de cada agência, registra a autorização de cada candidato e mantém uma trilha de auditoria completa."
     },
     "commissions": {
       "title": "Comissões",
-      "description": "Como funciona a divisão padrão 45/45/10, como uma colocação passa de prevista a pagável e paga, e por que nenhum valor passa pelo MissionHub."
+      "description": "Como funciona a divisão padrão 45/45/10, como uma colocação passa de prevista para a pagar e depois paga, e por que nenhum valor passa pelo MissionHub."
     },
     "faq": {
       "title": "Perguntas frequentes",

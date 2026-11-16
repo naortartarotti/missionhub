@@ -1,7 +1,7 @@
 import "server-only";
 import { unstable_rethrow } from "next/navigation";
 import { z } from "zod";
-import { AuthorizationError } from "@/server/auth/errors";
+import { AuthorizationError, RulesAcceptanceRequiredError, SettlementModeError } from "@/server/auth/errors";
 import type { UserClient } from "@/server/supabase/server";
 import { fromZodError, toActionError, type ActionResult } from "@/lib/actions/result";
 import { getGlobalT } from "@/i18n/server";
@@ -41,6 +41,8 @@ export async function guard<R extends ActionResult<any>>(body: () => Promise<R>)
   } catch (e) {
     unstable_rethrow(e);
     if (e instanceof InputError) result = e.result;
+    else if (e instanceof SettlementModeError) result = toActionError({ message: "settlement_mode_unavailable" });
+    else if (e instanceof RulesAcceptanceRequiredError) result = toActionError({ message: "rules_acceptance_required" });
     else if (e instanceof AuthorizationError) result = { ok: false, error: msg("errors.forbidden") };
     else result = toActionError(e);
   }

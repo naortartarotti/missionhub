@@ -1,6 +1,6 @@
 {
-  "title": "Occasions",
-  "description": "Postes partenaires qui conviennent à vos candidats. Soumettez quelqu'un et suivez-le dans Recommandations envoyées; vous touchez une part des honoraires à l'embauche.",
+  "title": "Suggestions",
+  "description": "Postes partenaires qui conviennent à vos candidats. Soumettez quelqu'un et suivez-le dans Recommandations › Envoyées; vous touchez une part des honoraires à l'embauche.",
   "filteredByCandidate": "Correspondances affichées pour un seul candidat.",
   "statusNav": "Statut des correspondances",
   "newCount": {
@@ -38,7 +38,10 @@
       "one": "{count} candidat",
       "other": "{count} candidats"
     },
-    "share": "votre part estimée"
+    "share": "votre part estimée",
+    "shareIfHired": "Votre part en cas d'embauche",
+    "shareEstimated": "Votre part estimée",
+    "feeOnly": "Honoraires"
   },
   "groupBy": {
     "job": "Par poste",
@@ -67,7 +70,7 @@
   "empty": {
     "inactive": {
       "title": "Activez le jumelage pour voir des occasions",
-      "description": "Aucun de vos candidats n'est encore en jumelage. Ouvrez un candidat, consignez son autorisation et activez le jumelage. Les postes partenaires qui conviennent s'afficheront ici.",
+      "description": "Aucun de vos candidats n'est encore en jumelage. Ouvrez un candidat, consignez son autorisation de jumelage et activez le jumelage. Les postes partenaires qui conviennent s'afficheront ici.",
       "action": "Aller aux candidats"
     },
     "caughtUp": {
@@ -160,8 +163,8 @@
   },
   "evidence": {
     "matchingOff": "Le jumelage est désactivé pour ce candidat",
-    "permissionMissing": "La permission du candidat n'a pas été enregistrée",
-    "jobClosed": "Le poste n'accepte pas de recommandations externes",
+    "permissionMissing": "L'autorisation de jumelage du candidat n'a pas été enregistrée",
+    "jobClosed": "Le poste n'est pas ouvert aux recommandations de partenaires",
     "arrangementMismatch": "Le poste est {jobArrangement}; le candidat préfère {candidateArrangements}",
     "relocationRequired": "Le poste exige une présence en {country}; le candidat n'est pas ouvert à la relocalisation",
     "requiredSkillsMatched": "Possède les compétences requises : {skills}",
@@ -226,5 +229,10 @@
   "internal": {
     "badge": "Votre autre organisation",
     "hint": "Vous êtes aussi membre de {org}. Les recommandations ici sont internes : aucune commission de partenaire, seulement les frais de plateforme."
+  },
+  "restricted": {
+    "title": "Les occasions des partenaires sont en pause",
+    "hold": "Votre organisation fait l'objet d'une restriction réseau : vous ne voyez pas les postes des partenaires et ne pouvez pas soumettre de recommandations. Les recommandations en cours se poursuivent.",
+    "rules": "Votre organisation n'a pas accepté la version {label} des Règles du réseau : vous ne voyez pas les postes des partenaires et ne pouvez pas soumettre de recommandations. Les recommandations en cours se poursuivent."
   }
 }

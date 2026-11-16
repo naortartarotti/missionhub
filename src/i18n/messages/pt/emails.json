@@ -106,5 +106,33 @@
     "expires": "Link válido até",
     "cta": "Revisar e confirmar",
     "note": "Este link é pessoal, não o encaminhe. Se você não reconhece este pedido, ignore este e-mail."
+  },
+  "claimFiled": {
+    "subject": "{partner} registrou uma objeção à sua indicação",
+    "preheader": "Você pode contestá-la até {when} (horário de Toronto).",
+    "heading": "Objeção por apresentação anterior à sua indicação",
+    "body": "{partner} diz que já tinha {candidate} em processo seletivo com este cliente e recusou sua indicação para a vaga {job}. Na indicação, você vê as datas, o tipo de comprovante e a nota de {partner}. Contestar é gratuito: um admin da plataforma analisa os comprovantes.",
+    "cta": "Ver a objeção"
+  },
+  "disputeOpened": {
+    "subject": "Objeção sobre {candidate} contestada",
+    "preheader": "Um admin da plataforma está analisando o caso.",
+    "heading": "Objeção contestada",
+    "body": "A objeção por apresentação anterior à indicação de {candidate} para a vaga {job} foi contestada. Um admin da plataforma está analisando os comprovantes e vai escrever uma resolução. As duas organizações serão avisadas do resultado.",
+    "cta": "Abrir indicação"
+  },
+  "disputeResolved": {
+    "subject": "Objeção sobre {candidate}: {outcome}",
+    "preheader": "Leia a resolução do admin da plataforma.",
+    "heading": "Um admin da plataforma resolveu a objeção",
+    "body": "Um admin da plataforma resolveu a objeção por apresentação anterior à indicação de {candidate} para a vaga {job}. Resultado: {outcome}. A resolução por escrito está na indicação.",
+    "cta": "Ler a resolução"
+  },
+  "alreadyPresented": {
+    "subject": "Sua indicação para a vaga {job} não foi entregue",
+    "preheader": "Nada foi compartilhado com {partner}.",
+    "heading": "Indicação não entregue",
+    "body": "{candidate} confirmou, mas já tinha sido apresentado a {partner} para este cliente, por isso esta indicação não foi entregue.",
+    "cta": "Abrir indicação"
   }
 }

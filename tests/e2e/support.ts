@@ -11,7 +11,7 @@ export const admin = (): Client => createClient<Database>(url(), process.env.SUP
 export type Account = { id: string; email: string; password: string; name: string; client: Client };
 
 /** Creates a confirmed user with a known synthetic password (local test stack only). */
-export async function createAccount(name: string, opts: { platformAdmin?: boolean } = {}): Promise<Account> {
+export async function createAccount(name: string, opts: { platformAdmin?: boolean; acceptRules?: boolean } = {}): Promise<Account> {
   const email = `e2e-${name.toLowerCase().replace(/\W+/g, "-")}-${randomUUID().slice(0, 8)}@test.missionhub.local`;
   const password = `E2e-${randomUUID()}`;
   const { data, error } = await admin().auth.admin.createUser({ email, password, email_confirm: true, user_metadata: { full_name: name } });
@@ -20,15 +20,37 @@ export async function createAccount(name: string, opts: { platformAdmin?: boolea
     const { error: pErr } = await admin().from("profiles").update({ is_platform_admin: true }).eq("id", data.user.id);
     if (pErr) throw pErr;
   }
+  if (opts.acceptRules !== false) await acceptCurrentRules(data.user.id);
   const client = createClient<Database>(url(), process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, { auth: { persistSession: false } });
   const { error: sErr } = await client.auth.signInWithPassword({ email, password });
   if (sErr) throw sErr;
   return { id: data.user.id, email, password, name, client };
 }
 
+async function currentRulesVersionId() {
+  const { data, error } = await admin().from("network_rules_versions").select("id").eq("status", "published")
+    .lte("effective_at", new Date().toISOString()).order("effective_at", { ascending: false }).limit(1).single();
+  if (error) throw error;
+  return data.id;
+}
+
+/** N10 BR-7: a personal acceptance of the current version (service role, like the demo seed). */
+export async function acceptCurrentRules(userId: string) {
+  const versionId = await currentRulesVersionId();
+  const { data: t, error } = await admin().from("network_rules_version_texts").select("sha256")
+    .eq("version_id", versionId).eq("locale", "en").single();
+  if (error) throw error;
+  const { error: iErr } = await admin().from("network_rules_member_acceptances")
+    .upsert({ user_id: userId, version_id: versionId, locale: "en", sha256: t.sha256 }, { onConflict: "user_id,version_id", ignoreDuplicates: true });
+  if (iErr) throw iErr;
+}
+
 export async function createOrg(acct: Account, name: string) {
   const slug = `${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${randomUUID().slice(0, 6)}`;
-  const { data, error } = await acct.client.rpc("create_organization", { p_name: name, p_slug: slug });
+  // N10 BR-6: the current Network Rules version is accepted for the org and personally.
+  const { data, error } = await acct.client.rpc("create_organization", {
+    p_name: name, p_slug: slug, p_rules_version: await currentRulesVersionId(), p_rules_locale: "en", p_accept_org: true, p_accept_member: true,
+  });
   if (error) throw error;
   return { id: data as string, slug, name };
 }
@@ -60,12 +82,30 @@ export async function createJob(acct: Account, orgId: string, title: string) {
     .insert({
       organization_id: orgId, owner_id: acct.id, created_by: acct.id, title, client_name: "Northwind Health",
       client_confidential: true, description: "Build clinical scheduling tools.", status: "active",
-      accepts_external_referrals: true, required_skills: ["typescript", "react", "postgresql"], preferred_skills: ["aws"],
+      required_skills: ["typescript", "react", "postgresql"], preferred_skills: ["aws"],
       seniority: "senior", min_years_experience: 5, work_arrangement: "hybrid", location_country: "CA",
       location_region: "ON", languages: ["english"], expected_fee_minor: 2_000_000,
     })
     .select("id")
     .single();
+  if (error) throw error;
+  await openToReferrals(acct.client, data.id);
+  return data.id;
+}
+
+/** N2: publishes a default terms card (20% of base, 6-month window) and opens the job, as the owner. */
+export async function openToReferrals(client: Client, jobId: string) {
+  const { error } = await client.rpc("save_job_terms", {
+    p_job: jobId, p_fee_basis: "pct_base", p_rate_bps: 2000, p_search_type: "contingent_shared", p_attested: true,
+    p_guarantee_days: 90, p_guarantee_remedy: "replacement_then_prorata", p_payment_terms_days: 30, p_ownership_months: 6, p_open: true,
+  } as never);
+  if (error) throw error;
+}
+
+/** N2: the job's current terms version id. */
+export async function termsOf(jobId: string): Promise<string> {
+  const { data, error } = await admin().from("job_terms_versions").select("id").eq("job_id", jobId).eq("kind", "job")
+    .order("version_no", { ascending: false }).limit(1).single();
   if (error) throw error;
   return data.id;
 }

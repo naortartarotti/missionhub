@@ -69,5 +69,12 @@
   "countries": {
     "add": "Ajouter un pays",
     "remove": "Retirer {country}"
-  }
+  },
+  "ownerScope": {
+    "label": "À qui",
+    "team": "Toute l'équipe",
+    "mine": "Les miens"
+  },
+  "imported": "Importé",
+  "charCount": "{count} caractères sur {max}"
 }

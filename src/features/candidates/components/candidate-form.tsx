@@ -1,10 +1,14 @@
 "use client";
 
+import { SUPPORTED_CURRENCIES } from "@/lib/money/currency";
 import { ActionForm } from "@/components/shared/action-form";
 
 import { useActionState, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { ChevronDown, Minus, Plus } from "lucide-react";
+import {
+  BadgeCheck, Building2, Check, ChevronDown, CircleSlash, Ellipsis, FileText, Globe, Handshake, House, Laptop, Link2, Mail, Map, MapPin,
+  Minus, PencilLine, Phone, Plane, PlaneTakeoff, Plus, Sheet, ShieldCheck, Shuffle, Sparkles, UserRound, type LucideIcon,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -21,13 +25,19 @@ import type { ActionResult } from "@/lib/actions/result";
 import { ARRANGEMENT, LEGAL_BASIS, SENIORITY } from "@/lib/labels";
 import { NativeSelect } from "@/components/shared/native-select";
 import { cn } from "@/lib/utils";
+import { TONE, type Tone } from "@/components/shared/tones";
 import { useGlobalT, useT } from "@/i18n/client";
 
 const SOURCES = ["manual", "resume_upload", "csv_import", "referral", "other"] as const;
-const CURRENCIES = ["CAD", "USD", "EUR", "GBP", "BRL"];
+const CURRENCIES = SUPPORTED_CURRENCIES;
 const LANGUAGE_SUGGESTIONS = ["english", "french", "portuguese", "spanish"];
 const TRAVEL = ["none", "occasional", "frequent"] as const;
 const RELOCATION = ["none", "region", "country", "international"] as const;
+
+const ARRANGEMENT_ICON: Record<keyof typeof ARRANGEMENT, LucideIcon> = { remote: Laptop, hybrid: Shuffle, onsite: Building2 };
+const TRAVEL_ICON: Record<(typeof TRAVEL)[number], LucideIcon> = { none: House, occasional: Plane, frequent: PlaneTakeoff };
+const RELOCATION_ICON: Record<(typeof RELOCATION)[number], LucideIcon> = { none: House, region: MapPin, country: Map, international: Globe };
+const SOURCE_ICON: Record<(typeof SOURCES)[number], LucideIcon> = { manual: PencilLine, resume_upload: FileText, csv_import: Sheet, referral: Handshake, other: Ellipsis };
 
 export type CandidateDefaults = Partial<{
   fullName: string;
@@ -70,11 +80,55 @@ const splitList = (s?: string) =>
     .map((x) => x.trim())
     .filter(Boolean);
 
-const chip = (active: boolean) =>
-  cn(
-    "inline-flex items-center rounded-full border px-3.5 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
-    active ? "border-foreground bg-foreground text-background" : "border-border bg-background text-foreground hover:border-foreground/40",
+const CHIP_BASE =
+  "inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 active:scale-[0.97]";
+const chip = (active: boolean, tone: Tone) => cn(CHIP_BASE, active ? TONE[tone].selected : TONE[tone].idle);
+
+type Option = { value: string; label: string; icon?: LucideIcon };
+
+function ChipContent({ o, active }: { o: Option; active: boolean }) {
+  const Icon = active ? Check : o.icon;
+  return (
+    <>
+      {Icon ? <Icon className="size-3.5" aria-hidden /> : null}
+      {o.label}
+    </>
   );
+}
+
+/** Coloured icon badge + title + one-line explanation that opens each panel. */
+function SectionHeader({ icon: Icon, tone, title, body }: { icon: LucideIcon; tone: Tone; title: string; body?: string }) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className={cn("grid size-9 shrink-0 place-items-center rounded-xl", TONE[tone].badge)}>
+        <Icon className="size-[18px]" aria-hidden />
+      </span>
+      <div>
+        <h2 className="text-base font-semibold">{title}</h2>
+        {body ? <p className="mt-0.5 text-sm text-muted-foreground">{body}</p> : null}
+      </div>
+    </div>
+  );
+}
+
+/** Input with a leading icon; the icon carries the meaning, so the label is announced but not shown. */
+function IconInput({ icon: Icon, label, error, hint, ...props }: { icon: LucideIcon; label: string; error?: string | string[]; hint?: string } & React.ComponentProps<typeof Input>) {
+  const msg = Array.isArray(error) ? error[0] : error;
+  return (
+    <div className="grid content-start gap-1">
+      <div className="relative">
+        <Icon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+        <Input {...props} aria-label={label} placeholder={props.placeholder ?? label} aria-invalid={msg ? true : undefined} className="pl-9" />
+      </div>
+      {msg ? <p role="alert" className="text-xs font-medium text-danger">{msg}</p> : hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
+    </div>
+  );
+}
+
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  return ((parts[0]?.[0] ?? "") + (parts.length > 1 ? parts[parts.length - 1][0] : "")).toUpperCase();
+}
 
 /** Single-choice pills backed by a hidden input. Clicking the active pill clears it when `clearable`. */
 function ChoiceChips({
@@ -83,14 +137,22 @@ function ChoiceChips({
   options,
   defaultValue,
   clearable,
+  tone = "neutral",
+  onValueChange,
 }: {
   name: string;
   label: string;
-  options: { value: string; label: string }[];
+  options: Option[];
   defaultValue?: string;
   clearable?: boolean;
+  tone?: Tone;
+  onValueChange?: (v: string) => void;
 }) {
-  const [value, setValue] = useState(defaultValue ?? "");
+  const [value, setValueState] = useState(defaultValue ?? "");
+  const setValue = (v: string) => {
+    setValueState(v);
+    onValueChange?.(v);
+  };
   return (
     <fieldset className="grid gap-2">
       <legend className="mb-2 text-sm font-medium">{label}</legend>
@@ -102,9 +164,9 @@ function ChoiceChips({
             role="radio"
             aria-checked={value === o.value}
             onClick={() => setValue(clearable && value === o.value ? "" : o.value)}
-            className={chip(value === o.value)}
+            className={chip(value === o.value, tone)}
           >
-            {o.label}
+            <ChipContent o={o} active={value === o.value} />
           </button>
         ))}
       </div>
@@ -114,16 +176,24 @@ function ChoiceChips({
 }
 
 /** Multi-choice pills: real checkboxes, so the form posts repeated values. */
-function ToggleChips({ name, label, options, defaultValue = [] }: { name: string; label: string; options: { value: string; label: string }[]; defaultValue?: string[] }) {
+function ToggleChips({ name, label, options, defaultValue = [], tone = "neutral" }: { name: string; label: string; options: Option[]; defaultValue?: string[]; tone?: Tone }) {
+  const [on, setOn] = useState<string[]>(defaultValue);
   return (
     <fieldset>
       <legend className="mb-2 text-sm font-medium">{label}</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((o) => (
           <label key={o.value} className="cursor-pointer">
-            <input type="checkbox" name={name} value={o.value} defaultChecked={defaultValue.includes(o.value)} className="peer sr-only" />
-            <span className={cn(chip(false), "peer-checked:border-foreground peer-checked:bg-foreground peer-checked:text-background peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/50")}>
-              {o.label}
+            <input
+              type="checkbox"
+              name={name}
+              value={o.value}
+              checked={on.includes(o.value)}
+              onChange={(e) => setOn((xs) => (e.target.checked ? [...xs, o.value] : xs.filter((x) => x !== o.value)))}
+              className="peer sr-only"
+            />
+            <span className={cn(chip(on.includes(o.value), tone), "peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/50")}>
+              <ChipContent o={o} active={on.includes(o.value)} />
             </span>
           </label>
         ))}
@@ -132,11 +202,11 @@ function ToggleChips({ name, label, options, defaultValue = [] }: { name: string
   );
 }
 
-function ChipList({ id, name, label, hint, error, placeholder, defaultValue, suggestions }: { id: string; name: string; label: string; hint?: string; error?: string | string[]; placeholder: string; defaultValue?: string; suggestions?: string[] }) {
+function ChipList({ id, name, label, hint, error, placeholder, defaultValue, suggestions, tone }: { id: string; name: string; label: string; hint?: string; error?: string | string[]; placeholder: string; defaultValue?: string; suggestions?: string[]; tone?: Tone }) {
   const [items, setItems] = useState(() => splitList(defaultValue));
   return (
     <FormField id={id} label={label} hint={hint} error={error}>
-      <TagInput id={id} value={items} onChange={setItems} placeholder={placeholder} suggestions={suggestions} max={60} describedBy={hint ? `${id}-hint` : undefined} />
+      <TagInput id={id} value={items} onChange={setItems} placeholder={placeholder} suggestions={suggestions} max={60} tone={tone} describedBy={hint ? `${id}-hint` : undefined} />
       <input type="hidden" name={name} value={items.join(", ")} />
     </FormField>
   );
@@ -185,9 +255,19 @@ function More({ title, hint, open, children }: { title: string; hint?: string; o
 }
 
 function ToggleRow({ name, defaultChecked, children }: { name: string; defaultChecked?: boolean; children: ReactNode }) {
+  const [on, setOn] = useState(Boolean(defaultChecked));
   return (
-    <Label className="flex w-fit cursor-pointer items-center gap-2.5 font-normal">
-      <Checkbox name={name} defaultChecked={defaultChecked} /> {children}
+    <Label
+      className={cn(
+        "flex cursor-pointer items-center gap-3 rounded-2xl border p-3.5 font-normal transition-colors",
+        on ? "border-success/40 bg-success-soft" : "border-border hover:border-foreground/30",
+      )}
+    >
+      <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg transition-colors", on ? "bg-success text-background" : "bg-muted text-muted-foreground")}>
+        <ShieldCheck className="size-4" aria-hidden />
+      </span>
+      <span className="flex-1 text-sm">{children}</span>
+      <Checkbox name={name} checked={on} onCheckedChange={(v) => setOn(v === true)} />
     </Label>
   );
 }
@@ -212,48 +292,55 @@ export function CandidateForm({
   const detailsOpen = Boolean(d.salaryMin || d.salaryMax || d.availableFrom || d.summary || fe?.salaryMin || fe?.salaryMax || fe?.salaryCurrency || fe?.availableFrom || fe?.summary);
   const sourceOpen = Boolean(d.sourceDetail || d.notes || (d.legalBasis && d.legalBasis !== "consent") || fe?.notes);
 
+  const [name, setName] = useState(d.fullName ?? "");
+  const [relocation, setRelocation] = useState(d.relocationScope ?? "");
+  const [passport, setPassport] = useState(d.hasPassport ?? "");
+  // Follow-up questions only appear when they apply; existing data keeps them visible on edit.
+  const showDestinations = relocation === "international" || (!relocation && Boolean(d.relocationDestinations));
+  const showPassportCountries = passport === "yes" || (!passport && Boolean(d.passportCountries));
+
   return (
     <ActionForm action={formAction} className="grid gap-5" noValidate>
-      <Panel className="grid gap-5 p-6">
-        <div>
-          <h2 className="text-base font-semibold">{t("form.identityTitle")}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">{t("form.identityBody")}</p>
+      <Panel className="grid gap-6 p-6">
+        <SectionHeader icon={UserRound} tone="orange" title={t("form.identityTitle")} body={t("form.identityBody")} />
+        <div className="flex items-center gap-4">
+          <span
+            className={cn(
+              "grid size-16 shrink-0 place-items-center rounded-2xl text-xl font-semibold transition-colors",
+              name.trim() ? "bg-tile-yellow text-tile-foreground" : "bg-muted text-muted-foreground",
+            )}
+            aria-hidden
+          >
+            {name.trim() ? initials(name) : <UserRound className="size-7" />}
+          </span>
+          <div className="grid flex-1 gap-2">
+            <FormField id="fullName" label={t("form.fullName")} error={fe?.fullName} required>
+              <Input id="fullName" name="fullName" value={name} onChange={(e) => setName(e.target.value)} required autoComplete="off" className="h-11 text-base font-medium" />
+            </FormField>
+          </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <FormField id="fullName" label={t("form.fullName")} error={fe?.fullName} required>
-            <Input id="fullName" name="fullName" defaultValue={d.fullName} required autoComplete="off" />
-          </FormField>
-          <FormField id="headline" label={t("form.headline")} error={fe?.headline}>
-            <Input id="headline" name="headline" defaultValue={d.headline} placeholder={t("form.headlineHint")} />
-          </FormField>
-          <FormField id="email" label={t("form.email")} error={fe?.email}>
-            <Input id="email" name="email" type="email" defaultValue={d.email} autoComplete="off" />
-          </FormField>
-          <FormField id="phone" label={t("form.phone")} error={fe?.phone}>
-            <Input id="phone" name="phone" type="tel" defaultValue={d.phone} autoComplete="off" />
-          </FormField>
-          <FormField id="linkedinUrl" label={t("form.linkedin")} error={fe?.linkedinUrl}>
-            <Input id="linkedinUrl" name="linkedinUrl" type="url" inputMode="url" defaultValue={d.linkedinUrl} placeholder="https://www.linkedin.com/in/…" autoComplete="off" />
-          </FormField>
-          <FormField id="postalCode" label={t("form.postalCode")} hint={t("form.postalCodeHint")} error={fe?.postalCode}>
-            <Input id="postalCode" name="postalCode" defaultValue={d.postalCode} autoComplete="off" />
-          </FormField>
+        <FormField id="headline" label={t("form.headline")} error={fe?.headline}>
+          <Input id="headline" name="headline" defaultValue={d.headline} placeholder={t("form.headlineHint")} />
+        </FormField>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <IconInput icon={Mail} id="email" name="email" type="email" label={t("form.email")} defaultValue={d.email} autoComplete="off" error={fe?.email} />
+          <IconInput icon={Phone} id="phone" name="phone" type="tel" label={t("form.phone")} defaultValue={d.phone} autoComplete="off" error={fe?.phone} />
+          <IconInput icon={Link2} id="linkedinUrl" name="linkedinUrl" type="url" inputMode="url" label={t("form.linkedin")} placeholder={`${t("form.linkedin")} · linkedin.com/in/…`} defaultValue={d.linkedinUrl} autoComplete="off" error={fe?.linkedinUrl} />
+          <IconInput icon={MapPin} id="postalCode" name="postalCode" label={t("form.postalCode")} hint={t("form.postalCodeHint")} defaultValue={d.postalCode} autoComplete="off" error={fe?.postalCode} />
         </div>
       </Panel>
 
       <Panel className="grid gap-6 p-6">
-        <div>
-          <h2 className="text-base font-semibold">{t("form.matchingTitle")}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">{t("form.matchingBody")}</p>
-        </div>
+        <SectionHeader icon={Sparkles} tone="blue" title={t("form.matchingTitle")} body={t("form.matchingBody")} />
 
-        <ChipList id="skills" name="skills" label={t("form.skills")} error={fe?.skills} placeholder={t("form.skillsPlaceholder")} defaultValue={d.skills} />
+        <ChipList id="skills" name="skills" label={t("form.skills")} error={fe?.skills} placeholder={t("form.skillsPlaceholder")} defaultValue={d.skills} tone="blue" />
 
         <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto]">
           <ChoiceChips
             name="seniority"
             label={t("form.seniority")}
             clearable
+            tone="violet"
             defaultValue={d.seniority}
             options={(Object.keys(SENIORITY) as (keyof typeof SENIORITY)[]).map((v) => ({ value: v, label: tg(`labels.seniority.${v}`) }))}
           />
@@ -261,13 +348,14 @@ export function CandidateForm({
         </div>
         {fe?.seniority ? <p role="alert" className="-mt-4 text-xs font-medium text-danger">{fe.seniority}</p> : null}
 
-        <ChipList id="languages" name="languages" label={t("form.languages")} error={fe?.languages} placeholder={t("form.languagesPlaceholder")} defaultValue={d.languages} suggestions={LANGUAGE_SUGGESTIONS} />
+        <ChipList id="languages" name="languages" label={t("form.languages")} error={fe?.languages} placeholder={t("form.languagesPlaceholder")} defaultValue={d.languages} suggestions={LANGUAGE_SUGGESTIONS} tone="green" />
 
         <ToggleChips
           name="workArrangements"
           label={t("form.arrangements")}
+          tone="orange"
           defaultValue={d.workArrangements}
-          options={(Object.keys(ARRANGEMENT) as (keyof typeof ARRANGEMENT)[]).map((v) => ({ value: v, label: tg(`labels.arrangement.${v}`) }))}
+          options={(Object.keys(ARRANGEMENT) as (keyof typeof ARRANGEMENT)[]).map((v) => ({ value: v, label: tg(`labels.arrangement.${v}`), icon: ARRANGEMENT_ICON[v] }))}
         />
 
         <div className="grid gap-3">
@@ -309,48 +397,61 @@ export function CandidateForm({
       </Panel>
 
       <Panel className="grid gap-6 p-6">
-        <div>
-          <h2 className="text-base font-semibold">{t("form.mobilityTitle")}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">{t("form.mobilityBody")}</p>
-        </div>
+        <SectionHeader icon={Globe} tone="green" title={t("form.mobilityTitle")} body={t("form.mobilityBody")} />
         <ChoiceChips
           name="travelAvailability"
           label={t("form.travel")}
           clearable
+          tone="blue"
           defaultValue={d.travelAvailability}
-          options={TRAVEL.map((v) => ({ value: v, label: t(`mobility.travel.${v}`) }))}
+          options={TRAVEL.map((v) => ({ value: v, label: t(`mobility.travel.${v}`), icon: TRAVEL_ICON[v] }))}
         />
-        <ChoiceChips
-          name="relocationScope"
-          label={t("form.relocation")}
-          clearable
-          defaultValue={d.relocationScope}
-          options={RELOCATION.map((v) => ({ value: v, label: t(`mobility.relocation.${v}`) }))}
-        />
-        <CountryMultiSelect id="relocationDestinations" name="relocationDestinations" label={t("form.destinations")} hint={t("form.destinationsHint")} error={fe?.relocationDestinations} defaultValue={splitList(d.relocationDestinations)} />
-        <div className="grid gap-6 border-t border-border/60 pt-6">
+        <div className="grid gap-4">
+          <ChoiceChips
+            name="relocationScope"
+            label={t("form.relocation")}
+            clearable
+            tone="green"
+            defaultValue={d.relocationScope}
+            onValueChange={setRelocation}
+            options={RELOCATION.map((v) => ({ value: v, label: t(`mobility.relocation.${v}`), icon: RELOCATION_ICON[v] }))}
+          />
+          {showDestinations ? (
+            <div className="border-l-2 border-success/30 pl-4">
+              <CountryMultiSelect id="relocationDestinations" name="relocationDestinations" label={t("form.destinations")} hint={t("form.destinationsHint")} error={fe?.relocationDestinations} defaultValue={splitList(d.relocationDestinations)} tone="green" />
+            </div>
+          ) : null}
+        </div>
+        <div className="grid gap-4 border-t border-border/60 pt-6">
           <ChoiceChips
             name="hasPassport"
             label={t("form.passport")}
             clearable
+            tone="violet"
             defaultValue={d.hasPassport}
+            onValueChange={setPassport}
             options={[
-              { value: "yes", label: t("mobility.passport.yes") },
-              { value: "no", label: t("mobility.passport.no") },
+              { value: "yes", label: t("mobility.passport.yes"), icon: BadgeCheck },
+              { value: "no", label: t("mobility.passport.no"), icon: CircleSlash },
             ]}
           />
-          <CountryMultiSelect id="passportCountries" name="passportCountries" label={t("form.passportCountries")} hint={t("form.passportCountriesHint")} error={fe?.passportCountries} defaultValue={splitList(d.passportCountries)} max={10} />
-          <CountryMultiSelect id="workAuthorization" name="workAuthorization" label={t("form.workAuthorization")} hint={t("form.workAuthorizationHint")} error={fe?.workAuthorization} defaultValue={splitList(d.workAuthorization)} />
+          {showPassportCountries ? (
+            <div className="border-l-2 border-violet/30 pl-4">
+              <CountryMultiSelect id="passportCountries" name="passportCountries" label={t("form.passportCountries")} hint={t("form.passportCountriesHint")} error={fe?.passportCountries} defaultValue={splitList(d.passportCountries)} max={10} tone="violet" />
+            </div>
+          ) : null}
         </div>
+        <CountryMultiSelect id="workAuthorization" name="workAuthorization" label={t("form.workAuthorization")} hint={t("form.workAuthorizationHint")} error={fe?.workAuthorization} defaultValue={splitList(d.workAuthorization)} tone="blue" />
       </Panel>
 
       <Panel className="grid gap-5 p-6">
-        <h2 className="text-base font-semibold">{t("form.sourceTitle")}</h2>
+        <SectionHeader icon={ShieldCheck} tone="violet" title={t("form.sourceTitle")} />
         <ChoiceChips
           name="source"
           label={t("form.source")}
+          tone="violet"
           defaultValue={d.source ?? "manual"}
-          options={SOURCES.map((v) => ({ value: v, label: t(`form.sources.${v}`) }))}
+          options={SOURCES.map((v) => ({ value: v, label: t(`form.sources.${v}`), icon: SOURCE_ICON[v] }))}
         />
         <ToggleRow name="privacyNoticeGiven" defaultChecked={d.privacyNoticeGiven}>
           {t("form.privacyNotice")}

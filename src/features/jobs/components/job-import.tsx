@@ -22,6 +22,8 @@ import { useT } from "@/i18n/client";
 import type { ActionResult } from "@/lib/actions/result";
 import { importJobPosting, type JobImportResult } from "../actions";
 import { JobForm, type JobDefaults } from "./job-form";
+import type { JobNetworkState } from "@/features/network-rules/job-network";
+import type { TermsFormContext } from "./terms-fields";
 
 type Mode = "text" | "url" | "file";
 const MODES: { mode: Mode; icon: typeof Type }[] = [
@@ -45,7 +47,11 @@ export function NewJobFlow({
   cancelHref,
   defaults,
   ai = false,
+  terms,
+  network,
 }: {
+  terms: TermsFormContext;
+  network?: JobNetworkState;
   ai?: boolean;
   title: string;
   description: string;
@@ -66,13 +72,13 @@ export function NewJobFlow({
   const [actionsSlot, setActionsSlot] = useState<HTMLDivElement | null>(null);
 
   return (
-    <div className="grid gap-6">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
       <PageHeader
         title={title}
         description={description}
         actions={<div ref={setActionsSlot} className="contents" />}
       />
-      <div className="grid gap-5">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-5">
         <JobImport
           orgSlug={orgSlug}
           ai={ai}
@@ -101,6 +107,8 @@ export function NewJobFlow({
             defaults={{ ...defaults, ...(imported?.result.draft ?? {}) }}
             autoFilled={imported?.result.filled ?? []}
             actionsTarget={actionsSlot}
+            terms={terms}
+            network={network}
           />
         </div>
       </div>
@@ -190,7 +198,7 @@ function JobImport({
   }
 
   return (
-    <Panel className="relative grid gap-5 overflow-hidden p-6">
+    <Panel className="relative grid grid-cols-[minmax(0,1fr)] gap-5 overflow-hidden p-6">
       <div
         aria-hidden
         className="pointer-events-none absolute -right-20 -top-20 size-56 rounded-full bg-tile-yellow/40 blur-3xl"

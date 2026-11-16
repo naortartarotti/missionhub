@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { AlertTriangle, Check, ExternalLink, FileText, MessageSquare, Minus, ShieldOff, X } from "lucide-react";
+import { AlertTriangle, Check, ExternalLink, FileText, MessageSquare, Minus, RotateCcw, ShieldOff, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,12 +14,13 @@ import { SkillChips } from "@/components/shared/skill-chips";
 import { Disclosure } from "@/components/shared/disclosure";
 import { StatusPill, type Tone } from "@/components/shared/status-pill";
 import { ScoreRing } from "@/features/matching/components/score-ring";
-import { useT } from "@/i18n/client";
+import { useFormatter, useT } from "@/i18n/client";
 import { cn } from "@/lib/utils";
 import { declineReferrals, reviewReferral } from "../actions";
 import { DECLINE_REASONS, type DeclineReason } from "../review";
 import { GrantDownload } from "./referral-actions";
 import { DIRECTION_STYLE, DirectionBadge } from "./direction-badge";
+import { ClaimForm, PriorPresentationClaimDialog, type ClaimContext } from "./claim-dialog";
 
 // ---------------------------------------------------------------------------
 // View models (built on the server, already translated)
@@ -40,6 +41,8 @@ export type RowView = {
   docs: number;
   revoked: boolean;
   selectable: boolean;
+  /** An admin rejected a prior-presentation objection on it; it's back in review (BR-18). */
+  claimRejected: boolean;
 };
 
 /** A job card in the received queue: header + that job's referrals on this page. */
@@ -68,6 +71,10 @@ export type PanelView = {
   messages: { count: number; last: { who: string; body: string; ago: string } | null };
   agreement: string | null;
   decision: "decide" | "waiting" | "none";
+  /** Present only when the referral is objection-eligible (AC-27); feeds the decline-dialog callout. */
+  claim: ClaimContext | null;
+  /** Formatted date of the rejected objection, for the banner (S2-e target copy). */
+  claimRejectedOn: string | null;
   fullHref: string;
   closeHref: string;
   nextHref: string;
@@ -244,6 +251,9 @@ function QueueRow({ row: r, picked, onPick }: { row: RowView; picked: boolean; o
           {r.revoked ? (
             <span className="inline-flex items-center gap-1 text-danger"><ShieldOff className="size-3" aria-hidden />{t("queue.revoked")}</span>
           ) : null}
+          {r.claimRejected ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-info-soft px-2 py-0.5 font-medium text-info"><RotateCcw className="size-3" aria-hidden />{t("queue.claimRejectedChip")}</span>
+          ) : null}
         </div>
       </div>
       <div className="hidden shrink-0 flex-col items-end gap-1 text-right sm:flex">
@@ -330,6 +340,12 @@ export function ReviewPanel({ view: v, orgSlug }: { view: PanelView; orgSlug: st
             <X className="size-4" aria-hidden />
           </Button>
         </header>
+
+        {v.claimRejectedOn ? (
+          <p className="mt-4 flex items-start gap-2 rounded-2xl bg-info-soft px-3 py-2.5 text-sm text-info">
+            <RotateCcw className="mt-0.5 size-4 shrink-0" aria-hidden /> <span className="text-foreground">{t("detail.claimRejected.target", { date: v.claimRejectedOn })}</span>
+          </p>
+        ) : null}
 
         {v.revoked ? (
           <p className="mt-4 flex items-start gap-2 rounded-2xl bg-danger-soft px-3 py-2.5 text-sm text-danger">
@@ -423,14 +439,28 @@ export function ReviewPanel({ view: v, orgSlug }: { view: PanelView; orgSlug: st
         ) : (
           <>
             <StatusPill tone={v.status.tone} label={v.status.label} />
-            <Button variant="outline" className="ml-auto" asChild>
+            {v.claim ? (
+              // Revoked but still objection-eligible (PD-028): the decide buttons stay hidden, the objection doesn't.
+              <span className="ml-auto">
+                <PriorPresentationClaimDialog orgSlug={orgSlug} ctx={v.claim} onFiled={() => router.replace(v.nextHref, { scroll: false })} />
+              </span>
+            ) : null}
+            <Button variant="outline" className={cn(!v.claim && "ml-auto")} asChild>
               <Link href={v.fullHref}><ExternalLink className="size-4" aria-hidden /> {t("queue.openFull")}</Link>
             </Button>
           </>
         )}
       </footer>
 
-      <DeclineDialog open={dialog === "decline"} onOpenChange={(o) => setDialog(o ? "decline" : null)} count={1} onConfirm={(code, note) => decide("declined", code, note)} />
+      <DeclineDialog
+        open={dialog === "decline"}
+        onOpenChange={(o) => setDialog(o ? "decline" : null)}
+        count={1}
+        onConfirm={(code, note) => decide("declined", code, note)}
+        claim={v.claim}
+        orgSlug={orgSlug}
+        onClaimFiled={() => router.replace(v.nextHref, { scroll: false })}
+      />
       <InfoDialog open={dialog === "info"} onOpenChange={(o) => setDialog(o ? "info" : null)} onConfirm={(note) => decide("info_requested", undefined, note)} />
     </aside>
   );
@@ -451,24 +481,79 @@ export function DeclineDialog({
   onOpenChange,
   count,
   onConfirm,
+  claim,
+  orgSlug,
+  onClaimFiled,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   count: number;
   onConfirm: (code: DeclineReason, note: string) => Promise<boolean>;
+  /** Single decline of an objection-eligible referral: shows the callout that swaps to the objection form (S4). */
+  claim?: ClaimContext | null;
+  orgSlug?: string;
+  onClaimFiled?: () => void;
 }) {
-  // The form lives inside DialogContent, which unmounts on close, so every opening starts blank.
+  // The forms live inside DialogContent, which unmounts on close, so every opening starts blank
+  // (and unfiled evidence uploads are discarded).
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="rounded-3xl sm:max-w-md">
-        <DeclineForm count={count} onCancel={() => onOpenChange(false)} onConfirm={async (c, n) => { const ok = await onConfirm(c, n); if (ok) onOpenChange(false); }} />
-      </DialogContent>
+      {open ? (
+        <DeclineContent
+          count={count}
+          claim={count === 1 && orgSlug ? (claim ?? null) : null}
+          orgSlug={orgSlug ?? ""}
+          onClose={() => onOpenChange(false)}
+          onConfirm={async (c, n) => { const ok = await onConfirm(c, n); if (ok) onOpenChange(false); }}
+          onClaimFiled={() => { onOpenChange(false); onClaimFiled?.(); }}
+        />
+      ) : null}
     </Dialog>
   );
 }
 
-function DeclineForm({ count, onCancel, onConfirm }: { count: number; onCancel: () => void; onConfirm: (code: DeclineReason, note: string) => Promise<void> }) {
+function DeclineContent({ count, claim, orgSlug, onClose, onConfirm, onClaimFiled }: { count: number; claim: ClaimContext | null; orgSlug: string; onClose: () => void; onConfirm: (code: DeclineReason, note: string) => Promise<void>; onClaimFiled: () => void }) {
+  const [mode, setMode] = useState<"decline" | "claim">("decline");
+  // Mounted on first use and kept while going back to the reasons, so files keep processing.
+  const [claimMounted, setClaimMounted] = useState(false);
+  // The control that opened each view disappears on the swap: move focus to its counterpart (§6).
+  const content = useRef<HTMLDivElement>(null);
+  const swapped = useRef(false);
+  useEffect(() => {
+    if (!swapped.current) return;
+    const target = mode === "claim" ? "[data-claim-back]" : "[data-claim-callout]";
+    requestAnimationFrame(() => content.current?.querySelector<HTMLElement>(target)?.focus());
+  }, [mode]);
+  const swap = (m: "decline" | "claim") => {
+    swapped.current = true;
+    setMode(m);
+  };
+  return (
+    <DialogContent ref={content} className={cn("max-h-[90dvh] rounded-3xl", mode === "claim" ? "flex flex-col gap-0 overflow-hidden p-0 sm:max-w-lg" : "overflow-y-auto sm:max-w-md")}>
+      {mode === "decline" ? (
+        <DeclineForm
+          count={count}
+          onCancel={onClose}
+          onConfirm={onConfirm}
+          claim={claim}
+          onFileClaim={() => {
+            setClaimMounted(true);
+            swap("claim");
+          }}
+        />
+      ) : null}
+      {claim && claimMounted ? (
+        <div hidden={mode !== "claim"} className={cn(mode === "claim" && "flex min-h-0 flex-1 flex-col")}>
+          <ClaimForm orgSlug={orgSlug} ctx={claim} inactive={mode !== "claim"} onBack={() => swap("decline")} onCancel={onClose} onFiled={onClaimFiled} />
+        </div>
+      ) : null}
+    </DialogContent>
+  );
+}
+
+function DeclineForm({ count, onCancel, onConfirm, claim, onFileClaim }: { count: number; onCancel: () => void; onConfirm: (code: DeclineReason, note: string) => Promise<void>; claim: ClaimContext | null; onFileClaim: () => void }) {
   const t = useT("referrals");
+  const f = useFormatter();
   const [code, setCode] = useState<DeclineReason | null>(null);
   const [note, setNote] = useState("");
   const [pending, start] = useTransition();
@@ -479,7 +564,15 @@ function DeclineForm({ count, onCancel, onConfirm }: { count: number; onCancel: 
       <DialogHeader>
         <DialogTitle>{count > 1 ? t("queue.declineTitleMany", { count }) : t("queue.declineTitle")}</DialogTitle>
         <DialogDescription>{t("queue.declineHint")}</DialogDescription>
+        {count > 1 ? <p className="text-sm text-muted-foreground">{t("queue.bulkClaimHint")}</p> : null}
       </DialogHeader>
+      {claim ? (
+        <div className="grid gap-2 rounded-2xl border border-border bg-muted/40 p-3.5">
+          <p className="text-sm font-semibold">{t("queue.claimCallout.title")}</p>
+          <p className="text-sm text-muted-foreground">{t("queue.claimCallout.description", { when: f.etDateTime(claim.deadlineAt) })}</p>
+          <Button data-claim-callout variant="outline" size="sm" className="min-h-11 justify-self-start sm:min-h-8" onClick={onFileClaim}>{t("queue.claimCallout.action")}</Button>
+        </div>
+      ) : null}
       <div role="radiogroup" aria-label={t("queue.reason")} className="flex flex-wrap gap-2">
         {DECLINE_REASONS.map((r) => (
           <button

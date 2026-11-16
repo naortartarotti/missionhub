@@ -1,6 +1,12 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { getPartnerJobAvailability } from "@/features/network-rules/queries";
+import { supportEmail } from "@/features/network-rules/page-data";
+import { ReportProblemButton } from "@/features/network-rules/components/report-dialog";
+import { OpportunitiesRestricted, PartnerJobUnavailable, isPartnerRestricted } from "@/features/network-rules/components/restricted-states";
 import { assertCan, getRequestContext } from "@/server/auth/context";
-import { asEvidence, listOpportunities } from "@/features/matching/queries";
+import { asEvidence, listOpportunities, partnerTerms } from "@/features/matching/queries";
 import { getCandidate } from "@/features/candidates/queries";
 import { PageHeader } from "@/components/shared/page-header";
 import { SubmitReferralForm, type ComposerCandidate, type ComposerJob } from "@/features/referrals/components/submit-referral-form";
@@ -19,8 +25,18 @@ export default async function ReviewMatchPage({ params }: PageProps<"/workspace/
   const ctx = await getRequestContext(orgSlug);
   const [t, tr, tg, f] = await Promise.all([getT("opportunities"), getT("referrals"), getGlobalT(), getFormatter()]);
   assertCan(ctx, "referrals:submit");
+  // N10 S20-c: restricted org → the paused state before any match lookup.
+  if (isPartnerRestricted(ctx)) return <OpportunitiesRestricted ctx={ctx} title={t("review.title")} />;
   const [opp] = await listOpportunities(ctx, { matchId });
-  if (!opp) notFound();
+  if (!opp) {
+    // S21 (BR-14): an old link to a job whose owner isn't taking referrals gets the one neutral sentence;
+    // the RPC answers not_found unless this org has a referral or a live match on that job.
+    const availability = await getPartnerJobAvailability(ctx, { matchId }).catch(() => ({ status: "not_found" as const }));
+    if (availability.status === "not_taking_referrals" || availability.status === "no_longer_member") {
+      return <PartnerJobUnavailable orgSlug={orgSlug} status={availability.status} orgName={availability.org_name} jobTitle={availability.job_title} />;
+    }
+    notFound();
+  }
 
   const [candidate, { data: consents }, { data: documents }, { data: experiences }] = await Promise.all([
     getCandidate(ctx, opp.candidate_id),
@@ -74,6 +90,7 @@ export default async function ReviewMatchPage({ params }: PageProps<"/workspace/
     arrangements: [...candidate.work_arrangements.map((a) => tg(`labels.arrangement.${a}`)), ...(candidate.open_to_relocation ? [tr("composer.relocation")] : [])],
     email: candidate.email,
     phone: candidate.phone,
+    hasLinkedin: Boolean(candidate.linkedin_url?.trim()),
     mobility,
     experience: (experiences ?? []).map((e) => ({
       title: e.title,
@@ -82,7 +99,9 @@ export default async function ReviewMatchPage({ params }: PageProps<"/workspace/
     })),
   };
 
-  const salary = range(opp.salary_min, opp.salary_max, opp.salary_currency);
+  // N2 (BR-38): the job's band sits next to code-display terms amounts, so it uses the ISO code too.
+  const codeMoney = (v: number | null) => (v != null ? f.money(v, opp.salary_currency, { whole: true, code: true }) : null);
+  const salary = [codeMoney(opp.salary_min), codeMoney(opp.salary_max)].filter(Boolean).join(" – ") || null;
   const job: ComposerJob = {
     title: opp.job_title,
     client: opp.client_label,
@@ -101,11 +120,18 @@ export default async function ReviewMatchPage({ params }: PageProps<"/workspace/
     gaps: asEvidence(opp.gaps).map((r) => evidenceText(r, tg)),
   };
 
+  const tn = await getT("network");
+  const rulesLabel = ctx.rules.required?.label ?? ctx.rules.current?.label ?? "";
   return (
-    <div className="grid gap-6">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
       <PageHeader
         title={t("review.heading")}
         description={t("review.description", { candidate: opp.candidate_name, job: opp.job_title, client: opp.client_label, org: opp.job_org_name })}
+        actions={
+          ctx.user.isPlatformAdmin ? null : (
+            <ReportProblemButton orgSlug={orgSlug} target={{ matchId }} orgName={opp.job_org_name} rightTool={{ position: null, hire: false, amount: "text", noAnswer: "job" }} supportEmail={supportEmail()} />
+          )
+        }
       />
       <SubmitReferralForm
         orgSlug={orgSlug}
@@ -116,6 +142,21 @@ export default async function ReviewMatchPage({ params }: PageProps<"/workspace/
         job={job}
         consents={consents ?? []}
         documents={(documents ?? []).map((d) => ({ id: d.id, name: d.file_name, ready: d.scan_status === "clean" }))}
+        terms={partnerTerms(opp)}
+        codeMessages={{
+          partner_activity_restricted: ctx.restriction === "network_hold" ? tr("composer.restrictedHold") : tr("composer.restrictedRules"),
+          rules_acceptance_required: tr("composer.userMustAccept", { label: rulesLabel }),
+        }}
+        blocked={
+          ctx.rules.userRestricted ? (
+            <div className="grid gap-3 rounded-2xl bg-warning-soft p-4 text-sm">
+              <p className="font-medium">{tr("composer.userMustAccept", { label: rulesLabel })}</p>
+              <Button asChild className="min-h-11 w-full">
+                <Link href={`/workspace/${orgSlug}/accept-rules?v=${encodeURIComponent(rulesLabel)}&next=${encodeURIComponent(`/workspace/${orgSlug}/opportunities/${matchId}`)}`}>{tn("banner.cta.accept")}</Link>
+              </Button>
+            </div>
+          ) : undefined
+        }
       />
     </div>
   );

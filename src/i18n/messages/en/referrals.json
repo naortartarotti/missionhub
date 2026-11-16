@@ -1,26 +1,28 @@
 {
   "title": "Referrals",
-  "description": "Track every submission from start to hire: candidates you sent to partner jobs, and candidates partners sent to yours.",
+  "description": "Track every referral from submission to hire: candidates you sent to partner jobs, and candidates partners sent to yours.",
   "directionNav": "Referral direction",
   "tabs": {
-    "sent": "Sent",
-    "received": "Received"
+    "label": "Referral views",
+    "received": "Received",
+    "pipeline": "Pipeline",
+    "sent": "Sent"
   },
   "empty": {
     "sent": {
       "title": "No referrals sent yet",
-      "description": "When a partner job fits one of your candidates, submit them from Opportunities. You'll follow their progress here.",
-      "action": "View opportunities"
+      "description": "When a partner job fits one of your candidates, submit them from Suggestions. You'll follow their progress here.",
+      "action": "View suggestions"
     },
     "received": {
-      "title": "No submissions received yet",
+      "title": "No referrals received yet",
       "description": "Publish a job open to partners. Recruiters with matching candidates can then submit them to you.",
       "action": "Manage jobs"
     }
   },
   "caption": {
     "sent": "Sent referrals",
-    "received": "Received submissions"
+    "received": "Referrals received"
   },
   "columns": {
     "candidate": "Candidate",
@@ -38,11 +40,11 @@
     "forJob": "for {job}",
     "revoked": "The candidate's sharing authorization was revoked on {date}.",
     "revokedTarget": "The shared profile and documents are no longer available to you.",
-    "revokedSource": "The partner no longer has access to the snapshot or documents.",
+    "revokedSource": "The partner no longer has access to the shared profile or documents.",
     "guidanceTarget": "Review the approved profile, then decide. Feedback must be job-related and non-discriminatory.",
     "guidanceSource": "Keep the partner updated. Withdrawing stops their access to further documents.",
     "openCandidate": "Open candidate record",
-    "approvedProfile": "Approved candidate profile",
+    "approvedProfile": "Shared profile",
     "whatYouShared": "What you shared",
     "notAvailable": "Not available.",
     "fields": {
@@ -65,7 +67,7 @@
     },
     "experience": "Experience",
     "present": "present",
-    "disclosed": "Disclosed fields: {fields}. Snapshot taken {date}; later edits to the source record are not shared.",
+    "disclosed": "Disclosed fields: {fields}. Shared on {date}. Later edits to the candidate's profile aren't shared.",
     "sharedDocuments": "Shared documents",
     "messages": "Messages",
     "you": "You",
@@ -74,18 +76,21 @@
     "agreement": {
       "title": "Collaboration agreement",
       "sourcing": "Sourcing recruiter",
-      "jobOwner": "Job owner",
+      "jobOwner": "Hiring recruiter",
       "platform": "Platform",
       "rule": "{rule} v{version} · terms {terms}",
       "confirmed": "Confirmed by both parties",
       "awaiting": "Awaiting sourcing recruiter",
       "openPlacement": "Open placement & ledger",
-      "pending": "Created automatically from the current commission rule when the job owner accepts. The snapshot is frozen after that.",
-      "internal": "Internal referral: both organizations share a member, so there's no sourcing commission. The job owner keeps that share; the platform fee is unchanged."
+      "pending": "Created automatically from the current commission rule when the hiring recruiter accepts. The split is frozen after that.",
+      "internal": "Internal referral: both organizations share a member, so there's no sourcing commission. The hiring recruiter keeps that share; the platform fee is unchanged.",
+      "pendingSnapshot": "Created when the hiring recruiter accepts, from this referral's terms and the split in force when it was submitted. The split is frozen for this referral.",
+      "deemed": "Created from the referral's terms",
+      "deemedLine": "Created on {date} from the terms and split frozen at submission, because the hire was recorded before the agreement was confirmed.",
+      "none": "No agreement: the hire was recorded without a split."
     },
     "timeline": "Timeline",
     "reasonQuote": "“{reason}”",
-    "ownership": "Ownership protected until {date}.",
     "showMore": "Show more",
     "showLess": "Show less",
     "summary": "Summary",
@@ -106,32 +111,69 @@
       "closedBy": "{status} by {who}",
       "closedByYou": "{status} by you",
       "noReason": "No reason given.",
-      "hired": "Hired · the placement is now tracked in your wallet.",
+      "hired": "Hired · the placement is now tracked in Commissions.",
       "awaitingCandidate": "Awaiting candidate approval",
       "awaitingSent": "Email sent to {email} {time}. The link expires on {date}. {partner} only sees the referral after confirmation.",
       "awaitingViewed": "The candidate opened the link {time}.",
       "awaitingNotSent": "The email to {email} has not been sent yet.",
       "awaitingExpired": "The link sent to {email} expired on {date}. Resend to create a new one.",
       "candidateDeclined": "The candidate declined the referral",
-      "candidateDeclinedBody": "{partner} was not notified and never had access to any information."
+      "candidateDeclinedBody": "{partner} was not notified and never had access to any information.",
+      "alreadyPresented": "Candidate already presented",
+      "alreadyPresentedBody": "The candidate confirmed, but they had already been presented to {partner} for this client, so this referral wasn't delivered. {partner} can't see it, and nothing was shared with them.",
+      "claimFiledSource": "Declined by {partner}: prior presentation",
+      "claimFiledSourceBody": "{partner} says they already had this candidate for this client. Review the objection below. You can contest it until {when} ET.",
+      "hiredNoSplit": "Hire recorded without a split",
+      "hiredNoSplitTargetReleased": "This referral doesn't carry a split.",
+      "hiredNoSplitTargetNoAgreement": "No placement: the referral had no confirmed agreement.",
+      "hiredNoSplitSource": "{partner} recorded a hire on {date}. No placement was created.",
+      "hiredNoSplitSourceRule": "The referral had no confirmed agreement. If you believe a share is owed, Network Rules 7.5 sets out the next steps.",
+      "void": "This referral no longer counts.",
+      "voidSource": "A platform admin found the candidate's confirmation invalid."
     },
     "awaitingFlash": "Referral created. We emailed {email}; it will be delivered to {partner} as soon as the candidate confirms.",
     "awaitingNotSentFlash": "Referral created, but the email to the candidate was not sent. Use “Resend email” below.",
     "resend": "Resend email",
     "resending": "Resending…",
     "candidateActor": "Candidate",
-    "profileUpdated": "The candidate updated: {fields}"
+    "profileUpdated": "The candidate updated: {fields}",
+    "systemActor": "MissionHub",
+    "adminActor": "MissionHub admin",
+    "ownershipNotDelivered": "This referral wasn't delivered, so it holds no ownership.",
+    "ownershipReleased": "Released on {date}. This referral no longer holds ownership for this client.",
+    "ownershipEnded": "No ownership: the prior-presentation objection on this referral was upheld or became final.",
+    "legacyDuplicateHint": "Recorded before evidence was required. No objection or contest is possible.",
+    "claimRejected": {
+      "target": "Objection rejected on {date}. A platform admin decided the prior-presentation objection wasn't valid. Review this referral again: accept it, or decline it for another reason.",
+      "source": "Objection rejected on {date}. This referral is back with {partner} for review."
+    },
+    "terms": {
+      "title": "Terms",
+      "newerOnJob": "This job's terms are now version {current}. This referral keeps version {version}.",
+      "placementLine": "Computed fee {computed} · invoiced {invoiced}",
+      "newerOnJobAmended": "This job's terms are now version {current}. This referral keeps its amended terms."
+    },
+    "ownershipStartsAtDelivery": {
+      "one": "Ownership starts when the referral is delivered: {count} month with this client.",
+      "other": "Ownership starts when the referral is delivered: {count} months with this client."
+    },
+    "protectedUntil": "Protected while in progress and until {date} ET.",
+    "protectedUnlessReleased": "Protected while in progress and until {date} ET, unless the sourcing recruiter released the candidate.",
+    "ownershipVoid": "This referral no longer counts.",
+    "closedStaleOwn": "Closed by MissionHub: no activity for 60 days after your organization was removed from the network.",
+    "closedStalePartner": "Closed by MissionHub after a long period with no activity.",
+    "recordCreated": "Candidate record created on {date}."
   },
   "actions": {
     "under_review": "Start review",
     "accepted": "Accept",
     "declined": "Decline",
-    "info_requested": "Request more info",
+    "info_requested": "Request information",
     "withdrawn": "Withdraw",
     "interviewing": "Move to interviewing",
     "offer": "Record offer",
     "rejected": "Not selected",
-    "cancelled": "Cancel",
+    "cancelled": "Cancel referral",
     "markInfoProvided": "Mark information provided",
     "confirmTitle": "{label}?",
     "declineHint": "Share job-related, non-discriminatory feedback. It will be visible to the partner recruiter.",
@@ -142,20 +184,76 @@
   },
   "agreement": {
     "trigger": "Review & confirm terms",
-    "title": "Confirm collaboration agreement",
+    "title": "Confirm the collaboration agreement?",
     "description": "You agree to the commission split shown, frozen for this referral. Template terms are a draft pending legal review; confirm your own contractual obligations separately.",
-    "confirm": "Confirm agreement"
+    "confirm": "Confirm agreement",
+    "descriptionSnapshot": "These are this referral's terms. They can't be changed for this referral unless both organizations ask MissionHub in writing before a hire. The network rules are a draft pending legal review."
   },
   "hire": {
-    "trigger": "Report hire",
-    "title": "Report a successful hire",
-    "description": "Creates the placement using the frozen agreement. Commission stays projected until the client payment is verified.",
-    "fee": "Contracted placement fee",
+    "trigger": "Record hire",
+    "title": "Record a hire",
+    "description": "Creates the placement from the fee, currency and guarantee you enter. Commission stays projected until the client's payment is verified.",
+    "fee": "Placement fee",
     "currency": "Currency",
     "startDate": "Start date",
-    "guarantee": "Replacement guarantee (days)",
+    "startRange": "Allowed dates: {min} to {max}",
+    "guarantee": "Guarantee (days)",
     "recording": "Recording…",
-    "submit": "Record hire"
+    "submit": "Record hire",
+    "descriptionSnapshot": "Creates the placement from this referral's terms. Commission stays projected until the client's payment is verified.",
+    "termsTitle": "Terms",
+    "base": "First-year base salary ({currency})",
+    "baseHint": "From the accepted offer. Both organizations see this amount; the candidate doesn't.",
+    "bonus": "Target bonus ({currency})",
+    "bonusHint": "Annual target bonus in the offer. Enter 0 if there's none. Don't include equity, signing bonus, benefits or relocation.",
+    "computedFee": "Computed fee",
+    "breakdownRate": "{rate} × {amount}",
+    "breakdownMinimum": "Minimum fee applies",
+    "breakdownFlat": "Flat fee",
+    "guaranteeEnds": "Guarantee ends {date}",
+    "noGuarantee": "No guarantee",
+    "differentToggle": "Invoiced fee is different",
+    "invoiced": "Invoiced fee ({currency})",
+    "invoicedHint": "This hire's fee to the client, retainer included. Don't include other services.",
+    "reason": "Reason",
+    "note": "Note (optional)",
+    "noteRequired": "Note",
+    "noteHint": "Both organizations see this note. Don't include candidate names or contact details.",
+    "difference": "Difference: {amount}",
+    "lowerConsequence": "{partner}'s share stays based on the computed fee, so your share covers the difference and can go below zero. {partner} is notified.",
+    "higherConsequence": "Shares are never calculated on less than the computed fee. When you invoice more, every share follows the invoiced fee. {partner} is notified.",
+    "legacyTitle": "Terms not recorded",
+    "legacyDescription": "This referral was sent before the terms card. Enter the fee, currency and guarantee as agreed with {partner}.",
+    "validation": {
+      "acceptanceAfterStart": "The acceptance date must be on or before the start date",
+      "acceptanceFuture": "Enter a date that isn't in the future",
+      "otherRoleTitle": "Enter the job title (120 characters or fewer)"
+    },
+    "anyStatusNote": "This referral's status is {status}. You can still record the hire: the referral's terms apply.",
+    "acceptedOn": "Offer accepted on",
+    "acceptanceUnknown": "I don't know the acceptance date",
+    "startUsedForTiming": "We'll use the start date to check the timing.",
+    "roleGroup": "Role hired into",
+    "roleThisJob": "This job: {job}",
+    "roleOther": "Another role at this client",
+    "otherRoleTitle": "Job title",
+    "otherRoleHint": "The title of the role they were hired into. Don't add candidate details. The fee uses this referral's terms and the salary for this role.",
+    "objectionOpenTitle": "Your objection on this referral is still open",
+    "objectionOpenBody": "You can record the hire once your prior-presentation objection is decided. If it's upheld, this referral no longer counts.",
+    "close": "Close",
+    "refresh": "Refresh page",
+    "deemedTitle": "This referral has no confirmed agreement",
+    "deemedBody": "Recording the hire creates the agreement from the terms {partner} submitted under (version {version}, {date}) and the split frozen then. {partner} is told and doesn't need to confirm.",
+    "deemedBodyLegacy": "Recording the hire creates the agreement from the split in force when {partner} submitted this referral. {partner} is told and doesn't need to confirm.",
+    "noAgreementTitle": "No placement will be created",
+    "noAgreementBody": "This referral has no confirmed agreement, so the hire is recorded for both organizations without a split.",
+    "noAgreementTermsLine": "This referral was sent under terms version {version} ({date}).",
+    "recordOnlyTitle": "Hire recorded",
+    "recordOnlyResult": "This referral doesn't carry a split. No placement was created.",
+    "noAgreementResult": "No placement was created, because the referral had no confirmed agreement. {partner} was told.",
+    "done": "Done",
+    "nonPermanentHint": "Contractor, PJ, EOR, payroll-provider, affiliate and other-agency engagements count as hires. The referral's terms still set {partner}'s share unless {partner} agreed in writing beforehand.",
+    "reportedStart": "{partner} reported a start around {month}."
   },
   "message": {
     "label": "Message",
@@ -171,7 +269,7 @@
   },
   "form": {
     "step1": "1. Choose what to share",
-    "step1Body": "Only checked fields are copied into an immutable snapshot for {recipient}. Your private notes and the original record are never shared.",
+    "step1Body": "Only the fields you check are copied into the shared profile {recipient} sees. Your private notes and the original profile are never shared.",
     "fieldsLegend": "Fields to disclose",
     "identifying": "Identifying",
     "documents": "Documents",
@@ -190,8 +288,8 @@
     "evidenceHint": "e.g. 'Candidate approved by email on 2026-11-06 after reviewing the role summary.'",
     "confirmInterest": "I confirmed the candidate is interested in this specific role and approved sharing the selected information.",
     "step3": "3. Add a note (optional)",
-    "noteLabel": "Note to the job owner",
-    "notePlaceholder": "Context for the job owner: motivation, notice period, why this is a fit…",
+    "noteLabel": "Note to the hiring recruiter",
+    "notePlaceholder": "Context for the hiring recruiter: motivation, notice period, why this is a fit…",
     "whoSees": "Who will see what",
     "nothingSelected": "Nothing selected",
     "plusDocuments": {
@@ -200,7 +298,7 @@
     },
     "identifyingWarning": "You are sharing identifying information: {fields}.",
     "anonymous": "The candidate stays anonymous to the partner unless you add identifying fields.",
-    "revocation": "If the authorization is revoked later, the partner immediately loses access to the snapshot and documents.",
+    "revocation": "If the authorization is revoked later, the partner immediately loses access to the shared profile and documents.",
     "submitting": "Submitting…",
     "submit": "Submit candidate",
     "authMethod": "How the candidate authorizes",
@@ -208,7 +306,15 @@
     "methodEmailHint": "We email a private link to {email}. The referral stays “Awaiting candidate approval” and is delivered to {partner} automatically once they confirm. Through the link, the candidate can also update their own profile.",
     "methodEmailMissing": "No email on the candidate's profile. Add one to ask for confirmation.",
     "methodRecorded": "I already have the candidate's authorization",
-    "methodRecordedHint": "Record how and when the candidate authorized it (e.g. by phone)."
+    "methodRecordedHint": "Record how and when the candidate authorized it (e.g. by phone). MissionHub uses the candidate's contact details to check for duplicate referrals.",
+    "duplicateCheckNote": "MissionHub checks the candidate's contact details to make sure they weren't already presented to {partner} for this client.",
+    "identifierRequired": {
+      "title": "Add contact details to submit",
+      "description": "Every referral needs at least one way to reach the candidate: an email, a full phone number with area code, or a LinkedIn profile.",
+      "action": "Edit candidate"
+    },
+    "termsLine": "You're submitting under terms version {version} ({date}).",
+    "termsLineConfirm": "These terms apply even if the candidate confirms later."
   },
   "disclosure": {
     "headline": "Headline",
@@ -236,7 +342,18 @@
     "validAmount": "Enter a valid amount",
     "pickReason": "Pick a reason",
     "addNote": "Add a short explanation",
-    "addQuestion": "Write your question"
+    "addQuestion": "Write your question",
+    "attestationRequired": "Confirm the statement to file the objection.",
+    "evidenceRequired": "Upload at least one file, or pick an earlier referral",
+    "priorDateRequired": "Enter the date",
+    "contestReason": "Explain why in 5 to 2,000 characters",
+    "baseRequired": "Enter a base salary above 0",
+    "bonusRequired": "Enter the target bonus, or 0",
+    "invoicedSame": "Enter a different amount, or untick “Invoiced fee is different”",
+    "invoicedPositive": "Enter an invoiced fee above 0",
+    "reasonRequired": "Choose a reason",
+    "noteRequiredOther": "Add a note to explain the difference",
+    "noteTooLong": "Keep the note to 500 characters or fewer"
   },
   "errors": {
     "opportunityGone": "This opportunity is no longer available.",
@@ -247,7 +364,13 @@
   "success": {
     "statusUpdated": "Status updated. The partner has been notified.",
     "agreementConfirmed": "Agreement confirmed. Commission terms are now frozen for this referral.",
-    "candidateEmailResent": "Email resent to {email}."
+    "candidateEmailResent": "Email resent to {email}.",
+    "withdrawn": "Referral withdrawn. It keeps first position for this client until {date}.",
+    "withdrawnReleased": "Referral withdrawn and candidate released.",
+    "released": "Candidate released for this client.",
+    "claimFiled": "Objection filed.",
+    "contested": "Objection contested. A platform admin will review it.",
+    "evidenceRemoved": "File removed."
   },
   "queue": {
     "bucketNav": "Referral stage",
@@ -267,7 +390,7 @@
     },
     "caughtUp": {
       "title": "All caught up",
-      "description": "No submissions waiting for a decision. New ones appear here and in your notifications."
+      "description": "No referrals waiting for a decision. New ones appear here and in your notifications."
     },
     "emptyBucket": "Nothing here yet.",
     "selectAll": "Select all on this page",
@@ -279,7 +402,7 @@
     },
     "declineSelected": "Decline…",
     "clear": "Clear",
-    "noScore": "No fit score for this submission",
+    "noScore": "No fit score for this referral",
     "coverage": "{has}/{total} required skills",
     "salaryFits": "Within budget",
     "salaryAbove": "Above budget",
@@ -309,7 +432,7 @@
     "agreementLine": "Split: sourcing {sourcing} · you {owner} · platform {platform}",
     "accept": "Accept",
     "decline": "Decline",
-    "askInfo": "Ask for info",
+    "askInfo": "Request information",
     "openFull": "Open full page",
     "waitingPartner": "Waiting for the partner's answer",
     "checkOk": "Meets",
@@ -350,7 +473,14 @@
       },
       "noneWaiting": "Nothing waiting",
       "viewJob": "View job"
-    }
+    },
+    "claimCallout": {
+      "title": "Already had this candidate for this client?",
+      "description": "Decline with a prior-presentation objection and dated evidence. You can do this until {when} ET.",
+      "action": "File objection"
+    },
+    "bulkClaimHint": "To file a prior-presentation objection, open one referral at a time.",
+    "claimRejectedChip": "Objection rejected"
   },
   "declineReasons": {
     "skills": "Missing skills",
@@ -358,9 +488,10 @@
     "salary": "Salary",
     "location": "Location",
     "availability": "Availability",
-    "duplicate": "Already in process",
-    "position_filled": "Position filled",
-    "other": "Other"
+    "duplicate": "Already in process (legacy)",
+    "position_filled": "Job filled",
+    "other": "Other",
+    "prior_presentation": "Prior presentation"
   },
   "direction": {
     "inbound": {
@@ -388,6 +519,10 @@
     "sent": {
       "title": "Referrals sent",
       "description": "Your candidates submitted to partner recruiters' jobs, from submission to hire."
+    },
+    "pipeline": {
+      "title": "Pipeline",
+      "description": "Move accepted candidates through your hiring process, from acceptance to hire."
     }
   },
   "sent": {
@@ -404,7 +539,8 @@
     "submittedAt": "Submitted {time}",
     "progress": "Step {step} of {total}",
     "openCandidate": "Candidate record",
-    "partnerSees": "Partner sees: {label}"
+    "partnerSees": "Partner sees: {label}",
+    "claimOpenChip": "Contest by {when} ET"
   },
   "composer": {
     "viewOwn": "Your view",
@@ -423,7 +559,7 @@
     "contact": "Contact",
     "documents": "Documents",
     "sharingCount": "Sharing {count} of {total} fields",
-    "shareHint": "Use the eye on each section to share or hide it. Only what's shared is copied into the snapshot.",
+    "shareHint": "Use the eye on each section to share or hide it. Only what's shared is copied into the shared profile.",
     "noSummary": "No summary on file.",
     "noExperience": "No work history on file.",
     "noContact": "No contact details on file.",
@@ -436,12 +572,328 @@
     },
     "submitTitle": "Submit to {partner}",
     "authTitle": "Candidate's authorization",
-    "noteTitle": "Note to the job owner (optional)",
+    "noteTitle": "Note to the hiring recruiter (optional)",
     "relocation": "Open to relocation",
     "yearsShort": {
       "one": "{count} yr",
       "other": "{count} yrs"
     },
-    "availableFrom": "Available {date}"
+    "availableFrom": "Available {date}",
+    "restrictedHold": "You can't submit referrals while your organization is on a network hold.",
+    "restrictedRules": "You can't submit referrals until an organization admin accepts the current Network Rules.",
+    "userMustAccept": "Accept Network Rules {label} to submit referrals."
+  },
+  "duplicate": {
+    "pendingTitle": "This candidate may already be in process with {partner}",
+    "pendingDescription": "Another referral for this candidate is waiting for the candidate to confirm it. You can still submit. If the other referral reaches {partner} first, this one is closed and {partner} won't receive it.",
+    "acknowledge": "I understand and want to submit this referral anyway.",
+    "submitAnyway": "Submit anyway",
+    "stopTitle": "Candidate already presented",
+    "message": "This candidate has already been presented to {partner} for this client, so this referral can't be submitted. This rule only decides which referral counts for the commission. It doesn't stop {partner} from hiring the candidate.",
+    "stopNext": "Nothing was sent to the candidate or to {partner}.",
+    "backToOpportunities": "Back to suggestions",
+    "supportBefore": "Think this is a mistake?",
+    "supportLink": "Contact MissionHub support",
+    "supportAfter": "and give reference {reference}.",
+    "supportSubject": "Stopped referral {reference}"
+  },
+  "withdraw": {
+    "title": "Withdraw this referral?",
+    "description": "{partner} is notified. Withdrawing doesn't give up your first position: until {date}, no other partner can submit this candidate to {partner} for this client through MissionHub.",
+    "release": "Also release this candidate for this client",
+    "releaseHint": "Other partners can then submit this candidate to {partner} for this client. This referral gives up its first position.",
+    "confirm": "Withdraw",
+    "continue": "Continue",
+    "releaseConfirmTitle": "Release this candidate for this client?",
+    "releaseConfirmDescription": "Your referral will be withdrawn and give up its first position. Other partners can then submit this candidate to {partner} for this client. You can't undo this.",
+    "releaseConfirm": "Withdraw and release",
+    "back": "Back"
+  },
+  "release": {
+    "trigger": "Release candidate",
+    "title": "Release this candidate for this client?",
+    "description": "This referral is closed but still holds first position for this client until {date}. If you release the candidate, other partners can submit them to {partner} for this client.",
+    "continue": "Continue",
+    "confirmTitle": "Release permanently?",
+    "confirmDescription": "This referral gives up its first position for this client for good. {partner} isn't notified. You can't undo this.",
+    "back": "Back",
+    "confirm": "Release permanently"
+  },
+  "claim": {
+    "trigger": "File objection",
+    "title": "File a prior-presentation objection",
+    "description": "Filing an objection declines this referral with the reason “Prior presentation”. {partner} sees the dates, the type of evidence and your note, but not your files. They have 10 business days to contest. If they do, a platform admin reviews your evidence.",
+    "deadlineLabel": "Objection deadline",
+    "evidenceType": "Evidence",
+    "evidenceFile": "Upload files",
+    "evidenceFileHint": "An ATS export, or an email saved as PDF or image, that shows the candidate in process with this client.",
+    "evidenceReferral": "Use an earlier MissionHub referral",
+    "evidenceReferralHint": "A referral you received for this job or this client before this one.",
+    "evidenceReferralNone": "No earlier referral for this job or client can be used.",
+    "files": "Files",
+    "filesHint": "PDF, PNG or JPEG. Up to 5 files, 10 MB each.",
+    "uploadDeadline": "Objection deadline: {when} ET · {left}. Files must finish processing and the objection must be filed by then.",
+    "addFiles": "Add files",
+    "addMoreFiles": "Add more files",
+    "removeFileAria": "Remove {name}",
+    "file": {
+      "uploading": "Uploading…",
+      "cancelAria": "Cancel upload of {name}",
+      "processing": "Checking file…",
+      "ready": "Ready · {size} · uploaded {when} ET",
+      "rejected": "This file can't be used. Remove it to continue.",
+      "failed": "Upload didn't finish.",
+      "retry": "Try again",
+      "waiting": {
+        "one": "Waiting for {count} file to finish processing",
+        "other": "Waiting for {count} files to finish processing"
+      },
+      "removeRejected": "To continue, remove the file that can't be used",
+      "none": "Add at least one file",
+      "selectedSr": {
+        "one": "{count} file attached",
+        "other": "{count} files attached"
+      },
+      "retryOrRemove": "To continue, try the upload again or remove the file"
+    },
+    "priorDate": "Date the candidate was last in process with this client",
+    "priorDateHint": "Between {from} and {to} (before this referral was delivered).",
+    "pickReferral": "Earlier referral",
+    "pickerOption": "{candidate} · {job} · from {partner} · delivered {date}",
+    "priorDateFromReferral": "Date used: {date}, the day the earlier referral was delivered.",
+    "note": "Note (optional)",
+    "noteHint": "{partner} sees this note. Don't include client names or contact details.",
+    "attestation": "I confirm this objection and its evidence are true and accurate. I understand that false objections can get my organization suspended from MissionHub.",
+    "submit": "Decline and file objection",
+    "submitting": "Filing objection…",
+    "back": "Back to decline reasons",
+    "validation": {
+      "evidenceRequired": "Upload at least one file, or pick an earlier referral",
+      "priorDateRequired": "Enter the date",
+      "priorDateAfterDelivery": "Enter a date before {date}, when this referral was delivered",
+      "priorDateTooOld": {
+        "one": "Enter a date on or after {date} ({count} month before delivery)",
+        "other": "Enter a date on or after {date} ({count} months before delivery)"
+      },
+      "attestationRequired": "Confirm the statement to file the objection",
+      "fileType": "Upload a PDF, PNG or JPEG file",
+      "fileSize": "Upload files of 10 MB or less",
+      "tooManyFiles": "Upload 5 files at most"
+    },
+    "messages": {
+      "filed": "Objection filed. {partner} can contest it until {when} ET."
+    },
+    "panel": {
+      "title": "Prior-presentation objection",
+      "filed": "Filed",
+      "priorDate": "Candidate last in process with this client",
+      "evidence": "Evidence",
+      "fileN": "File {n}",
+      "uploaded": "Uploaded {when} ET",
+      "sha": "SHA-256",
+      "copyShaAria": "Copy the SHA-256 of file {n}",
+      "copied": "Copied",
+      "filesHiddenSource": "Only {partner} can open these files, and platform admins if you contest. The SHA-256 shows that a file hasn't changed since it was uploaded.",
+      "download": "Download {name}",
+      "scanning": "Checking file…",
+      "earlierReferral": "Earlier referral through MissionHub",
+      "openEarlierReferral": "Open earlier referral",
+      "note": "Note",
+      "noNote": "No note.",
+      "contestDeadline": "Contest deadline",
+      "resolution": "Resolution from a platform admin",
+      "status": {
+        "openTarget": "{partner} can contest this objection until {when} ET.",
+        "openSource": "You can contest this objection until {when} ET. Contesting is free: a platform admin reviews the evidence.",
+        "contested": "Contested on {date}. A platform admin is reviewing the objection.",
+        "final": "Final: not contested by {when} ET.",
+        "upheld": "Upheld by a platform admin on {date}.",
+        "rejected": "Rejected by a platform admin on {date}."
+      }
+    },
+    "priorDateWindowHint": {
+      "one": "This referral's ownership window is {count} month, so you can go back {count} month.",
+      "other": "This referral's ownership window is {count} months, so you can go back {count} months."
+    }
+  },
+  "contest": {
+    "trigger": "Contest objection",
+    "title": "Contest this objection?",
+    "description": "A platform admin reviews the objection and its evidence, then upholds or rejects it. Contesting is free. You and {partner} are both notified of the decision.",
+    "reason": "Why do you disagree with the objection?",
+    "reasonHint": "Only MissionHub platform admins read this. {partner} doesn't see it. Don't include client names or contact details.",
+    "confirm": "Contest objection",
+    "messages": {
+      "contested": "Objection contested. A platform admin will review it."
+    }
+  },
+  "deadline": {
+    "at": "{when} ET",
+    "left": {
+      "one": "{count} business day left",
+      "other": "{count} business days left"
+    },
+    "endsToday": "Ends today",
+    "closed": "Closed {when} ET"
+  },
+  "termsChanged": {
+    "title": "The terms for this job changed",
+    "description": "{partner} published new terms on {date}. Nothing was sent. Review the changes marked below, then submit again.",
+    "submit": "Submit under new terms"
+  },
+  "hireReport": {
+    "limit": "You can report a hire until {date}.",
+    "limitTail": "You can report a hire until {date} if the client's selection process started before {windowEnd}.",
+    "limitClosed": "Hire reporting closed on {date}.",
+    "messages": {
+      "filed": "Hire report filed. {partner} has until {when} ET to answer."
+    },
+    "validation": {
+      "employer": "Enter the employer (200 characters or fewer)",
+      "startMonth": "Choose the month and year",
+      "statement": "Write 20–2000 characters",
+      "itemDate": "Enter a date that isn't in the future",
+      "capturedBefore": "The capture date can't be before the item's date",
+      "link": "Enter a link that starts with https://",
+      "tail": "Confirm when the process started and mark the item that shows it",
+      "learnedVia": "Choose how you learned of it",
+      "itemType": "Choose the type",
+      "attestation": "Check the box to confirm",
+      "role": "Use 120 characters or fewer for the role"
+    },
+    "trigger": "Report a hire",
+    "title": "Report a hire to {partner}",
+    "description": "Tell {partner} you believe the client hired this candidate. {partner} sees your statement, the employer and the dates of your evidence. Only MissionHub admins see files and links. {partner} has 10 business days to answer. While the report is pending, you can't release this candidate for this client.",
+    "tailStatement": "The client's selection process that led to this hire (first interview or assessment) started before {windowEnd}.",
+    "tailHint": "Mark at least one evidence item that shows when the process started.",
+    "item": {
+      "backsTail": "This item shows when the process started",
+      "type": "Type",
+      "date": "Date of the item",
+      "captured": "Captured on (optional)",
+      "link": "Link (optional)",
+      "linkHint": "Starts with https://. Only MissionHub admins see it.",
+      "add": "Add another item",
+      "remove": "Remove item {n}",
+      "legend": "Item {n}"
+    },
+    "employer": "Employer, as you know it",
+    "employerHint": "{partner} reads this.",
+    "startMonth": "Approximate start",
+    "role": "Role, if known",
+    "learnedVia": "How you learned of it",
+    "evidence": "Evidence",
+    "evidenceHint": "Add at least one dated item.",
+    "weightHint": "A screenshot with no link or date is accepted, but it counts for less.",
+    "files": "Files (optional)",
+    "filesHint": "PDF, PNG or JPEG. Up to 5 files, 10 MB each. Only MissionHub admins see them. {partner} sees when each was uploaded and its SHA-256.",
+    "statement": "Statement",
+    "statementHint": "What you know and how you know it. {partner} reads this. 20–2000 characters.",
+    "attestation": "I confirm this report is true and complete to the best of my knowledge (Network Rules 4.8).",
+    "submit": "File hire report",
+    "filing": "Filing…",
+    "file": {
+      "waiting": "Wait until every file is checked.",
+      "removeRejected": "Remove the file that can't be used."
+    },
+    "unavailableHint": "If you have a question for {partner}, write in the referral messages.",
+    "rightToolUnavailable": "Hire reports are filed from the referral, with dated evidence, while it still counts. Otherwise, write to {org} in the referral messages.",
+    "panel": {
+      "title": "Hire report",
+      "filedBy": "Filed {when} ET by {who}",
+      "notGiven": "Not given",
+      "tailMade": "The sourcing recruiter stated that the selection process started before {windowEnd}.",
+      "linksHidden": "Only {partner} and MissionHub admins can see the links.",
+      "filesHidden": "Only {partner} and MissionHub admins can see the files.",
+      "releasePaused": "While this report is pending, you can't release this candidate for this client.",
+      "earlier": "Earlier reports ({count})",
+      "earlierLine": "Filed {date}: {outcome}",
+      "status": {
+        "awaitingTarget": "Answer by {when} ET: confirm and record the hire, or contest it.",
+        "awaitingSource": "{partner} has until {when} ET to answer.",
+        "unansweredTarget": "The answer deadline has passed. A platform admin is reviewing the report. You can still record the hire.",
+        "unansweredSource": "{partner} didn't answer by the deadline. A platform admin is reviewing the report.",
+        "contestedTarget": "Contested. {partner} can add a rebuttal until {when} ET. Then a platform admin decides.",
+        "contestedSource": "{partner} contested this report. You can add one rebuttal until {when} ET.",
+        "inReview": "A platform admin is reviewing the report.",
+        "confirmedTarget": "You confirmed this hire on {date}.",
+        "confirmedSource": "{partner} confirmed this hire on {date}.",
+        "closedByRecordTarget": "Closed: you recorded the hire on {date}.",
+        "closedByRecordSource": "Closed: the hiring recruiter confirmed the hire on {date}.",
+        "deemedTarget": "Confirmed on {date}: no answer by the deadline, after the notice reached two people at {org} by email. Enter the fee details by {when} ET.",
+        "deemedSource": "Confirmed on {date}: {partner} didn't answer by the deadline.",
+        "upheld": "Upheld by a platform admin on {date}. The hire counts.",
+        "rejected": "Not upheld by a platform admin on {date}.",
+        "notThisClient": "Not this client.",
+        "voidTarget": "Closed by a platform admin on {date}. This referral no longer counts.",
+        "voidSource": "Closed on {date}: a platform admin found the candidate's confirmation invalid. This referral no longer counts."
+      },
+      "confirm": "Confirm and record hire",
+      "contest": "Contest",
+      "addRebuttal": "Add rebuttal",
+      "resolution": "Resolution: “{text}”",
+      "rows": {
+        "employer": "Employer as reported",
+        "role": "Role",
+        "learnedVia": "How the sourcing recruiter learned",
+        "tail": "Selection process start",
+        "files": "Files",
+        "contest": "Contest",
+        "rebuttal": "Rebuttal"
+      },
+      "itemCaptured": "captured {date}",
+      "newTab": "(opens in a new tab)"
+    },
+    "month": "Month",
+    "year": "Year"
+  },
+  "hireContest": {
+    "messages": {
+      "contested": "Report contested. {partner} can add a rebuttal until {when} ET."
+    },
+    "validation": {
+      "dates": "Enter both dates. The process can't start after the offer was accepted.",
+      "reason": "Choose a reason"
+    },
+    "title": "Contest this hire report?",
+    "description": "A platform admin decides on the record. {partner} can add one rebuttal within 5 business days. A false contest breaks Network Rules 4.8.",
+    "reason": "Reason",
+    "noPriorHint": "“We already had this candidate” isn't a reason here. That was the objection, within 5 business days of delivery.",
+    "acceptedOn": "Offer accepted on",
+    "processStarted": "Selection process started on",
+    "processHint": "The first interview or assessment for the role they were hired into.",
+    "statement": "Statement",
+    "statementHint": "{partner} reads this. Don't name your client.",
+    "statementHintAdmin": "Only MissionHub admins read this.",
+    "files": "Documents (optional)",
+    "filesHint": "Only MissionHub admins see these. For example, the client's written statement, shared with the client's permission.",
+    "attestation": "I confirm this contest is true and complete to the best of my knowledge (Network Rules 4.8).",
+    "submit": "Contest report"
+  },
+  "hireRebuttal": {
+    "messages": {
+      "sent": "Rebuttal sent. A platform admin will decide."
+    },
+    "title": "Add your rebuttal",
+    "description": "You can add one rebuttal. After that, a platform admin decides on the record.",
+    "submit": "Send rebuttal"
+  },
+  "authCheck": {
+    "messages": {
+      "requested": "Request sent to MissionHub."
+    },
+    "sentLine": "Evidence sent on {date}. A platform admin is reviewing it.",
+    "request": "Ask for an authorization check",
+    "requestTitle": "Ask MissionHub to check the candidate's authorization?",
+    "requestBody": "A platform admin checks whether the candidate really agreed to be presented by {partner}. Only admins read your reason.",
+    "reason": "Why you're asking",
+    "requestSubmit": "Send request",
+    "requestedLine": "Authorization check requested on {date}.",
+    "title": "Authorization check",
+    "body": "MissionHub needs independent evidence that the candidate agreed to be represented by you. For example, the candidate's dated message from a channel other than the confirmation email. If nothing is sent by the deadline, the referral may stop counting.",
+    "statement": "What you're sending",
+    "files": "Evidence",
+    "attestation": "I confirm this evidence is genuine (Network Rules 4.8).",
+    "submit": "Send evidence"
   }
 }

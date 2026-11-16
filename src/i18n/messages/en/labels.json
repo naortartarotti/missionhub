@@ -19,7 +19,7 @@
     "candidate_declined": "Declined by candidate",
     "submitted": "Submitted",
     "under_review": "Under review",
-    "info_requested": "Info requested",
+    "info_requested": "Information requested",
     "accepted": "Accepted",
     "declined": "Declined",
     "withdrawn": "Withdrawn",
@@ -27,16 +27,18 @@
     "offer": "Offer",
     "hired": "Hired",
     "rejected": "Not selected",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "already_presented": "Already presented"
   },
   "placementStatus": {
-    "hire_reported": "Hire reported",
+    "hire_reported": "Hire recorded",
     "invoiced": "Invoiced",
     "payment_partially_verified": "Partially paid",
     "commission_payable": "Commission payable",
     "settled": "Settled",
     "disputed": "Disputed",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "fee_pending": "Fee details pending"
   },
   "placementStatusDescription": {
     "hire_reported": "Projected commission — not yet invoiced.",
@@ -45,7 +47,8 @@
     "commission_payable": "Client payment verified; shares are owed.",
     "settled": "All obligations verified as paid.",
     "disputed": "Frozen pending platform review.",
-    "cancelled": "Placement cancelled."
+    "cancelled": "Placement cancelled.",
+    "fee_pending": "The hire counts. The hiring recruiter still needs to enter the start date, salary and invoiced fee."
   },
   "evidenceKind": {
     "client_payment": "Client payment received",
@@ -93,5 +96,122 @@
     "none": "no travel",
     "occasional": "occasional travel",
     "frequent": "frequent travel"
+  },
+  "commissionRule": {
+    "default": "MissionHub standard split"
+  },
+  "claimStatus": {
+    "open": "Open",
+    "contested": "Contested",
+    "final": "Final",
+    "upheld": "Upheld",
+    "rejected": "Rejected"
+  },
+  "evidenceType": {
+    "file": "Files",
+    "referral": "Earlier referral through MissionHub"
+  },
+  "disputeType": {
+    "placement": "Placement",
+    "prior_presentation": "Prior presentation",
+    "conduct": "Conduct",
+    "hire_report": "Hire report"
+  },
+  "identifierMatch": {
+    "match": "Same",
+    "no_match": "Different",
+    "not_available": "Not available"
+  },
+  "feeBasis": {
+    "pct_base": "% of base salary",
+    "pct_total_cash": "% of total cash",
+    "flat": "Flat fee"
+  },
+  "searchType": {
+    "contingent_exclusive": "Contingent, exclusive",
+    "contingent_shared": "Contingent, shared",
+    "retained": "Retained"
+  },
+  "guaranteeRemedy": {
+    "replacement_only": "Replacement only",
+    "replacement_then_prorata": "Replacement, then pro-rata refund",
+    "prorata_refund": "Pro-rata refund",
+    "full_refund": "Full refund"
+  },
+  "feeDifferenceReason": {
+    "client_discount": "Client negotiated a lower fee",
+    "client_contract_rate": "Client contract sets a different fee",
+    "client_invoiced_other_currency": "Client invoiced in another currency",
+    "invoice_correction": "Invoice correction or rounding",
+    "other": "Other",
+    "non_permanent_engagement": "Non-permanent engagement (contractor, PJ, EOR, payroll provider)"
+  },
+  "rulesVersionType": {
+    "initial": "First version",
+    "material": "Material change",
+    "non_material": "Minor change",
+    "legally_required": "Required by law"
+  },
+  "conductCategory": {
+    "went_around": "They went around me to the candidate or the client",
+    "misused": "They used what I shared for something else",
+    "shared_outside": "They shared my information outside their organization",
+    "hire_payout": "They didn't report a hire, or didn't pay my share on time",
+    "false_info": "False or forged information",
+    "job_terms": "The job or its terms are fake or misleading",
+    "discrimination": "Discrimination",
+    "retaliation": "Retaliation, public accusations or a bad-faith report",
+    "other": "Something else"
+  },
+  "sanctionStatus": {
+    "active": "Active",
+    "expired": "Expired on {date}",
+    "lifted": "Lifted on {date}",
+    "reduced": "Reduced on review",
+    "overturned": "Overturned on review"
+  },
+  "sanctionLevel": {
+    "none": "Finding, no sanction",
+    "warning": "Warning",
+    "network_hold": "Network hold",
+    "suspension": "Suspension",
+    "termination": "Termination"
+  },
+  "conductOutcome": {
+    "no_breach": "No breach found",
+    "not_enough": "Not enough evidence",
+    "breach": "Breach found"
+  },
+  "hireLearnedVia": {
+    "candidate": "The candidate told me",
+    "profile": "Public profile change",
+    "announcement": "Company announcement",
+    "contact": "A mutual contact",
+    "other": "Other"
+  },
+  "hireEvidenceType": {
+    "candidate_message": "Candidate's written message",
+    "company_announcement": "Company announcement or org chart",
+    "profile_change": "Public profile change",
+    "third_party": "Third-party statement",
+    "other": "Other"
+  },
+  "hireReportStatus": {
+    "awaiting_answer": "Awaiting answer",
+    "unanswered": "With an admin",
+    "contested": "Contested",
+    "in_review": "With an admin",
+    "confirmed": "Confirmed",
+    "closed_by_record": "Confirmed",
+    "deemed_confirmed": "Confirmed (no answer)",
+    "upheld": "Upheld",
+    "rejected": "Not upheld",
+    "void": "Closed"
+  },
+  "hireContestReason": {
+    "not_hired": "Not hired by the client, its affiliates, agents, EOR or payroll provider",
+    "outside_window": "Offer accepted outside the protection",
+    "different_person": "A different person",
+    "not_this_client": "Not this client"
   }
 }

@@ -39,6 +39,14 @@ async function user(email: string, fullName: string, platformAdmin = false) {
     u = data.user;
   }
   if (platformAdmin) await admin.from("profiles").update({ is_platform_admin: true }).eq("id", u.id);
+  // N10 BR-11: demo users have a personal acceptance of the current Network Rules (no gate for demo logins).
+  const { data: v } = await admin.from("network_rules_versions").select("id").eq("status", "published")
+    .lte("effective_at", new Date().toISOString()).order("effective_at", { ascending: false }).limit(1).maybeSingle();
+  if (v) {
+    const { data: t } = await admin.from("network_rules_version_texts").select("sha256").eq("version_id", v.id).eq("locale", "en").single();
+    if (t) await admin.from("network_rules_member_acceptances")
+      .upsert({ user_id: u.id, version_id: v.id, locale: "en", sha256: t.sha256 }, { onConflict: "user_id,version_id", ignoreDuplicates: true });
+  }
   const client = createClient<Database>(url, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, { auth: { persistSession: false } });
   const { error } = await client.auth.signInWithPassword({ email, password: PASSWORD });
   if (error) throw error;
@@ -48,7 +56,13 @@ async function user(email: string, fullName: string, platformAdmin = false) {
 async function org(u: Awaited<ReturnType<typeof user>>, name: string, slug: string) {
   const { data: existing } = await admin.from("organizations").select("id").eq("slug", slug).maybeSingle();
   if (existing) return existing.id;
-  const { data, error } = await u.client.rpc("create_organization", { p_name: name, p_slug: slug });
+  // N10 BR-6 / BR-11: demo orgs accept the current Network Rules for the org and personally.
+  const { data: v, error: vErr } = await admin.from("network_rules_versions").select("id").eq("status", "published")
+    .lte("effective_at", new Date().toISOString()).order("effective_at", { ascending: false }).limit(1).single();
+  if (vErr) throw new Error("No published Network Rules version: run `npm run db:reset` first (supabase/seed.sql).");
+  const { data, error } = await u.client.rpc("create_organization", {
+    p_name: name, p_slug: slug, p_rules_version: v.id, p_rules_locale: "en", p_accept_org: true, p_accept_member: true,
+  });
   if (error) throw error;
   await admin.from("organizations").update({ is_demo: true }).eq("id", data as string);
   return data as string;
@@ -92,11 +106,17 @@ async function main() {
   const { count: jobCount } = await admin.from("jobs").select("id", { count: "exact", head: true }).eq("organization_id", orgB);
   if (!jobCount) {
     for (const j of jobs) {
-      const { error } = await blair.client.from("jobs").insert({
-        ...j, organization_id: orgB, owner_id: blair.id, created_by: blair.id, status: "active", accepts_external_referrals: true, client_confidential: true,
+      const { data: row, error } = await blair.client.from("jobs").insert({
+        ...j, organization_id: orgB, owner_id: blair.id, created_by: blair.id, status: "active", client_confidential: true,
         description: "Synthetic demo job. Build reliable products with a small, senior team.", location_country: "CA", languages: ["english"], salary_currency: "CAD", fee_currency: "CAD",
-      } as never);
+      } as never).select("id").single();
       if (error) throw error;
+      // N2: a job opens to partner referrals only with a published terms card (save_job_terms).
+      const { error: tErr } = await blair.client.rpc("save_job_terms", {
+        p_job: (row as { id: string }).id, p_open: true, p_fee_basis: "pct_base", p_rate_bps: 2000, p_search_type: "contingent_shared",
+        p_attested: true, p_guarantee_days: 90, p_guarantee_remedy: "replacement_then_prorata", p_payment_terms_days: 30, p_ownership_months: 6,
+      });
+      if (tErr) throw tErr;
     }
   }
 

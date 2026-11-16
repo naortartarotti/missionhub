@@ -1,0 +1,372 @@
+{
+  "metaTitle": "Connectors",
+  "title": "Connectors",
+  "description": "Bring your organization's jobs and candidates into MissionHub from the tools you already use. Connect once; MissionHub keeps them in sync and never changes anything in the source.",
+  "connected": {
+    "title": "Connected",
+    "lastSync": "Synced {when}",
+    "firstSyncPending": "First import in progress",
+    "lastRun": "last run: {created} new, {updated} updated"
+  },
+  "gallery": {
+    "search": "Search connectors",
+    "categories": "Categories",
+    "noResults": "No connector matches your search.",
+    "connected": {
+      "one": "Connected",
+      "other": "{count} connected"
+    },
+    "soon": "Coming soon"
+  },
+  "category": {
+    "all": "All",
+    "ats": "ATS & CRM",
+    "spreadsheet": "Spreadsheets",
+    "developer": "Developers"
+  },
+  "entity": {
+    "jobs": "Jobs",
+    "candidates": "Candidates"
+  },
+  "options": {
+    "region": {
+      "global": "Global (lever.co)",
+      "eu": "Europe (eu.lever.co)"
+    },
+    "entity": {
+      "candidates": "Candidates",
+      "jobs": "Jobs"
+    }
+  },
+  "providers": {
+    "greenhouse": {
+      "tagline": "Import the open jobs from a Greenhouse job board.",
+      "description": "Reads the jobs your client (or your agency) publishes on Greenhouse and keeps them up to date. Only the board name is needed: no password, no API key.",
+      "does1": "Imports every published job with its description, location and work arrangement.",
+      "does2": "Updates jobs when they change and pauses them when they're taken down.",
+      "step1": "Open the company's Greenhouse careers page.",
+      "step2": "Copy the name after boards.greenhouse.io/ in the address (for example, \"acme\").",
+      "step3": "Paste it below, test, and connect.",
+      "fields": {
+        "board": {
+          "label": "Board name",
+          "hint": "You can also paste the whole link.",
+          "placeholder": "acme"
+        }
+      }
+    },
+    "lever": {
+      "tagline": "Import the open jobs from a Lever careers site.",
+      "description": "Reads the postings published on a Lever careers site, including salary ranges when they're shown. Only the site name is needed.",
+      "does1": "Imports every published posting with its description, team, location and salary range.",
+      "does2": "Updates postings when they change and pauses them when they're taken down.",
+      "step1": "Open the company's Lever careers page (jobs.lever.co/…).",
+      "step2": "Copy the name after jobs.lever.co/ (for example, \"acme\"). Sites on jobs.eu.lever.co use the Europe region.",
+      "step3": "Paste it below, test, and connect.",
+      "fields": {
+        "site": {
+          "label": "Site name",
+          "hint": "You can also paste the whole link.",
+          "placeholder": "acme"
+        },
+        "region": {
+          "label": "Region",
+          "hint": "Where the careers site is hosted."
+        }
+      }
+    },
+    "ashby": {
+      "tagline": "Import the open jobs from an Ashby job board.",
+      "description": "Reads the jobs listed on an Ashby job board, with compensation when it's published. Only the board name is needed.",
+      "does1": "Imports every listed job with its description, location, employment type and salary.",
+      "does2": "Updates jobs when they change and pauses them when they're unlisted.",
+      "step1": "Open the company's Ashby job board (jobs.ashbyhq.com/…).",
+      "step2": "Copy the name after jobs.ashbyhq.com/ (for example, \"acme\").",
+      "step3": "Paste it below, test, and connect.",
+      "fields": {
+        "board": {
+          "label": "Board name",
+          "hint": "You can also paste the whole link.",
+          "placeholder": "acme"
+        }
+      }
+    },
+    "workable": {
+      "tagline": "Import the open jobs from a Workable careers page.",
+      "description": "Reads the jobs published on a Workable careers page. Only the account name is needed.",
+      "does1": "Imports every published job with its description, location and employment type.",
+      "does2": "Updates jobs when they change and pauses them when they're taken down.",
+      "step1": "Open the company's Workable careers page (apply.workable.com/…).",
+      "step2": "Copy the name after apply.workable.com/ (for example, \"acme\").",
+      "step3": "Paste it below, test, and connect.",
+      "fields": {
+        "subdomain": {
+          "label": "Account name",
+          "hint": "You can also paste the whole link.",
+          "placeholder": "acme"
+        }
+      }
+    },
+    "google_sheets": {
+      "tagline": "Keep candidates or jobs in sync with a Google Sheet.",
+      "description": "Reads a Google Sheet your team keeps up to date and imports its rows. Column names are recognised in English, Portuguese, French and Spanish, so most sheets work as they are.",
+      "does1": "Imports each row as a candidate or a job; repeated rows update instead of duplicating.",
+      "does2": "Matches people you already have by email or LinkedIn and only fills what's missing.",
+      "step1": "In Google Sheets, click Share and set \"Anyone with the link\" to Viewer.",
+      "step2": "Copy the link. The first row must hold the column names (download a template from the CSV connector).",
+      "step3": "Paste it below, choose what the sheet holds, test, and connect.",
+      "fields": {
+        "url": {
+          "label": "Sheet link",
+          "hint": "Each tab has its own link: open the tab you want before copying.",
+          "placeholder": "https://docs.google.com/spreadsheets/d/…"
+        },
+        "entity": {
+          "label": "The sheet holds",
+          "hint": "One kind of record per sheet or file."
+        }
+      }
+    },
+    "csv_upload": {
+      "tagline": "Upload a CSV of candidates or jobs, exported from Excel or any tool.",
+      "description": "A one-off import from a file. Export from Excel, your ATS or any spreadsheet as CSV and upload it here.",
+      "does1": "Imports each row as a candidate or a job, as private drafts.",
+      "does2": "Matches people you already have by email or LinkedIn and only fills what's missing.",
+      "step1": "Download the template, or use your own file: the first row must hold the column names.",
+      "step2": "In Excel: File → Save as → CSV UTF-8.",
+      "step3": "Upload it below. Rows with problems are listed so you can fix and re-upload them.",
+      "fields": {
+        "entity": {
+          "label": "The file holds",
+          "hint": "One kind of record per sheet or file."
+        }
+      }
+    },
+    "missionhub_api": {
+      "tagline": "Send candidates and jobs from your own systems, Zapier or Make.",
+      "description": "A simple REST API for your developers or no-code tools. Create a key, send JSON, and records appear in your organization.",
+      "does1": "Creates and updates candidates and jobs; your own ids make repeated calls safe.",
+      "does2": "Assigns records to a teammate by email, or to the key's creator."
+    },
+    "bullhorn": {
+      "tagline": "Sync candidates and jobs from Bullhorn.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    },
+    "jobadder": {
+      "tagline": "Sync candidates and jobs from JobAdder.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    },
+    "vincere": {
+      "tagline": "Sync candidates and jobs from Vincere.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    },
+    "loxo": {
+      "tagline": "Sync candidates and jobs from Loxo.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    },
+    "recruitcrm": {
+      "tagline": "Sync candidates and jobs from Recruit CRM.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    },
+    "manatal": {
+      "tagline": "Sync candidates and jobs from Manatal.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    },
+    "zoho_recruit": {
+      "tagline": "Sync candidates and jobs from Zoho Recruit.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    },
+    "teamtailor": {
+      "tagline": "Sync candidates and jobs from Teamtailor.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    },
+    "smartrecruiters": {
+      "tagline": "Sync candidates and jobs from SmartRecruiters.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    },
+    "recruitee": {
+      "tagline": "Sync candidates and jobs from Recruitee.",
+      "description": "This connector is being built.",
+      "does1": "Will import candidates and jobs.",
+      "does2": "Will keep them in sync."
+    }
+  },
+  "connect": {
+    "jobStatus": "Imported jobs",
+    "jobStatusOption": {
+      "draft": "Start as drafts",
+      "active": "Publish right away"
+    },
+    "jobStatusHint": {
+      "draft": "Private until someone on your team reviews and activates each job.",
+      "active": "Open for matching as soon as they arrive."
+    },
+    "interval": "Check for changes",
+    "foundJobs": {
+      "one": "{count} job found",
+      "other": "{count} jobs found"
+    },
+    "foundCandidates": {
+      "one": "{count} candidate found",
+      "other": "{count} candidates found"
+    },
+    "rejected": {
+      "one": "{count} row can't be read",
+      "other": "{count} rows can't be read"
+    },
+    "previewHint": "This is how the first records will look in MissionHub. Skills, seniority and years are read from each description.",
+    "test": "Test",
+    "testing": "Testing…",
+    "connect": "Connect",
+    "connecting": "Connecting…"
+  },
+  "interval": {
+    "15": "Every 15 minutes",
+    "60": "Every hour",
+    "360": "Every 6 hours",
+    "1440": "Once a day"
+  },
+  "messages": {
+    "connected": "Connected. The first import has started.",
+    "updated": "Connection updated.",
+    "syncQueued": "Sync started. This page shows the result in a moment.",
+    "disconnected": "Disconnected. Imported records stay in your organization.",
+    "uploaded": {
+      "one": "{count} record imported.",
+      "other": "{count} records imported."
+    },
+    "keyCreated": "API key created. Copy it now: it won't be shown again.",
+    "keyRevoked": "API key revoked."
+  },
+  "errors": {
+    "httpsOnly": "Use a link that starts with https://",
+    "invalidOption": "Choose one of the options.",
+    "required": "Fill this in.",
+    "unavailable": "This connector isn't available yet.",
+    "notFound": "Nothing was found there. Check the name, and for a Google Sheet that \"Anyone with the link\" can view it.",
+    "unreachable": "The source didn't answer. Try again in a moment.",
+    "invalidConfig": "Check the name or link: it doesn't look right.",
+    "badFormat": "The source answered in an unexpected format.",
+    "missingColumn": "The first row needs a column for {column}. Download the template to see the expected columns.",
+    "empty": "The source has nothing to import right now.",
+    "internal": "The last sync failed. It will be retried automatically.",
+    "notFoundConnection": "This connection no longer exists.",
+    "chooseFile": "Choose a CSV file.",
+    "fileSize": "The file must be at most 5 MB.",
+    "csvOnly": "Upload a .csv file. In Excel: File → Save as → CSV UTF-8.",
+    "keyName": "Give the key a name of 2 to 80 characters.",
+    "notFoundKey": "This key doesn't exist or was already revoked."
+  },
+  "connection": {
+    "syncNow": "Sync now",
+    "pause": "Pause",
+    "resume": "Resume",
+    "disconnect": "Disconnect",
+    "disconnectTitle": "Disconnect this source?",
+    "disconnectDescription": "MissionHub stops syncing it. Candidates and jobs already imported stay in your organization and can be edited as usual.",
+    "owner": "Imports belong to {name}",
+    "next": "next check {when}"
+  },
+  "status": {
+    "upload": "Manual upload",
+    "syncing": "Syncing",
+    "error": "Needs attention",
+    "paused": "Paused",
+    "active": "Active"
+  },
+  "detail": {
+    "back": "All connectors",
+    "does": "What it does",
+    "never": "Never changes or deletes anything in the source.",
+    "steps": "How to connect",
+    "privacyCandidates": "Imported candidates arrive as private drafts. They can't be matched or shared with partners until a recruiter confirms the privacy notice and records the candidate's authorization.",
+    "privacyJobs": "Imported jobs belong to your organization and are never shown to partners until you activate them and open them to partners.",
+    "soonTitle": "Coming soon",
+    "soonBody": "The {name} connector is in development. Until it's ready, you can send records from {name} with the MissionHub API (or Zapier/Make), or export them to a spreadsheet.",
+    "connect": "Connect",
+    "connectAnother": "Connect another",
+    "adminOnly": "Only organization admins and recruiter managers can connect sources.",
+    "history": "Upload history",
+    "connections": "Connections"
+  },
+  "upload": {
+    "title": "Upload a file",
+    "what": "What the file holds",
+    "drop": "Choose a CSV file",
+    "dropHint": "Up to 5 MB and 2,000 rows",
+    "columnsHint": "Column names in English, Portuguese, French or Spanish are recognised.",
+    "template": "Download the template",
+    "result": "{created} new · {updated} updated · {unchanged} unchanged · {failed} with problems",
+    "rowError": "Row {line} · {field}: {message}",
+    "importing": "Importing…",
+    "import": "Import"
+  },
+  "api": {
+    "keysTitle": "API keys",
+    "keysBody": "Each key works for this organization only. Records sent with a key belong to the person who created it, unless you send ownerEmail.",
+    "keyName": "Key name",
+    "keyNameHint": "Where it will be used, so you can tell keys apart.",
+    "keyNamePlaceholder": "Zapier · Bullhorn export",
+    "creating": "Creating…",
+    "create": "Create key",
+    "copyNow": "Copy this key now. For your security it won't be shown again.",
+    "copied": "Copied",
+    "copy": "Copy",
+    "revoke": "Revoke",
+    "revokeTitle": "Revoke \"{name}\"?",
+    "revokeDescription": "Anything using this key stops working immediately. This can't be undone.",
+    "keyMeta": "by {who} on {created}",
+    "lastUsed": "last used {when}",
+    "neverUsed": "never used",
+    "revoked": "Revoked",
+    "docsTitle": "Quick start",
+    "docsBody": "Send JSON to these endpoints. Send one object, or up to 100 in { \"items\": [ … ] }.",
+    "baseUrl": "Base URL",
+    "auth": "Authentication",
+    "limits": "Limits",
+    "limitsValue": "120 requests per minute per key · 100 items per request · 1 MB per request",
+    "exampleCandidates": "Create or update candidates",
+    "exampleJobs": "Create or update a job",
+    "note1": "Send externalId (your system's id): repeating a call updates the record instead of duplicating it.",
+    "note2": "Candidates already in your organization are matched by email or LinkedIn; only empty fields are filled.",
+    "note3": "GET /candidates and GET /jobs list records (limit, page, updated_since). GET /me checks a key.",
+    "note4": "Invalid items return 422 with the index and field of each problem, and nothing is saved."
+  },
+  "runs": {
+    "caption": "Recent syncs",
+    "when": "When",
+    "result": "Result",
+    "created": "New",
+    "updated": "Updated",
+    "paused": "Paused",
+    "failed": "Problems",
+    "trigger": {
+      "manual": "manual",
+      "schedule": "scheduled",
+      "upload": "upload"
+    },
+    "status": {
+      "succeeded": "Done",
+      "failed": "Failed",
+      "running": "Running"
+    }
+  }
+}

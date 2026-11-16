@@ -1,6 +1,6 @@
 {
-  "title": "Opportunities",
-  "description": "Partner jobs that fit your candidates. Submit someone and follow it in Referrals sent; you earn a share of the fee when they're hired.",
+  "title": "Suggestions",
+  "description": "Partner jobs that fit your candidates. Submit someone and follow it under Referrals › Sent; you earn a share of the fee when they're hired.",
   "filteredByCandidate": "Showing matches for one candidate.",
   "statusNav": "Match status",
   "newCount": {
@@ -38,7 +38,10 @@
       "one": "{count} candidate",
       "other": "{count} candidates"
     },
-    "share": "your est. share"
+    "share": "your est. share",
+    "shareIfHired": "Your share if hired",
+    "shareEstimated": "Your estimated share",
+    "feeOnly": "Fee"
   },
   "groupBy": {
     "job": "By job",
@@ -67,7 +70,7 @@
   "empty": {
     "inactive": {
       "title": "Turn on matching to see opportunities",
-      "description": "None of your candidates are matching yet. Open a candidate, record their permission and turn on matching. Partner jobs that fit will show up here.",
+      "description": "None of your candidates are matching yet. Open a candidate, record their matching authorization and turn on matching. Partner jobs that fit will show up here.",
       "action": "Go to candidates"
     },
     "caughtUp": {
@@ -160,8 +163,8 @@
   },
   "evidence": {
     "matchingOff": "Matching is turned off for this candidate",
-    "permissionMissing": "The candidate's permission hasn't been recorded",
-    "jobClosed": "Job is not open to external referrals",
+    "permissionMissing": "The candidate's matching authorization hasn't been recorded",
+    "jobClosed": "Job isn't open to partner referrals",
     "arrangementMismatch": "Job is {jobArrangement}; candidate prefers {candidateArrangements}",
     "relocationRequired": "Job requires presence in {country}; candidate is not open to relocation",
     "requiredSkillsMatched": "Matches required skills: {skills}",
@@ -226,5 +229,10 @@
   "internal": {
     "badge": "Your other organization",
     "hint": "You're also a member of {org}. Referrals here are internal: no partner commission, only the platform fee."
+  },
+  "restricted": {
+    "title": "Partner opportunities are paused",
+    "hold": "Your organization is on a network hold, so you can't see partner jobs or submit referrals. Referrals in progress continue.",
+    "rules": "Your organization hasn't accepted Network Rules {label}, so you can't see partner jobs or submit referrals. Referrals in progress continue."
   }
 }

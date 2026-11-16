@@ -1,5 +1,6 @@
 import type { Tone } from "@/components/shared/status-pill";
 import type { Database } from "@/server/db/database.types";
+import type { GlobalTranslator } from "@/i18n/translate";
 
 /**
  * Visual metadata for database enums. The human-readable text lives in the i18n `labels`
@@ -39,9 +40,11 @@ export const REFERRAL_STATUS: Record<E["referral_status"], { tone: Tone }> = {
   hired: { tone: "success" },
   rejected: { tone: "danger" },
   cancelled: { tone: "neutral" },
+  already_presented: { tone: "neutral" },
 };
 
 export const PLACEMENT_STATUS: Record<E["placement_status"], { tone: Tone }> = {
+  fee_pending: { tone: "warning" },  // N3 BR-31
   hire_reported: { tone: "info" },
   invoiced: { tone: "warning" },
   payment_partially_verified: { tone: "warning" },
@@ -66,4 +69,15 @@ export const LEGAL_BASIS: Record<E["legal_basis"], true> = { consent: true, cont
 
 export function isPast(iso: string | null | undefined): boolean {
   return Boolean(iso) && Date.parse(iso!) < Date.now();
+}
+
+/**
+ * Name of the platform's default commission rule. It is a stable identifier in the database (rule versions
+ * are grouped by name and frozen into agreements), so it stays in English there; show it to users through
+ * `commissionRuleLabel`, which translates it.
+ */
+export const DEFAULT_COMMISSION_RULE_NAME = "Standard marketplace split";
+
+export function commissionRuleLabel(name: string, tg: GlobalTranslator): string {
+  return name === DEFAULT_COMMISSION_RULE_NAME ? tg("labels.commissionRule.default") : name;
 }

@@ -1,0 +1,372 @@
+{
+  "metaTitle": "Conectores",
+  "title": "Conectores",
+  "description": "Traga as vagas e os candidatos da sua organização para o MissionHub a partir das ferramentas que vocês já usam. Conecte uma vez: o MissionHub mantém tudo sincronizado e nunca altera nada na origem.",
+  "connected": {
+    "title": "Conectados",
+    "lastSync": "Sincronizado {when}",
+    "firstSyncPending": "Primeira importação em andamento",
+    "lastRun": "última execução: {created} novos, {updated} atualizados"
+  },
+  "gallery": {
+    "search": "Buscar conectores",
+    "categories": "Categorias",
+    "noResults": "Nenhum conector corresponde à busca.",
+    "connected": {
+      "one": "Conectado",
+      "other": "{count} conectados"
+    },
+    "soon": "Em breve"
+  },
+  "category": {
+    "all": "Todos",
+    "ats": "ATS e CRM",
+    "spreadsheet": "Planilhas",
+    "developer": "Desenvolvedores"
+  },
+  "entity": {
+    "jobs": "Vagas",
+    "candidates": "Candidatos"
+  },
+  "options": {
+    "region": {
+      "global": "Global (lever.co)",
+      "eu": "Europa (eu.lever.co)"
+    },
+    "entity": {
+      "candidates": "Candidatos",
+      "jobs": "Vagas"
+    }
+  },
+  "providers": {
+    "greenhouse": {
+      "tagline": "Importe as vagas abertas de um quadro de vagas do Greenhouse.",
+      "description": "Lê as vagas que seu cliente (ou sua agência) publica no Greenhouse e as mantém atualizadas. Basta o nome do quadro: sem senha, sem chave de API.",
+      "does1": "Importa cada vaga publicada com descrição, localização e modelo de trabalho.",
+      "does2": "Atualiza as vagas quando mudam e as pausa quando saem do ar.",
+      "step1": "Abra a página de carreiras da empresa no Greenhouse.",
+      "step2": "Copie o nome depois de boards.greenhouse.io/ no endereço (por exemplo, \"acme\").",
+      "step3": "Cole abaixo, teste e conecte.",
+      "fields": {
+        "board": {
+          "label": "Nome do quadro",
+          "hint": "Você também pode colar o link inteiro.",
+          "placeholder": "acme"
+        }
+      }
+    },
+    "lever": {
+      "tagline": "Importe as vagas abertas de um site de carreiras do Lever.",
+      "description": "Lê as vagas publicadas em um site de carreiras do Lever, incluindo faixas salariais quando aparecem. Basta o nome do site.",
+      "does1": "Importa cada vaga publicada com descrição, time, localização e faixa salarial.",
+      "does2": "Atualiza as vagas quando mudam e as pausa quando saem do ar.",
+      "step1": "Abra a página de carreiras da empresa no Lever (jobs.lever.co/…).",
+      "step2": "Copie o nome depois de jobs.lever.co/ (por exemplo, \"acme\"). Sites em jobs.eu.lever.co usam a região Europa.",
+      "step3": "Cole abaixo, teste e conecte.",
+      "fields": {
+        "site": {
+          "label": "Nome do site",
+          "hint": "Você também pode colar o link inteiro.",
+          "placeholder": "acme"
+        },
+        "region": {
+          "label": "Região",
+          "hint": "Onde o site de carreiras está hospedado."
+        }
+      }
+    },
+    "ashby": {
+      "tagline": "Importe as vagas abertas de um quadro de vagas do Ashby.",
+      "description": "Lê as vagas listadas em um quadro do Ashby, com remuneração quando publicada. Basta o nome do quadro.",
+      "does1": "Importa cada vaga listada com descrição, localização, tipo de contratação e salário.",
+      "does2": "Atualiza as vagas quando mudam e as pausa quando deixam de ser listadas.",
+      "step1": "Abra o quadro de vagas da empresa no Ashby (jobs.ashbyhq.com/…).",
+      "step2": "Copie o nome depois de jobs.ashbyhq.com/ (por exemplo, \"acme\").",
+      "step3": "Cole abaixo, teste e conecte.",
+      "fields": {
+        "board": {
+          "label": "Nome do quadro",
+          "hint": "Você também pode colar o link inteiro.",
+          "placeholder": "acme"
+        }
+      }
+    },
+    "workable": {
+      "tagline": "Importe as vagas abertas de uma página de carreiras do Workable.",
+      "description": "Lê as vagas publicadas em uma página de carreiras do Workable. Basta o nome da conta.",
+      "does1": "Importa cada vaga publicada com descrição, localização e tipo de contratação.",
+      "does2": "Atualiza as vagas quando mudam e as pausa quando saem do ar.",
+      "step1": "Abra a página de carreiras da empresa no Workable (apply.workable.com/…).",
+      "step2": "Copie o nome depois de apply.workable.com/ (por exemplo, \"acme\").",
+      "step3": "Cole abaixo, teste e conecte.",
+      "fields": {
+        "subdomain": {
+          "label": "Nome da conta",
+          "hint": "Você também pode colar o link inteiro.",
+          "placeholder": "acme"
+        }
+      }
+    },
+    "google_sheets": {
+      "tagline": "Mantenha candidatos ou vagas sincronizados com uma planilha do Google.",
+      "description": "Lê uma planilha do Google que seu time mantém atualizada e importa as linhas. Nomes de colunas em português, inglês, francês e espanhol são reconhecidos, então a maioria das planilhas funciona como está.",
+      "does1": "Importa cada linha como candidato ou vaga; linhas repetidas atualizam em vez de duplicar.",
+      "does2": "Reconhece pessoas que vocês já têm pelo e-mail ou LinkedIn e só preenche o que falta.",
+      "step1": "No Google Sheets, clique em Compartilhar e defina \"Qualquer pessoa com o link\" como Leitor.",
+      "step2": "Copie o link. A primeira linha precisa ter os nomes das colunas (baixe um modelo no conector CSV).",
+      "step3": "Cole abaixo, escolha o que a planilha contém, teste e conecte.",
+      "fields": {
+        "url": {
+          "label": "Link da planilha",
+          "hint": "Cada aba tem seu próprio link: abra a aba desejada antes de copiar.",
+          "placeholder": "https://docs.google.com/spreadsheets/d/…"
+        },
+        "entity": {
+          "label": "A planilha contém",
+          "hint": "Um tipo de registro por planilha ou arquivo."
+        }
+      }
+    },
+    "csv_upload": {
+      "tagline": "Envie um CSV de candidatos ou vagas, exportado do Excel ou de qualquer ferramenta.",
+      "description": "Uma importação pontual a partir de um arquivo. Exporte do Excel, do seu ATS ou de qualquer planilha em CSV e envie aqui.",
+      "does1": "Importa cada linha como candidato ou vaga, como rascunhos privados.",
+      "does2": "Reconhece pessoas que vocês já têm pelo e-mail ou LinkedIn e só preenche o que falta.",
+      "step1": "Baixe o modelo, ou use seu próprio arquivo: a primeira linha precisa ter os nomes das colunas.",
+      "step2": "No Excel: Arquivo → Salvar como → CSV UTF-8.",
+      "step3": "Envie abaixo. Linhas com problemas são listadas para você corrigir e reenviar.",
+      "fields": {
+        "entity": {
+          "label": "O arquivo contém",
+          "hint": "Um tipo de registro por planilha ou arquivo."
+        }
+      }
+    },
+    "missionhub_api": {
+      "tagline": "Envie candidatos e vagas dos seus sistemas, do Zapier ou do Make.",
+      "description": "Uma API REST simples para seus desenvolvedores ou ferramentas no-code. Crie uma chave, envie JSON e os registros aparecem na sua organização.",
+      "does1": "Cria e atualiza candidatos e vagas; seus próprios IDs tornam as chamadas repetidas seguras.",
+      "does2": "Atribui registros a um colega pelo e-mail, ou a quem criou a chave."
+    },
+    "bullhorn": {
+      "tagline": "Sincronize candidatos e vagas do Bullhorn.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    },
+    "jobadder": {
+      "tagline": "Sincronize candidatos e vagas do JobAdder.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    },
+    "vincere": {
+      "tagline": "Sincronize candidatos e vagas do Vincere.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    },
+    "loxo": {
+      "tagline": "Sincronize candidatos e vagas do Loxo.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    },
+    "recruitcrm": {
+      "tagline": "Sincronize candidatos e vagas do Recruit CRM.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    },
+    "manatal": {
+      "tagline": "Sincronize candidatos e vagas do Manatal.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    },
+    "zoho_recruit": {
+      "tagline": "Sincronize candidatos e vagas do Zoho Recruit.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    },
+    "teamtailor": {
+      "tagline": "Sincronize candidatos e vagas do Teamtailor.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    },
+    "smartrecruiters": {
+      "tagline": "Sincronize candidatos e vagas do SmartRecruiters.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    },
+    "recruitee": {
+      "tagline": "Sincronize candidatos e vagas do Recruitee.",
+      "description": "Este conector está em construção.",
+      "does1": "Vai importar candidatos e vagas.",
+      "does2": "Vai mantê-los sincronizados."
+    }
+  },
+  "connect": {
+    "jobStatus": "Vagas importadas",
+    "jobStatusOption": {
+      "draft": "Começar como rascunho",
+      "active": "Publicar na hora"
+    },
+    "jobStatusHint": {
+      "draft": "Privadas até alguém do time revisar e ativar cada vaga.",
+      "active": "Abertas para matching assim que chegam."
+    },
+    "interval": "Verificar mudanças",
+    "foundJobs": {
+      "one": "{count} vaga encontrada",
+      "other": "{count} vagas encontradas"
+    },
+    "foundCandidates": {
+      "one": "{count} candidato encontrado",
+      "other": "{count} candidatos encontrados"
+    },
+    "rejected": {
+      "one": "{count} linha não pôde ser lida",
+      "other": "{count} linhas não puderam ser lidas"
+    },
+    "previewHint": "É assim que os primeiros registros vão aparecer no MissionHub. Competências, senioridade e anos de experiência são lidos de cada descrição.",
+    "test": "Testar",
+    "testing": "Testando…",
+    "connect": "Conectar",
+    "connecting": "Conectando…"
+  },
+  "interval": {
+    "15": "A cada 15 minutos",
+    "60": "A cada hora",
+    "360": "A cada 6 horas",
+    "1440": "Uma vez por dia"
+  },
+  "messages": {
+    "connected": "Conectado. A primeira importação começou.",
+    "updated": "Conexão atualizada.",
+    "syncQueued": "Sincronização iniciada. O resultado aparece aqui em instantes.",
+    "disconnected": "Desconectado. Os registros importados continuam na sua organização.",
+    "uploaded": {
+      "one": "{count} registro importado.",
+      "other": "{count} registros importados."
+    },
+    "keyCreated": "Chave de API criada. Copie agora: ela não será exibida de novo.",
+    "keyRevoked": "Chave de API revogada."
+  },
+  "errors": {
+    "httpsOnly": "Use um link que comece com https://",
+    "invalidOption": "Escolha uma das opções.",
+    "required": "Preencha este campo.",
+    "unavailable": "Este conector ainda não está disponível.",
+    "notFound": "Nada foi encontrado ali. Confira o nome e, no caso de uma planilha do Google, se \"Qualquer pessoa com o link\" pode ver.",
+    "unreachable": "A origem não respondeu. Tente de novo em instantes.",
+    "invalidConfig": "Confira o nome ou o link: parece incorreto.",
+    "badFormat": "A origem respondeu em um formato inesperado.",
+    "missingColumn": "A primeira linha precisa de uma coluna para {column}. Baixe o modelo para ver as colunas esperadas.",
+    "empty": "A origem não tem nada para importar agora.",
+    "internal": "A última sincronização falhou. Ela será tentada de novo automaticamente.",
+    "notFoundConnection": "Esta conexão não existe mais.",
+    "chooseFile": "Escolha um arquivo CSV.",
+    "fileSize": "O arquivo pode ter no máximo 5 MB.",
+    "csvOnly": "Envie um arquivo .csv. No Excel: Arquivo → Salvar como → CSV UTF-8.",
+    "keyName": "Dê à chave um nome de 2 a 80 caracteres.",
+    "notFoundKey": "Esta chave não existe ou já foi revogada."
+  },
+  "connection": {
+    "syncNow": "Sincronizar agora",
+    "pause": "Pausar",
+    "resume": "Retomar",
+    "disconnect": "Desconectar",
+    "disconnectTitle": "Desconectar esta origem?",
+    "disconnectDescription": "O MissionHub para de sincronizá-la. Candidatos e vagas já importados continuam na sua organização e podem ser editados normalmente.",
+    "owner": "As importações pertencem a {name}",
+    "next": "próxima verificação {when}"
+  },
+  "status": {
+    "upload": "Envio manual",
+    "syncing": "Sincronizando",
+    "error": "Precisa de atenção",
+    "paused": "Pausado",
+    "active": "Ativo"
+  },
+  "detail": {
+    "back": "Todos os conectores",
+    "does": "O que faz",
+    "never": "Nunca altera nem apaga nada na origem.",
+    "steps": "Como conectar",
+    "privacyCandidates": "Candidatos importados chegam como rascunhos privados. Eles não entram no matching nem são compartilhados com parceiros até um recrutador confirmar o aviso de privacidade e registrar a autorização do candidato.",
+    "privacyJobs": "Vagas importadas pertencem à sua organização e nunca são mostradas a parceiros até você ativá-las e abri-las para parceiros.",
+    "soonTitle": "Em breve",
+    "soonBody": "O conector do {name} está em desenvolvimento. Até lá, você pode enviar registros do {name} pela API do MissionHub (ou Zapier/Make), ou exportá-los para uma planilha.",
+    "connect": "Conectar",
+    "connectAnother": "Conectar outro",
+    "adminOnly": "Apenas administradores da organização e gerentes de recrutamento podem conectar origens.",
+    "history": "Histórico de envios",
+    "connections": "Conexões"
+  },
+  "upload": {
+    "title": "Enviar um arquivo",
+    "what": "O que o arquivo contém",
+    "drop": "Escolha um arquivo CSV",
+    "dropHint": "Até 5 MB e 2.000 linhas",
+    "columnsHint": "Nomes de colunas em português, inglês, francês ou espanhol são reconhecidos.",
+    "template": "Baixar o modelo",
+    "result": "{created} novos · {updated} atualizados · {unchanged} sem mudança · {failed} com problemas",
+    "rowError": "Linha {line} · {field}: {message}",
+    "importing": "Importando…",
+    "import": "Importar"
+  },
+  "api": {
+    "keysTitle": "Chaves de API",
+    "keysBody": "Cada chave funciona só para esta organização. Registros enviados com uma chave pertencem a quem a criou, a menos que você envie ownerEmail.",
+    "keyName": "Nome da chave",
+    "keyNameHint": "Onde ela será usada, para diferenciar as chaves.",
+    "keyNamePlaceholder": "Zapier · exportação do Bullhorn",
+    "creating": "Criando…",
+    "create": "Criar chave",
+    "copyNow": "Copie esta chave agora. Por segurança, ela não será exibida de novo.",
+    "copied": "Copiado",
+    "copy": "Copiar",
+    "revoke": "Revogar",
+    "revokeTitle": "Revogar \"{name}\"?",
+    "revokeDescription": "Tudo que usa esta chave para de funcionar na hora. Não dá para desfazer.",
+    "keyMeta": "por {who} em {created}",
+    "lastUsed": "usada {when}",
+    "neverUsed": "nunca usada",
+    "revoked": "Revogada",
+    "docsTitle": "Começo rápido",
+    "docsBody": "Envie JSON para estes endpoints. Envie um objeto, ou até 100 em { \"items\": [ … ] }.",
+    "baseUrl": "URL base",
+    "auth": "Autenticação",
+    "limits": "Limites",
+    "limitsValue": "120 requisições por minuto por chave · 100 itens por requisição · 1 MB por requisição",
+    "exampleCandidates": "Criar ou atualizar candidatos",
+    "exampleJobs": "Criar ou atualizar uma vaga",
+    "note1": "Envie externalId (o ID no seu sistema): repetir uma chamada atualiza o registro em vez de duplicá-lo.",
+    "note2": "Candidatos que já estão na sua organização são reconhecidos pelo e-mail ou LinkedIn; só os campos vazios são preenchidos.",
+    "note3": "GET /candidates e GET /jobs listam registros (limit, page, updated_since). GET /me testa uma chave.",
+    "note4": "Itens inválidos retornam 422 com o índice e o campo de cada problema, e nada é salvo."
+  },
+  "runs": {
+    "caption": "Sincronizações recentes",
+    "when": "Quando",
+    "result": "Resultado",
+    "created": "Novos",
+    "updated": "Atualizados",
+    "paused": "Pausados",
+    "failed": "Problemas",
+    "trigger": {
+      "manual": "manual",
+      "schedule": "agendada",
+      "upload": "envio"
+    },
+    "status": {
+      "succeeded": "Concluída",
+      "failed": "Falhou",
+      "running": "Em andamento"
+    }
+  }
+}

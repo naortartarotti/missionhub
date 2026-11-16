@@ -82,11 +82,11 @@
     "steps": {
       "one": {
         "title": "Add candidates privately",
-        "body": "Import a CSV or add profiles by hand. Record the candidate's processing authorization, then activate them for matching. They stay visible to your organization only."
+        "body": "Import a CSV or add profiles by hand. Record the candidate's matching authorization, then turn on matching. They stay visible to your organization only."
       },
       "two": {
         "title": "Get matched to partner jobs",
-        "body": "The engine scores your candidates against partner roles and sorts them into Strong, Potential and Not eligible, with a plain explanation of why."
+        "body": "The engine scores your candidates against partner roles and sorts them into Strong, Partial and Not eligible, with a plain explanation of why."
       },
       "three": {
         "title": "Submit with authorization",
@@ -119,7 +119,7 @@
       "points": {
         "a": "Paste a job description, get suggested requirements",
         "b": "Anonymized match counts before referrals arrive",
-        "c": "Accept, decline with a reason, or request info"
+        "c": "Accept, decline with a reason, or request information"
       },
       "imageAlt": "Two recruiters working side by side at their desks"
     }
@@ -127,27 +127,27 @@
   "privacy": {
     "eyebrow": "Privacy by design",
     "title": "Anonymous until it's authorized.",
-    "subtitle": "Job owners see match counts, never identities. A candidate is only revealed when their recruiter submits them, with documented consent for that specific role.",
+    "subtitle": "Hiring recruiters see match counts, never identities. A candidate is only revealed when their recruiter submits them, with the candidate's documented authorization for that specific job.",
     "mock": {
       "job": "Head of Finance · Montréal",
-      "visible": "What the job owner sees",
+      "visible": "What the hiring recruiter sees",
       "count": "4 partner candidates match",
       "strong": "2 strong",
-      "potential": "2 potential",
+      "potential": "2 partial",
       "hidden": "Name, contact and resume stay hidden"
     },
     "features": {
       "isolation": {
         "title": "Organization isolation",
-        "body": "Row-level security keeps every agency's data inside its own workspace."
+        "body": "Row-level security keeps every organization's data inside its own space."
       },
       "consent": {
-        "title": "Documented consent",
+        "title": "Documented authorization",
         "body": "Processing and job-specific authorizations are recorded before anything is shared."
       },
       "audit": {
         "title": "Full audit trail",
-        "body": "Every submission, decision and ledger entry is logged and reviewable."
+        "body": "Every referral, decision and ledger entry is logged and reviewable."
       },
       "requests": {
         "title": "Privacy requests",
@@ -160,8 +160,8 @@
     "title": "A split everyone can see coming.",
     "subtitle": "Agree on the terms before work starts. The ledger shows exactly who is owed what, at every step.",
     "split": {
-      "source": "Candidate recruiter",
-      "job": "Job recruiter",
+      "source": "Sourcing recruiter",
+      "job": "Hiring recruiter",
       "platform": "MissionHub"
     },
     "ledger": {
@@ -200,11 +200,11 @@
     "items": {
       "a": {
         "q": "Can other agencies see my candidates?",
-        "a": "No. Your candidates are visible only to your organization. Job owners see anonymized match counts. A candidate is revealed only when you submit them to a specific job, sharing only the fields and documents you choose."
+        "a": "No. Your candidates are visible only to your organization. Hiring recruiters see anonymized match counts. A candidate is revealed only when you submit them to a specific job, sharing only the fields and documents you choose."
       },
       "b": {
         "q": "How is the commission split?",
-        "a": "By default, 45% to the recruiter who sourced the candidate, 45% to the recruiter who owns the job and 10% to MissionHub. Rules are configurable and versioned, and both sides confirm a collaboration agreement before the process continues."
+        "a": "By default, 45% to the sourcing recruiter, 45% to the hiring recruiter and 10% to MissionHub. Rules are configurable and versioned, and both sides confirm a collaboration agreement before the process continues."
       },
       "c": {
         "q": "Does MissionHub handle payments?",
@@ -244,7 +244,7 @@
     },
     "privacy": {
       "title": "Privacy by design",
-      "description": "Job owners see anonymized match counts, never identities. Learn how MissionHub isolates each agency's data, records consent and keeps a full audit trail."
+      "description": "Hiring recruiters see match counts, never identities. Learn how MissionHub isolates agency data, records candidate authorizations and keeps an audit trail."
     },
     "commissions": {
       "title": "Commissions",

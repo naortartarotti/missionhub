@@ -1,26 +1,28 @@
 {
   "title": "Indicações",
-  "description": "Acompanhe cada envio do início à contratação: candidatos que você enviou para vagas de parceiros e candidatos que parceiros enviaram para as suas.",
+  "description": "Acompanhe cada indicação, do envio à contratação: candidatos que você enviou para vagas de parceiros e candidatos que parceiros enviaram para as suas.",
   "directionNav": "Direção das indicações",
   "tabs": {
-    "sent": "Enviadas",
-    "received": "Recebidas"
+    "label": "Visões das indicações",
+    "received": "Recebidas",
+    "pipeline": "Pipeline",
+    "sent": "Enviadas"
   },
   "empty": {
     "sent": {
       "title": "Nenhuma indicação enviada ainda",
-      "description": "Quando uma vaga de parceiro combinar com um dos seus candidatos, envie-o pela página Oportunidades. Você acompanhará o progresso aqui.",
-      "action": "Ver oportunidades"
+      "description": "Quando uma vaga de parceiro combinar com um dos seus candidatos, envie-o pela página Sugestões. Você acompanhará o progresso aqui.",
+      "action": "Ver sugestões"
     },
     "received": {
-      "title": "Nenhum envio recebido ainda",
+      "title": "Nenhuma indicação recebida ainda",
       "description": "Publique uma vaga aberta a parceiros. Recrutadores com candidatos compatíveis poderão enviá-los a você.",
       "action": "Gerenciar vagas"
     }
   },
   "caption": {
     "sent": "Indicações enviadas",
-    "received": "Envios recebidos"
+    "received": "Indicações recebidas"
   },
   "columns": {
     "candidate": "Candidato",
@@ -38,11 +40,11 @@
     "forJob": "para {job}",
     "revoked": "A autorização de compartilhamento do candidato foi revogada em {date}.",
     "revokedTarget": "O perfil compartilhado e os documentos não estão mais disponíveis para você.",
-    "revokedSource": "O parceiro não tem mais acesso ao snapshot nem aos documentos.",
+    "revokedSource": "O parceiro não tem mais acesso ao perfil compartilhado nem aos documentos.",
     "guidanceTarget": "Analise o perfil aprovado e depois decida. O feedback deve ser relacionado à vaga e não discriminatório.",
     "guidanceSource": "Mantenha o parceiro atualizado. Retirar a indicação encerra o acesso dele a novos documentos.",
     "openCandidate": "Abrir ficha do candidato",
-    "approvedProfile": "Perfil do candidato aprovado",
+    "approvedProfile": "Perfil compartilhado",
     "whatYouShared": "O que você compartilhou",
     "notAvailable": "Não disponível.",
     "fields": {
@@ -65,7 +67,7 @@
     },
     "experience": "Experiência",
     "present": "atual",
-    "disclosed": "Campos divulgados: {fields}. Snapshot feito em {date}; edições posteriores na ficha original não são compartilhadas.",
+    "disclosed": "Campos divulgados: {fields}. Compartilhado em {date}. Edições posteriores no perfil do candidato não são compartilhadas.",
     "sharedDocuments": "Documentos compartilhados",
     "messages": "Mensagens",
     "you": "Você",
@@ -74,18 +76,21 @@
     "agreement": {
       "title": "Acordo de colaboração",
       "sourcing": "Recrutador de origem",
-      "jobOwner": "Dono da vaga",
+      "jobOwner": "Recrutador da vaga",
       "platform": "Plataforma",
       "rule": "{rule} v{version} · termos {terms}",
       "confirmed": "Confirmado por ambas as partes",
       "awaiting": "Aguardando o recrutador de origem",
       "openPlacement": "Abrir colocação e extrato",
-      "pending": "Criado automaticamente a partir da regra de comissão vigente quando o dono da vaga aceita. Depois disso, o snapshot fica congelado.",
-      "internal": "Indicação interna: as duas organizações têm um membro em comum, então não há comissão de sourcing. O dono da vaga fica com essa parte; a taxa da plataforma não muda."
+      "pending": "Criado automaticamente a partir da regra de comissão vigente quando o recrutador da vaga aceita. Depois disso, a divisão fica congelada.",
+      "internal": "Indicação interna: as duas organizações têm um membro em comum, então não há comissão para o recrutador de origem. O recrutador da vaga fica com essa parte; a taxa da plataforma não muda.",
+      "pendingSnapshot": "Criado quando o recrutador da vaga aceitar, com os termos desta indicação e a divisão vigente no envio. A divisão fica congelada para esta indicação.",
+      "deemed": "Criado a partir dos termos da indicação",
+      "deemedLine": "Criado em {date} a partir dos termos e da divisão congelados no envio, porque a contratação foi registrada antes da confirmação do acordo.",
+      "none": "Nenhum acordo: a contratação foi registrada sem divisão."
     },
     "timeline": "Linha do tempo",
     "reasonQuote": "“{reason}”",
-    "ownership": "Titularidade protegida até {date}.",
     "showMore": "Mostrar mais",
     "showLess": "Mostrar menos",
     "summary": "Resumo",
@@ -106,32 +111,69 @@
       "closedBy": "{status} por {who}",
       "closedByYou": "{status} por você",
       "noReason": "Nenhum motivo informado.",
-      "hired": "Contratado · o placement agora é acompanhado na sua carteira.",
+      "hired": "Contratado · a colocação agora é acompanhada em Comissões.",
       "awaitingCandidate": "Aguardando aprovação do candidato",
       "awaitingSent": "E-mail enviado para {email} {time}. O link expira em {date}. {partner} só vê a indicação depois da confirmação.",
       "awaitingViewed": "O candidato abriu o link {time}.",
       "awaitingNotSent": "O e-mail para {email} ainda não foi enviado.",
       "awaitingExpired": "O link enviado para {email} expirou em {date}. Reenvie para gerar um novo.",
       "candidateDeclined": "O candidato recusou a indicação",
-      "candidateDeclinedBody": "{partner} não foi avisado e não teve acesso a nenhuma informação."
+      "candidateDeclinedBody": "{partner} não foi avisado e não teve acesso a nenhuma informação.",
+      "alreadyPresented": "Candidato já apresentado",
+      "alreadyPresentedBody": "O candidato confirmou, mas já tinha sido apresentado a {partner} para este cliente, por isso esta indicação não foi entregue. {partner} não a vê, e nada foi compartilhado.",
+      "claimFiledSource": "Recusada por {partner}: apresentação anterior",
+      "claimFiledSourceBody": "{partner} diz que já tinha este candidato para este cliente. Veja a objeção abaixo. Você pode contestá-la até {when} (horário de Toronto).",
+      "hiredNoSplit": "Contratação registrada sem divisão",
+      "hiredNoSplitTargetReleased": "Esta indicação não gera divisão.",
+      "hiredNoSplitTargetNoAgreement": "Nenhuma colocação: a indicação não tinha acordo confirmado.",
+      "hiredNoSplitSource": "{partner} registrou uma contratação em {date}. Nenhuma colocação foi criada.",
+      "hiredNoSplitSourceRule": "A indicação não tinha acordo confirmado. Se você entende que uma parte é devida, a regra 7.5 das Regras da rede descreve os próximos passos.",
+      "void": "Esta indicação deixou de contar.",
+      "voidSource": "Um admin da plataforma considerou inválida a confirmação do candidato."
     },
     "awaitingFlash": "Indicação criada. Enviamos um e-mail para {email}; ela será entregue a {partner} assim que o candidato confirmar.",
     "awaitingNotSentFlash": "Indicação criada, mas o e-mail para o candidato não foi enviado. Use “Reenviar e-mail” abaixo.",
     "resend": "Reenviar e-mail",
     "resending": "Reenviando…",
     "candidateActor": "Candidato",
-    "profileUpdated": "O candidato atualizou: {fields}"
+    "profileUpdated": "O candidato atualizou: {fields}",
+    "systemActor": "MissionHub",
+    "adminActor": "Admin do MissionHub",
+    "ownershipNotDelivered": "Esta indicação não foi entregue, por isso não tem titularidade.",
+    "ownershipReleased": "Candidato liberado em {date}. Esta indicação não tem mais titularidade para este cliente.",
+    "ownershipEnded": "Sem titularidade: a objeção por apresentação anterior a esta indicação foi mantida ou se tornou definitiva.",
+    "legacyDuplicateHint": "Registrado antes da exigência de comprovantes. Não é possível registrar objeção nem contestar.",
+    "claimRejected": {
+      "target": "Objeção rejeitada em {date}. Um admin da plataforma considerou a objeção por apresentação anterior improcedente. Analise esta indicação de novo: aceite-a ou recuse-a por outro motivo.",
+      "source": "Objeção rejeitada em {date}. Esta indicação voltou para análise de {partner}."
+    },
+    "terms": {
+      "title": "Termos",
+      "newerOnJob": "Os termos desta vaga estão agora na versão {current}. Esta indicação mantém a versão {version}.",
+      "placementLine": "Taxa calculada {computed} · faturada {invoiced}",
+      "newerOnJobAmended": "Os termos desta vaga estão agora na versão {current}. Esta indicação mantém os termos alterados."
+    },
+    "ownershipStartsAtDelivery": {
+      "one": "A titularidade começa quando a indicação for entregue: {count} mês com este cliente.",
+      "other": "A titularidade começa quando a indicação for entregue: {count} meses com este cliente."
+    },
+    "protectedUntil": "Protegida enquanto estiver em andamento e até {date} (horário de Toronto).",
+    "protectedUnlessReleased": "Protegida enquanto estiver em andamento e até {date} (horário de Toronto), a menos que o recrutador de origem tenha liberado o candidato.",
+    "ownershipVoid": "Esta indicação deixou de contar.",
+    "closedStaleOwn": "Encerrada pelo MissionHub: sem atividade por 60 dias após a retirada da sua organização da rede.",
+    "closedStalePartner": "Encerrada pelo MissionHub após um longo período sem atividade.",
+    "recordCreated": "Perfil do candidato criado em {date}."
   },
   "actions": {
     "under_review": "Iniciar análise",
     "accepted": "Aceitar",
     "declined": "Recusar",
-    "info_requested": "Pedir mais informações",
+    "info_requested": "Pedir informações",
     "withdrawn": "Retirar",
     "interviewing": "Mover para entrevistas",
     "offer": "Registrar oferta",
     "rejected": "Não selecionado",
-    "cancelled": "Cancelar",
+    "cancelled": "Cancelar indicação",
     "markInfoProvided": "Marcar informações como enviadas",
     "confirmTitle": "{label}?",
     "declineHint": "Compartilhe um feedback relacionado à vaga e não discriminatório. Ele ficará visível para o recrutador parceiro.",
@@ -142,20 +184,76 @@
   },
   "agreement": {
     "trigger": "Analisar e confirmar termos",
-    "title": "Confirmar acordo de colaboração",
+    "title": "Confirmar o acordo de colaboração?",
     "description": "Você concorda com a divisão de comissão exibida, congelada para esta indicação. Os termos-modelo são um rascunho pendente de revisão jurídica; confirme suas próprias obrigações contratuais separadamente.",
-    "confirm": "Confirmar acordo"
+    "confirm": "Confirmar acordo",
+    "descriptionSnapshot": "Estes são os termos desta indicação. Eles não podem ser alterados para esta indicação, a menos que as duas organizações peçam por escrito ao MissionHub antes da contratação. As regras da rede são um rascunho pendente de revisão jurídica."
   },
   "hire": {
-    "trigger": "Informar contratação",
-    "title": "Informar uma contratação",
-    "description": "Cria a colocação usando o acordo congelado. A comissão fica projetada até o pagamento do cliente ser verificado.",
-    "fee": "Taxa de colocação contratada",
+    "trigger": "Registrar contratação",
+    "title": "Registrar uma contratação",
+    "description": "Cria a colocação com a taxa, a moeda e a garantia que você informar. A comissão fica prevista até o pagamento do cliente ser verificado.",
+    "fee": "Taxa de colocação",
     "currency": "Moeda",
     "startDate": "Data de início",
-    "guarantee": "Garantia de reposição (dias)",
+    "startRange": "Datas permitidas: de {min} a {max}",
+    "guarantee": "Garantia (dias)",
     "recording": "Registrando…",
-    "submit": "Registrar contratação"
+    "submit": "Registrar contratação",
+    "descriptionSnapshot": "Cria a colocação com os termos desta indicação. A comissão fica prevista até o pagamento do cliente ser verificado.",
+    "termsTitle": "Termos",
+    "base": "Salário-base do primeiro ano ({currency})",
+    "baseHint": "Conforme a oferta aceita. As duas organizações veem este valor; o candidato, não.",
+    "bonus": "Bônus-alvo ({currency})",
+    "bonusHint": "Bônus-alvo anual previsto na oferta. Informe 0 se não houver. Não inclua ações, bônus de contratação, benefícios nem auxílio-mudança.",
+    "computedFee": "Taxa calculada",
+    "breakdownRate": "{rate} × {amount}",
+    "breakdownMinimum": "Vale a taxa mínima",
+    "breakdownFlat": "Taxa fixa",
+    "guaranteeEnds": "A garantia termina em {date}",
+    "noGuarantee": "Sem garantia",
+    "differentToggle": "A taxa faturada é diferente",
+    "invoiced": "Taxa faturada ({currency})",
+    "invoicedHint": "A taxa cobrada do cliente por esta contratação, adiantamento incluído. Não inclua outros serviços.",
+    "reason": "Motivo",
+    "note": "Nota (opcional)",
+    "noteRequired": "Nota",
+    "noteHint": "As duas organizações veem esta nota. Não inclua nomes nem contatos de candidatos.",
+    "difference": "Diferença: {amount}",
+    "lowerConsequence": "A parte de {partner} continua baseada na taxa calculada, então sua parte cobre a diferença e pode ficar negativa. {partner} será avisado.",
+    "higherConsequence": "As partes nunca são calculadas sobre menos que a taxa calculada. Se você faturar mais, todas as partes acompanham a taxa faturada. {partner} será avisado.",
+    "legacyTitle": "Termos não registrados",
+    "legacyDescription": "Esta indicação foi enviada antes dos termos da vaga. Informe a taxa, a moeda e a garantia combinadas com {partner}.",
+    "validation": {
+      "acceptanceAfterStart": "A data do aceite deve ser igual ou anterior à data de início",
+      "acceptanceFuture": "Informe uma data que não esteja no futuro",
+      "otherRoleTitle": "Informe o título da vaga (até 120 caracteres)"
+    },
+    "anyStatusNote": "Status desta indicação: {status}. Você ainda pode registrar a contratação: valem os termos da indicação.",
+    "acceptedOn": "Oferta aceita em",
+    "acceptanceUnknown": "Não sei a data do aceite",
+    "startUsedForTiming": "Vamos usar a data de início para verificar os prazos.",
+    "roleGroup": "Vaga ocupada",
+    "roleThisJob": "Esta vaga: {job}",
+    "roleOther": "Outra vaga neste cliente",
+    "otherRoleTitle": "Título da vaga",
+    "otherRoleHint": "O título da vaga em que a pessoa foi contratada. Não inclua dados do candidato. A taxa segue os termos desta indicação e o salário desta vaga.",
+    "objectionOpenTitle": "Sua objeção nesta indicação ainda está aberta",
+    "objectionOpenBody": "Você poderá registrar a contratação depois que sua objeção por apresentação anterior for decidida. Se ela for mantida, esta indicação deixa de contar.",
+    "close": "Fechar",
+    "refresh": "Atualizar página",
+    "deemedTitle": "Esta indicação não tem acordo confirmado",
+    "deemedBody": "Registrar a contratação cria o acordo a partir dos termos do envio de {partner} (versão {version}, {date}) e da divisão congelada naquele momento. {partner} é avisado e não precisa confirmar.",
+    "deemedBodyLegacy": "Registrar a contratação cria o acordo a partir da divisão vigente quando {partner} enviou esta indicação. {partner} é avisado e não precisa confirmar.",
+    "noAgreementTitle": "Nenhuma colocação será criada",
+    "noAgreementBody": "Esta indicação não tem acordo confirmado, então a contratação é registrada para as duas organizações, sem divisão.",
+    "noAgreementTermsLine": "Esta indicação foi enviada com a versão {version} dos termos ({date}).",
+    "recordOnlyTitle": "Contratação registrada",
+    "recordOnlyResult": "Esta indicação não gera divisão. Nenhuma colocação foi criada.",
+    "noAgreementResult": "Nenhuma colocação foi criada, porque a indicação não tinha acordo confirmado. {partner} foi avisado.",
+    "done": "Concluir",
+    "nonPermanentHint": "Contratações como PJ ou autônomo, por EOR, empresa de folha de pagamento, empresa do mesmo grupo ou outra agência contam como contratação. Os termos da indicação continuam definindo a parte de {partner}, salvo concordância prévia por escrito de {partner}.",
+    "reportedStart": "{partner} relatou um início por volta de {month}."
   },
   "message": {
     "label": "Mensagem",
@@ -171,7 +269,7 @@
   },
   "form": {
     "step1": "1. Escolha o que compartilhar",
-    "step1Body": "Apenas os campos marcados são copiados para um snapshot imutável para {recipient}. Suas notas privadas e a ficha original nunca são compartilhadas.",
+    "step1Body": "Apenas os campos que você marcar são copiados para o perfil compartilhado que {recipient} vê. Suas notas privadas e o perfil original nunca são compartilhados.",
     "fieldsLegend": "Campos a divulgar",
     "identifying": "Identificador",
     "documents": "Documentos",
@@ -186,12 +284,12 @@
     "newAuthorization": "Registrar nova autorização",
     "legalBasis": "Base legal",
     "legalBasisHint": "Opções provisórias — confirme com um assessor de privacidade.",
-    "evidence": "Evidência",
+    "evidence": "Comprovante",
     "evidenceHint": "ex.: 'Candidato aprovou por e-mail em 2026-11-06 após ler o resumo da vaga.'",
     "confirmInterest": "Confirmei que o candidato tem interesse nesta vaga específica e aprovou o compartilhamento das informações selecionadas.",
     "step3": "3. Adicione uma nota (opcional)",
-    "noteLabel": "Nota para o dono da vaga",
-    "notePlaceholder": "Contexto para o dono da vaga: motivação, aviso prévio, por que combina…",
+    "noteLabel": "Nota para o recrutador da vaga",
+    "notePlaceholder": "Contexto para o recrutador da vaga: motivação, aviso prévio, por que combina…",
     "whoSees": "Quem verá o quê",
     "nothingSelected": "Nada selecionado",
     "plusDocuments": {
@@ -200,7 +298,7 @@
     },
     "identifyingWarning": "Você está compartilhando informações identificadoras: {fields}.",
     "anonymous": "O candidato permanece anônimo para o parceiro, a menos que você adicione campos identificadores.",
-    "revocation": "Se a autorização for revogada depois, o parceiro perde imediatamente o acesso ao snapshot e aos documentos.",
+    "revocation": "Se a autorização for revogada depois, o parceiro perde imediatamente o acesso ao perfil compartilhado e aos documentos.",
     "submitting": "Enviando…",
     "submit": "Enviar candidato",
     "authMethod": "Como o candidato autoriza",
@@ -208,7 +306,15 @@
     "methodEmailHint": "Enviamos um link privado para {email}. A indicação fica como “Aguardando aprovação do candidato” e é entregue a {partner} automaticamente quando ele confirmar. Pelo link, o candidato também pode atualizar o próprio perfil.",
     "methodEmailMissing": "Sem e-mail na ficha do candidato. Adicione um e-mail para pedir a confirmação.",
     "methodRecorded": "Já tenho a autorização do candidato",
-    "methodRecordedHint": "Registre como e quando o candidato autorizou (ex.: por telefone)."
+    "methodRecordedHint": "Registre como e quando o candidato autorizou (ex.: por telefone). O MissionHub usa os dados de contato do candidato para detectar indicações duplicadas.",
+    "duplicateCheckNote": "O MissionHub compara os dados de contato do candidato para checar se ele já foi apresentado a {partner} para este cliente.",
+    "identifierRequired": {
+      "title": "Adicione dados de contato para enviar",
+      "description": "Toda indicação precisa de pelo menos uma forma de contato com o candidato: e-mail, telefone completo com código de área ou perfil do LinkedIn.",
+      "action": "Editar candidato"
+    },
+    "termsLine": "Você está enviando com a versão {version} dos termos ({date}).",
+    "termsLineConfirm": "Estes termos valem mesmo que o candidato confirme depois."
   },
   "disclosure": {
     "headline": "Título",
@@ -236,7 +342,18 @@
     "validAmount": "Informe um valor válido",
     "pickReason": "Escolha um motivo",
     "addNote": "Adicione uma explicação curta",
-    "addQuestion": "Escreva sua pergunta"
+    "addQuestion": "Escreva sua pergunta",
+    "attestationRequired": "Marque a confirmação para registrar a objeção.",
+    "evidenceRequired": "Anexe pelo menos um arquivo ou escolha uma indicação anterior",
+    "priorDateRequired": "Informe a data",
+    "contestReason": "Explique o motivo em 5 a 2.000 caracteres",
+    "baseRequired": "Informe um salário-base maior que 0",
+    "bonusRequired": "Informe o bônus-alvo ou 0",
+    "invoicedSame": "Informe um valor diferente ou desmarque “A taxa faturada é diferente”",
+    "invoicedPositive": "Informe uma taxa faturada maior que 0",
+    "reasonRequired": "Escolha um motivo",
+    "noteRequiredOther": "Adicione uma nota explicando a diferença",
+    "noteTooLong": "Use no máximo 500 caracteres na nota"
   },
   "errors": {
     "opportunityGone": "Esta oportunidade não está mais disponível.",
@@ -247,7 +364,13 @@
   "success": {
     "statusUpdated": "Status atualizado. O parceiro foi notificado.",
     "agreementConfirmed": "Acordo confirmado. Os termos de comissão agora estão congelados para esta indicação.",
-    "candidateEmailResent": "E-mail reenviado para {email}."
+    "candidateEmailResent": "E-mail reenviado para {email}.",
+    "withdrawn": "Indicação retirada. Ela mantém a prioridade para este cliente até {date}.",
+    "withdrawnReleased": "Indicação retirada e candidato liberado.",
+    "released": "Candidato liberado para este cliente.",
+    "claimFiled": "Objeção registrada.",
+    "contested": "Objeção contestada. Um admin da plataforma vai analisá-la.",
+    "evidenceRemoved": "Arquivo removido."
   },
   "queue": {
     "bucketNav": "Etapa da indicação",
@@ -267,7 +390,7 @@
     },
     "caughtUp": {
       "title": "Tudo em dia",
-      "description": "Nenhum envio aguardando decisão. Os novos aparecem aqui e nas suas notificações."
+      "description": "Nenhuma indicação aguardando decisão. As novas aparecem aqui e nas suas notificações."
     },
     "emptyBucket": "Nada por aqui ainda.",
     "selectAll": "Selecionar todos desta página",
@@ -279,7 +402,7 @@
     },
     "declineSelected": "Recusar…",
     "clear": "Limpar",
-    "noScore": "Sem score de aderência para este envio",
+    "noScore": "Sem score de aderência para esta indicação",
     "coverage": "{has}/{total} skills obrigatórias",
     "salaryFits": "Dentro do budget",
     "salaryAbove": "Acima do budget",
@@ -306,10 +429,10 @@
       "one": "{count} mensagem",
       "other": "{count} mensagens"
     },
-    "agreementLine": "Divisão: indicador {sourcing} · você {owner} · plataforma {platform}",
+    "agreementLine": "Divisão: origem {sourcing} · você {owner} · plataforma {platform}",
     "accept": "Aceitar",
     "decline": "Recusar",
-    "askInfo": "Pedir info",
+    "askInfo": "Pedir informações",
     "openFull": "Abrir página completa",
     "waitingPartner": "Aguardando resposta do parceiro",
     "checkOk": "Atende",
@@ -350,7 +473,14 @@
       },
       "noneWaiting": "Nada aguardando",
       "viewJob": "Ver vaga"
-    }
+    },
+    "claimCallout": {
+      "title": "Já tinha este candidato para este cliente?",
+      "description": "Recuse com uma objeção por apresentação anterior e comprovantes datados. Você pode fazer isso até {when} (horário de Toronto).",
+      "action": "Registrar objeção"
+    },
+    "bulkClaimHint": "Para registrar uma objeção por apresentação anterior, abra uma indicação por vez.",
+    "claimRejectedChip": "Objeção rejeitada"
   },
   "declineReasons": {
     "skills": "Faltam skills",
@@ -358,9 +488,10 @@
     "salary": "Salário",
     "location": "Localização",
     "availability": "Disponibilidade",
-    "duplicate": "Já em processo",
+    "duplicate": "Já em processo (motivo antigo)",
     "position_filled": "Vaga preenchida",
-    "other": "Outro"
+    "other": "Outro",
+    "prior_presentation": "Apresentação anterior"
   },
   "direction": {
     "inbound": {
@@ -388,6 +519,10 @@
     "sent": {
       "title": "Indicações enviadas",
       "description": "Seus candidatos enviados para vagas de recrutadores parceiros, do envio à contratação."
+    },
+    "pipeline": {
+      "title": "Pipeline",
+      "description": "Mova os candidatos aceitos pelo seu processo seletivo, da aceitação à contratação."
     }
   },
   "sent": {
@@ -404,7 +539,8 @@
     "submittedAt": "Enviado {time}",
     "progress": "Etapa {step} de {total}",
     "openCandidate": "Ficha do candidato",
-    "partnerSees": "O parceiro vê: {label}"
+    "partnerSees": "O parceiro vê: {label}",
+    "claimOpenChip": "Contestar até {when} (Toronto)"
   },
   "composer": {
     "viewOwn": "Sua visão",
@@ -423,7 +559,7 @@
     "contact": "Contato",
     "documents": "Documentos",
     "sharingCount": "Compartilhando {count} de {total} campos",
-    "shareHint": "Use o olho de cada seção para compartilhar ou ocultar. Só o que estiver compartilhado entra no snapshot.",
+    "shareHint": "Use o olho de cada seção para compartilhar ou ocultar. Só o que estiver compartilhado é copiado para o perfil compartilhado.",
     "noSummary": "Nenhum resumo cadastrado.",
     "noExperience": "Nenhum histórico profissional cadastrado.",
     "noContact": "Nenhum contato cadastrado.",
@@ -436,12 +572,328 @@
     },
     "submitTitle": "Enviar para {partner}",
     "authTitle": "Autorização do candidato",
-    "noteTitle": "Nota para o dono da vaga (opcional)",
+    "noteTitle": "Nota para o recrutador da vaga (opcional)",
     "relocation": "Aberto a realocação",
     "yearsShort": {
       "one": "{count} ano",
       "other": "{count} anos"
     },
-    "availableFrom": "Disponível a partir de {date}"
+    "availableFrom": "Disponível a partir de {date}",
+    "restrictedHold": "Você não pode enviar indicações enquanto sua organização estiver com restrição de rede.",
+    "restrictedRules": "Você não pode enviar indicações até um administrador da organização aceitar as Regras da rede em vigor.",
+    "userMustAccept": "Aceite a versão {label} das Regras da rede para enviar indicações."
+  },
+  "duplicate": {
+    "pendingTitle": "Este candidato talvez já esteja em processo com {partner}",
+    "pendingDescription": "Outra indicação deste candidato aguarda a confirmação do candidato. Você ainda pode enviar. Se a outra indicação chegar primeiro a {partner}, esta será encerrada e {partner} não vai recebê-la.",
+    "acknowledge": "Entendi e quero enviar esta indicação mesmo assim.",
+    "submitAnyway": "Enviar mesmo assim",
+    "stopTitle": "Candidato já apresentado",
+    "message": "Este candidato já foi apresentado a {partner} para este cliente, por isso esta indicação não pode ser enviada. Essa regra só define qual indicação conta para a comissão. Ela não impede {partner} de contratar o candidato.",
+    "stopNext": "Nada foi enviado ao candidato nem a {partner}.",
+    "backToOpportunities": "Voltar às sugestões",
+    "supportBefore": "Acha que é um engano?",
+    "supportLink": "Fale com o suporte do MissionHub",
+    "supportAfter": "e informe a referência {reference}.",
+    "supportSubject": "Indicação bloqueada {reference}"
+  },
+  "withdraw": {
+    "title": "Retirar esta indicação?",
+    "description": "{partner} será avisado. Retirar não faz você perder a prioridade: até {date}, nenhum outro parceiro pode enviar este candidato a {partner} para este cliente pelo MissionHub.",
+    "release": "Liberar também este candidato para este cliente",
+    "releaseHint": "Outros parceiros poderão enviar este candidato a {partner} para este cliente. Esta indicação perde a prioridade.",
+    "confirm": "Retirar",
+    "continue": "Continuar",
+    "releaseConfirmTitle": "Liberar este candidato para este cliente?",
+    "releaseConfirmDescription": "Sua indicação será retirada e perderá a prioridade. Outros parceiros poderão enviar este candidato a {partner} para este cliente. Não é possível desfazer.",
+    "releaseConfirm": "Retirar e liberar",
+    "back": "Voltar"
+  },
+  "release": {
+    "trigger": "Liberar candidato",
+    "title": "Liberar este candidato para este cliente?",
+    "description": "Esta indicação está encerrada, mas mantém a prioridade para este cliente até {date}. Se você liberar o candidato, outros parceiros poderão enviá-lo a {partner} para este cliente.",
+    "continue": "Continuar",
+    "confirmTitle": "Liberar definitivamente?",
+    "confirmDescription": "Esta indicação perderá a prioridade para este cliente de vez. {partner} não será avisado. Não é possível desfazer.",
+    "back": "Voltar",
+    "confirm": "Liberar definitivamente"
+  },
+  "claim": {
+    "trigger": "Registrar objeção",
+    "title": "Registrar objeção por apresentação anterior",
+    "description": "Ao registrar a objeção, esta indicação é recusada com o motivo “Apresentação anterior”. {partner} vê as datas, o tipo de comprovante e sua nota, mas não seus arquivos. {partner} tem 10 dias úteis para contestar. Se contestar, um admin da plataforma analisa seus comprovantes.",
+    "deadlineLabel": "Prazo da objeção",
+    "evidenceType": "Comprovante",
+    "evidenceFile": "Anexar arquivos",
+    "evidenceFileHint": "Uma exportação do seu ATS, ou um e-mail salvo em PDF ou imagem, que mostre o candidato em processo seletivo com este cliente.",
+    "evidenceReferral": "Usar uma indicação anterior do MissionHub",
+    "evidenceReferralHint": "Uma indicação que você recebeu para esta vaga ou este cliente antes desta.",
+    "evidenceReferralNone": "Nenhuma indicação anterior para esta vaga ou este cliente pode ser usada.",
+    "files": "Arquivos",
+    "filesHint": "PDF, PNG ou JPEG. Até 5 arquivos, de até 10 MB cada.",
+    "uploadDeadline": "Prazo da objeção: {when} (horário de Toronto) · {left}. Os arquivos precisam ser processados e a objeção registrada até lá.",
+    "addFiles": "Adicionar arquivos",
+    "addMoreFiles": "Adicionar mais arquivos",
+    "removeFileAria": "Remover {name}",
+    "file": {
+      "uploading": "Carregando arquivo…",
+      "cancelAria": "Cancelar o carregamento de {name}",
+      "processing": "Verificando arquivo…",
+      "ready": "Pronto · {size} · carregado em {when} (Toronto)",
+      "rejected": "Este arquivo não pode ser usado. Remova-o para continuar.",
+      "failed": "O carregamento não foi concluído.",
+      "retry": "Tentar de novo",
+      "waiting": {
+        "one": "Aguardando o processamento de {count} arquivo",
+        "other": "Aguardando o processamento de {count} arquivos"
+      },
+      "removeRejected": "Para continuar, remova o arquivo que não pode ser usado",
+      "none": "Adicione pelo menos um arquivo",
+      "selectedSr": {
+        "one": "{count} arquivo anexado",
+        "other": "{count} arquivos anexados"
+      },
+      "retryOrRemove": "Para continuar, tente carregar de novo ou remova o arquivo"
+    },
+    "priorDate": "Última data em que o candidato esteve em processo seletivo com este cliente",
+    "priorDateHint": "Entre {from} e {to} (antes da entrega desta indicação).",
+    "pickReferral": "Indicação anterior",
+    "pickerOption": "{candidate} · {job} · de {partner} · entregue em {date}",
+    "priorDateFromReferral": "Data usada: {date}, dia em que a indicação anterior foi entregue.",
+    "note": "Nota (opcional)",
+    "noteHint": "{partner} vê esta nota. Não inclua nomes de clientes nem dados de contato.",
+    "attestation": "Confirmo que esta objeção e seus comprovantes são verdadeiros e corretos. Entendo que objeções falsas podem levar à suspensão da minha organização no MissionHub.",
+    "submit": "Recusar e registrar objeção",
+    "submitting": "Registrando objeção…",
+    "back": "Voltar aos motivos de recusa",
+    "validation": {
+      "evidenceRequired": "Anexe pelo menos um arquivo ou escolha uma indicação anterior",
+      "priorDateRequired": "Informe a data",
+      "priorDateAfterDelivery": "Informe uma data anterior a {date}, dia da entrega desta indicação",
+      "priorDateTooOld": {
+        "one": "Informe uma data a partir de {date} ({count} mês antes da entrega)",
+        "other": "Informe uma data a partir de {date} ({count} meses antes da entrega)"
+      },
+      "attestationRequired": "Marque a confirmação para registrar a objeção",
+      "fileType": "Anexe um arquivo PDF, PNG ou JPEG",
+      "fileSize": "Anexe arquivos de até 10 MB",
+      "tooManyFiles": "Anexe no máximo 5 arquivos"
+    },
+    "messages": {
+      "filed": "Objeção registrada. {partner} pode contestá-la até {when} (horário de Toronto)."
+    },
+    "panel": {
+      "title": "Objeção por apresentação anterior",
+      "filed": "Registrada",
+      "priorDate": "Última data em processo seletivo com este cliente",
+      "evidence": "Comprovantes",
+      "fileN": "Arquivo {n}",
+      "uploaded": "Carregado em {when} (Toronto)",
+      "sha": "SHA-256",
+      "copyShaAria": "Copiar o SHA-256 do arquivo {n}",
+      "copied": "Copiado",
+      "filesHiddenSource": "Só {partner} pode abrir estes arquivos, além dos admins da plataforma se você contestar. O SHA-256 permite checar que um arquivo não mudou desde o carregamento.",
+      "download": "Baixar {name}",
+      "scanning": "Verificando arquivo…",
+      "earlierReferral": "Indicação anterior pelo MissionHub",
+      "openEarlierReferral": "Abrir indicação anterior",
+      "note": "Nota",
+      "noNote": "Nenhuma nota.",
+      "contestDeadline": "Prazo para contestar",
+      "resolution": "Resolução de um admin da plataforma",
+      "status": {
+        "openTarget": "{partner} pode contestar esta objeção até {when} (horário de Toronto).",
+        "openSource": "Você pode contestar esta objeção até {when} (horário de Toronto). Contestar é gratuito: um admin da plataforma analisa os comprovantes.",
+        "contested": "Contestada em {date}. Um admin da plataforma está analisando a objeção.",
+        "final": "Definitiva: não contestada até {when} (horário de Toronto).",
+        "upheld": "Mantida por um admin da plataforma em {date}.",
+        "rejected": "Rejeitada por um admin da plataforma em {date}."
+      }
+    },
+    "priorDateWindowHint": {
+      "one": "O período de titularidade desta indicação é de {count} mês, então você pode voltar até {count} mês.",
+      "other": "O período de titularidade desta indicação é de {count} meses, então você pode voltar até {count} meses."
+    }
+  },
+  "contest": {
+    "trigger": "Contestar objeção",
+    "title": "Contestar esta objeção?",
+    "description": "Um admin da plataforma analisa a objeção e os comprovantes e depois a mantém ou rejeita. Contestar é gratuito. Você e {partner} serão avisados da decisão.",
+    "reason": "Por que você discorda da objeção?",
+    "reasonHint": "Só os admins da plataforma MissionHub leem este texto. {partner} não o vê. Não inclua nomes de clientes nem dados de contato.",
+    "confirm": "Contestar objeção",
+    "messages": {
+      "contested": "Objeção contestada. Um admin da plataforma vai analisá-la."
+    }
+  },
+  "deadline": {
+    "at": "{when} (horário de Toronto)",
+    "left": {
+      "one": "{count} dia útil restante",
+      "other": "{count} dias úteis restantes"
+    },
+    "endsToday": "Termina hoje",
+    "closed": "Encerrado em {when} (horário de Toronto)"
+  },
+  "termsChanged": {
+    "title": "Os termos desta vaga mudaram",
+    "description": "{partner} publicou novos termos em {date}. Nada foi enviado. Confira as mudanças marcadas abaixo e envie de novo.",
+    "submit": "Enviar com os novos termos"
+  },
+  "hireReport": {
+    "limit": "Você pode relatar uma contratação até {date}.",
+    "limitTail": "Você pode relatar uma contratação até {date} se o processo seletivo do cliente começou antes de {windowEnd}.",
+    "limitClosed": "O prazo para relatar uma contratação terminou em {date}.",
+    "messages": {
+      "filed": "Relato de contratação enviado. {partner} tem até {when} (horário de Toronto) para responder."
+    },
+    "validation": {
+      "employer": "Informe o empregador (até 200 caracteres)",
+      "startMonth": "Escolha o mês e o ano",
+      "statement": "Escreva de 20 a 2000 caracteres",
+      "itemDate": "Informe uma data que não esteja no futuro",
+      "capturedBefore": "A data de captura não pode ser anterior à data do comprovante",
+      "link": "Informe um link que comece com https://",
+      "tail": "Confirme quando o processo começou e marque o comprovante que mostra isso",
+      "learnedVia": "Escolha como você soube",
+      "itemType": "Escolha o tipo",
+      "attestation": "Marque a caixa para confirmar",
+      "role": "Use até 120 caracteres no cargo"
+    },
+    "trigger": "Relatar contratação",
+    "title": "Relatar uma contratação a {partner}",
+    "description": "Avise {partner} de que, na sua avaliação, o cliente contratou este candidato. {partner} vê a sua explicação, o empregador e as datas dos seus comprovantes. Só os admins do MissionHub veem arquivos e links. {partner} tem 10 dias úteis para responder. Enquanto o relato estiver pendente, você não pode liberar este candidato para este cliente.",
+    "tailStatement": "O processo seletivo do cliente que levou a esta contratação (primeira entrevista ou avaliação) começou antes de {windowEnd}.",
+    "tailHint": "Marque pelo menos um comprovante que mostre quando o processo começou.",
+    "item": {
+      "backsTail": "Este comprovante mostra quando o processo começou",
+      "type": "Tipo",
+      "date": "Data do comprovante",
+      "captured": "Capturado em (opcional)",
+      "link": "Link (opcional)",
+      "linkHint": "Começa com https://. Só os admins do MissionHub o veem.",
+      "add": "Adicionar outro comprovante",
+      "remove": "Remover comprovante {n}",
+      "legend": "Comprovante {n}"
+    },
+    "employer": "Empregador, como você o conhece",
+    "employerHint": "{partner} lê este campo.",
+    "startMonth": "Início aproximado",
+    "role": "Cargo, se souber",
+    "learnedVia": "Como você soube",
+    "evidence": "Comprovantes",
+    "evidenceHint": "Adicione pelo menos um comprovante datado.",
+    "weightHint": "Uma captura de tela sem link nem data é aceita, mas tem menos peso.",
+    "files": "Arquivos (opcional)",
+    "filesHint": "PDF, PNG ou JPEG. Até 5 arquivos, de até 10 MB cada. Só os admins do MissionHub os veem. {partner} vê quando cada um foi carregado e o SHA-256.",
+    "statement": "Explicação",
+    "statementHint": "O que você sabe e como sabe. {partner} lê este texto. 20 a 2000 caracteres.",
+    "attestation": "Confirmo que este relato é verdadeiro e completo, até onde sei (Regras da rede, regra 4.8).",
+    "submit": "Enviar relato",
+    "filing": "Enviando…",
+    "file": {
+      "waiting": "Aguarde até que todos os arquivos sejam verificados.",
+      "removeRejected": "Remova o arquivo que não pode ser usado."
+    },
+    "unavailableHint": "Se você tiver uma pergunta para {partner}, escreva nas mensagens da indicação.",
+    "rightToolUnavailable": "Relatos de contratação são enviados a partir da indicação, com comprovantes datados, enquanto ela conta. Caso contrário, escreva para {org} nas mensagens da indicação.",
+    "panel": {
+      "title": "Relato de contratação",
+      "filedBy": "Enviado em {when} (Toronto) por {who}",
+      "notGiven": "Não informado",
+      "tailMade": "O recrutador de origem declarou que o processo seletivo começou antes de {windowEnd}.",
+      "linksHidden": "Só {partner} e os admins do MissionHub podem ver os links.",
+      "filesHidden": "Só {partner} e os admins do MissionHub podem ver os arquivos.",
+      "releasePaused": "Enquanto este relato estiver pendente, você não pode liberar este candidato para este cliente.",
+      "earlier": "Relatos anteriores ({count})",
+      "earlierLine": "Enviado em {date}: {outcome}",
+      "status": {
+        "awaitingTarget": "Responda até {when} (horário de Toronto): confirme e registre a contratação, ou conteste o relato.",
+        "awaitingSource": "{partner} tem até {when} (horário de Toronto) para responder.",
+        "unansweredTarget": "O prazo de resposta terminou. Um admin da plataforma está analisando o relato. Você ainda pode registrar a contratação.",
+        "unansweredSource": "{partner} não respondeu no prazo. Um admin da plataforma está analisando o relato.",
+        "contestedTarget": "Contestado. {partner} pode apresentar uma réplica até {when} (horário de Toronto). Depois, um admin da plataforma decide.",
+        "contestedSource": "{partner} contestou este relato. Você pode apresentar uma réplica até {when} (horário de Toronto).",
+        "inReview": "Um admin da plataforma está analisando o relato.",
+        "confirmedTarget": "Você confirmou esta contratação em {date}.",
+        "confirmedSource": "{partner} confirmou esta contratação em {date}.",
+        "closedByRecordTarget": "Encerrado: você registrou a contratação em {date}.",
+        "closedByRecordSource": "Encerrado: o recrutador da vaga confirmou a contratação em {date}.",
+        "deemedTarget": "Confirmado em {date}: sem resposta no prazo, depois que o aviso chegou por e-mail a duas pessoas de {org}. Informe os detalhes da taxa até {when} (horário de Toronto).",
+        "deemedSource": "Confirmado em {date}: {partner} não respondeu no prazo.",
+        "upheld": "Mantido por um admin da plataforma em {date}. A contratação conta.",
+        "rejected": "Não mantido por um admin da plataforma em {date}.",
+        "notThisClient": "Não é este cliente.",
+        "voidTarget": "Encerrado por um admin da plataforma em {date}. Esta indicação deixou de contar.",
+        "voidSource": "Encerrado em {date}: um admin da plataforma considerou inválida a confirmação do candidato. Esta indicação deixou de contar."
+      },
+      "confirm": "Confirmar e registrar contratação",
+      "contest": "Contestar",
+      "addRebuttal": "Apresentar réplica",
+      "resolution": "Resolução: “{text}”",
+      "rows": {
+        "employer": "Empregador informado",
+        "role": "Cargo",
+        "learnedVia": "Como o recrutador de origem soube",
+        "tail": "Início do processo seletivo",
+        "files": "Arquivos",
+        "contest": "Contestação",
+        "rebuttal": "Réplica"
+      },
+      "itemCaptured": "capturado em {date}",
+      "newTab": "(abre em uma nova aba)"
+    },
+    "month": "Mês",
+    "year": "Ano"
+  },
+  "hireContest": {
+    "messages": {
+      "contested": "Relato contestado. {partner} pode apresentar uma réplica até {when} (horário de Toronto)."
+    },
+    "validation": {
+      "dates": "Informe as duas datas. O processo não pode começar depois do aceite da oferta.",
+      "reason": "Escolha um motivo"
+    },
+    "title": "Contestar este relato de contratação?",
+    "description": "Um admin da plataforma decide com base no histórico. {partner} pode apresentar uma réplica em até 5 dias úteis. Uma contestação falsa descumpre a regra 4.8 das Regras da rede.",
+    "reason": "Motivo",
+    "noPriorHint": "“Nós já tínhamos este candidato” não é um motivo aqui. Isso era a objeção, em até 5 dias úteis após a entrega.",
+    "acceptedOn": "Oferta aceita em",
+    "processStarted": "Processo seletivo iniciado em",
+    "processHint": "A primeira entrevista ou avaliação para a vaga em que a pessoa foi contratada.",
+    "statement": "Explicação",
+    "statementHint": "{partner} lê este texto. Não cite o nome do seu cliente.",
+    "statementHintAdmin": "Só os admins do MissionHub leem este texto.",
+    "files": "Documentos (opcional)",
+    "filesHint": "Só os admins do MissionHub os veem. Por exemplo, a declaração por escrito do cliente, compartilhada com a permissão dele.",
+    "attestation": "Confirmo que esta contestação é verdadeira e completa, até onde sei (Regras da rede, regra 4.8).",
+    "submit": "Contestar relato"
+  },
+  "hireRebuttal": {
+    "messages": {
+      "sent": "Réplica enviada. Um admin da plataforma vai decidir."
+    },
+    "title": "Apresentar sua réplica",
+    "description": "Você pode apresentar uma única réplica. Depois, um admin da plataforma decide com base no histórico.",
+    "submit": "Enviar réplica"
+  },
+  "authCheck": {
+    "messages": {
+      "requested": "Pedido enviado ao MissionHub."
+    },
+    "sentLine": "Comprovantes enviados em {date}. Um admin da plataforma está analisando.",
+    "request": "Pedir verificação da autorização",
+    "requestTitle": "Pedir ao MissionHub que verifique a autorização do candidato?",
+    "requestBody": "Um admin da plataforma verifica se o candidato realmente concordou em ser apresentado por {partner}. Só os admins leem o seu motivo.",
+    "reason": "Por que você está pedindo",
+    "requestSubmit": "Enviar pedido",
+    "requestedLine": "Verificação da autorização pedida em {date}.",
+    "title": "Verificação da autorização",
+    "body": "O MissionHub precisa de um comprovante independente de que o candidato concordou em ser representado por você. Por exemplo, uma mensagem datada do candidato recebida por outro canal que não o e-mail de confirmação. Se nada for enviado até o prazo, a indicação pode deixar de contar.",
+    "statement": "O que você está enviando",
+    "files": "Comprovantes",
+    "attestation": "Confirmo que estes comprovantes são autênticos (Regras da rede, regra 4.8).",
+    "submit": "Enviar comprovantes"
   }
 }

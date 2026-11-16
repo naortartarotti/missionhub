@@ -13,7 +13,7 @@ export function SubmitButton({ children, pendingLabel, ...props }: ComponentProp
   const ctxPending = useActionFormPending();
   const pending = status.pending || ctxPending;
   return (
-    <Button type="submit" disabled={pending || props.disabled} aria-busy={pending} {...props}>
+    <Button type="submit" aria-busy={pending} {...props} disabled={pending || props.disabled}>
       {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
       {pending ? (pendingLabel ?? t("actions.saving")) : children}
     </Button>

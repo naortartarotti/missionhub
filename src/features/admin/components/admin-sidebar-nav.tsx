@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AlertTriangle, Building2, FileCheck2, LayoutGrid, Percent, ScrollText, Users, Wallet, type LucideIcon } from "lucide-react";
+import { AlertTriangle, BookText, Building2, FileCheck2, FileSignature, LayoutGrid, Percent, Scale, ScrollText, Users, type LucideIcon } from "lucide-react";
 import { useT } from "@/i18n/client";
 import { cn } from "@/lib/utils";
 
-type BadgeKey = "evidence" | "disputes" | "wallets";
-type ItemKey = "overview" | "organizations" | "users" | "evidence" | "disputes" | "wallets" | "rules" | "audit";
+type BadgeKey = "evidence" | "disputes";
+type ItemKey = "overview" | "organizations" | "users" | "evidence" | "disputes" | "hireReports" | "referralTerms" | "rules" | "networkRules" | "audit";
 type Item = { key: ItemKey; href: string; icon: LucideIcon; badge?: BadgeKey };
 
 const GROUPS: { key: "operations" | "finance" | "compliance"; items: Item[] }[] = [
@@ -24,11 +24,13 @@ const GROUPS: { key: "operations" | "finance" | "compliance"; items: Item[] }[] 
     items: [
       { key: "evidence", href: "/admin/evidence", icon: FileCheck2, badge: "evidence" },
       { key: "disputes", href: "/admin/disputes", icon: AlertTriangle, badge: "disputes" },
-      { key: "wallets", href: "/admin/wallets", icon: Wallet, badge: "wallets" },
+      { key: "hireReports", href: "/admin/hire-reports", icon: Scale },
+      { key: "referralTerms", href: "/admin/referrals", icon: FileSignature },
       { key: "rules", href: "/admin/rules", icon: Percent },
     ],
   },
-  { key: "compliance", items: [{ key: "audit", href: "/admin/audit", icon: ScrollText }] },
+  // N10 (§2.4): Network Rules versions sit in Compliance.
+  { key: "compliance", items: [{ key: "networkRules", href: "/admin/network-rules", icon: BookText }, { key: "audit", href: "/admin/audit", icon: ScrollText }] },
 ];
 
 export function AdminSidebarNav({ badges }: { badges: Record<BadgeKey, number> }) {
@@ -55,7 +57,7 @@ export function AdminSidebarNav({ badges }: { badges: Record<BadgeKey, number> }
               >
                 {active ? <span className="absolute top-1.5 bottom-1.5 -left-3 w-1 rounded-r-full bg-foreground lg:-left-5" aria-hidden /> : null}
                 <item.icon className="size-[18px]" aria-hidden />
-                <span className="min-w-0 truncate">{t(`nav.${item.key}`)}</span>
+                <span className="min-w-0 text-pretty">{t(`nav.${item.key}`)}</span>
                 {count ? (
                   <span className="ml-auto grid min-w-6 place-items-center rounded-full bg-foreground px-1.5 text-xs font-semibold text-background tabular-nums">
                     {count > 99 ? "99+" : count}

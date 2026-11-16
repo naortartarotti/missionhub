@@ -4,6 +4,7 @@ import { useId, useState, type KeyboardEvent } from "react";
 import { Plus, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useT } from "@/i18n/client";
+import { TONE, type Tone } from "@/components/shared/tones";
 
 /** Chip input: Enter or comma adds, Backspace on empty removes the last chip. */
 export function TagInput({
@@ -14,6 +15,7 @@ export function TagInput({
   placeholder,
   max = 30,
   describedBy,
+  tone = "neutral",
 }: {
   id: string;
   value: string[];
@@ -22,6 +24,8 @@ export function TagInput({
   placeholder?: string;
   max?: number;
   describedBy?: string;
+  /** Colour family for the chips. */
+  tone?: Tone;
 }) {
   const t = useT("onboarding");
   const [draft, setDraft] = useState("");
@@ -49,9 +53,9 @@ export function TagInput({
       <div className="flex min-h-11 flex-wrap items-center gap-1.5 rounded-xl border border-input bg-background px-2 py-1.5 focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50">
         <ul className="contents" aria-label={t("tags.selected")} id={listId}>
           {value.map((tag) => (
-            <li key={tag} className="inline-flex items-center gap-1 rounded-full bg-muted py-1 pr-1 pl-3 text-sm">
+            <li key={tag} className={cn("inline-flex items-center gap-1 rounded-full py-1 pr-1 pl-3 text-sm font-medium", TONE[tone].tag)}>
               {tag}
-              <button type="button" onClick={() => onChange(value.filter((v) => v !== tag))} className="grid size-5 place-items-center rounded-full hover:bg-background" aria-label={t("tags.remove", { tag })}>
+              <button type="button" onClick={() => onChange(value.filter((v) => v !== tag))} className={cn("grid size-5 place-items-center rounded-full", TONE[tone].tagRemove)} aria-label={t("tags.remove", { tag })}>
                 <X className="size-3" aria-hidden />
               </button>
             </li>
@@ -75,7 +79,7 @@ export function TagInput({
               key={s}
               type="button"
               onClick={() => add(s)}
-              className={cn("inline-flex items-center gap-1 rounded-full border border-dashed border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-foreground hover:text-foreground")}
+              className={cn("inline-flex items-center gap-1 rounded-full border border-dashed px-3 py-1 text-xs transition-colors", tone === "neutral" ? "border-border text-muted-foreground hover:border-foreground hover:text-foreground" : cn("border-current/30 hover:border-current", TONE[tone].tag, "bg-transparent"))}
             >
               <Plus className="size-3" aria-hidden /> {s}
             </button>

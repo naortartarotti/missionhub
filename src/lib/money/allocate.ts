@@ -44,3 +44,40 @@ export function splitCommission(distributableMinor: bigint | number, split: Comm
   ]);
   return { sourcing, jobOwner, platform };
 }
+
+export type PlatformBasis = "collected" | "frozen";
+
+/** Half-up integer division on non-negative bigints (SQL app.round_half_up). */
+const roundHalfUp = (n: bigint, d: bigint) => (2n * n + d) / (2n * d);
+
+/**
+ * N2 BR-27 allocation of a net client payment (negative for a refund) P, identical to SQL
+ * app.allocate_placement (parity-tested):
+ *  - legacy (computed null) or I ≥ C → exactly allocateMinor(P, split);
+ *  - I < C → sourcing = sourcing_bps × C × P / I; platform = platform_bps × P (`collected`) or
+ *    platform_bps × C × P / I (`frozen`); job owner = P − both (may be negative). Half-up on |P|.
+ */
+export function allocatePlacement(
+  amountMinor: bigint | number,
+  split: CommissionSplit,
+  fee: { computedMinor: bigint | number | null; invoicedMinor: bigint | number; platformBasis: PlatformBasis },
+): { sourcing: bigint; jobOwner: bigint; platform: bigint } {
+  const amount = BigInt(amountMinor);
+  // Same rule as SQL (QA-N2-08): a net payment or refund above 10^12 minor units is refused on every path.
+  if (amount > 1_000_000_000_000n || amount < -1_000_000_000_000n) throw new Error("invalid_fee");
+  const invoiced = BigInt(fee.invoicedMinor);
+  if (fee.computedMinor === null || invoiced >= BigInt(fee.computedMinor)) return splitCommission(amount, split);
+  if (invoiced <= 0n) throw new Error("Invoiced fee must be positive");
+  const computed = BigInt(fee.computedMinor);
+  const sign = amount < 0n ? -1n : 1n;
+  const abs = amount * sign;
+  const s = roundHalfUp(abs * BigInt(split.sourcingBps) * computed, invoiced * 10_000n);
+  const p =
+    fee.platformBasis === "frozen"
+      ? roundHalfUp(abs * BigInt(split.platformBps) * computed, invoiced * 10_000n)
+      : roundHalfUp(abs * BigInt(split.platformBps), 10_000n);
+  // Same range rule as SQL (QA-N2-02): results that don't fit a Postgres bigint are refused, not wrapped.
+  const MAX = 9_223_372_036_854_775_807n;
+  if (s > MAX || p > MAX || abs - s - p < -MAX) throw new Error("invalid_fee");
+  return { sourcing: sign * s, jobOwner: sign * (abs - s - p), platform: sign * p };
+}
