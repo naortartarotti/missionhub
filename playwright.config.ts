@@ -24,5 +24,8 @@ export default defineConfig({
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 240_000,
+    // concurrently merges the server's stderr into its stdout; without this, server-side render
+    // errors (the "Something went wrong · Ref: <digest>" page) never reach the CI log.
+    stdout: process.env.CI ? "pipe" : "ignore",
   },
 });
