@@ -12,6 +12,15 @@ import { formToObject } from "@/lib/validation/form-data";
 import { parseMajorToMinor } from "@/lib/money/format";
 import { msg } from "@/i18n/translate";
 import { jobFormSchema, jobStatusSchema, type JobFormValues } from "./schemas";
+import { termsDiffer, type TermsValues } from "@/lib/money/terms";
+
+/** Field errors as usual; when any card field failed, the summary is the "complete the terms" message (spec S1). */
+const CARD_FIELDS = new Set(["feeBasis", "feeRate", "minimumFee", "flatFee", "flatCurrency", "searchType", "guaranteeDays", "guaranteeRemedy", "paymentTermsDays", "ownershipMonths", "directClientAttested", "contractType"]);
+function termsAwareZodError(error: z.ZodError): ActionResult {
+  const r = fromZodError(error);
+  if (!r.ok && Object.keys(r.fieldErrors ?? {}).some((k) => CARD_FIELDS.has(k))) return { ...r, error: msg("jobs.errors.termsIncomplete") };
+  return r;
+}
 import { extractJobFromText, type ExtractResult, type JobDraft } from "./import/extract";
 import { htmlToText, pageTitle, readJobPosting } from "./import/html";
 import { fetchPage, ImportError, readImportFile } from "./import/sources";
@@ -44,14 +53,65 @@ function toRow(v: JobFormValues) {
     salary_min: m(v.salaryMin, v.salaryCurrency),
     salary_max: m(v.salaryMax, v.salaryCurrency),
     salary_currency: v.salaryCurrency,
-    expected_fee_minor: m(v.expectedFee, v.feeCurrency),
-    fee_currency: v.feeCurrency,
-    accepts_external_referrals: v.acceptsExternalReferrals,
+    // N2: accepts_external_referrals is set only by save_job_terms (BR-4/BR-6); expected_fee_minor,
+    // fee_currency and share_fee are retired for partners (BR-9) and no longer written by the form.
     share_description: v.shareDescription,
     share_salary: v.shareSalary,
     share_location: v.shareLocation,
-    share_fee: v.shareFee,
   };
+}
+
+type Db = Awaited<ReturnType<typeof getRequestContext>>["db"];
+
+/** The job's current terms version in TermsValues form (null when it has none). RLS: own org only. */
+async function currentTerms(db: Db, jobId: string): Promise<TermsValues | null> {
+  const { data, error } = await db
+    .from("job_terms_versions")
+    .select("fee_basis, rate_bps, flat_fee_minor, min_fee_minor, currency, search_type, guarantee_days, guarantee_remedy, payment_terms_days, ownership_months")
+    .eq("job_id", jobId)
+    .eq("kind", "job")
+    .order("version_no", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) throw error;
+  if (!data) return null;
+  return {
+    feeBasis: data.fee_basis, rateBps: data.rate_bps, flatFeeMinor: data.flat_fee_minor, minFeeMinor: data.min_fee_minor,
+    currency: data.currency, searchType: data.search_type, guaranteeDays: data.guarantee_days, guaranteeRemedy: data.guarantee_remedy,
+    paymentTermsDays: data.payment_terms_days, ownershipMonths: data.ownership_months,
+  };
+}
+
+/** BR-4: the attestation is required only when this save publishes a new version (the RPC re-checks). */
+function attestationError(v: JobFormValues, current: TermsValues | null): ActionResult | null {
+  if (!v.terms || v.attested || !termsDiffer(current, v.terms)) return null;
+  return { ok: false, error: msg("jobs.errors.termsIncomplete"), fieldErrors: { directClientAttested: [msg("jobs.validation.attestationRequired")] } };
+}
+
+/** Publishes the card / opens or closes the job through the only path that may (BR-4, BR-6). */
+async function saveTerms(db: Db, jobId: string, v: JobFormValues, wasOpen: boolean) {
+  const t = v.terms;
+  if (!t) {
+    if (!wasOpen) return null;
+    const { error } = await db.rpc("save_job_terms", { p_job: jobId, p_open: false });
+    return error;
+  }
+  const { error } = await db.rpc("save_job_terms", {
+    p_job: jobId,
+    p_open: true,
+    p_fee_basis: t.feeBasis,
+    p_rate_bps: t.rateBps ?? undefined,
+    p_flat_fee_minor: t.flatFeeMinor ?? undefined,
+    p_min_fee_minor: t.minFeeMinor ?? undefined,
+    p_flat_currency: t.feeBasis === "flat" ? t.currency : undefined,
+    p_search_type: t.searchType,
+    p_attested: v.attested,
+    p_guarantee_days: t.guaranteeDays,
+    p_guarantee_remedy: t.guaranteeRemedy ?? undefined,
+    p_payment_terms_days: t.paymentTermsDays,
+    p_ownership_months: t.ownershipMonths,
+  });
+  return error;
 }
 
 export async function createJob(orgSlug: string, _: ActionResult | null, formData: FormData): Promise<ActionResult> {
@@ -60,13 +120,19 @@ export async function createJob(orgSlug: string, _: ActionResult | null, formDat
     assertCan(ctx, "jobs:write");
     await rateLimit(ctx.db, "job.create", 60, 3600);
     const parsed = jobFormSchema.safeParse(formToObject(formData));
-    if (!parsed.success) return fromZodError(parsed.error);
+    if (!parsed.success) return termsAwareZodError(parsed.error);
+    const attest = attestationError(parsed.data, null);
+    if (attest) return attest;
     const { data, error } = await ctx.db
       .from("jobs")
       .insert({ ...toRow(parsed.data), status: parsed.data.status, organization_id: ctx.organizationId, owner_id: ctx.userId, created_by: ctx.userId })
       .select("id")
       .single();
     if (error) return toActionError(error);
+    // Every deterministic refusal was checked above, so this only fails on a race or the rate limit;
+    // the job then stays saved but private, and the error is shown.
+    const tErr = await saveTerms(ctx.db, data.id, parsed.data, false);
+    if (tErr) return toActionError(tErr);
     revalidatePath(`/workspace/${orgSlug}/jobs`);
     redirect(`/workspace/${orgSlug}/jobs/${data.id}?created=1`);
   });
@@ -78,10 +144,17 @@ export async function updateJob(orgSlug: string, jobId: string, _: ActionResult 
     assertCan(ctx, "jobs:write");
     parse(id, jobId);
     const parsed = jobFormSchema.safeParse(formToObject(formData));
-    if (!parsed.success) return fromZodError(parsed.error);
+    if (!parsed.success) return termsAwareZodError(parsed.error);
+    const { data: before, error: bErr } = await ctx.db.from("jobs").select("accepts_external_referrals").eq("id", jobId).eq("organization_id", ctx.organizationId).maybeSingle();
+    if (bErr) return toActionError(bErr);
+    if (!before) return { ok: false, error: msg("jobs.errors.notFound") };
+    const attest = attestationError(parsed.data, parsed.data.terms ? await currentTerms(ctx.db, jobId) : null);
+    if (attest) return attest;
     const { data, error } = await ctx.db.from("jobs").update(toRow(parsed.data)).eq("id", jobId).eq("organization_id", ctx.organizationId).select("id");
     if (error) return toActionError(error);
     if (!data?.length) return { ok: false, error: msg("jobs.errors.notFound") };
+    const tErr = await saveTerms(ctx.db, jobId, parsed.data, before.accepts_external_referrals);
+    if (tErr) return toActionError(tErr);
     revalidatePath(`/workspace/${orgSlug}/jobs/${jobId}`);
     redirect(`/workspace/${orgSlug}/jobs/${jobId}?updated=1`);
   });

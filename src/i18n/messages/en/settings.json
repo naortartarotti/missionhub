@@ -7,7 +7,9 @@
     "team": "Team",
     "privacy": "Privacy requests",
     "audit": "Audit log",
-    "preferences": "Preferences"
+    "preferences": "Preferences",
+    "connectors": "Connectors",
+    "standing": "Network standing"
   },
   "organization": {
     "title": "Organization",
@@ -47,7 +49,17 @@
     "suspend": "Suspend",
     "reactivate": "Reactivate",
     "revoked": "Revoked",
-    "revoke": "Revoke"
+    "revoke": "Revoke",
+    "owns": "{candidates} candidates · {jobs} jobs",
+    "transfer": "Transfer portfolio",
+    "transferTitle": "Transfer {name}'s portfolio",
+    "transferDescription": "{candidates} candidates and {jobs} jobs, plus any connectors they set up, will belong to the teammate you choose. Referrals and history are not changed.",
+    "transferTo": "New owner",
+    "cancel": "Cancel",
+    "transferConfirm": "Transfer",
+    "rulesColumn": "Network Rules",
+    "rulesAccepted": "Version {label} accepted",
+    "rulesNotAccepted": "Not accepted yet"
   },
   "privacy": {
     "metaTitle": "Privacy requests",
@@ -114,7 +126,26 @@
     "action": "Action",
     "entity": "Entity",
     "system": "Partner / system",
-    "empty": "No events yet."
+    "empty": "No events yet.",
+    "actions": {
+      "network_rules_org_accepted": "Network Rules accepted for the organization",
+      "network_rules_member_accepted": "Network Rules accepted by a member",
+      "conduct_report_filed": "Conduct report sent",
+      "conduct_notice_sent": "Notice received from MissionHub",
+      "conduct_response_submitted": "Response to a notice sent",
+      "conduct_followup_sent": "Follow-up question received",
+      "conduct_followup_answered": "Follow-up question answered",
+      "conduct_decided": "Decision recorded",
+      "sanction_applied": "Sanction applied",
+      "sanction_lifted": "Sanction lifted",
+      "sanction_immediate_hold": "Immediate network hold applied",
+      "sanction_review_requested": "Review requested",
+      "sanction_reviewed": "Review decided",
+      "settlement_mode_entered": "Settlement mode started",
+      "settlement_mode_exited": "Settlement mode ended",
+      "conduct_incident_notice_sent": "Data incident notice received",
+      "referral_closed_stale_by_admin": "Referral closed by MissionHub (no activity)"
+    }
   },
   "preferences": {
     "title": "Preferences",

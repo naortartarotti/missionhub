@@ -8,6 +8,7 @@ import { BestOpportunities } from "@/features/overview/components/best-opportuni
 import { RecruitingActivity } from "@/features/overview/components/recruiting-activity";
 import { PipelineChart, type PipelineChartView, type PipelineSide } from "@/features/overview/components/pipeline-chart";
 import { getFormatter, getT } from "@/i18n/server";
+import { SettlementHome } from "@/features/network-rules/components/settlement-home";
 
 export async function generateMetadata() {
   return { title: (await getT("overview"))("title") };
@@ -19,7 +20,9 @@ export async function generateMetadata() {
  */
 export default async function OverviewPage({ params }: PageProps<"/workspace/[orgSlug]/overview">) {
   const { orgSlug } = await params;
-  const ctx = await getRequestContext(orgSlug);
+  // N10 (S22-b): in settlement mode the home is the settlement home, not the dashboard.
+  const ctx = await getRequestContext(orgSlug, { allowSettlement: true });
+  if (ctx.settlementMode) return <SettlementHome ctx={ctx} />;
   const base = `/workspace/${orgSlug}`;
   const [t, f, data] = await Promise.all([getT("overview"), getFormatter(), loadOverview(ctx)]);
   const firstName = ctx.user.fullName.split(" ")[0] || t("welcomeFallbackName");
@@ -64,7 +67,7 @@ export default async function OverviewPage({ params }: PageProps<"/workspace/[or
       total: f.number(live),
       totalLabel: t("pipeline.total", { count: live }),
       closed: p.closed ? t("pipeline.closed", { count: p.closed }) : null,
-      href: side === "received" ? `${base}/pipeline` : `${base}/referrals?tab=sent`,
+      href: side === "received" ? `${base}/referrals?tab=pipeline` : `${base}/referrals?tab=sent`,
       linkLabel: side === "received" ? t("pipeline.open") : t("pipeline.openSent"),
       stages: p.stages.map((s) => ({
         key: s.key,

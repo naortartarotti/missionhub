@@ -2,16 +2,17 @@
 
 import { ActionForm } from "@/components/shared/action-form";
 
-import { useActionState, useTransition } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { Copy } from "lucide-react";
+import { ArrowRightLeft, Copy } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/components/shared/form-field";
 import { FormMessage } from "@/components/shared/form-message";
 import { SubmitButton } from "@/components/shared/submit-button";
 import { NativeSelect } from "@/components/shared/native-select";
-import { inviteMember, revokeInvitation, updateMember } from "../actions";
+import { inviteMember, revokeInvitation, transferPortfolio, updateMember } from "../actions";
 import { useGlobalT, useT } from "@/i18n/client";
 
 const ROLES = ["org_admin", "recruiter_manager", "recruiter"] as const;
@@ -77,5 +78,61 @@ export function RevokeInviteButton({ orgSlug, invitationId }: { orgSlug: string;
     <Button variant="ghost" size="sm" disabled={pending} onClick={() => start(async () => { const r = await revokeInvitation(orgSlug, invitationId); if (r.ok) toast.success(r.message ?? t("team.revoked")); else toast.error(r.error); })}>
       {t("team.revoke")}
     </Button>
+  );
+}
+
+/** Moves everything a member owns (candidates, jobs, connectors) to a teammate, e.g. when they leave. */
+export function TransferPortfolioButton({
+  orgSlug,
+  fromUserId,
+  fromName,
+  owned,
+  teammates,
+}: {
+  orgSlug: string;
+  fromUserId: string;
+  fromName: string;
+  owned: { candidates: number; jobs: number };
+  teammates: { userId: string; name: string }[];
+}) {
+  const t = useT("settings");
+  const [open, setOpen] = useState(false);
+  const [to, setTo] = useState(teammates[0]?.userId ?? "");
+  const [pending, start] = useTransition();
+  if (!teammates.length || owned.candidates + owned.jobs === 0) return null;
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm"><ArrowRightLeft className="size-3.5" aria-hidden /> {t("team.transfer")}</Button>
+      </DialogTrigger>
+      <DialogContent className="rounded-3xl sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>{t("team.transferTitle", { name: fromName })}</DialogTitle>
+          <DialogDescription>{t("team.transferDescription", { candidates: owned.candidates, jobs: owned.jobs })}</DialogDescription>
+        </DialogHeader>
+        <FormField id={`transfer-${fromUserId}`} label={t("team.transferTo")}>
+          <NativeSelect id={`transfer-${fromUserId}`} value={to} onChange={(e) => setTo(e.target.value)}>
+            {teammates.map((m) => <option key={m.userId} value={m.userId}>{m.name}</option>)}
+          </NativeSelect>
+        </FormField>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setOpen(false)}>{t("team.cancel")}</Button>
+          <Button
+            disabled={pending || !to}
+            onClick={() =>
+              start(async () => {
+                const r = await transferPortfolio(orgSlug, { fromUserId, toUserId: to });
+                if (r.ok) {
+                  toast.success(r.message ?? "");
+                  setOpen(false);
+                } else toast.error(r.error);
+              })
+            }
+          >
+            {t("team.transferConfirm")}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

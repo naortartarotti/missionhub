@@ -1,43 +1,39 @@
 {
-  "metaTitle": "Configurer votre espace de travail",
-  "footer": "Vous rejoignez une équipe existante? Ouvrez le lien d'invitation envoyé par votre administrateur.",
+  "metaTitle": "Configurer votre organisation",
+  "footer": "Vous rejoignez une équipe existante? Ouvrez le lien d'invitation envoyé par l'administrateur de votre organisation.",
   "steps": {
-    "kind": "Votre façon de travailler",
-    "workspace": "Espace de travail",
+    "workspace": "Organisation",
     "profile": "Votre profil",
-    "review": "Vérification"
+    "review": "Vérification",
+    "rules": "Règles du réseau"
   },
   "progress": "Progression de la configuration",
   "stepCompleted": "{label} (terminé, revenir)",
   "stepCurrent": "{label} (étape actuelle)",
   "stepStatus": "Étape {current} sur {total} : {label}",
   "titles": {
-    "kind": "Bienvenue! Comment travaillez-vous?",
-    "kindNamed": "Bienvenue, {name}! Comment travaillez-vous?",
-    "kindDescription": "Cela adapte votre espace de travail. Vous pourrez inviter des collègues plus tard dans les deux cas.",
-    "workspace": "Nommez votre espace de travail",
-    "workspaceDescription": "Les candidats et les postes appartiennent à cet espace de travail et ne sont jamais visibles par d'autres organisations.",
+    "workspace": "Nommez votre organisation",
+    "workspaceDescription": "Les candidats et les postes appartiennent à cette organisation et ne sont jamais visibles par d'autres organisations.",
     "profile": "Votre profil de recruteur",
     "profileDescription": "Vos partenaires le voient lorsque vous collaborez sur une recommandation. C'est facultatif; vous pourrez le remplir plus tard.",
     "review": "Prêt à commencer?",
-    "reviewDescription": "Vérifiez les détails ci-dessous, puis créez votre espace de travail."
-  },
-  "kind": {
-    "label": "Type d'organisation",
-    "agency": "Agence",
-    "agencyDescription": "Une équipe de recruteurs qui partagent un même bassin de candidats.",
-    "independent": "Indépendant",
-    "independentDescription": "Un recruteur autonome. Ajoutez des collaborateurs à mesure que vous grandissez."
+    "reviewDescription": "Vérifiez les détails ci-dessous, puis créez votre organisation.",
+    "company": "Configurez votre organisation",
+    "companyNamed": "Bienvenue, {name} ! Configurez votre organisation",
+    "companyDescription": "C'est votre agence ou votre entreprise de recrutement sur MissionHub. Vos recruteurs la rejoignent sur invitation, et ses candidats et postes ne sont jamais visibles par d'autres organisations.",
+    "rules": "Accepter les Règles du réseau",
+    "rulesDescription": "Chaque organisation accepte ces règles pour adhérer au réseau, tout comme chaque membre."
   },
   "workspace": {
-    "agencyName": "Nom de l'agence",
-    "displayName": "Nom d'entreprise ou nom affiché",
+    "agencyName": "Nom de l'organisation",
     "agencyPlaceholder": "p. ex. Northbound Talent",
-    "displayPlaceholder": "p. ex. Sam Rivera Recrutement",
     "url": "URL de l'espace de travail",
     "urlHint": "Lettres minuscules, chiffres et tirets. Vous ne pourrez pas la modifier plus tard.",
     "currency": "Devise par défaut",
-    "currencyHint": "Utilisée pour les honoraires et les commissions. Chaque placement peut quand même utiliser sa propre devise."
+    "currencyHint": "Utilisée pour les honoraires et les commissions. Chaque placement peut quand même utiliser sa propre devise.",
+    "country": "Pays",
+    "countryHint": "Où votre organisation est établie.",
+    "countryPlaceholder": "Choisissez un pays"
   },
   "profile": {
     "headline": "Titre",
@@ -60,32 +56,31 @@
       "executive": "Recrutement de cadres"
     },
     "regions": {
-      "ontario": "Ontario",
-      "quebec": "Québec",
-      "bc": "Colombie-Britannique",
-      "alberta": "Alberta",
-      "remoteCanada": "Télétravail au Canada",
-      "us": "États-Unis",
-      "remoteWorld": "Télétravail partout dans le monde"
+      "northAmerica": "Amérique du Nord",
+      "latam": "Amérique latine",
+      "europe": "Europe",
+      "ukIreland": "Royaume-Uni et Irlande",
+      "mena": "Moyen-Orient et Afrique",
+      "apac": "Asie-Pacifique",
+      "remoteWorld": "À distance, partout"
     }
   },
   "review": {
-    "organization": "Organisation",
-    "workspace": "Espace de travail",
+    "workspace": "Organisation",
     "profile": "Profil",
-    "editOrganization": "Modifier l'organisation",
-    "editWorkspace": "Modifier l'espace de travail",
+    "editWorkspace": "Modifier l'organisation",
     "editProfile": "Modifier le profil",
-    "agency": "Agence",
-    "independent": "Recruteur indépendant",
     "noTags": "Aucune spécialité ni région pour l'instant",
     "notFilled": "Pas encore rempli",
     "protectionTitle": "Comment vos données sont protégées",
-    "protectionPrivate": "Vos candidats et vos postes restent privés à cet espace de travail.",
+    "protectionPrivate": "Vos candidats et vos postes restent privés à cette organisation.",
     "protectionAnonymized": "Vos partenaires ne parcourent jamais votre bassin. Ils ne voient que des nombres de correspondances anonymisés.",
     "protectionConsent": "Vous choisissez exactement ce que vous partagez, pour chaque recommandation, avec l'autorisation du candidat.",
-    "creating": "Création de l'espace de travail…",
-    "create": "Créer l'espace de travail"
+    "creating": "Création de l'organisation…",
+    "create": "Créer l'organisation",
+    "rules": "Règles du réseau",
+    "rulesValue": "Version {label}, acceptée en {language}",
+    "editRules": "Revoir les règles"
   },
   "tags": {
     "selected": "Sélectionnés",
@@ -96,7 +91,8 @@
     "nameRequired": "Entrez le nom de votre organisation",
     "nameTooLong": "Utilisez au plus 120 caractères",
     "slugFormat": "3 à 48 caractères : lettres minuscules, chiffres et tirets",
-    "email": "Entrez un courriel valide"
+    "email": "Entrez un courriel valide",
+    "country": "Choisissez votre pays"
   },
   "errors": {
     "slugTaken": "Cette URL d'espace de travail est déjà prise.",
@@ -105,7 +101,8 @@
     "memberNotFound": "Membre introuvable.",
     "selfChange": "Vous ne pouvez pas modifier votre propre rôle ou statut.",
     "nameInvalid": "Entrez un nom valide.",
-    "currencyInvalid": "Devise invalide."
+    "currencyInvalid": "Devise invalide.",
+    "transferSame": "Choisissez un autre collègue."
   },
   "messages": {
     "invitationCreated": "Invitation créée. L'envoi de courriels n'est pas configuré; partagez ce lien à usage unique de façon sécurisée.",
@@ -113,7 +110,8 @@
     "memberUpdated": "Membre mis à jour.",
     "organizationUpdated": "Organisation mise à jour.",
     "invitationSent": "Invitation envoyée par courriel à {email}. Vous pouvez aussi partager le lien ci-dessous.",
-    "invitationEmailFailed": "Invitation créée, mais le courriel n'a pas pu être envoyé. Partagez ce lien à usage unique de façon sécurisée."
+    "invitationEmailFailed": "Invitation créée, mais le courriel n'a pas pu être envoyé. Partagez ce lien à usage unique de façon sécurisée.",
+    "portfolioTransferred": "Portefeuille transféré : {candidates} candidats et {jobs} postes."
   },
   "invite": {
     "metaTitle": "Rejoindre l'organisation",

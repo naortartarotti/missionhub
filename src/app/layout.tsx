@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/i18n/client";
 import { INTL_LOCALE } from "@/i18n/config";
 import { getLocale, getMessages, getT } from "@/i18n/server";
+import { ThemeScript } from "./theme-script";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
@@ -16,17 +17,13 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// Applies the stored theme before paint to avoid a flash. Light is the default;
-// "system" follows the OS only when the user picked it explicitly.
-const themeScript = `try{var t=localStorage.getItem('mh-theme');var d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d)}catch(e){}`;
-
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const nonce = (await headers()).get("x-nonce") ?? undefined;
   const [locale, messages] = await Promise.all([getLocale(), getMessages()]);
   return (
     <html lang={INTL_LOCALE[locale]} className={`${inter.variable} h-full`} suppressHydrationWarning>
       <head>
-        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <ThemeScript nonce={nonce} />
       </head>
       <body className="min-h-full">
         <I18nProvider locale={locale} messages={messages}>

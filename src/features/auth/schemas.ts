@@ -26,8 +26,21 @@ export const resetSchema = z
   .object({ password: passwordSchema, confirm: z.string() })
   .refine((v) => v.password === v.confirm, { path: ["confirm"], message: msg("auth.validation.passwordMismatch") });
 
-/** Only allow same-origin relative redirects (prevents open redirect). */
+/**
+ * Only allow same-origin relative redirects (prevents open redirect). Browsers strip tabs and newlines
+ * from URLs and treat `\` like `/`, so `/\t/evil.example` would become `//evil.example`: any control
+ * character, whitespace or backslash is refused, the path must start with exactly one `/`, and it must
+ * resolve to the same origin.
+ */
 export function safeNext(next: string | undefined | null, fallback = "/"): string {
-  if (!next || !next.startsWith("/") || next.startsWith("//") || next.includes("\\")) return fallback;
+  if (typeof next !== "string" || next.length === 0 || next.length > 2048) return fallback;
+  if (/[\u0000-\u0020\u007f-\u009f\u2028\u2029\s\\]/.test(next)) return fallback;
+  if (!next.startsWith("/") || next.startsWith("//")) return fallback;
+  try {
+    const base = "http://x";
+    if (new URL(next, base).origin !== base) return fallback;
+  } catch {
+    return fallback;
+  }
   return next;
 }

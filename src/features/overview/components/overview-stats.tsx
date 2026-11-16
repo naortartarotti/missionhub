@@ -28,7 +28,7 @@ export async function OverviewStats({ base, data, stacked = false }: { base: str
           label: t("stats.earned"),
           value: f.money(stats.earned, stats.currency, { whole: true }),
           hint: stats.projected > 0 ? t("stats.earnedProjected", { amount: f.money(stats.projected, stats.currency, { whole: true }) }) : undefined,
-          href: `${base}/wallet`,
+          href: `${base}/commissions`,
           tone: "green" as const,
           icon: CircleDollarSign,
         }]

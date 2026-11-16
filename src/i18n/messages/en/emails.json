@@ -106,5 +106,33 @@
     "expires": "Link valid until",
     "cta": "Review and confirm",
     "note": "This link is personal, don't forward it. If you don't recognize this request, ignore this email."
+  },
+  "claimFiled": {
+    "subject": "{partner} filed an objection on your referral",
+    "preheader": "You can contest it until {when} ET.",
+    "heading": "Prior-presentation objection on your referral",
+    "body": "{partner} says they already had {candidate} in process for this client, and declined your referral for {job}. On the referral, you can see the dates, the type of evidence and their note. Contesting is free: a platform admin reviews the evidence.",
+    "cta": "Review the objection"
+  },
+  "disputeOpened": {
+    "subject": "Objection on {candidate} contested",
+    "preheader": "A platform admin is now reviewing it.",
+    "heading": "Objection contested",
+    "body": "The prior-presentation objection on the referral of {candidate} for {job} was contested. A platform admin is reviewing the evidence and will write a resolution. Both organizations are notified of the outcome.",
+    "cta": "Open referral"
+  },
+  "disputeResolved": {
+    "subject": "Objection on {candidate}: {outcome}",
+    "preheader": "Read the platform admin's resolution.",
+    "heading": "A platform admin resolved the objection",
+    "body": "A platform admin resolved the prior-presentation objection on the referral of {candidate} for {job}. Outcome: {outcome}. The written resolution is on the referral.",
+    "cta": "Read the resolution"
+  },
+  "alreadyPresented": {
+    "subject": "Your referral for {job} wasn't delivered",
+    "preheader": "Nothing was shared with {partner}.",
+    "heading": "Referral not delivered",
+    "body": "{candidate} confirmed, but they had already been presented to {partner} for this client, so this referral wasn't delivered.",
+    "cta": "Open referral"
   }
 }

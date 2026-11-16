@@ -1,6 +1,6 @@
 {
   "title": "Comissões",
-  "description": "Acompanhe cada colocação da contratação ao repasse. Os valores são estimativas até o cliente pagar. As partes passam a ser devidas quando esse pagamento é confirmado. As partes podem ser pagas fora do MissionHub e registradas aqui, ou pelo MissionHub quando os pagamentos online estiverem disponíveis.",
+  "description": "Acompanhe cada colocação da contratação ao repasse. Os valores são estimativas até o cliente pagar. As partes passam a ser devidas quando esse pagamento é verificado. As partes são pagas fora do MissionHub e registradas aqui.",
   "kpi": {
     "projected": "Previsto",
     "projectedHint": "Contratações ainda não pagas pelo cliente",
@@ -8,7 +8,7 @@
     "payableHint": "Verificado, aguardando repasse",
     "paid": "Pago a você",
     "paidHint": "Repasses verificados",
-    "owed": "Você deve a parceiros",
+    "owed": "A repassar a parceiros",
     "owedHint": "Partes verificadas a repassar"
   },
   "otherCurrencies": "Os totais incluem apenas colocações em {currency}; outras moedas são listadas abaixo e nunca convertidas.",
@@ -24,17 +24,18 @@
     "share": "Sua parte",
     "start": "Início",
     "status": "Status",
-    "projected": "previsto"
+    "projected": "previsto",
+    "computedSub": "Calculada: {amount}"
   },
   "party": {
     "client": "Valor distribuível recebido",
     "sourcing": "Recrutador de origem",
-    "job_owner": "Dono da vaga",
+    "job_owner": "Recrutador da vaga",
     "platform": "Plataforma"
   },
   "detail": {
     "metaTitle": "Colocação",
-    "flashCreated": "Colocação criada a partir do acordo congelado. Próximo passo: registrar a fatura do cliente.",
+    "flashCreated": "Colocação criada. Próximo passo: registrar a fatura do cliente.",
     "sourcedFor": "Colocação · você indicou para {org}",
     "sourcedBy": "Colocação · indicado por {org}",
     "subtitle": "{candidate} · começa em {start}",
@@ -46,7 +47,7 @@
     "projected": "Previsto — pagamento do cliente não verificado",
     "outstanding": "Em aberto:",
     "recordClientPayment": "Registrar pagamento do cliente",
-    "recordPayout": "Registrar repasse / remessa",
+    "recordPayout": "Registrar repasse",
     "openReferral": "Abrir indicação",
     "agreement": "Acordo: {rule} v{version} · {terms}",
     "invoicesTitle": "Faturas e comprovantes",
@@ -63,10 +64,10 @@
     "evidenceLineFees": "{amount} (tarifas {fees}) · {date} · ref. {reference}",
     "review": "Análise: {note}",
     "sourcingConfirms": "O recrutador de origem confirma o recebimento.",
-    "platformVerifies": "Verificado por um administrador da plataforma MissionHub.",
-    "ledger": "Lançamentos",
-    "ledgerEmpty": "Vazio até que um pagamento do cliente seja verificado. Os lançamentos são imutáveis; correções são registradas como lançamentos de estorno.",
-    "ledgerCaption": "Lançamentos de comissão",
+    "platformVerifies": "Verificado por um admin da plataforma MissionHub.",
+    "ledger": "Extrato",
+    "ledgerEmpty": "Vazio até que um pagamento do cliente seja verificado. Os lançamentos são imutáveis; correções são registradas como lançamentos de correção.",
+    "ledgerCaption": "Extrato da comissão",
     "entry": "Lançamento",
     "partyColumn": "Parte",
     "amount": "Valor",
@@ -74,17 +75,36 @@
       "fee_received": "taxa recebida",
       "allocation": "alocação",
       "payout": "repasse",
-      "remittance": "remessa",
+      "remittance": "repasse à plataforma",
       "refund": "reembolso",
       "allocation_reversal": "estorno de alocação",
       "adjustment": "ajuste"
     },
     "statusHistory": "Histórico de status",
-    "payThrough": "Pagar {amount} pelo MissionHub",
-    "payThroughHint": "Paga o recrutador que indicou e a parte da plataforma em um só passo. Sem necessidade de comprovante de repasse.",
-    "paymentReturned": "Obrigado. Seu pagamento está sendo confirmado; esta página será atualizada quando o provedor confirmar.",
-    "paymentCancelled": "Pagamento cancelado. Nada foi cobrado.",
-    "productName": "Comissão de colocação"
+    "productName": "Comissão de colocação",
+    "fee": {
+      "title": "Taxa",
+      "terms": "Termos",
+      "version": "Versão {version}",
+      "amended": "Alterados em {date}",
+      "base": "Salário-base",
+      "bonus": "Bônus-alvo {amount}",
+      "computed": "Taxa calculada",
+      "invoiced": "Taxa faturada",
+      "difference": "Diferença {amount}",
+      "note": "“{note}”",
+      "noNote": "Sem nota.",
+      "legacyFee": "Taxa de colocação {fee}",
+      "lowerSource": "{partner} faturou menos que a taxa calculada. Sua parte continua baseada na taxa calculada ({computed}) e fica a pagar à medida que os pagamentos do cliente forem verificados. Se não concordar com a diferença, você pode abrir uma disputa.",
+      "lowerTarget": "Você faturou menos que a taxa calculada. A parte de {partner} continua baseada na taxa calculada, então sua parte cobre a diferença.",
+      "negativeTarget": "Sua parte prevista é de {amount}. Esse é o valor da parte de {partner} que a taxa faturada não cobre. Você o paga diretamente a {partner}.",
+      "higher": "A taxa faturada é maior que a taxa calculada. As partes nunca são calculadas sobre menos que a taxa calculada, então todas acompanham a taxa faturada."
+    },
+    "negativeShareHint": "Negativa porque a taxa faturada é menor que a taxa calculada.",
+    "platformBasis": {
+      "collected": "Baseada na taxa recebida",
+      "frozen": "Baseada na taxa calculada"
+    }
   },
   "forms": {
     "recorded": "Registrado",
@@ -95,7 +115,7 @@
     "due": "Vencimento",
     "recordInvoice": "Registrar fatura",
     "recordClientInvoice": "Registrar fatura do cliente",
-    "invoiceDescription": "A fatura que você (dono da vaga) emitiu para a empresa contratante. Valores em {currency}.",
+    "invoiceDescription": "A fatura que você (recrutador da vaga) emitiu para a empresa contratante. Valores em {currency}.",
     "type": "Tipo",
     "amount": "Valor ({currency})",
     "processingFees": "Tarifas de processamento",
@@ -115,7 +135,7 @@
     "reason": "Motivo",
     "openDispute": "Abrir disputa",
     "disputeTitle": "Abrir uma disputa?",
-    "disputeDescription": "A colocação fica congelada (sem novos comprovantes ou verificações) até que um administrador da plataforma a resolva. O histórico nunca é excluído.",
+    "disputeDescription": "A colocação fica congelada (sem novos comprovantes ou verificações) até que um admin da plataforma a resolva. O histórico nunca é excluído.",
     "disputeReason": "Qual é o problema?"
   },
   "messages": {
@@ -135,5 +155,26 @@
     "invalidAmount": "Informe um valor válido",
     "rejectReason": "Informe o motivo da rejeição.",
     "disputeReason": "Descreva o problema (10 a 2000 caracteres)."
-  }
+  },
+  "feeDetails": {
+    "saved": "Detalhes da taxa salvos. Próximo passo: registrar a fatura do cliente.",
+    "title": "Informar detalhes da taxa"
+  },
+  "feePending": {
+    "title": "Detalhes da taxa aguardando o recrutador da vaga",
+    "estimate": "Estimativa no envio: ~{amount}",
+    "rateOnly": "{rate} do salário na contratação",
+    "flat": "Taxa prevista nos termos: {amount}",
+    "legacy": "Termos não registrados: o recrutador da vaga informa a taxa.",
+    "established": "Contratação estabelecida em {date}: {how}",
+    "how": {
+      "deemed": "sem resposta ao relato de contratação",
+      "upheld": "relato de contratação mantido por um admin da plataforma"
+    },
+    "due": "Prazo dos detalhes da taxa",
+    "overdue": "Os detalhes da taxa venceram em {when} (horário de Toronto).",
+    "noAmounts": "Os valores aparecem quando o recrutador da vaga informar os detalhes da taxa.",
+    "enter": "Informar detalhes da taxa"
+  },
+  "invoiceOverdue": "Fatura atrasada"
 }

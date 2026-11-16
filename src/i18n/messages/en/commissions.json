@@ -1,6 +1,6 @@
 {
   "title": "Commissions",
-  "description": "Follow each placement from hire to payout. Amounts are estimates until the client pays. Shares become owed once that payment is confirmed. Shares can be paid outside MissionHub and recorded here, or through MissionHub where online payments are available.",
+  "description": "Follow each placement from hire to payout. Amounts are estimates until the client pays. Shares become owed once that payment is verified. Shares are paid outside MissionHub and recorded here.",
   "kpi": {
     "projected": "Projected",
     "projectedHint": "Hires not yet paid by client",
@@ -8,7 +8,7 @@
     "payableHint": "Verified, awaiting payout",
     "paid": "Paid to you",
     "paidHint": "Verified payouts",
-    "owed": "You owe partners",
+    "owed": "To pay partners",
     "owedHint": "Verified shares to remit"
   },
   "otherCurrencies": "Totals include only {currency} placements; other currencies are listed below and never converted.",
@@ -24,17 +24,18 @@
     "share": "Your share",
     "start": "Start",
     "status": "Status",
-    "projected": "projected"
+    "projected": "projected",
+    "computedSub": "Computed {amount}"
   },
   "party": {
     "client": "Distributable received",
     "sourcing": "Sourcing recruiter",
-    "job_owner": "Job owner",
+    "job_owner": "Hiring recruiter",
     "platform": "Platform"
   },
   "detail": {
     "metaTitle": "Placement",
-    "flashCreated": "Placement created from the frozen agreement. Next: record the client invoice.",
+    "flashCreated": "Placement created. Next: record the client invoice.",
     "sourcedFor": "Placement · you sourced for {org}",
     "sourcedBy": "Placement · sourced by {org}",
     "subtitle": "{candidate} · starts {start}",
@@ -63,9 +64,9 @@
     "evidenceLineFees": "{amount} (fees {fees}) · {date} · ref {reference}",
     "review": "Review: {note}",
     "sourcingConfirms": "The sourcing recruiter confirms receipt.",
-    "platformVerifies": "Verified by a MissionHub platform administrator.",
+    "platformVerifies": "Verified by a MissionHub platform admin.",
     "ledger": "Ledger",
-    "ledgerEmpty": "Empty until a client payment is verified. Entries are immutable; corrections are recorded as reversing entries.",
+    "ledgerEmpty": "Empty until a client payment is verified. Entries are immutable; corrections are recorded as correcting entries.",
     "ledgerCaption": "Commission ledger",
     "entry": "Entry",
     "partyColumn": "Party",
@@ -80,11 +81,30 @@
       "adjustment": "adjustment"
     },
     "statusHistory": "Status history",
-    "payThrough": "Pay {amount} through MissionHub",
-    "payThroughHint": "Pays the sourcing recruiter and the platform share in one step. No payout evidence needed.",
-    "paymentReturned": "Thanks. Your payment is being confirmed; this page updates when the provider confirms it.",
-    "paymentCancelled": "Payment cancelled. Nothing was charged.",
-    "productName": "Placement commission"
+    "productName": "Placement commission",
+    "fee": {
+      "title": "Fee",
+      "terms": "Terms",
+      "version": "Version {version}",
+      "amended": "Amended on {date}",
+      "base": "Base salary",
+      "bonus": "Target bonus {amount}",
+      "computed": "Computed fee",
+      "invoiced": "Invoiced fee",
+      "difference": "Difference {amount}",
+      "note": "“{note}”",
+      "noNote": "No note.",
+      "legacyFee": "Placement fee {fee}",
+      "lowerSource": "{partner} invoiced less than the computed fee. Your share is still based on the computed fee ({computed}) and becomes payable as the client's payments are verified. If you disagree with the difference, you can open a dispute.",
+      "lowerTarget": "You invoiced less than the computed fee. {partner}'s share stays based on the computed fee, so your share covers the difference.",
+      "negativeTarget": "Your projected share is {amount}. This is the part of {partner}'s share that the invoiced fee doesn't cover. You pay it to {partner} directly.",
+      "higher": "The invoiced fee is higher than the computed fee. Shares are never calculated on less than the computed fee, so every share follows the invoiced fee."
+    },
+    "negativeShareHint": "Below zero because the invoiced fee is lower than the computed fee.",
+    "platformBasis": {
+      "collected": "Calculated on the fee collected",
+      "frozen": "Calculated on the computed fee"
+    }
   },
   "forms": {
     "recorded": "Recorded",
@@ -95,7 +115,7 @@
     "due": "Due",
     "recordInvoice": "Record invoice",
     "recordClientInvoice": "Record client invoice",
-    "invoiceDescription": "The invoice you (the job owner) issued to the hiring company. Amounts in {currency}.",
+    "invoiceDescription": "The invoice you (the hiring recruiter) issued to the hiring company. Amounts in {currency}.",
     "type": "Type",
     "amount": "Amount ({currency})",
     "processingFees": "Processing fees",
@@ -115,7 +135,7 @@
     "reason": "Reason",
     "openDispute": "Open dispute",
     "disputeTitle": "Open a dispute?",
-    "disputeDescription": "The placement is frozen (no new evidence or verification) until a platform administrator resolves it. History is never deleted.",
+    "disputeDescription": "The placement is frozen (no new evidence or verification) until a platform admin resolves it. History is never deleted.",
     "disputeReason": "What's wrong?"
   },
   "messages": {
@@ -135,5 +155,26 @@
     "invalidAmount": "Enter a valid amount",
     "rejectReason": "Give a reason for the rejection.",
     "disputeReason": "Describe the issue (10–2000 characters)."
-  }
+  },
+  "feeDetails": {
+    "saved": "Fee details saved. Next: record the client invoice.",
+    "title": "Enter fee details"
+  },
+  "feePending": {
+    "title": "Fee details pending from the hiring recruiter",
+    "estimate": "Estimate at submission: ~{amount}",
+    "rateOnly": "{rate} of the salary at hire",
+    "flat": "Fee in the terms: {amount}",
+    "legacy": "Terms not recorded: the hiring recruiter enters the fee.",
+    "established": "Hire established on {date}: {how}",
+    "how": {
+      "deemed": "no answer to the hire report",
+      "upheld": "hire report upheld by a platform admin"
+    },
+    "due": "Fee details due",
+    "overdue": "Fee details were due {when} ET.",
+    "noAmounts": "Amounts appear once the hiring recruiter enters the fee details.",
+    "enter": "Enter fee details"
+  },
+  "invoiceOverdue": "Invoice overdue"
 }

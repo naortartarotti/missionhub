@@ -35,20 +35,76 @@ const AUTHENTICATED_RPCS = new Set([
   "confirm_agreement", "consume_rate_limit", "create_invitation", "create_organization",
   "get_job_match_summary", "get_opportunities", "open_dispute", "platform_metrics",
   "publish_commission_rule", "record_invoice", "record_payment_evidence", "report_hire",
-  "resolve_dispute", "review_payment_evidence", "set_organization_suspension", "submit_referral",
+  "resolve_dispute", "review_payment_evidence", "submit_referral",
   "transition_referral",
   // Referral review & match triage (20261108000200/000300): each checks org membership internally.
   "review_referral", "decline_referrals", "decline_pending_for_job", "set_match_triage", "mark_matches_seen",
   // Sent-referral job status (20261109000200): checks org membership internally.
   "get_sent_referral_jobs",
-  // Wallet (20261110000100/000200): org-admin transfer, platform-admin switches and reconciliation
-  // (which refuses non-admins internally). Funding and release are service_role only and must
-  // stay out of this list.
-  "wallet_transfer", "set_wallet_frozen", "set_wallet_transfers_enabled", "wallet_reconcile",
-  // Wallet payments (20261110000300): job owner starts a charge, org admin requests a cash-out.
-  // Everything that acts on the payment provider's word is service_role only.
-  "create_placement_charge", "request_cashout", "set_wallet_cashouts_enabled",
+  // Candidate-confirmed referrals (20261111000200): source-org membership checked internally.
+  // (Pre-existing gap in this list, closed with N1.) N9 (20261115000100): neither takes a token or
+  // token hash any more. Never allow-list issue_candidate_request_token: it returns the raw
+  // candidate token and is service_role only (BR-2).
+  "submit_referral_for_candidate", "rotate_candidate_request_token",
+  // Token-only candidate page RPCs; also callable by anon (see ANON_RPCS).
+  "get_candidate_request", "respond_candidate_request",
+  // N1 duplicate and prior-presentation protection (20261113000400–000700). Each resolves the side
+  // from the caller's membership + acting org and answers "not found" otherwise; admin ones check
+  // app.is_platform_admin(). Never allow-list the service-role ones: claim_evidence_scan_target,
+  // record_claim_evidence_scan, finalize_due_claims, purge_presentation_data, purge_orphan_claim_files,
+  // forget_claim_files, rotate_fingerprint_key.
+  "withdraw_referral", "release_referral",
+  "register_claim_evidence", "list_claim_evidence_files", "remove_claim_evidence", "authorize_claim_evidence",
+  "list_claim_evidence_referrals", "file_prior_presentation_claim", "get_referral_presentation",
+  "contest_prior_presentation_claim",
+  "resolve_prior_presentation_dispute", "get_referral_dispute", "compare_dispute_contacts",
+  "presentation_admin_metrics", "presentation_abuse_flags",
+  // PD-033 / m-5 (20261113001000): platform-admin lookup of a stop by its support reference.
+  "get_stop_by_reference",
+  // N2 job terms card (20261116000200): save_job_terms re-checks job edit rights (owner or manager) and is
+  // the only path that publishes a terms version or opens a job; get_jobs_terms_state checks membership.
+  "save_job_terms", "get_jobs_terms_state",
+  // N2 drop 2 (20261116000400): admin_* check app.is_platform_admin(); get_referral_terms_context checks
+  // app.can_see_referral (either side, record scope).
+  "admin_amend_referral_terms", "admin_get_referral_terms", "get_referral_terms_context",
+  // N3 drop 1 (20261117000300–000500). report_hire re-checks the hiring side (record scope); complete_fee_details
+  // likewise; get_referral_hire_state answers either side or "not found"; admin_* check app.is_platform_admin()
+  // and answer "not found" otherwise. N3 BR-2: record_candidate_request_delivery is service_role only now (the
+  // app's email path), like issue_candidate_request_token. Never allow-list run_hire_maintenance (service role).
+  "complete_fee_details", "get_referral_hire_state", "admin_get_hire_record", "admin_set_hire_record_note",
+  "admin_list_hire_tasks", "admin_record_fee_notice",
+  // N3 drop 2 (20261117000700–000900). Member RPCs resolve the side from the acting org (record scope) and answer
+  // not_found / the generic hire_report_unavailable otherwise; admin_* check app.is_platform_admin(). Never
+  // allow-list the service-role ones: hire_evidence_scan_target, record_hire_evidence_scan, purge_orphan_hire_files.
+  "file_hire_report", "contest_hire_report", "rebut_hire_report", "get_hire_reports",
+  "register_hire_evidence", "list_hire_evidence_files", "remove_hire_evidence", "authorize_hire_evidence",
+  "request_authorization_check", "submit_authorization_evidence",
+  "admin_list_hire_reports", "admin_hire_report_flags", "admin_get_hire_report", "admin_set_hire_report_fields",
+  "admin_decide_hire_report", "admin_open_authorization_check", "admin_decide_authorization_check", "admin_get_authorization_checks",
+  "get_placement_fee_state",
+  // N10 Network Rules enforcement (20261116001000–001700). set_organization_suspension is dropped
+  // (BR-29): never re-add it. Member RPCs re-check membership / side from auth.uid() and answer
+  // not_found; admin_* and the rules publishing RPCs check app.is_platform_admin(). Never allow-list
+  // the service-role ones: conduct_evidence_scan_target, record_conduct_evidence_scan,
+  // purge_orphan_conduct_files.
+  "accept_network_rules", "save_network_rules_draft", "delete_network_rules_draft", "publish_network_rules_version",
+  "admin_list_network_rules", "admin_get_network_rules_version",
+  "get_my_org_state", "list_my_organizations", "get_partner_job_availability",
+  "deactivate_member_in_settlement", "get_settlement_summary", "admin_close_stale_referral",
+  "register_conduct_evidence", "list_conduct_draft_files", "remove_conduct_draft_file", "authorize_conduct_evidence",
+  "get_conduct_report_context", "file_conduct_report", "list_my_conduct_reports", "get_conduct_report",
+  "reply_conduct_info_request",
+  "admin_list_conduct_cases", "admin_get_conduct_case", "admin_set_conduct_category", "admin_request_conduct_info",
+  "admin_close_conduct_case", "admin_open_conduct_case", "admin_conduct_notice_context", "admin_send_conduct_notice",
+  "admin_send_conduct_followup", "get_conduct_case_for_org", "submit_conduct_response", "reply_conduct_followup",
+  "admin_decide_conduct_case", "admin_apply_immediate_hold", "admin_lift_sanction", "request_sanction_review",
+  "admin_decide_sanction_review", "admin_conduct_incident_options", "admin_send_incident_notice", "get_incident_notice",
+  "get_network_standing", "admin_org_conduct_file",
 ]);
+
+// The only RPCs anon may execute: the candidate's confirmation page, where the token is the
+// credential (checked by hash inside the database). N1 runs the delivery re-check in there.
+const ANON_RPCS = new Set(["get_candidate_request", "respond_candidate_request"]);
 
 beforeAll(async () => {
   const res = await fetch(`${url()}/rest/v1/`, { headers: { apikey: process.env.SUPABASE_SECRET_KEY!, Accept: "application/openapi+json" } });
@@ -93,6 +149,10 @@ describe("anonymous callers (publishable key only)", () => {
     const open: string[] = [];
     for (const fn of rpcs) {
       const { error } = await anon().rpc(fn as never, rpcArgs[fn] as never);
+      if (ANON_RPCS.has(fn)) {
+        if (privilegeDenied(error)) open.push(`${fn}: denied but anon-allow-listed`);
+        continue;
+      }
       if (!privilegeDenied(error)) open.push(`${fn}: ${error?.code ?? "ok"} ${error?.message ?? ""}`);
     }
     expect(open).toEqual([]);

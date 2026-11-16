@@ -116,6 +116,44 @@ export async function fetchDocument(raw: string, opts: { allowPdf?: boolean; max
   throw new ImportError("fetchFailed");
 }
 
+/**
+ * Fetches a public text resource (CSV export, JSON feed) through the same SSRF checks as pages:
+ * https only, public addresses on every redirect hop, timeout and size cap.
+ */
+export async function fetchPublicText(raw: string, opts: { accept: string; maxBytes?: number; timeoutMs?: number }): Promise<{ text: string; contentType: string; url: URL }> {
+  let url = normalizeUrl(raw);
+  for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
+    await assertPublic(url);
+    let res: Response;
+    try {
+      res = await fetch(url, {
+        redirect: "manual",
+        signal: AbortSignal.timeout(opts.timeoutMs ?? 15000),
+        headers: { "user-agent": "MissionHub-Connector/1.0", accept: opts.accept },
+        cache: "no-store",
+      });
+    } catch {
+      throw new ImportError("fetchFailed");
+    }
+    if (res.status >= 300 && res.status < 400) {
+      const loc = res.headers.get("location");
+      await res.body?.cancel();
+      if (!loc) throw new ImportError("fetchFailed");
+      url = new URL(loc, url);
+      continue;
+    }
+    if ([401, 403, 429].includes(res.status)) {
+      await res.body?.cancel();
+      throw new ImportError("blockedSite");
+    }
+    if (!res.ok || !res.body) throw new ImportError("fetchFailed");
+    const { bytes, truncated } = await readBytes(res.body, opts.maxBytes ?? MAX_PAGE_BYTES);
+    if (truncated) throw new ImportError("fileSize");
+    return { text: new TextDecoder("utf-8", { fatal: false }).decode(bytes), contentType: res.headers.get("content-type") ?? "", url };
+  }
+  throw new ImportError("fetchFailed");
+}
+
 export async function fetchPage(raw: string): Promise<{ html: string; url: URL }> {
   const doc = await fetchDocument(raw);
   if (doc.kind !== "html") throw new ImportError("notHtml");

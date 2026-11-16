@@ -21,7 +21,8 @@ export type JobDraft = Partial<{
   salaryCurrency: string;
 }>;
 
-export const SUPPORTED_CURRENCIES = ["CAD", "USD", "EUR", "GBP", "BRL"] as const;
+export { SUPPORTED_CURRENCIES } from "@/lib/money/currency";
+import { SUPPORTED_CURRENCIES } from "@/lib/money/currency";
 
 // ---------------------------------------------------------------------------------------------
 // Text helpers

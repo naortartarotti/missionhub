@@ -1,43 +1,39 @@
 {
-  "metaTitle": "Configure seu workspace",
-  "footer": "Vai entrar em uma equipe existente? Abra o link de convite que seu administrador enviou.",
+  "metaTitle": "Configure sua organização",
+  "footer": "Vai entrar em uma equipe existente? Abra o link de convite que o administrador da sua organização enviou.",
   "steps": {
-    "kind": "Como você trabalha",
-    "workspace": "Workspace",
+    "workspace": "Organização",
     "profile": "Seu perfil",
-    "review": "Revisão"
+    "review": "Revisão",
+    "rules": "Regras da rede"
   },
   "progress": "Progresso da configuração",
   "stepCompleted": "{label} (concluída, voltar)",
   "stepCurrent": "{label} (atual)",
   "stepStatus": "Etapa {current} de {total}: {label}",
   "titles": {
-    "kind": "Boas-vindas! Como você trabalha?",
-    "kindNamed": "Boas-vindas, {name}! Como você trabalha?",
-    "kindDescription": "Isso personaliza seu workspace. Em qualquer caso, você pode convidar colegas depois.",
-    "workspace": "Dê um nome ao seu workspace",
-    "workspaceDescription": "Candidatos e vagas pertencem a este workspace e nunca ficam visíveis para outras organizações.",
+    "workspace": "Dê um nome à sua organização",
+    "workspaceDescription": "Candidatos e vagas pertencem a esta organização e nunca ficam visíveis para outras organizações.",
     "profile": "Seu perfil de recrutador",
     "profileDescription": "Os parceiros veem isto quando vocês colaboram em uma indicação. É opcional; você pode preencher depois.",
     "review": "Tudo pronto?",
-    "reviewDescription": "Confira os detalhes abaixo e depois crie seu workspace."
-  },
-  "kind": {
-    "label": "Tipo de organização",
-    "agency": "Agência",
-    "agencyDescription": "Uma equipe de recrutadores que compartilha um único banco de candidatos.",
-    "independent": "Independente",
-    "independentDescription": "Um recrutador autônomo. Traga colaboradores quando crescer."
+    "reviewDescription": "Confira os detalhes abaixo e depois crie sua organização.",
+    "company": "Configure sua organização",
+    "companyNamed": "Boas-vindas, {name}! Configure sua organização",
+    "companyDescription": "Esta é a sua agência ou empresa de recrutamento no MissionHub. Seus recrutadores entram por convite, e os candidatos e vagas dela nunca ficam visíveis para outras organizações.",
+    "rules": "Aceite as Regras da rede",
+    "rulesDescription": "Toda organização aceita estas regras para entrar na rede, assim como cada membro."
   },
   "workspace": {
-    "agencyName": "Nome da agência",
-    "displayName": "Nome da empresa ou de exibição",
+    "agencyName": "Nome da organização",
     "agencyPlaceholder": "ex.: Northbound Talent",
-    "displayPlaceholder": "ex.: Sam Rivera Recrutamento",
     "url": "URL do workspace",
     "urlHint": "Letras minúsculas, números e hifens. Não é possível alterá-la depois.",
     "currency": "Moeda padrão",
-    "currencyHint": "Usada para honorários e comissões. Cada contratação ainda pode usar sua própria moeda."
+    "currencyHint": "Usada para honorários e comissões. Cada contratação ainda pode usar sua própria moeda.",
+    "country": "País",
+    "countryHint": "Onde sua organização está sediada.",
+    "countryPlaceholder": "Escolha um país"
   },
   "profile": {
     "headline": "Título",
@@ -60,32 +56,31 @@
       "executive": "Busca de executivos"
     },
     "regions": {
-      "ontario": "Ontário",
-      "quebec": "Quebec",
-      "bc": "Colúmbia Britânica",
-      "alberta": "Alberta",
-      "remoteCanada": "Remoto no Canadá",
-      "us": "Estados Unidos",
+      "northAmerica": "América do Norte",
+      "latam": "América Latina",
+      "europe": "Europa",
+      "ukIreland": "Reino Unido e Irlanda",
+      "mena": "Oriente Médio e África",
+      "apac": "Ásia-Pacífico",
       "remoteWorld": "Remoto no mundo todo"
     }
   },
   "review": {
-    "organization": "Organização",
-    "workspace": "Workspace",
+    "workspace": "Organização",
     "profile": "Perfil",
-    "editOrganization": "Editar organização",
-    "editWorkspace": "Editar workspace",
+    "editWorkspace": "Editar organização",
     "editProfile": "Editar perfil",
-    "agency": "Agência",
-    "independent": "Recrutador independente",
     "noTags": "Nenhuma especialidade ou região ainda",
     "notFilled": "Ainda não preenchido",
     "protectionTitle": "Como seus dados são protegidos",
-    "protectionPrivate": "Seus candidatos e vagas permanecem privados neste workspace.",
+    "protectionPrivate": "Seus candidatos e vagas permanecem privados nesta organização.",
     "protectionAnonymized": "Os parceiros nunca navegam pelo seu banco de candidatos. Eles veem apenas contagens anonimizadas de correspondências.",
     "protectionConsent": "Você escolhe exatamente o que compartilhar, em cada indicação, com a autorização do candidato.",
-    "creating": "Criando workspace…",
-    "create": "Criar workspace"
+    "creating": "Criando organização…",
+    "create": "Criar organização",
+    "rules": "Regras da rede",
+    "rulesValue": "Versão {label}, aceita em {language}",
+    "editRules": "Revisar as regras"
   },
   "tags": {
     "selected": "Selecionados",
@@ -96,7 +91,8 @@
     "nameRequired": "Informe o nome da sua organização",
     "nameTooLong": "Use no máximo 120 caracteres",
     "slugFormat": "3 a 48 caracteres: letras minúsculas, números e hifens",
-    "email": "Informe um e-mail válido"
+    "email": "Informe um e-mail válido",
+    "country": "Escolha seu país"
   },
   "errors": {
     "slugTaken": "Essa URL de workspace já está em uso.",
@@ -105,7 +101,8 @@
     "memberNotFound": "Membro não encontrado.",
     "selfChange": "Você não pode alterar sua própria função ou status.",
     "nameInvalid": "Informe um nome válido.",
-    "currencyInvalid": "Moeda inválida."
+    "currencyInvalid": "Moeda inválida.",
+    "transferSame": "Escolha outro colega."
   },
   "messages": {
     "invitationCreated": "Convite criado. O envio de e-mails não está configurado; compartilhe este link de uso único com segurança.",
@@ -113,7 +110,8 @@
     "memberUpdated": "Membro atualizado.",
     "organizationUpdated": "Organização atualizada.",
     "invitationSent": "Convite enviado por e-mail para {email}. Você também pode compartilhar o link abaixo.",
-    "invitationEmailFailed": "Convite criado, mas não foi possível enviar o e-mail. Compartilhe este link de uso único com segurança."
+    "invitationEmailFailed": "Convite criado, mas não foi possível enviar o e-mail. Compartilhe este link de uso único com segurança.",
+    "portfolioTransferred": "Carteira transferida: {candidates} candidatos e {jobs} vagas."
   },
   "invite": {
     "metaTitle": "Entrar na organização",

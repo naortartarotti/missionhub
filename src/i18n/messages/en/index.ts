@@ -9,8 +9,8 @@ import candidates from "./candidates.json";
 import jobs from "./jobs.json";
 import referrals from "./referrals.json";
 import commissions from "./commissions.json";
-import wallet from "./wallet.json";
 import settings from "./settings.json";
+import connectors from "./connectors.json";
 import profile from "./profile.json";
 import auth from "./auth.json";
 import onboarding from "./onboarding.json";
@@ -19,6 +19,7 @@ import landing from "./landing.json";
 import pipeline from "./pipeline.json";
 import candidate from "./candidate.json";
 import emails from "./emails.json";
+import network from "./network.json";
 
-const messages = { common, nav, labels, errors, activity, overview, opportunities, candidates, jobs, referrals, commissions, wallet, settings, profile, auth, onboarding, admin, landing, pipeline, candidate, emails };
+const messages = { common, nav, labels, errors, activity, overview, opportunities, candidates, jobs, referrals, commissions, settings, connectors, profile, auth, onboarding, admin, landing, pipeline, candidate, emails, network };
 export default messages;

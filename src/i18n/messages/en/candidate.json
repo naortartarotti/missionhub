@@ -44,7 +44,7 @@
     "workAuthorization": "Work authorization",
     "passport": "Passport"
   },
-  "consent": "I authorize {org} to share the information above with {partner} for the {job} role. I know I can withdraw this authorization at any time by contacting {org}.",
+  "consent": "I authorize {org} to share the information above with {partner} for the {job} role. MissionHub uses my contact details to check whether my profile was already sent to {partner} for the same company. I know I can withdraw this authorization at any time by contacting {org}.",
   "consentRequired": "Tick the authorization to confirm.",
   "confirm": "Confirm and authorize",
   "confirming": "Confirming…",
@@ -75,6 +75,10 @@
     "invalid": {
       "title": "Invalid link",
       "body": "Make sure you opened the full link from the email."
+    },
+    "already_sent": {
+      "title": "Your profile was already sent",
+      "body": "{partner} already has your profile through MissionHub, so {org} didn't send it again for the {job} role. You don't need to do anything. If you have questions, contact {org}."
     }
   },
   "nameRequired": "Enter your name"

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
-import { Check, EllipsisVertical, Languages, LogOut, Monitor, Moon, ShieldCheck, Sun, UserRound, type LucideIcon } from "lucide-react";
+import { Check, EllipsisVertical, Flag, Languages, LogOut, Monitor, Moon, ShieldCheck, Sun, UserRound, type LucideIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,9 +27,14 @@ import { cn } from "@/lib/utils";
 
 const THEME_ICONS: Record<Theme, LucideIcon> = { light: Sun, dark: Moon, system: Monitor };
 
-/** The signed-in person: profile, language and theme (per browser), platform admin and sign out. */
-export function AccountMenu({ orgSlug, user }: { orgSlug?: string; user: { fullName: string; email: string; isPlatformAdmin: boolean } }) {
+/**
+ * The signed-in person: profile, language and theme (per browser), platform admin and sign out.
+ * N10: `hideProfile` behind the first-access gate (sign out stays); `reportsHref` adds "Your reports"
+ * when the member (or, for an org admin, anyone in the org) has sent a conduct report.
+ */
+export function AccountMenu({ orgSlug, user, hideProfile = false, reportsHref = null }: { orgSlug?: string; user: { fullName: string; email: string; isPlatformAdmin: boolean }; hideProfile?: boolean; reportsHref?: string | null }) {
   const t = useT("common");
+  const tn = useT("network");
   const ts = useT("settings");
   const tp = useT("profile");
   const [theme, setTheme] = useState<Theme>("light");
@@ -70,11 +75,20 @@ export function AccountMenu({ orgSlug, user }: { orgSlug?: string; user: { fullN
           <span className="block truncate text-xs text-muted-foreground">{user.email}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild className="rounded-xl">
-          <Link href={`/workspace/${orgSlug}/profile`}>
-            <UserRound className="size-4" aria-hidden /> {tp("menu")}
-          </Link>
-        </DropdownMenuItem>
+        {hideProfile ? null : (
+          <DropdownMenuItem asChild className="rounded-xl">
+            <Link href={`/workspace/${orgSlug}/profile`}>
+              <UserRound className="size-4" aria-hidden /> {tp("menu")}
+            </Link>
+          </DropdownMenuItem>
+        )}
+        {reportsHref ? (
+          <DropdownMenuItem asChild className="rounded-xl">
+            <Link href={reportsHref}>
+              <Flag className="size-4" aria-hidden /> {tn("reports.menu")}
+            </Link>
+          </DropdownMenuItem>
+        ) : null}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className="rounded-xl" disabled={localePending}>
             <Languages className="size-4" aria-hidden />

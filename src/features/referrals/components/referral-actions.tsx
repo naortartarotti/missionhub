@@ -2,21 +2,18 @@
 
 import { ActionForm } from "@/components/shared/action-form";
 
-import { useActionState, useEffect, useRef, useTransition } from "react";
+import { Fragment, useActionState, useEffect, useRef, useTransition, type ReactNode } from "react";
 import { toast } from "sonner";
 import { Download, FileText, Loader2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
-import { FormField } from "@/components/shared/form-field";
 import { FormMessage } from "@/components/shared/form-message";
 import { SubmitButton } from "@/components/shared/submit-button";
-import { NativeSelect } from "@/components/shared/native-select";
 import type { REFERRAL_STATUS } from "@/lib/labels";
-import { useT } from "@/i18n/client";
-import { confirmAgreement, getReferralDocumentUrl, reportHire, resendCandidateRequest, sendReferralMessage, transitionReferral } from "../actions";
+import { useFormatter, useT } from "@/i18n/client";
+import { WithdrawDialog } from "./release-dialogs";
+import { getReferralDocumentUrl, resendCandidateRequest, sendReferralMessage, transitionReferral } from "../actions";
 
 /** Statuses with a button label in `referrals.actions.<status>`. */
 const ACTION_STATUSES = ["under_review", "accepted", "declined", "info_requested", "withdrawn", "interviewing", "offer", "rejected", "cancelled"] as const;
@@ -36,6 +33,8 @@ export function TransitionButtons({
   transitions,
   side,
   status,
+  withdraw,
+  afterNegative,
 }: {
   orgSlug: string;
   referralId: string;
@@ -43,26 +42,50 @@ export function TransitionButtons({
   transitions: { to_status: keyof typeof REFERRAL_STATUS; requires_reason: boolean; requires_active_agreement: boolean }[];
   side: "source" | "target";
   status: string;
+  /**
+   * Sourcing side, N1 (BR-25): `canRelease` = the three release guards hold, so Withdraw opens the
+   * dialog with the release option; `counts` = the referral still holds first position.
+   */
+  withdraw?: { canRelease: boolean; counts: boolean; partner: string; ownershipUntil: string };
+  /** Extra negative action ranked right after the negative transitions (e.g. File objection). */
+  afterNegative?: ReactNode;
 }) {
   const t = useT("referrals");
+  const f = useFormatter();
   const [pending, start] = useTransition();
   const run = (to: string, reason = "") =>
     transitionReferral(orgSlug, { referralId, to, reason, version }).then((r) => {
       if (!r.ok) toast.error(r.error);
+      // "Keeps first position until {date}" only when it's true (spec §5.2 note); otherwise the usual toast.
+      if (r.ok && to === "withdrawn" && withdraw?.counts) return { ...r, message: t("success.withdrawn", { date: f.date(withdraw.ownershipUntil) }) };
       return r;
     });
+  const sorted = [...transitions].sort((a, b) => rank(a.to_status) - rank(b.to_status));
+  const lastNegative = sorted.findLastIndex((tr) => NEGATIVE.has(tr.to_status));
+  // Below `sm` each button is full width and the bar stacks negative → secondary → primary (S2-i).
+  const mobile = "min-h-11 w-full sm:min-h-0 sm:w-auto";
   return (
-    <div className="flex flex-wrap gap-2">
-      {[...transitions].sort((a, b) => rank(a.to_status) - rank(b.to_status)).map((tr) => {
+    <div className="flex w-full flex-wrap gap-2 sm:w-auto">
+      {lastNegative < 0 ? afterNegative : null}
+      {sorted.map((tr, i) => {
         const label =
           side === "source" && tr.to_status === "under_review" && status === "info_requested"
             ? t("actions.markInfoProvided")
             : hasActionLabel(tr.to_status) ? t(`actions.${tr.to_status}`) : tr.to_status;
+        const slot = i === lastNegative ? afterNegative : null;
+        if (tr.to_status === "withdrawn" && side === "source" && withdraw?.canRelease) {
+          return (
+            <Fragment key={tr.to_status}>
+              <WithdrawDialog orgSlug={orgSlug} referralId={referralId} version={version} partner={withdraw.partner} ownershipUntil={withdraw.ownershipUntil} label={label} />
+              {slot}
+            </Fragment>
+          );
+        }
         if (tr.requires_reason) {
           return (
+            <Fragment key={tr.to_status}>
             <ConfirmDialog
-              key={tr.to_status}
-              trigger={<Button variant={NEGATIVE.has(tr.to_status) ? "outline" : "secondary"}>{label}</Button>}
+              trigger={<Button variant={NEGATIVE.has(tr.to_status) ? "outline" : "secondary"} className={mobile}>{label}</Button>}
               title={t("actions.confirmTitle", { label })}
               description={tr.to_status === "declined" ? t("actions.declineHint") : t("actions.noteHint")}
               confirmLabel={label}
@@ -71,12 +94,17 @@ export function TransitionButtons({
               reasonRequired
               onConfirm={(reason) => run(tr.to_status, reason)}
             />
+            {slot}
+            </Fragment>
           );
         }
         return (
-          <Button key={tr.to_status} variant={SECONDARY.has(tr.to_status) && !(side === "source" && status === "info_requested") ? "secondary" : "default"} disabled={pending} onClick={() => start(async () => { const r = await run(tr.to_status); if (r.ok) toast.success(r.message ?? t("actions.updated")); })}>
+          <Fragment key={tr.to_status}>
+          <Button className={mobile} variant={SECONDARY.has(tr.to_status) && !(side === "source" && status === "info_requested") ? "secondary" : "default"} disabled={pending} onClick={() => start(async () => { const r = await run(tr.to_status); if (r.ok) toast.success(r.message ?? t("actions.updated")); })}>
             {label}
           </Button>
+          {slot}
+          </Fragment>
         );
       })}
     </div>
@@ -102,70 +130,6 @@ export function ResendCandidateButton({ orgSlug, referralId, primary }: { orgSlu
       {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <Mail className="size-4" aria-hidden />}
       {pending ? t("detail.resending") : t("detail.resend")}
     </Button>
-  );
-}
-
-export function ConfirmAgreementButton({ orgSlug, referralId }: { orgSlug: string; referralId: string }) {
-  const t = useT("referrals");
-  return (
-    <ConfirmDialog
-      trigger={<Button>{t("agreement.trigger")}</Button>}
-      title={t("agreement.title")}
-      description={t("agreement.description")}
-      confirmLabel={t("agreement.confirm")}
-      onConfirm={() => confirmAgreement(orgSlug, referralId)}
-    />
-  );
-}
-
-export function ReportHireDialog({
-  orgSlug,
-  referralId,
-  version,
-  defaultFee,
-  currency,
-  open,
-  onOpenChange,
-  trigger,
-}: {
-  orgSlug: string;
-  referralId: string;
-  version: number;
-  defaultFee: string;
-  currency: string;
-  /** Controlled mode (e.g. opened by dropping a card on the Hired column). */
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  /** Custom trigger; pass `null` for no trigger in controlled mode. */
-  trigger?: React.ReactNode | null;
-}) {
-  const t = useT("referrals");
-  const [state, action] = useActionState(reportHire.bind(null, orgSlug), null);
-  const fe = state && !state.ok ? state.fieldErrors : undefined;
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      {trigger === null ? null : <DialogTrigger asChild>{trigger ?? <Button>{t("hire.trigger")}</Button>}</DialogTrigger>}
-      <DialogContent className="rounded-3xl sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{t("hire.title")}</DialogTitle>
-          <DialogDescription>{t("hire.description")}</DialogDescription>
-        </DialogHeader>
-        <ActionForm action={action} className="grid gap-4">
-          <input type="hidden" name="referralId" value={referralId} />
-          <input type="hidden" name="version" value={version} />
-          <div className="grid grid-cols-[1fr_110px] gap-3">
-            <FormField id="fee" label={t("hire.fee")} error={fe?.fee}><Input id="fee" name="fee" inputMode="decimal" defaultValue={defaultFee} required /></FormField>
-            <FormField id="currency" label={t("hire.currency")}>
-              <NativeSelect id="currency" name="currency" defaultValue={currency}>{["CAD", "USD", "EUR", "GBP", "BRL"].map((c) => <option key={c}>{c}</option>)}</NativeSelect>
-            </FormField>
-          </div>
-          <FormField id="startDate" label={t("hire.startDate")} error={fe?.startDate}><Input id="startDate" name="startDate" type="date" required /></FormField>
-          <FormField id="guaranteeDays" label={t("hire.guarantee")}><Input id="guaranteeDays" name="guaranteeDays" type="number" min={0} max={365} defaultValue={90} /></FormField>
-          <FormMessage state={state} />
-          <SubmitButton pendingLabel={t("hire.recording")}>{t("hire.submit")}</SubmitButton>
-        </ActionForm>
-      </DialogContent>
-    </Dialog>
   );
 }
 

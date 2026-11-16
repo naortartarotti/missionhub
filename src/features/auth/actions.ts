@@ -80,5 +80,5 @@ export async function resetPassword(_: ActionResult | null, formData: FormData):
 export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  redirect("/sign-in");
+  redirect("/");
 }

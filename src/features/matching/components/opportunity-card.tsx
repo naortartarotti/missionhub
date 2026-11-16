@@ -8,7 +8,6 @@ import { ArrowRight, Bookmark, BookmarkCheck, Building2, CheckCircle2, CircleAle
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { StatusPill } from "@/components/shared/status-pill";
 import { StatTile } from "@/components/shared/stat-tile";
 import { SkillChips } from "@/components/shared/skill-chips";
 import { Disclosure } from "@/components/shared/disclosure";
@@ -20,6 +19,8 @@ import { ScoreRing } from "./score-ring";
 import { useFormatter, useGlobalT, useT } from "@/i18n/client";
 import { evidenceText, type StoredEvidence } from "../evidence";
 import { InternalBadge } from "./internal-badge";
+import type { FeeBasis } from "@/lib/money/terms";
+import { feeShort, shareFigure } from "@/features/jobs/terms-display";
 
 type Evidence = StoredEvidence;
 export type OpportunityView = {
@@ -41,9 +42,14 @@ export type OpportunityView = {
   salary_min: number | null;
   salary_max: number | null;
   salary_currency: string | null;
-  expected_fee_minor: number | null;
+  estimated_fee_minor: number | null;
   fee_currency: string | null;
-  your_share_minor: number | null;
+  estimated_share_minor: number | null;
+  // N2 partner card (get_opportunities, BR-8 / BR-33)
+  fee_basis: FeeBasis;
+  rate_bps: number | null;
+  flat_fee_minor: number | null;
+  terms_updated_at: string | null;
   score: number;
   band: keyof typeof BAND;
   reasons: Evidence[];
@@ -62,14 +68,19 @@ export type OpportunityView = {
 };
 
 
-/** "~$8,400 for you" — the sourcing recruiter's estimated share of the placement fee. */
-export function ShareChip({ opp, className }: { opp: Pick<OpportunityView, "your_share_minor" | "fee_currency">; className?: string }) {
+/**
+ * "~CAD 8,400 for you" — the sourcing recruiter's estimated share (% basis, band shared); a flat
+ * fee shows the exact share. Nothing when the server sent no amount (BR-9).
+ */
+export function ShareChip({ opp, className }: { opp: Pick<OpportunityView, "estimated_share_minor" | "fee_currency" | "fee_basis">; className?: string }) {
   const t = useT("opportunities");
   const f = useFormatter();
-  if (!opp.your_share_minor) return null;
+  if (opp.estimated_share_minor === null) return null;
+  const currency = opp.fee_currency ?? "CAD";
+  const flat = opp.fee_basis === "flat";
   return (
-    <span className={cn("inline-flex items-center rounded-full bg-success/10 px-2.5 py-0.5 text-xs font-semibold text-success tabular-nums", className)} title={t("share.title")}>
-      {t("share.chip", { amount: f.money(opp.your_share_minor, opp.fee_currency ?? "CAD", { whole: true }) })}
+    <span className={cn("inline-flex items-center rounded-full bg-success/10 px-2.5 py-0.5 text-xs font-semibold text-success tabular-nums", className)} title={flat ? t("jobGroup.shareIfHired") : t("share.title")}>
+      {flat ? f.money(opp.estimated_share_minor, currency, { code: true, whole: true }) : t("share.chip", { amount: f.money(opp.estimated_share_minor, currency, { code: true, whole: true }) })}
     </span>
   );
 }
@@ -122,7 +133,7 @@ function MatchDetail({ opp, orgSlug, headerAction, inPanel = false }: { opp: Opp
   const currency = opp.fee_currency ?? "CAD";
   const salary =
     opp.salary_min !== null || opp.salary_max !== null
-      ? `${f.money(opp.salary_min, opp.salary_currency ?? "CAD", { whole: true })} – ${f.money(opp.salary_max, opp.salary_currency ?? "CAD", { whole: true })}`
+      ? `${f.money(opp.salary_min, opp.salary_currency ?? "CAD", { whole: true, code: true })} – ${f.money(opp.salary_max, opp.salary_currency ?? "CAD", { whole: true, code: true })}`
       : tg("common.notShared");
 
   const missingRequired = skillsFrom(opp.gaps, "requiredSkillsMissing");
@@ -130,14 +141,15 @@ function MatchDetail({ opp, orgSlug, headerAction, inPanel = false }: { opp: Opp
   const hasPreferred = skillsFrom(opp.reasons, "preferredSkills");
   const strengths = opp.reasons.filter((e) => !isSkillEvidence(e));
   const gaps = opp.gaps.filter((e) => !isSkillEvidence(e));
-  const bandDot = opp.band === "strong" ? "bg-success" : opp.band === "potential" ? "bg-amber-500" : "bg-danger";
 
   return (
     // grid-cols-1 = minmax(0, 1fr): truncated lines must not widen the panel.
     <div className={cn("grid grid-cols-1 gap-6", !(canAct || (submitted && opp.referral_id)) && "pb-6 lg:pb-7")}>
       {/* Header: score + role, one line of context, who it's for */}
       <header className="flex items-start gap-4">
-        <ScoreRing score={opp.score} className="size-16 [&_span]:text-base" />
+        <span className="shrink-0 cursor-help" title={t("panel.scoreInfo", { time: f.relative(opp.refreshed_at) })}>
+          <ScoreRing score={opp.score} className="size-16 [&_span]:text-base" />
+        </span>
         <div className="min-w-0 flex-1">
           <h2 className="text-xl font-semibold leading-tight tracking-tight">{opp.job_title}</h2>
           <p className="mt-1 flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
@@ -145,13 +157,6 @@ function MatchDetail({ opp, orgSlug, headerAction, inPanel = false }: { opp: Opp
             {opp.internal ? <InternalBadge org={opp.job_org_name} /> : null}
           </p>
           <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-            <span className="inline-flex items-center gap-1.5 font-medium">
-              <span className={cn("size-2 rounded-full", bandDot)} aria-hidden />
-              {tg(`labels.band.${opp.band}`)}
-              <span className="inline-flex cursor-help text-muted-foreground" title={t("panel.scoreInfo", { time: f.relative(opp.refreshed_at) })} aria-label={t("panel.scoreInfo", { time: f.relative(opp.refreshed_at) })}>
-                <Info className="size-3.5" aria-hidden />
-              </span>
-            </span>
             <span className="inline-flex min-w-0 items-center gap-1 text-muted-foreground">
               <User className="size-3.5 shrink-0" aria-hidden />
               <span className="truncate">{opp.candidate_name}</span>
@@ -163,9 +168,18 @@ function MatchDetail({ opp, orgSlug, headerAction, inPanel = false }: { opp: Opp
 
       {/* Key numbers */}
       <div className="grid grid-cols-3 gap-2">
-        <StatTile label={t("panel.share")} value={opp.your_share_minor ? f.money(opp.your_share_minor, currency, { whole: true }) : "—"} tone={opp.your_share_minor ? "success" : undefined} />
-        <StatTile label={t("panel.fee")} value={opp.expected_fee_minor ? f.money(opp.expected_fee_minor, currency, { whole: true }) : "—"} />
-        <StatTile label={t("panel.posted")} value={f.relative(opp.job_posted_at)} />
+        {/* N2 (BR-9): amounts only when the server sent them; otherwise the fee basis, never a guess. */}
+        <StatTile label={t("panel.share")} wrap value={shareFigure(opp, tg, f).amount ?? "—"} tone={opp.estimated_share_minor !== null ? "success" : undefined} />
+        <StatTile
+          label={t("panel.fee")}
+          wrap
+          value={
+            opp.estimated_fee_minor !== null
+              ? f.money(opp.estimated_fee_minor, currency, { code: true, whole: true, approx: opp.fee_basis !== "flat" })
+              : feeShort({ feeBasis: opp.fee_basis, rateBps: opp.rate_bps, flatFeeMinor: opp.flat_fee_minor, currency }, tg, f)
+          }
+        />
+        <StatTile label={t("panel.posted")} wrap value={f.relative(opp.job_posted_at)} />
       </div>
 
       {/* Skills */}
@@ -237,12 +251,18 @@ function MatchDetail({ opp, orgSlug, headerAction, inPanel = false }: { opp: Opp
   );
 }
 
-function MatchSheet({ opp, orgSlug, triggerVariant }: { opp: OpportunityView; orgSlug: string; triggerVariant: "ghost" | "outline" }) {
+function MatchSheet({ opp, orgSlug, triggerVariant, iconOnly = false }: { opp: OpportunityView; orgSlug: string; triggerVariant: "ghost" | "outline"; iconOnly?: boolean }) {
   const t = useT("opportunities");
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant={triggerVariant} size="sm">{t("sheet.trigger")}</Button>
+        {iconOnly ? (
+          <Button variant={triggerVariant} size="icon" aria-label={t("sheet.trigger")} title={t("sheet.trigger")}>
+            <Info className="size-4" aria-hidden />
+          </Button>
+        ) : (
+          <Button variant={triggerVariant} size="sm">{t("sheet.trigger")}</Button>
+        )}
       </SheetTrigger>
       <SheetContent className="w-full overflow-y-auto px-6 pt-6 sm:max-w-lg">
         <SheetHeader className="sr-only">
@@ -324,8 +344,8 @@ export function TriageActions({ opp, orgSlug, compact = false }: { opp: Opportun
 
   if (opp.triage_state === "dismissed") {
     return (
-      <Button variant="ghost" size="sm" disabled={pending} onClick={() => run(null, null, t("triage.restored"))} className="relative z-10">
-        <RotateCcw className="size-4" aria-hidden /> {t("triage.restore")}
+      <Button variant="ghost" size={compact ? "icon" : "sm"} disabled={pending} onClick={() => run(null, null, t("triage.restored"))} aria-label={compact ? t("triage.restore") : undefined} title={compact ? t("triage.restore") : undefined} className="relative z-10">
+        <RotateCcw className="size-4" aria-hidden /> {compact ? null : t("triage.restore")}
       </Button>
     );
   }
@@ -420,7 +440,6 @@ export function OpportunityCard({
             <h3 className={cn("font-semibold", nested ? "text-[15px]" : "text-base")}>{opp.job_title}</h3>
           )}
           {opp.is_new && canAct ? <NewDot /> : null}
-          <StatusPill tone={BAND[opp.band].tone} label={tg(`labels.band.${opp.band}`)} />
           {ctx !== "job" ? <ShareChip opp={opp} /> : null}
         </div>
         {ctx === "job" ? (
@@ -451,13 +470,15 @@ export function OpportunityCard({
             <Link href={`/workspace/${orgSlug}/referrals/${opp.referral_id}`}>{tg(`labels.referralStatus.${opp.referral_status!}`)}</Link>
           </Button>
         ) : null}
-        {canAct ? <TriageActions opp={opp} orgSlug={orgSlug} /> : null}
+        {canAct ? <TriageActions opp={opp} orgSlug={orgSlug} compact /> : null}
         {detailHref ? (
-          <Button variant={selected ? "secondary" : submitted || canAct ? "ghost" : "outline"} size="sm" asChild>
-            <Link href={detailHref} scroll={false} aria-current={selected ? "true" : undefined}>{t("sheet.trigger")}</Link>
+          <Button variant={selected ? "secondary" : submitted || canAct ? "ghost" : "outline"} size="icon" asChild>
+            <Link href={detailHref} scroll={false} aria-current={selected ? "true" : undefined} aria-label={t("sheet.trigger")} title={t("sheet.trigger")}>
+              <Info className="size-4" aria-hidden />
+            </Link>
           </Button>
         ) : (
-          <MatchSheet opp={opp} orgSlug={orgSlug} triggerVariant={submitted || canAct ? "ghost" : "outline"} />
+          <MatchSheet opp={opp} orgSlug={orgSlug} triggerVariant={submitted || canAct ? "ghost" : "outline"} iconOnly />
         )}
         {canAct && opp.triage_state !== "dismissed" ? (
           <Button size="sm" asChild>

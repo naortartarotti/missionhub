@@ -1,7 +1,12 @@
 import Link from "next/link";
-import { ArrowLeftRight, CheckCircle2 } from "lucide-react";
-import { getRequestContext } from "@/server/auth/context";
-import { getReferralDetail, listReceivedQueue, listSentByJob, receivedCounts, receivedJobs, type QueueRow, type ReceivedJob } from "@/features/referrals/queries";
+import { ArrowLeftRight, CheckCircle2, Clock, KanbanSquare } from "lucide-react";
+import { can, getRequestContext } from "@/server/auth/context";
+import { listPipeline, listPipelineJobs } from "@/features/pipeline/queries";
+import { PipelineBoard } from "@/features/pipeline/components/pipeline-board";
+import { SegmentedNav } from "@/components/shared/segmented-nav";
+import { getReferralDetail, getReferralPresentation, listReceivedQueue, listSentByJob, receivedCounts, receivedJobs, type QueueRow, type ReceivedJob } from "@/features/referrals/queries";
+import { getClaimContext } from "@/features/referrals/claim-context";
+import type { ClaimContext } from "@/features/referrals/components/claim-dialog";
 import { BUCKET_KEYS, CLOSED_STATUSES, DECIDABLE, REFERRAL_STAGES, STAGE_INDEX, PAGE_SIZE, QUEUE_SORTS, isDeclineReason, salaryFit, skillCoverage, waitTone, type Bucket, type FitEvidence, type QueueSort, type Snapshot } from "@/features/referrals/review";
 import { QueueJobFilter, QueueList, ReviewPanel, type PanelView, type QueueGroup, type ReqCheck, type RowView } from "@/features/referrals/components/review-queue";
 import { evidenceText } from "@/features/matching/evidence";
@@ -15,11 +20,15 @@ import { JOB_STATUS, REFERRAL_STATUS } from "@/lib/labels";
 import { DIRECTION_STYLE } from "@/features/referrals/components/direction-badge";
 import { ScoreRing } from "@/features/matching/components/score-ring";
 import { bpsToPercent } from "@/lib/money/format";
+import { feeShort } from "@/features/jobs/terms-display";
 import { getFormatter, getGlobalT, getT } from "@/i18n/server";
 import type { Formatter } from "@/i18n/format";
 import type { GlobalTranslator, Paths, Translator } from "@/i18n/translate";
 import type { Messages } from "@/i18n/messages";
 import { cn } from "@/lib/utils";
+
+/** The claim-rejected banner shows while the referral is back in review (S2-e). */
+const PENDING_REVIEW = new Set(["submitted", "under_review", "info_requested"]);
 
 export async function generateMetadata() {
   return { title: (await getT("referrals"))("title") };
@@ -31,17 +40,65 @@ const str = (v: unknown) => (typeof v === "string" && v ? v : undefined);
 export default async function ReferralsPage({ params, searchParams }: PageProps<"/workspace/[orgSlug]/referrals">) {
   const { orgSlug } = await params;
   const sp = await searchParams;
-  const ctx = await getRequestContext(orgSlug);
+  const ctx = await getRequestContext(orgSlug, { allowSettlement: true });
   const [t, tg, f] = await Promise.all([getT("referrals"), getGlobalT(), getFormatter()]);
   const pendingCount = await receivedCounts(ctx).then((c) => c.review);
   // Land on "Received" when submissions are waiting for a decision (matches the sidebar badge).
-  const tab: "sent" | "received" = sp.tab === "received" || (!sp.tab && pendingCount > 0) ? "received" : "sent";
-  // Sent and Received are separate pages in the sidebar ("Referrals sent" / "Referrals received"),
-  // so each view stands alone here with its own title, without a direction switcher.
+  // N10 settlement mode (BR-34, Q-D10): the pipeline board isn't part of settling; Received and Sent stay.
+  const tabs: readonly Tab[] = ctx.settlementMode ? TABS.filter((k) => k !== "pipeline") : TABS;
+  const tab: Tab = tabs.includes(sp.tab as Tab) ? (sp.tab as Tab) : pendingCount > 0 ? "received" : "sent";
+  const base = `/workspace/${orgSlug}/referrals`;
+  // One page, three views: Received (decide), Pipeline (move accepted candidates to hire), Sent (follow).
+  const segments = tabs.map((key) => ({ key, label: t(`tabs.${key}`), href: `${base}?tab=${key}`, count: key === "received" && pendingCount > 0 ? pendingCount : undefined }));
   return (
-    <div className="grid gap-6">
-      <PageHeader title={t(`pages.${tab}.title`)} description={t(`pages.${tab}.description`)} />
-      {tab === "sent" ? <SentTable orgSlug={orgSlug} /> : <ReceivedQueue orgSlug={orgSlug} sp={sp} t={t} tg={tg} f={f} />}
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
+      <PageHeader title={t("title")} description={t(`pages.${tab}.description`)} />
+      <SegmentedNav label={t("tabs.label")} segments={segments} active={tab} />
+      {tab === "sent" ? (
+        <SentTable orgSlug={orgSlug} />
+      ) : tab === "pipeline" ? (
+        <PipelineTab orgSlug={orgSlug} jobId={str(sp.job)} />
+      ) : (
+        <ReceivedQueue orgSlug={orgSlug} sp={sp} t={t} tg={tg} f={f} />
+      )}
+    </div>
+  );
+}
+
+const TABS = ["received", "pipeline", "sent"] as const;
+type Tab = (typeof TABS)[number];
+
+// ---------------------------------------------------------------------------
+// Pipeline: accepted referrals, one column per stage from acceptance to hire.
+// The hiring side (this organization) moves candidates; the partner follows along on the referral.
+
+async function PipelineTab({ orgSlug, jobId }: { orgSlug: string; jobId?: string }) {
+  const ctx = await getRequestContext(orgSlug, { allowSettlement: true });
+  const t = await getT("pipeline");
+  const base = `/workspace/${orgSlug}/referrals?tab=pipeline`;
+  const [{ cards, transitions }, jobs] = await Promise.all([listPipeline(ctx, jobId), listPipelineJobs(ctx)]);
+  const canMove = can(ctx, "referrals:review");
+  const hrefFor: Record<string, string> = Object.fromEntries([["", base], ...jobs.map((j) => [j.id, `${base}&job=${j.id}`])]);
+
+  if (cards.length === 0 && !jobId) {
+    return (
+      <EmptyState
+        icon={KanbanSquare}
+        title={t("empty.title")}
+        description={t("empty.description")}
+        action={<Button variant="outline" asChild><Link href={`/workspace/${orgSlug}/referrals?tab=received`}>{t("empty.action")}</Link></Button>}
+      />
+    );
+  }
+  return (
+    <div className="grid gap-4">
+      {!canMove || jobs.length > 1 ? (
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-muted-foreground">{canMove ? null : t("readOnly")}</p>
+          {jobs.length > 1 ? <QueueJobFilter value={jobId ?? ""} options={jobs.map((j) => ({ id: j.id, label: j.title }))} allLabel={t("allJobs")} hrefFor={hrefFor} /> : null}
+        </div>
+      ) : null}
+      <PipelineBoard orgSlug={orgSlug} cards={cards} transitions={transitions} canMove={canMove} showJob={!jobId} currency={ctx.currency} />
     </div>
   );
 }
@@ -50,19 +107,22 @@ export default async function ReferralsPage({ params, searchParams }: PageProps<
 // Received: the review queue
 
 async function ReceivedQueue({ orgSlug, sp, t, tg, f }: { orgSlug: string; sp: Record<string, string | string[] | undefined>; t: Translator<"referrals">; tg: GlobalTranslator; f: Formatter }) {
-  const ctx = await getRequestContext(orgSlug);
+  const ctx = await getRequestContext(orgSlug, { allowSettlement: true });
   const bucket = pick(BUCKET_KEYS, sp.bucket, "review") as Bucket;
   const sort = pick(QUEUE_SORTS, sp.sort, "fit") as QueueSort;
   const jobId = str(sp.job);
   const page = Math.max(1, Number(sp.page) || 1);
   const selectedId = str(sp.r);
 
-  const [jobs, counts, { rows, total }, detail] = await Promise.all([
+  const [jobs, counts, { rows, total }, detail, presentation] = await Promise.all([
     receivedJobs(ctx),
     receivedCounts(ctx, jobId),
     listReceivedQueue(ctx, { bucket, jobId, sort, page }),
     selectedId ? getReferralDetail(ctx, selectedId) : Promise.resolve(null),
+    selectedId ? getReferralPresentation(ctx, selectedId).catch(() => null) : Promise.resolve(null),
   ]);
+  // Objection entry (AC-27) for the open panel: only when the backend says this referral is eligible.
+  const claimCtx = detail ? await getClaimContext(ctx, detail.referral, presentation) : null;
   const jobById = new Map(jobs.map((j) => [j.id, j]));
 
   const base = `/workspace/${orgSlug}/referrals`;
@@ -112,6 +172,7 @@ async function ReceivedQueue({ orgSlug, sp, t, tg, f }: { orgSlug: string; sp: R
     detail && detail.side === "target"
       ? toPanelView(detail, jobById.get(detail.referral.job_id), {
           orgSlug,
+          claim: claimCtx,
           closeHref: qs({}),
           nextHref: neighbour ? qs({ r: neighbour.id }) : qs({}),
           t,
@@ -214,8 +275,9 @@ function toRowView(r: QueueRow, job: ReceivedJob | undefined, o: Ctx & { bucket:
     label: r.candidate_label,
     score: r.fit_score,
     partner: r.source_org?.name ?? "",
-    ago: o.f.relative(r.submitted_at),
-    wait: waitTone(r.submitted_at),
+    // After a rejected objection, the wait counts from the fresh review clock (BR-18).
+    ago: o.f.relative(waitingSince(r)),
+    wait: waitTone(waitingSince(r)),
     status: pending && r.status === "submitted" ? null : { label: o.tg(`labels.referralStatus.${r.status}`), tone: REFERRAL_STATUS[r.status].tone },
     facts,
     salary: job ? salaryFit(snap, job) : null,
@@ -223,12 +285,16 @@ function toRowView(r: QueueRow, job: ReceivedJob | undefined, o: Ctx & { bucket:
     docs: r.grants?.[0]?.count ?? 0,
     revoked: Boolean(r.sharing_revoked_at),
     selectable: pending,
+    claimRejected: Boolean(r.claim_rejected_at),
   };
 }
 
+const waitingSince = (r: { submitted_at: string; claim_rejected_at: string | null; review_clock_started_at: string | null }) =>
+  (r.claim_rejected_at && r.review_clock_started_at) || r.submitted_at;
+
 type Detail = NonNullable<Awaited<ReturnType<typeof getReferralDetail>>>;
 
-function toPanelView(d: Detail, job: ReceivedJob | undefined, o: Ctx & { orgSlug: string; closeHref: string; nextHref: string }): PanelView {
+function toPanelView(d: Detail, job: ReceivedJob | undefined, o: Ctx & { orgSlug: string; closeHref: string; nextHref: string; claim: ClaimContext | null }): PanelView {
   const { t, tg, f } = o;
   const r = d.referral;
   const snap = (d.profile?.snapshot ?? null) as Snapshot | null;
@@ -276,8 +342,8 @@ function toPanelView(d: Detail, job: ReceivedJob | undefined, o: Ctx & { orgSlug
     headline: snap?.headline ?? null,
     score: r.fit_score,
     partner,
-    ago: f.relative(r.submitted_at),
-    wait: waitTone(r.submitted_at),
+    ago: f.relative(waitingSince(r)),
+    wait: waitTone(waitingSince(r)),
     status: { ...status, label: status.label + declined },
     revoked: Boolean(r.sharing_revoked_at),
     identity: snap ? ([snap.full_name, snap.email, snap.phone].filter(Boolean) as string[]) : [],
@@ -301,6 +367,8 @@ function toPanelView(d: Detail, job: ReceivedJob | undefined, o: Ctx & { orgSlug
       ? t("queue.agreementLine", { sourcing: bpsToPercent(d.agreement.sourcing_bps), owner: bpsToPercent(d.agreement.job_owner_bps), platform: bpsToPercent(d.agreement.platform_bps) })
       : null,
     decision: r.sharing_revoked_at ? "none" : DECIDABLE.has(r.status) ? "decide" : r.status === "info_requested" ? "waiting" : "none",
+    claim: o.claim,
+    claimRejectedOn: r.claim_rejected_at && PENDING_REVIEW.has(r.status) ? f.date(r.claim_rejected_at) : null,
     fullHref: `/workspace/${o.orgSlug}/referrals/${r.id}`,
     closeHref: o.closeHref,
     nextHref: o.nextHref,
@@ -312,9 +380,16 @@ function toPanelView(d: Detail, job: ReceivedJob | undefined, o: Ctx & { orgSlug
 
 
 async function SentTable({ orgSlug }: { orgSlug: string }) {
-  const ctx = await getRequestContext(orgSlug);
+  const ctx = await getRequestContext(orgSlug, { allowSettlement: true });
   const [t, tg, f, groups] = await Promise.all([getT("referrals"), getGlobalT(), getFormatter(), listSentByJob(ctx)]);
   const base = `/workspace/${orgSlug}/referrals`;
+  // Open objections show "Contest by {when} ET" on the row (S6). Only prior-presentation declines need the lookup.
+  const objected = groups.flatMap((g) => g.referrals).filter((r) => r.status === "declined" && r.lastEvent?.reason === "prior_presentation");
+  const contestBy = new Map(
+    (await Promise.all(objected.map(async (r) => [r.id, await getReferralPresentation(ctx, r.id).catch(() => null)] as const)))
+      .filter(([, p]) => p?.claim?.status === "open")
+      .map(([id, p]) => [id, p!.claim!.contest_deadline_at]),
+  );
   if (groups.length === 0) {
     return (
       <EmptyState
@@ -369,7 +444,14 @@ async function SentTable({ orgSlug }: { orgSlug: string }) {
                     </div>
                     {/* What the partner sees instead of the name until contact details are disclosed. */}
                     {r.candidate ? <p className="truncate text-xs text-muted-foreground">{t("sent.partnerSees", { label: r.candidate_label })}</p> : null}
-                    {ev && ev.to_status !== "submitted" ? (
+                    {/* N2 (PD-050 c): the referral's own frozen basis and rate, no money share; legacy rows say so. */}
+                    <p className="text-xs text-pretty text-muted-foreground">
+                      {r.terms
+                        ? feeShort({ feeBasis: r.terms.fee_basis, rateBps: r.terms.rate_bps, flatFeeMinor: r.terms.flat_fee_minor, currency: r.terms.currency }, tg, f)
+                        : tg("jobs.terms.notRecorded")}
+                    </p>
+                    {/* The "already presented" closure is recorded by MissionHub, not by either recruiter. */}
+                    {ev && ev.to_status !== "submitted" && ev.to_status !== "already_presented" ? (
                       <p className="mt-1 text-sm text-muted-foreground">
                         {ev.actor_side === "target"
                           ? t("sent.movedBy", { partner: g.partner, status: tg(`labels.referralStatus.${ev.to_status}`), time: f.relative(ev.created_at) })
@@ -378,7 +460,14 @@ async function SentTable({ orgSlug }: { orgSlug: string }) {
                     ) : (
                       <p className="mt-1 text-sm text-muted-foreground">{t("sent.submittedAt", { time: f.relative(r.submitted_at) })}</p>
                     )}
-                    {ev?.reason ? <p className="mt-1.5 rounded-xl bg-muted/60 px-3 py-2 text-sm text-pretty">{isDeclineReason(ev.reason) ? t(`declineReasons.${ev.reason}`) : t("detail.reasonQuote", { reason: ev.reason })}</p> : null}
+                    {ev?.reason && ev.reason !== "claim_rejected" ? <p className="mt-1.5 rounded-xl bg-muted/60 px-3 py-2 text-sm text-pretty">{isDeclineReason(ev.reason) ? t(`declineReasons.${ev.reason}`) : t("detail.reasonQuote", { reason: ev.reason })}</p> : null}
+                    {contestBy.has(r.id) ? (
+                      // Wraps instead of truncating; the weekday is dropped to keep it short (§5.11).
+                      <p className="mt-2 inline-flex max-w-full items-start gap-1.5 rounded-2xl border border-warning/30 bg-warning-soft px-2.5 py-1 text-xs font-medium whitespace-normal text-warning">
+                        <Clock className="mt-px size-3.5 shrink-0" aria-hidden />
+                        {t("sent.claimOpenChip", { when: f.etDateTimeShort(contestBy.get(r.id)) })}
+                      </p>
+                    ) : null}
                   </div>
                   <div className="col-start-2 grid justify-items-start gap-2 sm:col-start-auto sm:justify-items-end">
                     <StatusPill tone={REFERRAL_STATUS[r.status].tone} label={tg(`labels.referralStatus.${r.status}`)} />

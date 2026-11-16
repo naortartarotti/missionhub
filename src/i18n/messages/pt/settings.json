@@ -7,7 +7,9 @@
     "team": "Equipe",
     "privacy": "Solicitações de privacidade",
     "audit": "Log de auditoria",
-    "preferences": "Preferências"
+    "preferences": "Preferências",
+    "connectors": "Conectores",
+    "standing": "Situação na rede"
   },
   "organization": {
     "title": "Organização",
@@ -23,10 +25,10 @@
     "emailName": "E-mail transacional",
     "emailDescription": "Sem ele, as notificações ficam apenas no aplicativo.",
     "paymentsName": "Provedor de pagamentos",
-    "paymentsDescription": "A liquidação é registrada em um livro-razão manual verificado. Nenhum valor passa pelo MissionHub.",
+    "paymentsDescription": "A liquidação é registrada em um extrato manual verificado. Nenhum valor passa pelo MissionHub.",
     "configured": "Configurado",
     "notConfigured": "Não configurado",
-    "manualLedger": "Livro-razão manual",
+    "manualLedger": "Extrato manual",
     "residency": "Residência de dados: configure seu projeto Supabase em uma região canadense (ca-central-1). Subprocessadores, como fornecedores de IA ou de e-mail, podem processar dados fora do Canadá."
   },
   "team": {
@@ -47,7 +49,17 @@
     "suspend": "Suspender",
     "reactivate": "Reativar",
     "revoked": "Revogado",
-    "revoke": "Revogar"
+    "revoke": "Revogar",
+    "owns": "{candidates} candidatos · {jobs} vagas",
+    "transfer": "Transferir carteira",
+    "transferTitle": "Transferir a carteira de {name}",
+    "transferDescription": "{candidates} candidatos e {jobs} vagas, além dos conectores que essa pessoa configurou, passam a pertencer ao colega escolhido. Indicações e histórico não mudam.",
+    "transferTo": "Novo responsável",
+    "cancel": "Cancelar",
+    "transferConfirm": "Transferir",
+    "rulesColumn": "Regras da rede",
+    "rulesAccepted": "Versão {label} aceita",
+    "rulesNotAccepted": "Ainda não aceita"
   },
   "privacy": {
     "metaTitle": "Solicitações de privacidade",
@@ -114,7 +126,26 @@
     "action": "Ação",
     "entity": "Entidade",
     "system": "Parceiro / sistema",
-    "empty": "Nenhum evento ainda."
+    "empty": "Nenhum evento ainda.",
+    "actions": {
+      "network_rules_org_accepted": "Regras da rede aceitas pela organização",
+      "network_rules_member_accepted": "Regras da rede aceitas por um membro",
+      "conduct_report_filed": "Relato de conduta enviado",
+      "conduct_notice_sent": "Aviso recebido do MissionHub",
+      "conduct_response_submitted": "Resposta a um aviso enviada",
+      "conduct_followup_sent": "Pergunta complementar recebida",
+      "conduct_followup_answered": "Pergunta complementar respondida",
+      "conduct_decided": "Decisão registrada",
+      "sanction_applied": "Sanção aplicada",
+      "sanction_lifted": "Sanção encerrada",
+      "sanction_immediate_hold": "Restrição de rede imediata aplicada",
+      "sanction_review_requested": "Revisão solicitada",
+      "sanction_reviewed": "Revisão decidida",
+      "settlement_mode_entered": "Modo de finalização iniciado",
+      "settlement_mode_exited": "Modo de finalização encerrado",
+      "conduct_incident_notice_sent": "Aviso de incidente com dados recebido",
+      "referral_closed_stale_by_admin": "Indicação encerrada pelo MissionHub (sem atividade)"
+    }
   },
   "preferences": {
     "title": "Preferências",

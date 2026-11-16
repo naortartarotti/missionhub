@@ -16,9 +16,10 @@ const schema = z.object({
   EMAIL_FROM: z.string().min(3).default("MissionHub <onboarding@resend.dev>"),
   // Supabase Auth "Send Email Hook" secret ("v1,whsec_…"). Set => auth emails go through /api/auth/send-email + Resend.
   SEND_EMAIL_HOOK_SECRET: z.string().startsWith("v1,whsec_").optional(),
-  // Stripe (wallet payments). Both must be set for payments to switch on.
-  STRIPE_SECRET_KEY: z.string().min(10).optional(),
-  STRIPE_WEBHOOK_SECRET: z.string().min(10).optional(),
+  // Support address shown with a stopped referral (N1, PD-025). Unset => the UI hides the support line.
+  SUPPORT_EMAIL: z.email().optional(),
+  // Bearer secret for /api/cron/worker (hosted queue drain, called by Supabase pg_cron). Unset => route is off.
+  CRON_SECRET: z.string().min(32).optional(),
 });
 
 type Env = z.infer<typeof schema>;
@@ -51,8 +52,8 @@ function load(): Env {
     RESEND_API_KEY: process.env.RESEND_API_KEY || undefined,
     EMAIL_FROM: process.env.EMAIL_FROM || undefined,
     SEND_EMAIL_HOOK_SECRET: process.env.SEND_EMAIL_HOOK_SECRET || undefined,
-    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || undefined,
-    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET || undefined,
+    SUPPORT_EMAIL: process.env.SUPPORT_EMAIL || undefined,
+    CRON_SECRET: process.env.CRON_SECRET || undefined,
   });
   return cached;
 }
@@ -70,9 +71,5 @@ export const integrations = {
   },
   get email() {
     return Boolean(env.RESEND_API_KEY);
-  },
-  /** Wallet pay-ins and cash-outs. Off until both Stripe secrets are configured. */
-  get payments() {
-    return Boolean(env.STRIPE_SECRET_KEY && env.STRIPE_WEBHOOK_SECRET);
   },
 };

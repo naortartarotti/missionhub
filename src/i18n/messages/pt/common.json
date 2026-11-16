@@ -46,7 +46,7 @@
   },
   "skipToContent": "Pular para o conteúdo",
   "demo": {
-    "title": "Espaço de demonstração",
+    "title": "Organização de demonstração",
     "body": "Todos os dados aqui são fictícios. Nunca misture com candidatos reais."
   },
   "none": "—",
@@ -69,5 +69,12 @@
   "countries": {
     "add": "Adicionar país",
     "remove": "Remover {country}"
-  }
+  },
+  "ownerScope": {
+    "label": "De quem",
+    "team": "Toda a equipe",
+    "mine": "Meus"
+  },
+  "imported": "Importado",
+  "charCount": "{count} de {max} caracteres"
 }

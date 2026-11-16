@@ -4,10 +4,19 @@
  */
 import type { StoredEvidence } from "@/features/matching/evidence";
 
-/** Reason codes stored on a declined referral. Labels live in `referrals.declineReasons.<code>`. */
-export const DECLINE_REASONS = ["skills", "seniority", "salary", "location", "availability", "duplicate", "position_filled", "other"] as const;
+/**
+ * Reason codes a hiring recruiter can pick when declining (single and bulk). Labels live in
+ * `referrals.declineReasons.<code>`. `duplicate` is no longer selectable (N1, BR-11): a "we already
+ * had them" decline is a prior-presentation claim, which sets `prior_presentation` itself.
+ */
+export const DECLINE_REASONS = ["skills", "seniority", "salary", "location", "availability", "position_filled", "other"] as const;
 export type DeclineReason = (typeof DECLINE_REASONS)[number];
-export const isDeclineReason = (v: unknown): v is DeclineReason => (DECLINE_REASONS as readonly unknown[]).includes(v);
+/** Stored codes that are shown but never picked: legacy `duplicate` (BR-30) and `prior_presentation` (claims). */
+export const SYSTEM_DECLINE_REASONS = ["duplicate", "prior_presentation"] as const;
+/** Every code with a label in `referrals.declineReasons` (display only; never makes a system code selectable). */
+const LABELLED_DECLINE_REASONS = [...DECLINE_REASONS, ...SYSTEM_DECLINE_REASONS] as const;
+export type LabelledDeclineReason = (typeof LABELLED_DECLINE_REASONS)[number];
+export const isDeclineReason = (v: unknown): v is LabelledDeclineReason => (LABELLED_DECLINE_REASONS as readonly unknown[]).includes(v);
 
 /** Queue tabs. Labels live in `referrals.queue.buckets.<key>`. */
 export const BUCKETS = {
@@ -27,7 +36,7 @@ export const PAGE_SIZE = 25;
 export const REFERRAL_STAGES = ["submitted", "under_review", "interviewing", "offer", "hired"] as const;
 export const STAGE_INDEX: Partial<Record<string, number>> = { awaiting_candidate: 0, submitted: 0, under_review: 1, info_requested: 1, accepted: 1, interviewing: 2, offer: 3, hired: 4 };
 /** Statuses that end a referral without a hire. */
-export const CLOSED_STATUSES = new Set(["declined", "rejected", "withdrawn", "cancelled", "candidate_declined"]);
+export const CLOSED_STATUSES = new Set(["declined", "rejected", "withdrawn", "cancelled", "candidate_declined", "already_presented"]);
 
 /** Statuses where the job owner can still accept / decline / ask for info. */
 export const DECIDABLE = new Set(["submitted", "under_review"]);

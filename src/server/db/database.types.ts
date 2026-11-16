@@ -34,6 +34,70 @@ export type Database = {
   }
   public: {
     Tables: {
+      api_keys: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          key_hash: string
+          last_used_at: string | null
+          name: string
+          organization_id: string
+          prefix: string
+          revoked_at: string | null
+          window_count: number
+          window_started_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          key_hash: string
+          last_used_at?: string | null
+          name: string
+          organization_id: string
+          prefix: string
+          revoked_at?: string | null
+          window_count?: number
+          window_started_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          key_hash?: string
+          last_used_at?: string | null
+          name?: string
+          organization_id?: string
+          prefix?: string
+          revoked_at?: string | null
+          window_count?: number
+          window_started_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "api_keys_creator_profile_fk"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "api_keys_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "api_keys_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_events: {
         Row: {
           action: string
@@ -71,6 +135,13 @@ export type Database = {
             columns: ["actor_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "audit_events_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
             referencedColumns: ["id"]
           },
           {
@@ -134,6 +205,7 @@ export type Database = {
         Row: {
           candidate_id: string
           created_at: string
+          disputed_at: string | null
           evidence: string
           expires_at: string | null
           id: string
@@ -150,6 +222,7 @@ export type Database = {
         Insert: {
           candidate_id: string
           created_at?: string
+          disputed_at?: string | null
           evidence: string
           expires_at?: string | null
           id?: string
@@ -166,6 +239,7 @@ export type Database = {
         Update: {
           candidate_id?: string
           created_at?: string
+          disputed_at?: string | null
           evidence?: string
           expires_at?: string | null
           id?: string
@@ -192,6 +266,13 @@ export type Database = {
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_consents_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
             referencedColumns: ["id"]
           },
           {
@@ -261,6 +342,13 @@ export type Database = {
             foreignKeyName: "candidate_documents_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_documents_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -312,6 +400,13 @@ export type Database = {
             foreignKeyName: "candidate_experiences_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_experiences_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -319,26 +414,19 @@ export type Database = {
       }
       candidates: {
         Row: {
-          has_passport: boolean | null
-          linkedin_url: string | null
-          passport_countries: string[]
-          photo_path: string | null
-          postal_code: string | null
-          relocation_destinations: string[]
-          relocation_scope: string | null
-          travel_availability: string | null
-          work_authorization: string[]
           anonymized_at: string | null
           available_from: string | null
           created_at: string
           created_by: string | null
           email: string | null
           full_name: string
+          has_passport: boolean | null
           headline: string | null
           id: string
           languages: string[]
           last_reviewed_at: string | null
           legal_basis: Database["public"]["Enums"]["legal_basis"]
+          linkedin_url: string | null
           location_city: string | null
           location_country: string | null
           location_region: string | null
@@ -346,9 +434,14 @@ export type Database = {
           open_to_relocation: boolean
           organization_id: string
           owner_id: string
+          passport_countries: string[]
           phone: string | null
+          photo_path: string | null
+          postal_code: string | null
           privacy_notice_given_at: string | null
           processing_purpose: string
+          relocation_destinations: string[]
+          relocation_scope: string | null
           retention_until: string | null
           salary_currency: string | null
           salary_expectation_max: number | null
@@ -360,31 +453,26 @@ export type Database = {
           status: Database["public"]["Enums"]["candidate_status"]
           summary: string | null
           tags: string[]
+          travel_availability: string | null
           updated_at: string
           work_arrangements: Database["public"]["Enums"]["work_arrangement"][]
+          work_authorization: string[]
           years_experience: number | null
         }
         Insert: {
-          has_passport?: boolean | null
-          linkedin_url?: string | null
-          passport_countries?: string[]
-          photo_path?: string | null
-          postal_code?: string | null
-          relocation_destinations?: string[]
-          relocation_scope?: string | null
-          travel_availability?: string | null
-          work_authorization?: string[]
           anonymized_at?: string | null
           available_from?: string | null
           created_at?: string
           created_by?: string | null
           email?: string | null
           full_name: string
+          has_passport?: boolean | null
           headline?: string | null
           id?: string
           languages?: string[]
           last_reviewed_at?: string | null
           legal_basis?: Database["public"]["Enums"]["legal_basis"]
+          linkedin_url?: string | null
           location_city?: string | null
           location_country?: string | null
           location_region?: string | null
@@ -392,9 +480,14 @@ export type Database = {
           open_to_relocation?: boolean
           organization_id: string
           owner_id: string
+          passport_countries?: string[]
           phone?: string | null
+          photo_path?: string | null
+          postal_code?: string | null
           privacy_notice_given_at?: string | null
           processing_purpose?: string
+          relocation_destinations?: string[]
+          relocation_scope?: string | null
           retention_until?: string | null
           salary_currency?: string | null
           salary_expectation_max?: number | null
@@ -406,31 +499,26 @@ export type Database = {
           status?: Database["public"]["Enums"]["candidate_status"]
           summary?: string | null
           tags?: string[]
+          travel_availability?: string | null
           updated_at?: string
           work_arrangements?: Database["public"]["Enums"]["work_arrangement"][]
+          work_authorization?: string[]
           years_experience?: number | null
         }
         Update: {
-          has_passport?: boolean | null
-          linkedin_url?: string | null
-          passport_countries?: string[]
-          photo_path?: string | null
-          postal_code?: string | null
-          relocation_destinations?: string[]
-          relocation_scope?: string | null
-          travel_availability?: string | null
-          work_authorization?: string[]
           anonymized_at?: string | null
           available_from?: string | null
           created_at?: string
           created_by?: string | null
           email?: string | null
           full_name?: string
+          has_passport?: boolean | null
           headline?: string | null
           id?: string
           languages?: string[]
           last_reviewed_at?: string | null
           legal_basis?: Database["public"]["Enums"]["legal_basis"]
+          linkedin_url?: string | null
           location_city?: string | null
           location_country?: string | null
           location_region?: string | null
@@ -438,9 +526,14 @@ export type Database = {
           open_to_relocation?: boolean
           organization_id?: string
           owner_id?: string
+          passport_countries?: string[]
           phone?: string | null
+          photo_path?: string | null
+          postal_code?: string | null
           privacy_notice_given_at?: string | null
           processing_purpose?: string
+          relocation_destinations?: string[]
+          relocation_scope?: string | null
           retention_until?: string | null
           salary_currency?: string | null
           salary_expectation_max?: number | null
@@ -452,11 +545,20 @@ export type Database = {
           status?: Database["public"]["Enums"]["candidate_status"]
           summary?: string | null
           tags?: string[]
+          travel_availability?: string | null
           updated_at?: string
           work_arrangements?: Database["public"]["Enums"]["work_arrangement"][]
+          work_authorization?: string[]
           years_experience?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "candidates_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "candidates_organization_id_fkey"
             columns: ["organization_id"]
@@ -473,71 +575,14 @@ export type Database = {
           },
         ]
       }
-      cashout_requests: {
-        Row: {
-          amount_minor: number
-          completed_at: string | null
-          created_at: string
-          currency: string
-          failure_reason: string | null
-          id: string
-          idempotency_key: string
-          organization_id: string
-          psp_transfer_id: string | null
-          requested_by: string
-          reserve_transaction_id: string
-          status: Database["public"]["Enums"]["cashout_status"]
-        }
-        Insert: {
-          amount_minor: number
-          completed_at?: string | null
-          created_at?: string
-          currency: string
-          failure_reason?: string | null
-          id?: string
-          idempotency_key: string
-          organization_id: string
-          psp_transfer_id?: string | null
-          requested_by: string
-          reserve_transaction_id: string
-          status?: Database["public"]["Enums"]["cashout_status"]
-        }
-        Update: {
-          amount_minor?: number
-          completed_at?: string | null
-          created_at?: string
-          currency?: string
-          failure_reason?: string | null
-          id?: string
-          idempotency_key?: string
-          organization_id?: string
-          psp_transfer_id?: string | null
-          requested_by?: string
-          reserve_transaction_id?: string
-          status?: Database["public"]["Enums"]["cashout_status"]
-        }
-        Relationships: [
-          {
-            foreignKeyName: "cashout_requests_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "cashout_requests_reserve_transaction_id_fkey"
-            columns: ["reserve_transaction_id"]
-            isOneToOne: false
-            referencedRelation: "wallet_transactions"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       collaboration_agreements: {
         Row: {
           created_at: string
+          deemed_at: string | null
           id: string
           job_owner_bps: number
+          origin: string
+          platform_basis: Database["public"]["Enums"]["platform_basis"]
           platform_bps: number
           referral_id: string
           rule_id: string
@@ -550,11 +595,15 @@ export type Database = {
           target_accepted_at: string | null
           target_accepted_by: string | null
           terms_version: string
+          terms_version_id: string | null
         }
         Insert: {
           created_at?: string
+          deemed_at?: string | null
           id?: string
           job_owner_bps: number
+          origin?: string
+          platform_basis?: Database["public"]["Enums"]["platform_basis"]
           platform_bps: number
           referral_id: string
           rule_id: string
@@ -567,11 +616,15 @@ export type Database = {
           target_accepted_at?: string | null
           target_accepted_by?: string | null
           terms_version?: string
+          terms_version_id?: string | null
         }
         Update: {
           created_at?: string
+          deemed_at?: string | null
           id?: string
           job_owner_bps?: number
+          origin?: string
+          platform_basis?: Database["public"]["Enums"]["platform_basis"]
           platform_bps?: number
           referral_id?: string
           rule_id?: string
@@ -584,6 +637,7 @@ export type Database = {
           target_accepted_at?: string | null
           target_accepted_by?: string | null
           terms_version?: string
+          terms_version_id?: string | null
         }
         Relationships: [
           {
@@ -598,6 +652,13 @@ export type Database = {
             columns: ["rule_id"]
             isOneToOne: false
             referencedRelation: "commission_rules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collaboration_agreements_terms_version_id_fkey"
+            columns: ["terms_version_id"]
+            isOneToOne: false
+            referencedRelation: "job_terms_versions"
             referencedColumns: ["id"]
           },
         ]
@@ -653,6 +714,13 @@ export type Database = {
             foreignKeyName: "commission_ledger_entries_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "commission_ledger_entries_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -688,6 +756,7 @@ export type Database = {
           is_default: boolean
           job_owner_bps: number
           name: string
+          platform_basis: Database["public"]["Enums"]["platform_basis"]
           platform_bps: number
           retired_at: string | null
           sourcing_bps: number
@@ -701,6 +770,7 @@ export type Database = {
           is_default?: boolean
           job_owner_bps: number
           name: string
+          platform_basis?: Database["public"]["Enums"]["platform_basis"]
           platform_bps: number
           retired_at?: string | null
           sourcing_bps: number
@@ -714,6 +784,7 @@ export type Database = {
           is_default?: boolean
           job_owner_bps?: number
           name?: string
+          platform_basis?: Database["public"]["Enums"]["platform_basis"]
           platform_bps?: number
           retired_at?: string | null
           sourcing_bps?: number
@@ -721,44 +792,142 @@ export type Database = {
         }
         Relationships: []
       }
+      connections: {
+        Row: {
+          config: Json
+          created_at: string
+          created_by: string
+          id: string
+          last_error: string | null
+          last_sync_at: string | null
+          name: string
+          next_sync_at: string
+          organization_id: string
+          owner_id: string
+          provider: string
+          secret_id: string | null
+          status: string
+          sync_interval_minutes: number
+          updated_at: string
+        }
+        Insert: {
+          config?: Json
+          created_at?: string
+          created_by: string
+          id?: string
+          last_error?: string | null
+          last_sync_at?: string | null
+          name: string
+          next_sync_at?: string
+          organization_id: string
+          owner_id: string
+          provider: string
+          secret_id?: string | null
+          status?: string
+          sync_interval_minutes?: number
+          updated_at?: string
+        }
+        Update: {
+          config?: Json
+          created_at?: string
+          created_by?: string
+          id?: string
+          last_error?: string | null
+          last_sync_at?: string | null
+          name?: string
+          next_sync_at?: string
+          organization_id?: string
+          owner_id?: string
+          provider?: string
+          secret_id?: string | null
+          status?: string
+          sync_interval_minutes?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "connections_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "connections_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "connections_owner_profile_fk"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       disputes: {
         Row: {
+          claim_id: string | null
           created_at: string
+          hire_report_id: string | null
           id: string
+          kind: string
           opened_by: string
           opened_by_org: string
-          placement_id: string
+          outcome: string | null
+          placement_id: string | null
           reason: string
+          referral_id: string | null
           resolution: string | null
           resolved_at: string | null
           resolved_by: string | null
           status: string
         }
         Insert: {
+          claim_id?: string | null
           created_at?: string
+          hire_report_id?: string | null
           id?: string
+          kind?: string
           opened_by: string
           opened_by_org: string
-          placement_id: string
+          outcome?: string | null
+          placement_id?: string | null
           reason: string
+          referral_id?: string | null
           resolution?: string | null
           resolved_at?: string | null
           resolved_by?: string | null
           status?: string
         }
         Update: {
+          claim_id?: string | null
           created_at?: string
+          hire_report_id?: string | null
           id?: string
+          kind?: string
           opened_by?: string
           opened_by_org?: string
-          placement_id?: string
+          outcome?: string | null
+          placement_id?: string | null
           reason?: string
+          referral_id?: string | null
           resolution?: string | null
           resolved_at?: string | null
           resolved_by?: string | null
           status?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "disputes_opened_by_org_fkey"
+            columns: ["opened_by_org"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "disputes_opened_by_org_fkey"
             columns: ["opened_by_org"]
@@ -771,6 +940,165 @@ export type Database = {
             columns: ["placement_id"]
             isOneToOne: false
             referencedRelation: "placements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "disputes_referral_id_fkey"
+            columns: ["referral_id"]
+            isOneToOne: false
+            referencedRelation: "referrals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      external_refs: {
+        Row: {
+          connection_id: string | null
+          content_hash: string | null
+          created_at: string
+          entity_id: string
+          entity_type: string
+          external_id: string
+          id: string
+          organization_id: string
+          seen_at: string
+          source: string
+        }
+        Insert: {
+          connection_id?: string | null
+          content_hash?: string | null
+          created_at?: string
+          entity_id: string
+          entity_type: string
+          external_id: string
+          id?: string
+          organization_id: string
+          seen_at?: string
+          source: string
+        }
+        Update: {
+          connection_id?: string | null
+          content_hash?: string | null
+          created_at?: string
+          entity_id?: string
+          entity_type?: string
+          external_id?: string
+          id?: string
+          organization_id?: string
+          seen_at?: string
+          source?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "external_refs_connection_id_fkey"
+            columns: ["connection_id"]
+            isOneToOne: false
+            referencedRelation: "connections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "external_refs_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "external_refs_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hire_records: {
+        Row: {
+          created_at: string
+          hired_role_title: string | null
+          id: string
+          kind: string
+          offer_accepted_on: string | null
+          origin: string
+          placement_id: string | null
+          prior_status: Database["public"]["Enums"]["referral_status"]
+          recorded_by: string | null
+          referral_id: string
+          source_org_id: string
+          start_date: string | null
+          target_org_id: string
+        }
+        Insert: {
+          created_at?: string
+          hired_role_title?: string | null
+          id?: string
+          kind: string
+          offer_accepted_on?: string | null
+          origin: string
+          placement_id?: string | null
+          prior_status: Database["public"]["Enums"]["referral_status"]
+          recorded_by?: string | null
+          referral_id: string
+          source_org_id: string
+          start_date?: string | null
+          target_org_id: string
+        }
+        Update: {
+          created_at?: string
+          hired_role_title?: string | null
+          id?: string
+          kind?: string
+          offer_accepted_on?: string | null
+          origin?: string
+          placement_id?: string | null
+          prior_status?: Database["public"]["Enums"]["referral_status"]
+          recorded_by?: string | null
+          referral_id?: string
+          source_org_id?: string
+          start_date?: string | null
+          target_org_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hire_records_placement_id_fkey"
+            columns: ["placement_id"]
+            isOneToOne: true
+            referencedRelation: "placements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hire_records_referral_id_fkey"
+            columns: ["referral_id"]
+            isOneToOne: true
+            referencedRelation: "referrals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hire_records_source_org_id_fkey"
+            columns: ["source_org_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hire_records_source_org_id_fkey"
+            columns: ["source_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hire_records_target_org_id_fkey"
+            columns: ["target_org_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hire_records_target_org_id_fkey"
+            columns: ["target_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
@@ -822,11 +1150,122 @@ export type Database = {
           },
         ]
       }
+      job_terms_versions: {
+        Row: {
+          amends_version_id: string | null
+          created_at: string
+          created_by: string
+          currency: string
+          direct_client_attested_at: string
+          direct_client_attested_by: string
+          fee_basis: Database["public"]["Enums"]["fee_basis"]
+          flat_fee_minor: number | null
+          guarantee_days: number
+          guarantee_remedy:
+            | Database["public"]["Enums"]["guarantee_remedy"]
+            | null
+          id: string
+          job_id: string
+          kind: Database["public"]["Enums"]["terms_kind"]
+          min_fee_minor: number | null
+          organization_id: string
+          ownership_months: number
+          payment_terms_days: number
+          rate_bps: number | null
+          referral_id: string | null
+          search_type: Database["public"]["Enums"]["search_type"]
+          version_no: number
+        }
+        Insert: {
+          amends_version_id?: string | null
+          created_at?: string
+          created_by: string
+          currency: string
+          direct_client_attested_at: string
+          direct_client_attested_by: string
+          fee_basis: Database["public"]["Enums"]["fee_basis"]
+          flat_fee_minor?: number | null
+          guarantee_days: number
+          guarantee_remedy?:
+            | Database["public"]["Enums"]["guarantee_remedy"]
+            | null
+          id?: string
+          job_id: string
+          kind?: Database["public"]["Enums"]["terms_kind"]
+          min_fee_minor?: number | null
+          organization_id: string
+          ownership_months: number
+          payment_terms_days: number
+          rate_bps?: number | null
+          referral_id?: string | null
+          search_type: Database["public"]["Enums"]["search_type"]
+          version_no: number
+        }
+        Update: {
+          amends_version_id?: string | null
+          created_at?: string
+          created_by?: string
+          currency?: string
+          direct_client_attested_at?: string
+          direct_client_attested_by?: string
+          fee_basis?: Database["public"]["Enums"]["fee_basis"]
+          flat_fee_minor?: number | null
+          guarantee_days?: number
+          guarantee_remedy?:
+            | Database["public"]["Enums"]["guarantee_remedy"]
+            | null
+          id?: string
+          job_id?: string
+          kind?: Database["public"]["Enums"]["terms_kind"]
+          min_fee_minor?: number | null
+          organization_id?: string
+          ownership_months?: number
+          payment_terms_days?: number
+          rate_bps?: number | null
+          referral_id?: string | null
+          search_type?: Database["public"]["Enums"]["search_type"]
+          version_no?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_terms_versions_amends_version_id_fkey"
+            columns: ["amends_version_id"]
+            isOneToOne: false
+            referencedRelation: "job_terms_versions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_terms_versions_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_terms_versions_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_terms_versions_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_terms_versions_referral_id_fkey"
+            columns: ["referral_id"]
+            isOneToOne: false
+            referencedRelation: "referrals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       jobs: {
         Row: {
-          relocation_support: boolean
-          travel_requirement: string | null
-          visa_sponsorship: boolean
           accepts_external_referrals: boolean
           client_confidential: boolean
           client_name: string | null
@@ -845,6 +1284,7 @@ export type Database = {
           organization_id: string
           owner_id: string
           preferred_skills: string[]
+          relocation_support: boolean
           required_skills: string[]
           salary_currency: string
           salary_max: number | null
@@ -854,15 +1294,15 @@ export type Database = {
           share_fee: boolean
           share_location: boolean
           share_salary: boolean
+          source: string
           status: Database["public"]["Enums"]["job_status"]
           title: string
+          travel_requirement: string | null
           updated_at: string
+          visa_sponsorship: boolean
           work_arrangement: Database["public"]["Enums"]["work_arrangement"]
         }
         Insert: {
-          relocation_support?: boolean
-          travel_requirement?: string | null
-          visa_sponsorship?: boolean
           accepts_external_referrals?: boolean
           client_confidential?: boolean
           client_name?: string | null
@@ -881,6 +1321,7 @@ export type Database = {
           organization_id: string
           owner_id: string
           preferred_skills?: string[]
+          relocation_support?: boolean
           required_skills?: string[]
           salary_currency?: string
           salary_max?: number | null
@@ -890,15 +1331,15 @@ export type Database = {
           share_fee?: boolean
           share_location?: boolean
           share_salary?: boolean
+          source?: string
           status?: Database["public"]["Enums"]["job_status"]
           title: string
+          travel_requirement?: string | null
           updated_at?: string
+          visa_sponsorship?: boolean
           work_arrangement?: Database["public"]["Enums"]["work_arrangement"]
         }
         Update: {
-          relocation_support?: boolean
-          travel_requirement?: string | null
-          visa_sponsorship?: boolean
           accepts_external_referrals?: boolean
           client_confidential?: boolean
           client_name?: string | null
@@ -917,6 +1358,7 @@ export type Database = {
           organization_id?: string
           owner_id?: string
           preferred_skills?: string[]
+          relocation_support?: boolean
           required_skills?: string[]
           salary_currency?: string
           salary_max?: number | null
@@ -926,12 +1368,22 @@ export type Database = {
           share_fee?: boolean
           share_location?: boolean
           share_salary?: boolean
+          source?: string
           status?: Database["public"]["Enums"]["job_status"]
           title?: string
+          travel_requirement?: string | null
           updated_at?: string
+          visa_sponsorship?: boolean
           work_arrangement?: Database["public"]["Enums"]["work_arrangement"]
         }
         Relationships: [
+          {
+            foreignKeyName: "jobs_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "jobs_organization_id_fkey"
             columns: ["organization_id"]
@@ -988,6 +1440,13 @@ export type Database = {
             foreignKeyName: "match_feedback_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "match_feedback_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -1027,6 +1486,13 @@ export type Database = {
             columns: ["match_id"]
             isOneToOne: false
             referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "match_triage_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
             referencedColumns: ["id"]
           },
           {
@@ -1105,6 +1571,13 @@ export type Database = {
             foreignKeyName: "matches_candidate_org_id_fkey"
             columns: ["candidate_org_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_candidate_org_id_fkey"
+            columns: ["candidate_org_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -1119,10 +1592,204 @@ export type Database = {
             foreignKeyName: "matches_job_org_id_fkey"
             columns: ["job_org_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_job_org_id_fkey"
+            columns: ["job_org_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
+      }
+      network_rules_member_acceptances: {
+        Row: {
+          accepted_at: string
+          id: string
+          locale: Database["public"]["Enums"]["network_rules_locale"]
+          organization_id: string | null
+          sha256: string
+          user_id: string
+          version_id: string
+        }
+        Insert: {
+          accepted_at?: string
+          id?: string
+          locale: Database["public"]["Enums"]["network_rules_locale"]
+          organization_id?: string | null
+          sha256: string
+          user_id: string
+          version_id: string
+        }
+        Update: {
+          accepted_at?: string
+          id?: string
+          locale?: Database["public"]["Enums"]["network_rules_locale"]
+          organization_id?: string | null
+          sha256?: string
+          user_id?: string
+          version_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "network_rules_member_acceptances_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "network_rules_member_acceptances_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "network_rules_member_acceptances_version_id_fkey"
+            columns: ["version_id"]
+            isOneToOne: false
+            referencedRelation: "network_rules_versions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      network_rules_org_acceptances: {
+        Row: {
+          accepted_at: string
+          accepted_by: string | null
+          id: string
+          locale: Database["public"]["Enums"]["network_rules_locale"]
+          organization_id: string
+          sha256: string
+          version_id: string
+        }
+        Insert: {
+          accepted_at?: string
+          accepted_by?: string | null
+          id?: string
+          locale: Database["public"]["Enums"]["network_rules_locale"]
+          organization_id: string
+          sha256: string
+          version_id: string
+        }
+        Update: {
+          accepted_at?: string
+          accepted_by?: string | null
+          id?: string
+          locale?: Database["public"]["Enums"]["network_rules_locale"]
+          organization_id?: string
+          sha256?: string
+          version_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "network_rules_org_acceptances_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "network_rules_org_acceptances_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "network_rules_org_acceptances_version_id_fkey"
+            columns: ["version_id"]
+            isOneToOne: false
+            referencedRelation: "network_rules_versions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      network_rules_version_texts: {
+        Row: {
+          body: string
+          change_summary: string | null
+          locale: Database["public"]["Enums"]["network_rules_locale"]
+          rules: Json
+          sections: Json
+          sha256: string
+          version_id: string
+        }
+        Insert: {
+          body: string
+          change_summary?: string | null
+          locale: Database["public"]["Enums"]["network_rules_locale"]
+          rules?: Json
+          sections?: Json
+          sha256: string
+          version_id: string
+        }
+        Update: {
+          body?: string
+          change_summary?: string | null
+          locale?: Database["public"]["Enums"]["network_rules_locale"]
+          rules?: Json
+          sections?: Json
+          sha256?: string
+          version_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "network_rules_version_texts_version_id_fkey"
+            columns: ["version_id"]
+            isOneToOne: false
+            referencedRelation: "network_rules_versions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      network_rules_versions: {
+        Row: {
+          approval_reference: string | null
+          created_at: string
+          effective_at: string | null
+          effective_on: string | null
+          id: string
+          label: string
+          legal_reason: string | null
+          published_at: string | null
+          rule_numbers: string[]
+          status: string
+          type: Database["public"]["Enums"]["network_rules_version_type"]
+          updated_at: string
+        }
+        Insert: {
+          approval_reference?: string | null
+          created_at?: string
+          effective_at?: string | null
+          effective_on?: string | null
+          id?: string
+          label: string
+          legal_reason?: string | null
+          published_at?: string | null
+          rule_numbers?: string[]
+          status?: string
+          type: Database["public"]["Enums"]["network_rules_version_type"]
+          updated_at?: string
+        }
+        Update: {
+          approval_reference?: string | null
+          created_at?: string
+          effective_at?: string | null
+          effective_on?: string | null
+          id?: string
+          label?: string
+          legal_reason?: string | null
+          published_at?: string | null
+          rule_numbers?: string[]
+          status?: string
+          type?: Database["public"]["Enums"]["network_rules_version_type"]
+          updated_at?: string
+        }
+        Relationships: []
       }
       notification_preferences: {
         Row: {
@@ -1187,6 +1854,13 @@ export type Database = {
             foreignKeyName: "notifications_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -1237,6 +1911,13 @@ export type Database = {
             foreignKeyName: "organization_invitations_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_invitations_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -1282,6 +1963,13 @@ export type Database = {
             foreignKeyName: "organization_memberships_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_memberships_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -1301,6 +1989,7 @@ export type Database = {
           slug: string
           suspended_at: string | null
           suspended_reason: string | null
+          terminated_at: string | null
           updated_at: string
         }
         Insert: {
@@ -1316,6 +2005,7 @@ export type Database = {
           slug: string
           suspended_at?: string | null
           suspended_reason?: string | null
+          terminated_at?: string | null
           updated_at?: string
         }
         Update: {
@@ -1331,6 +2021,7 @@ export type Database = {
           slug?: string
           suspended_at?: string | null
           suspended_reason?: string | null
+          terminated_at?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -1405,140 +2096,14 @@ export type Database = {
             foreignKeyName: "payment_evidence_recorded_by_org_fkey"
             columns: ["recorded_by_org"]
             isOneToOne: false
-            referencedRelation: "organizations"
+            referencedRelation: "admin_organizations"
             referencedColumns: ["id"]
           },
-        ]
-      }
-      payout_destinations: {
-        Row: {
-          created_at: string
-          created_by: string | null
-          details_submitted: boolean
-          organization_id: string
-          payouts_enabled: boolean
-          psp_account_id: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          created_by?: string | null
-          details_submitted?: boolean
-          organization_id: string
-          payouts_enabled?: boolean
-          psp_account_id: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          created_by?: string | null
-          details_submitted?: boolean
-          organization_id?: string
-          payouts_enabled?: boolean
-          psp_account_id?: string
-          updated_at?: string
-        }
-        Relationships: [
           {
-            foreignKeyName: "payout_destinations_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: true
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      placement_charges: {
-        Row: {
-          amount_minor: number | null
-          created_at: string
-          created_by: string
-          currency: string
-          id: string
-          payee_net_minor: number | null
-          payee_org_id: string
-          payer_org_id: string
-          placement_id: string
-          platform_minor: number
-          psp_fee_minor: number | null
-          psp_payment_intent_id: string | null
-          psp_session_id: string | null
-          review_reason: string | null
-          settled_at: string | null
-          sourcing_minor: number
-          status: Database["public"]["Enums"]["placement_charge_status"]
-          updated_at: string
-          wallet_transaction_id: string | null
-        }
-        Insert: {
-          amount_minor?: number | null
-          created_at?: string
-          created_by: string
-          currency: string
-          id?: string
-          payee_net_minor?: number | null
-          payee_org_id: string
-          payer_org_id: string
-          placement_id: string
-          platform_minor: number
-          psp_fee_minor?: number | null
-          psp_payment_intent_id?: string | null
-          psp_session_id?: string | null
-          review_reason?: string | null
-          settled_at?: string | null
-          sourcing_minor: number
-          status?: Database["public"]["Enums"]["placement_charge_status"]
-          updated_at?: string
-          wallet_transaction_id?: string | null
-        }
-        Update: {
-          amount_minor?: number | null
-          created_at?: string
-          created_by?: string
-          currency?: string
-          id?: string
-          payee_net_minor?: number | null
-          payee_org_id?: string
-          payer_org_id?: string
-          placement_id?: string
-          platform_minor?: number
-          psp_fee_minor?: number | null
-          psp_payment_intent_id?: string | null
-          psp_session_id?: string | null
-          review_reason?: string | null
-          settled_at?: string | null
-          sourcing_minor?: number
-          status?: Database["public"]["Enums"]["placement_charge_status"]
-          updated_at?: string
-          wallet_transaction_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "placement_charges_payee_org_id_fkey"
-            columns: ["payee_org_id"]
+            foreignKeyName: "payment_evidence_recorded_by_org_fkey"
+            columns: ["recorded_by_org"]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "placement_charges_payer_org_id_fkey"
-            columns: ["payer_org_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "placement_charges_placement_id_fkey"
-            columns: ["placement_id"]
-            isOneToOne: false
-            referencedRelation: "placements"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "placement_charges_wallet_transaction_id_fkey"
-            columns: ["wallet_transaction_id"]
-            isOneToOne: false
-            referencedRelation: "wallet_transactions"
             referencedColumns: ["id"]
           },
         ]
@@ -1584,61 +2149,94 @@ export type Database = {
       placements: {
         Row: {
           agreement_id: string
-          contracted_fee_minor: number
+          computed_fee_minor: number | null
+          contracted_fee_minor: number | null
           created_at: string
-          currency: string
+          currency: string | null
+          established_at: string | null
+          established_how: string | null
+          fee_details_due_at: string | null
+          fee_details_entered_at: string | null
+          fee_difference_note: string | null
+          fee_difference_reason: string | null
           guarantee_until: string | null
           id: string
+          invoice_due_at: string | null
           referral_id: string
-          reported_by: string
+          reported_base_minor: number | null
+          reported_bonus_minor: number | null
+          reported_by: string | null
           settled_at: string | null
           source_org_id: string
-          start_date: string
+          start_date: string | null
           status: Database["public"]["Enums"]["placement_status"]
           status_before_dispute:
             | Database["public"]["Enums"]["placement_status"]
             | null
           target_org_id: string
+          terms_version_id: string | null
           updated_at: string
           version: number
         }
         Insert: {
           agreement_id: string
-          contracted_fee_minor: number
+          computed_fee_minor?: number | null
+          contracted_fee_minor?: number | null
           created_at?: string
-          currency: string
+          currency?: string | null
+          established_at?: string | null
+          established_how?: string | null
+          fee_details_due_at?: string | null
+          fee_details_entered_at?: string | null
+          fee_difference_note?: string | null
+          fee_difference_reason?: string | null
           guarantee_until?: string | null
           id?: string
+          invoice_due_at?: string | null
           referral_id: string
-          reported_by: string
+          reported_base_minor?: number | null
+          reported_bonus_minor?: number | null
+          reported_by?: string | null
           settled_at?: string | null
           source_org_id: string
-          start_date: string
+          start_date?: string | null
           status?: Database["public"]["Enums"]["placement_status"]
           status_before_dispute?:
             | Database["public"]["Enums"]["placement_status"]
             | null
           target_org_id: string
+          terms_version_id?: string | null
           updated_at?: string
           version?: number
         }
         Update: {
           agreement_id?: string
-          contracted_fee_minor?: number
+          computed_fee_minor?: number | null
+          contracted_fee_minor?: number | null
           created_at?: string
-          currency?: string
+          currency?: string | null
+          established_at?: string | null
+          established_how?: string | null
+          fee_details_due_at?: string | null
+          fee_details_entered_at?: string | null
+          fee_difference_note?: string | null
+          fee_difference_reason?: string | null
           guarantee_until?: string | null
           id?: string
+          invoice_due_at?: string | null
           referral_id?: string
-          reported_by?: string
+          reported_base_minor?: number | null
+          reported_bonus_minor?: number | null
+          reported_by?: string | null
           settled_at?: string | null
           source_org_id?: string
-          start_date?: string
+          start_date?: string | null
           status?: Database["public"]["Enums"]["placement_status"]
           status_before_dispute?:
             | Database["public"]["Enums"]["placement_status"]
             | null
           target_org_id?: string
+          terms_version_id?: string | null
           updated_at?: string
           version?: number
         }
@@ -1661,6 +2259,13 @@ export type Database = {
             foreignKeyName: "placements_source_org_id_fkey"
             columns: ["source_org_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_source_org_id_fkey"
+            columns: ["source_org_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -1668,7 +2273,21 @@ export type Database = {
             foreignKeyName: "placements_target_org_id_fkey"
             columns: ["target_org_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_target_org_id_fkey"
+            columns: ["target_org_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_terms_version_id_fkey"
+            columns: ["terms_version_id"]
+            isOneToOne: false
+            referencedRelation: "job_terms_versions"
             referencedColumns: ["id"]
           },
         ]
@@ -1731,6 +2350,13 @@ export type Database = {
             foreignKeyName: "privacy_requests_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "privacy_requests_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -1775,33 +2401,6 @@ export type Database = {
         }
         Relationships: []
       }
-      psp_events: {
-        Row: {
-          id: string
-          outcome: string | null
-          payload: Json
-          processed_at: string | null
-          received_at: string
-          type: string
-        }
-        Insert: {
-          id: string
-          outcome?: string | null
-          payload?: Json
-          processed_at?: string | null
-          received_at?: string
-          type: string
-        }
-        Update: {
-          id?: string
-          outcome?: string | null
-          payload?: Json
-          processed_at?: string | null
-          received_at?: string
-          type?: string
-        }
-        Relationships: []
-      }
       referral_candidate_links: {
         Row: {
           candidate_id: string
@@ -1843,6 +2442,13 @@ export type Database = {
             foreignKeyName: "referral_candidate_links_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_candidate_links_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -1877,7 +2483,9 @@ export type Database = {
           response_meta: Json
           send_count: number
           sent_at: string | null
-          token_hash: string
+          token_hash: string | null
+          token_issued_at: string | null
+          token_issued_by: string | null
           updated_at: string
           viewed_at: string | null
         }
@@ -1902,7 +2510,9 @@ export type Database = {
           response_meta?: Json
           send_count?: number
           sent_at?: string | null
-          token_hash: string
+          token_hash?: string | null
+          token_issued_at?: string | null
+          token_issued_by?: string | null
           updated_at?: string
           viewed_at?: string | null
         }
@@ -1927,7 +2537,9 @@ export type Database = {
           response_meta?: Json
           send_count?: number
           sent_at?: string | null
-          token_hash?: string
+          token_hash?: string | null
+          token_issued_at?: string | null
+          token_issued_by?: string | null
           updated_at?: string
           viewed_at?: string | null
         }
@@ -1944,6 +2556,13 @@ export type Database = {
             columns: ["consent_id"]
             isOneToOne: false
             referencedRelation: "candidate_consents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_candidate_requests_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
             referencedColumns: ["id"]
           },
           {
@@ -2041,6 +2660,13 @@ export type Database = {
             foreignKeyName: "referral_document_sources_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_document_sources_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -2120,6 +2746,7 @@ export type Database = {
       referral_status_events: {
         Row: {
           actor_id: string | null
+          actor_kind: string | null
           actor_side: Database["public"]["Enums"]["referral_side"] | null
           created_at: string
           from_status: Database["public"]["Enums"]["referral_status"] | null
@@ -2130,6 +2757,7 @@ export type Database = {
         }
         Insert: {
           actor_id?: string | null
+          actor_kind?: string | null
           actor_side?: Database["public"]["Enums"]["referral_side"] | null
           created_at?: string
           from_status?: Database["public"]["Enums"]["referral_status"] | null
@@ -2140,6 +2768,7 @@ export type Database = {
         }
         Update: {
           actor_id?: string | null
+          actor_kind?: string | null
           actor_side?: Database["public"]["Enums"]["referral_side"] | null
           created_at?: string
           from_status?: Database["public"]["Enums"]["referral_status"] | null
@@ -2185,9 +2814,14 @@ export type Database = {
       referrals: {
         Row: {
           candidate_label: string
+          claim_deadline_at: string | null
+          claim_rejected_at: string | null
+          commission_rule_id: string | null
           created_at: string
           decided_at: string | null
           decline_reason: string | null
+          delivered_at: string | null
+          fee_estimate_minor: number | null
           fit_evidence: Json
           fit_score: number | null
           id: string
@@ -2195,21 +2829,28 @@ export type Database = {
           internal: boolean
           job_id: string
           job_title_snapshot: string
-          ownership_protected_until: string
+          ownership_protected_until: string | null
+          review_clock_started_at: string | null
           sharing_revoked_at: string | null
           source_org_id: string
           source_user_id: string
           status: Database["public"]["Enums"]["referral_status"]
           submitted_at: string
           target_org_id: string
+          terms_version_id: string | null
           updated_at: string
           version: number
         }
         Insert: {
           candidate_label: string
+          claim_deadline_at?: string | null
+          claim_rejected_at?: string | null
+          commission_rule_id?: string | null
           created_at?: string
           decided_at?: string | null
           decline_reason?: string | null
+          delivered_at?: string | null
+          fee_estimate_minor?: number | null
           fit_evidence?: Json
           fit_score?: number | null
           id?: string
@@ -2217,21 +2858,28 @@ export type Database = {
           internal?: boolean
           job_id: string
           job_title_snapshot: string
-          ownership_protected_until?: string
+          ownership_protected_until?: string | null
+          review_clock_started_at?: string | null
           sharing_revoked_at?: string | null
           source_org_id: string
           source_user_id: string
           status?: Database["public"]["Enums"]["referral_status"]
           submitted_at?: string
           target_org_id: string
+          terms_version_id?: string | null
           updated_at?: string
           version?: number
         }
         Update: {
           candidate_label?: string
+          claim_deadline_at?: string | null
+          claim_rejected_at?: string | null
+          commission_rule_id?: string | null
           created_at?: string
           decided_at?: string | null
           decline_reason?: string | null
+          delivered_at?: string | null
+          fee_estimate_minor?: number | null
           fit_evidence?: Json
           fit_score?: number | null
           id?: string
@@ -2239,22 +2887,38 @@ export type Database = {
           internal?: boolean
           job_id?: string
           job_title_snapshot?: string
-          ownership_protected_until?: string
+          ownership_protected_until?: string | null
+          review_clock_started_at?: string | null
           sharing_revoked_at?: string | null
           source_org_id?: string
           source_user_id?: string
           status?: Database["public"]["Enums"]["referral_status"]
           submitted_at?: string
           target_org_id?: string
+          terms_version_id?: string | null
           updated_at?: string
           version?: number
         }
         Relationships: [
           {
+            foreignKeyName: "referrals_commission_rule_id_fkey"
+            columns: ["commission_rule_id"]
+            isOneToOne: false
+            referencedRelation: "commission_rules"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "referrals_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_source_org_id_fkey"
+            columns: ["source_org_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
             referencedColumns: ["id"]
           },
           {
@@ -2268,7 +2932,21 @@ export type Database = {
             foreignKeyName: "referrals_target_org_id_fkey"
             columns: ["target_org_id"]
             isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_target_org_id_fkey"
+            columns: ["target_org_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_terms_version_id_fkey"
+            columns: ["terms_version_id"]
+            isOneToOne: false
+            referencedRelation: "job_terms_versions"
             referencedColumns: ["id"]
           },
         ]
@@ -2294,206 +2972,416 @@ export type Database = {
         }
         Relationships: []
       }
-      wallet_accounts: {
+      sync_runs: {
         Row: {
-          balance_minor: number
-          created_at: string
-          currency: string
+          closed_count: number
+          connection_id: string
+          created_count: number
+          error: string | null
+          failed_count: number
+          finished_at: string | null
           id: string
-          kind: Database["public"]["Enums"]["wallet_account_kind"]
-          organization_id: string | null
-          updated_at: string
-        }
-        Insert: {
-          balance_minor?: number
-          created_at?: string
-          currency: string
-          id?: string
-          kind: Database["public"]["Enums"]["wallet_account_kind"]
-          organization_id?: string | null
-          updated_at?: string
-        }
-        Update: {
-          balance_minor?: number
-          created_at?: string
-          currency?: string
-          id?: string
-          kind?: Database["public"]["Enums"]["wallet_account_kind"]
-          organization_id?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "wallet_accounts_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      wallet_entries: {
-        Row: {
-          account_id: string
-          amount_minor: number
-          balance_after_minor: number
-          created_at: string
-          id: number
-          transaction_id: string
-        }
-        Insert: {
-          account_id: string
-          amount_minor: number
-          balance_after_minor: number
-          created_at?: string
-          id?: never
-          transaction_id: string
-        }
-        Update: {
-          account_id?: string
-          amount_minor?: number
-          balance_after_minor?: number
-          created_at?: string
-          id?: never
-          transaction_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "wallet_entries_account_id_fkey"
-            columns: ["account_id"]
-            isOneToOne: false
-            referencedRelation: "wallet_accounts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "wallet_entries_transaction_id_fkey"
-            columns: ["transaction_id"]
-            isOneToOne: false
-            referencedRelation: "wallet_transactions"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      wallet_freezes: {
-        Row: {
-          frozen_at: string
-          frozen_by: string | null
           organization_id: string
-          reason: string
+          started_at: string
+          status: string
+          trigger: string
+          unchanged_count: number
+          updated_count: number
         }
         Insert: {
-          frozen_at?: string
-          frozen_by?: string | null
+          closed_count?: number
+          connection_id: string
+          created_count?: number
+          error?: string | null
+          failed_count?: number
+          finished_at?: string | null
+          id?: string
           organization_id: string
-          reason: string
+          started_at?: string
+          status?: string
+          trigger: string
+          unchanged_count?: number
+          updated_count?: number
         }
         Update: {
-          frozen_at?: string
-          frozen_by?: string | null
+          closed_count?: number
+          connection_id?: string
+          created_count?: number
+          error?: string | null
+          failed_count?: number
+          finished_at?: string | null
+          id?: string
           organization_id?: string
-          reason?: string
+          started_at?: string
+          status?: string
+          trigger?: string
+          unchanged_count?: number
+          updated_count?: number
         }
         Relationships: [
           {
-            foreignKeyName: "wallet_freezes_organization_id_fkey"
+            foreignKeyName: "sync_runs_connection_id_fkey"
+            columns: ["connection_id"]
+            isOneToOne: false
+            referencedRelation: "connections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sync_runs_organization_id_fkey"
             columns: ["organization_id"]
-            isOneToOne: true
+            isOneToOne: false
+            referencedRelation: "admin_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sync_runs_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      wallet_settings: {
-        Row: {
-          cashouts_enabled: boolean
-          id: boolean
-          transfers_enabled: boolean
-          updated_at: string
-          updated_by: string | null
-        }
-        Insert: {
-          cashouts_enabled?: boolean
-          id?: boolean
-          transfers_enabled?: boolean
-          updated_at?: string
-          updated_by?: string | null
-        }
-        Update: {
-          cashouts_enabled?: boolean
-          id?: boolean
-          transfers_enabled?: boolean
-          updated_at?: string
-          updated_by?: string | null
-        }
-        Relationships: []
-      }
-      wallet_transactions: {
-        Row: {
-          amount_minor: number
-          created_at: string
-          created_by: string | null
-          currency: string
-          id: string
-          idempotency_key: string
-          kind: Database["public"]["Enums"]["wallet_transaction_kind"]
-          memo: string | null
-          placement_id: string | null
-          reverses_transaction_id: string | null
-        }
-        Insert: {
-          amount_minor: number
-          created_at?: string
-          created_by?: string | null
-          currency: string
-          id?: string
-          idempotency_key: string
-          kind: Database["public"]["Enums"]["wallet_transaction_kind"]
-          memo?: string | null
-          placement_id?: string | null
-          reverses_transaction_id?: string | null
-        }
-        Update: {
-          amount_minor?: number
-          created_at?: string
-          created_by?: string | null
-          currency?: string
-          id?: string
-          idempotency_key?: string
-          kind?: Database["public"]["Enums"]["wallet_transaction_kind"]
-          memo?: string | null
-          placement_id?: string | null
-          reverses_transaction_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "wallet_transactions_placement_id_fkey"
-            columns: ["placement_id"]
-            isOneToOne: false
-            referencedRelation: "placements"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "wallet_transactions_reverses_transaction_id_fkey"
-            columns: ["reverses_transaction_id"]
-            isOneToOne: false
-            referencedRelation: "wallet_transactions"
             referencedColumns: ["id"]
           },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      admin_organizations: {
+        Row: {
+          country: string | null
+          created_at: string | null
+          created_by: string | null
+          default_currency: string | null
+          id: string | null
+          is_demo: boolean | null
+          kind: Database["public"]["Enums"]["organization_kind"] | null
+          locale: string | null
+          name: string | null
+          slug: string | null
+          suspended_at: string | null
+          suspended_reason: string | null
+          terminated_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          default_currency?: string | null
+          id?: string | null
+          is_demo?: boolean | null
+          kind?: Database["public"]["Enums"]["organization_kind"] | null
+          locale?: string | null
+          name?: string | null
+          slug?: string | null
+          suspended_at?: string | null
+          suspended_reason?: string | null
+          terminated_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          country?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          default_currency?: string | null
+          id?: string | null
+          is_demo?: boolean | null
+          kind?: Database["public"]["Enums"]["organization_kind"] | null
+          locale?: string | null
+          name?: string | null
+          slug?: string | null
+          suspended_at?: string | null
+          suspended_reason?: string | null
+          terminated_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       accept_invitation: { Args: { p_token: string }; Returns: string }
+      accept_network_rules: {
+        Args: {
+          p_for_org: boolean
+          p_locale: string
+          p_org: string
+          p_personal: boolean
+          p_version: string
+        }
+        Returns: Json
+      }
+      admin_amend_referral_terms: {
+        Args: {
+          p_both_requested: boolean
+          p_expected_currency?: string
+          p_fee_basis: Database["public"]["Enums"]["fee_basis"]
+          p_flat_currency?: string
+          p_flat_fee_minor?: number
+          p_guarantee_days: number
+          p_guarantee_remedy?: Database["public"]["Enums"]["guarantee_remedy"]
+          p_hiring_request_reference: string
+          p_min_fee_minor?: number
+          p_ownership_months: number
+          p_payment_terms_days: number
+          p_rate_bps?: number
+          p_reason: string
+          p_referral: string
+          p_search_type: Database["public"]["Enums"]["search_type"]
+          p_sourcing_request_reference: string
+        }
+        Returns: string
+      }
+      admin_apply_immediate_hold: {
+        Args: {
+          p_allegation: string
+          p_alleged_when: string
+          p_case: string
+          p_conduct_date: string
+          p_evidence_summary: string
+          p_ground: string
+          p_language: string
+          p_name_reporter?: boolean
+          p_rules_cited: string[]
+          p_rules_version: string
+        }
+        Returns: Json
+      }
+      admin_close_conduct_case: {
+        Args: { p_case: string; p_reason: string; p_reason_code: string }
+        Returns: undefined
+      }
+      admin_close_stale_referral: {
+        Args: { p_reason: string; p_referral: string }
+        Returns: undefined
+      }
+      admin_conduct_incident_options: {
+        Args: { p_case: string }
+        Returns: Json
+      }
+      admin_conduct_notice_context: {
+        Args: { p_case: string; p_conduct_date?: string }
+        Returns: Json
+      }
+      admin_decide_authorization_check: {
+        Args: {
+          p_candidate_contacted?: boolean
+          p_check: string
+          p_resolution: string
+          p_valid: boolean
+        }
+        Returns: undefined
+      }
+      admin_decide_conduct_case: {
+        Args: {
+          p_case: string
+          p_finding: string
+          p_level: string
+          p_notice: string
+          p_outcome: string
+          p_planned_review_on?: string
+          p_residual: boolean
+          p_rules_cited: string[]
+          p_why_not_hold?: string
+        }
+        Returns: string
+      }
+      admin_decide_hire_report: {
+        Args: {
+          p_finding?: string
+          p_outcome: string
+          p_report: string
+          p_resolution: string
+        }
+        Returns: Json
+      }
+      admin_decide_sanction_review: {
+        Args: {
+          p_new_level: string
+          p_outcome: string
+          p_reason: string
+          p_review: string
+        }
+        Returns: undefined
+      }
+      admin_get_authorization_checks: {
+        Args: { p_referral: string }
+        Returns: Json
+      }
+      admin_get_conduct_case: { Args: { p_case: string }; Returns: Json }
+      admin_get_hire_record: { Args: { p_referral: string }; Returns: Json }
+      admin_get_hire_report: { Args: { p_report: string }; Returns: Json }
+      admin_get_network_rules_version: {
+        Args: { p_version: string }
+        Returns: Json
+      }
+      admin_get_referral_terms: { Args: { p_referral: string }; Returns: Json }
+      admin_hire_report_flags: {
+        Args: never
+        Returns: {
+          organization_id: string
+          organization_name: string
+          rejected_90d: number
+        }[]
+      }
+      admin_lift_sanction: {
+        Args: { p_org: string; p_reason: string; p_sanction: string }
+        Returns: undefined
+      }
+      admin_list_conduct_cases: {
+        Args: { p_open_only?: boolean }
+        Returns: Json
+      }
+      admin_list_hire_reports: {
+        Args: never
+        Returns: {
+          candidate_label: string
+          deadline: string
+          deadline_business_days_left: number
+          filed_at: string
+          finding: string
+          id: string
+          job_title: string
+          overdue: boolean
+          referral_id: string
+          resolved_at: string
+          row_kind: string
+          section: string
+          source_org_id: string
+          source_org_name: string
+          source_suspended: boolean
+          status: string
+          target_org_id: string
+          target_org_name: string
+          target_suspended: boolean
+        }[]
+      }
+      admin_list_hire_tasks: {
+        Args: never
+        Returns: {
+          candidate_label: string
+          fee_details_due_at: string
+          job_title: string
+          notice_note: string
+          notice_sent_on: string
+          offer_accepted_on: string
+          placement_id: string
+          recorded_at: string
+          referral_id: string
+          source_org_id: string
+          source_org_name: string
+          start_date: string
+          target_org_id: string
+          target_org_name: string
+          task: string
+        }[]
+      }
+      admin_list_network_rules: { Args: never; Returns: Json }
+      admin_open_authorization_check: {
+        Args: {
+          p_challenger_evidence?: boolean
+          p_referral: string
+          p_requested_by: string
+        }
+        Returns: Json
+      }
+      admin_open_conduct_case: {
+        Args: {
+          p_admin_source: string
+          p_category: string
+          p_description: string
+          p_file_ids?: string[]
+          p_org: string
+          p_referral: string
+        }
+        Returns: string
+      }
+      admin_org_conduct_file: { Args: { p_org: string }; Returns: Json }
+      admin_record_fee_notice: {
+        Args: { p_note?: string; p_placement: string; p_sent_on: string }
+        Returns: undefined
+      }
+      admin_request_conduct_info: {
+        Args: {
+          p_case: string
+          p_due_business_days?: number
+          p_question: string
+        }
+        Returns: undefined
+      }
+      admin_send_conduct_followup: {
+        Args: {
+          p_due_business_days?: number
+          p_notice: string
+          p_question: string
+        }
+        Returns: string
+      }
+      admin_send_conduct_notice: {
+        Args: {
+          p_allegation: string
+          p_alleged_when: string
+          p_case: string
+          p_conduct_date: string
+          p_evidence_summary: string
+          p_language: string
+          p_name_reporter?: boolean
+          p_rules_cited: string[]
+          p_rules_version: string
+        }
+        Returns: string
+      }
+      admin_send_incident_notice: {
+        Args: {
+          p_case: string
+          p_information: string
+          p_language: string
+          p_recipient_orgs: string[]
+          p_referrals: string[]
+          p_to_whom: string
+          p_when: string
+        }
+        Returns: string
+      }
+      admin_set_conduct_category: {
+        Args: { p_case: string; p_category: string }
+        Returns: undefined
+      }
+      admin_set_hire_record_note: {
+        Args: { p_note: string; p_referral: string }
+        Returns: undefined
+      }
+      admin_set_hire_report_fields: {
+        Args: {
+          p_candidate_contacts: number
+          p_client_confirmation: string
+          p_note: string
+          p_report: string
+        }
+        Returns: undefined
+      }
       anonymize_candidate: {
         Args: { p_candidate: string; p_reason: string }
         Returns: undefined
       }
+      api_key_authenticate: {
+        Args: { p_hash: string }
+        Returns: {
+          allowed: boolean
+          created_by: string
+          key_id: string
+          organization_id: string
+        }[]
+      }
       audit_document_access: {
         Args: { p_document: string }
         Returns: undefined
+      }
+      authorize_claim_evidence: {
+        Args: { p_acting_org?: string; p_file: string }
+        Returns: string
+      }
+      authorize_conduct_evidence: { Args: { p_file: string }; Returns: string }
+      authorize_hire_evidence: {
+        Args: { p_acting_org?: string; p_file: string }
+        Returns: string
       }
       authorize_referral_document: {
         Args: { p_grant: string }
@@ -2523,11 +3411,53 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      claim_evidence_scan_target: { Args: { p_file: string }; Returns: Json }
+      compare_dispute_contacts: { Args: { p_dispute: string }; Returns: Json }
       complete_background_job: { Args: { p_id: string }; Returns: undefined }
+      complete_fee_details: {
+        Args: {
+          p_base_minor?: number
+          p_bonus_minor?: number
+          p_difference_note?: string
+          p_difference_reason?: string
+          p_expected_version: number
+          p_invoiced_fee_minor?: number
+          p_legacy_currency?: string
+          p_legacy_fee_minor?: number
+          p_legacy_guarantee_days?: number
+          p_placement: string
+          p_start_date: string
+          p_terms_version?: string
+        }
+        Returns: undefined
+      }
+      conduct_evidence_scan_target: { Args: { p_file: string }; Returns: Json }
       confirm_agreement: { Args: { p_referral: string }; Returns: undefined }
+      connection_get_secret: { Args: { p_connection: string }; Returns: string }
+      connection_set_secret: {
+        Args: { p_connection: string; p_secret: string }
+        Returns: undefined
+      }
       consume_rate_limit: {
         Args: { p_bucket: string; p_limit: number; p_window_seconds: number }
         Returns: boolean
+      }
+      contest_hire_report: {
+        Args: {
+          p_acting_org: string
+          p_attested: boolean
+          p_file_ids: string[]
+          p_offer_accepted_on: string
+          p_process_started_on: string
+          p_reason: string
+          p_report: string
+          p_statement: string
+        }
+        Returns: Json
+      }
+      contest_prior_presentation_claim: {
+        Args: { p_acting_org: string; p_reason: string; p_referral: string }
+        Returns: string
       }
       create_invitation: {
         Args: {
@@ -2539,26 +3469,101 @@ export type Database = {
       }
       create_organization: {
         Args: {
+          p_accept_member?: boolean
+          p_accept_org?: boolean
           p_kind?: Database["public"]["Enums"]["organization_kind"]
           p_name: string
+          p_rules_locale?: string
+          p_rules_version?: string
           p_slug: string
         }
         Returns: string
       }
-      create_placement_charge: {
-        Args: { p_placement: string }
-        Returns: string
+      deactivate_member_in_settlement: {
+        Args: { p_membership: string; p_org: string }
+        Returns: undefined
       }
       decline_pending_for_job: { Args: { p_job: string }; Returns: number }
       decline_referrals: {
         Args: { p_ids: string[]; p_note?: string; p_reason_code: string }
         Returns: number
       }
+      delete_network_rules_draft: {
+        Args: { p_draft: string }
+        Returns: undefined
+      }
+      enqueue_due_connector_syncs: { Args: never; Returns: number }
       fail_background_job: {
         Args: { p_error: string; p_id: string }
         Returns: undefined
       }
+      file_conduct_report: {
+        Args: {
+          p_attested: boolean
+          p_category: string
+          p_description: string
+          p_file_ids?: string[]
+          p_match: string
+          p_occurred_approx: boolean
+          p_occurred_on: string
+          p_org: string
+          p_referral: string
+        }
+        Returns: Json
+      }
+      file_hire_report: {
+        Args: {
+          p_acting_org: string
+          p_attested: boolean
+          p_employer: string
+          p_file_ids: string[]
+          p_items: Json
+          p_learned_via: string
+          p_referral: string
+          p_role: string
+          p_start_month: string
+          p_statement: string
+          p_tail_statement: boolean
+        }
+        Returns: Json
+      }
+      file_prior_presentation_claim: {
+        Args: {
+          p_acting_org?: string
+          p_attested?: boolean
+          p_evidence_kind: string
+          p_evidence_referral?: string
+          p_expected_version: number
+          p_file_ids: string[]
+          p_note?: string
+          p_prior_process_date?: string
+          p_referral: string
+        }
+        Returns: Json
+      }
+      finalize_due_claims: { Args: never; Returns: number }
+      forget_claim_files: { Args: { p_paths: string[] }; Returns: number }
       get_candidate_request: { Args: { p_token: string }; Returns: Json }
+      get_conduct_case_for_org: {
+        Args: { p_case: string; p_org: string }
+        Returns: Json
+      }
+      get_conduct_report: {
+        Args: { p_case: string; p_org: string }
+        Returns: Json
+      }
+      get_conduct_report_context: {
+        Args: { p_match?: string; p_org: string; p_referral?: string }
+        Returns: Json
+      }
+      get_hire_reports: {
+        Args: { p_acting_org: string; p_referral: string }
+        Returns: Json
+      }
+      get_incident_notice: {
+        Args: { p_notice: string; p_org: string }
+        Returns: Json
+      }
       get_job_match_summary: {
         Args: { p_job: string }
         Returns: {
@@ -2567,6 +3572,33 @@ export type Database = {
           strong_count: number
         }[]
       }
+      get_jobs_terms_state: {
+        Args: { p_job?: string; p_org: string }
+        Returns: {
+          attested_at: string
+          attested_by_name: string
+          currency: string
+          fee_basis: Database["public"]["Enums"]["fee_basis"]
+          flat_fee_minor: number
+          guarantee_days: number
+          guarantee_remedy: Database["public"]["Enums"]["guarantee_remedy"]
+          hidden_reason: string
+          job_id: string
+          min_fee_minor: number
+          ownership_months: number
+          partner_visible: boolean
+          payment_terms_days: number
+          published_at: string
+          published_by_name: string
+          rate_bps: number
+          referral_count: number
+          search_type: Database["public"]["Enums"]["search_type"]
+          terms_version_id: string
+          version_no: number
+        }[]
+      }
+      get_my_org_state: { Args: { p_org: string }; Returns: Json }
+      get_network_standing: { Args: { p_org: string }; Returns: Json }
       get_opportunities: {
         Args: { p_candidate?: string; p_match?: string; p_org: string }
         Returns: {
@@ -2579,45 +3611,116 @@ export type Database = {
           contract_type: Database["public"]["Enums"]["contract_type"]
           description: string
           dismiss_reason: string
-          expected_fee_minor: number
+          estimated_fee_minor: number
+          estimated_share_minor: number
+          fee_basis: Database["public"]["Enums"]["fee_basis"]
           fee_currency: string
+          flat_fee_minor: number
           gaps: Json
+          guarantee_days: number
+          guarantee_remedy: Database["public"]["Enums"]["guarantee_remedy"]
           internal: boolean
           is_new: boolean
           job_id: string
           job_org_name: string
+          job_owner_bps: number
           job_posted_at: string
           job_title: string
           location: string
           match_id: string
           matched_at: string
+          min_fee_minor: number
           model_version: string
+          ownership_months: number
+          payment_terms_days: number
+          platform_bps: number
           preferred_skills: string[]
+          rate_bps: number
           reasons: Json
           referral_id: string
           referral_status: string
           refreshed_at: string
           required_skills: string[]
+          rule_name: string
+          rule_version: number
           salary_currency: string
           salary_max: number
           salary_min: number
           score: number
+          search_type: Database["public"]["Enums"]["search_type"]
           seniority: Database["public"]["Enums"]["seniority_level"]
+          sourcing_bps: number
+          terms_published_at: string
+          terms_updated_at: string
+          terms_version_id: string
+          terms_version_no: number
           triage_state: string
           work_arrangement: Database["public"]["Enums"]["work_arrangement"]
-          your_share_minor: number
+        }[]
+      }
+      get_partner_job_availability: {
+        Args: { p_job?: string; p_match?: string; p_org: string }
+        Returns: Json
+      }
+      get_placement_fee_state: { Args: { p_placement: string }; Returns: Json }
+      get_referral_dispute: { Args: { p_dispute: string }; Returns: Json }
+      get_referral_hire_state: {
+        Args: { p_acting_org?: string; p_referral: string }
+        Returns: Json
+      }
+      get_referral_presentation: {
+        Args: { p_acting_org: string; p_referral: string }
+        Returns: Json
+      }
+      get_referral_terms_context: {
+        Args: { p_referral: string }
+        Returns: {
+          job_current_version_at: string
+          job_current_version_no: number
         }[]
       }
       get_sent_referral_jobs: {
         Args: { p_org: string }
         Returns: {
-          expected_fee_minor: number
-          fee_currency: string
           internal: boolean
           job_id: string
           status: Database["public"]["Enums"]["job_status"]
           status_updated_at: string
-          your_share_minor: number
+        }[]
+      }
+      get_settlement_summary: { Args: { p_org: string }; Returns: Json }
+      get_stop_by_reference: { Args: { p_reference: string }; Returns: Json }
+      hire_evidence_scan_target: { Args: { p_file: string }; Returns: Json }
+      issue_candidate_request_token: {
+        Args: { p_actor: string; p_referral: string }
+        Returns: string
+      }
+      list_claim_evidence_files: {
+        Args: { p_acting_org: string; p_referral: string }
+        Returns: Json
+      }
+      list_claim_evidence_referrals: {
+        Args: { p_acting_org: string; p_referral: string }
+        Returns: Json
+      }
+      list_conduct_draft_files: { Args: { p_ids?: string[] }; Returns: Json }
+      list_hire_evidence_files: {
+        Args: { p_acting_org: string; p_owner_kind: string; p_referral: string }
+        Returns: Json
+      }
+      list_my_conduct_reports: {
+        Args: { p_org: string; p_referral?: string; p_scope?: string }
+        Returns: Json
+      }
+      list_my_organizations: {
+        Args: never
+        Returns: {
+          id: string
+          is_demo: boolean
+          name: string
+          role: Database["public"]["Enums"]["membership_role"]
+          settlement_mode: boolean
+          slug: string
         }[]
       }
       mark_grant_copied: {
@@ -2644,25 +3747,73 @@ export type Database = {
           referrals: number
         }[]
       }
-      psp_complete_event: {
-        Args: { p_id: string; p_outcome: string }
-        Returns: undefined
+      presentation_abuse_flags: {
+        Args: never
+        Returns: {
+          organization_id: string
+          organization_name: string
+          rejected_claims_90d: number
+          stops_7d: number
+        }[]
       }
-      psp_record_event: {
-        Args: { p_id: string; p_payload: Json; p_type: string }
-        Returns: boolean
-      }
+      presentation_admin_metrics: { Args: { p_days?: number }; Returns: Json }
       publish_commission_rule: {
         Args: {
           p_job_owner: number
           p_name: string
           p_platform: number
+          p_platform_basis?: Database["public"]["Enums"]["platform_basis"]
           p_sourcing: number
         }
         Returns: string
       }
+      publish_network_rules_version: {
+        Args: {
+          p_approval_reference: string
+          p_draft?: string
+          p_effective_on: string
+          p_label: string
+          p_legal_reason: string
+          p_summaries: Json
+          p_texts: Json
+          p_type: string
+        }
+        Returns: string
+      }
+      purge_orphan_claim_files: { Args: never; Returns: string[] }
+      purge_orphan_conduct_files: { Args: never; Returns: string[] }
+      purge_orphan_hire_files: { Args: never; Returns: string[] }
+      purge_presentation_data: { Args: never; Returns: Json }
+      rebut_hire_report: {
+        Args: {
+          p_acting_org: string
+          p_attested: boolean
+          p_file_ids: string[]
+          p_items: Json
+          p_report: string
+          p_statement: string
+        }
+        Returns: Json
+      }
       record_candidate_request_delivery: {
-        Args: { p_error?: string; p_ok: boolean; p_referral: string }
+        Args: {
+          p_actor: string
+          p_error?: string
+          p_ok: boolean
+          p_referral: string
+        }
+        Returns: undefined
+      }
+      record_claim_evidence_scan: {
+        Args: { p_file: string; p_sha256: string; p_verdict: string }
+        Returns: undefined
+      }
+      record_conduct_evidence_scan: {
+        Args: { p_file: string; p_sha256: string; p_verdict: string }
+        Returns: undefined
+      }
+      record_hire_evidence_scan: {
+        Args: { p_file: string; p_sha256: string; p_verdict: string }
         Returns: undefined
       }
       record_invoice: {
@@ -2689,28 +3840,112 @@ export type Database = {
         }
         Returns: string
       }
+      register_claim_evidence: {
+        Args: {
+          p_acting_org: string
+          p_file_name: string
+          p_referral: string
+          p_storage_path: string
+        }
+        Returns: Json
+      }
+      register_conduct_evidence: {
+        Args: { p_file_name: string; p_storage_path: string }
+        Returns: Json
+      }
+      register_hire_evidence: {
+        Args: {
+          p_acting_org: string
+          p_file_name: string
+          p_owner_kind: string
+          p_referral: string
+          p_storage_path: string
+        }
+        Returns: Json
+      }
+      release_referral: {
+        Args: { p_acting_org?: string; p_referral: string }
+        Returns: undefined
+      }
+      remove_claim_evidence: {
+        Args: { p_acting_org: string; p_file: string }
+        Returns: string
+      }
+      remove_conduct_draft_file: { Args: { p_file: string }; Returns: string }
+      remove_hire_evidence: {
+        Args: { p_acting_org: string; p_file: string }
+        Returns: string
+      }
+      reply_conduct_followup: {
+        Args: {
+          p_body: string
+          p_file_ids?: string[]
+          p_followup: string
+          p_org: string
+        }
+        Returns: undefined
+      }
+      reply_conduct_info_request: {
+        Args: {
+          p_body: string
+          p_case: string
+          p_file_ids?: string[]
+          p_org: string
+        }
+        Returns: undefined
+      }
       report_hire: {
         Args: {
-          p_currency: string
+          p_base_minor?: number
+          p_bonus_minor?: number
+          p_difference_note?: string
+          p_difference_reason?: string
           p_expected_version: number
-          p_fee_minor: number
-          p_guarantee_days?: number
+          p_hired_role_title?: string
+          p_invoiced_fee_minor?: number
+          p_legacy_currency?: string
+          p_legacy_fee_minor?: number
+          p_legacy_guarantee_days?: number
+          p_offer_accepted_on?: string
           p_referral: string
+          p_report?: string
           p_start_date: string
+          p_terms_version?: string
         }
         Returns: string
       }
-      request_cashout: {
+      request_authorization_check: {
         Args: {
-          p_amount_minor: number
-          p_currency: string
-          p_idempotency_key: string
+          p_acting_org: string
+          p_file_ids?: string[]
+          p_reason: string
+          p_referral: string
+        }
+        Returns: Json
+      }
+      request_connection_sync: {
+        Args: { p_connection: string }
+        Returns: undefined
+      }
+      request_sanction_review: {
+        Args: {
+          p_case: string
+          p_file_ids?: string[]
           p_org: string
+          p_text: string
         }
         Returns: string
       }
       resolve_dispute: {
         Args: { p_dispute: string; p_resolution: string; p_upheld: boolean }
+        Returns: undefined
+      }
+      resolve_prior_presentation_dispute: {
+        Args: {
+          p_claim_upheld: boolean
+          p_dispute: string
+          p_resolution: string
+        }
         Returns: undefined
       }
       respond_candidate_request: {
@@ -2739,7 +3974,45 @@ export type Database = {
         Returns: number
       }
       rotate_candidate_request_token: {
-        Args: { p_referral: string; p_token_hash: string; p_ttl_days?: number }
+        Args: { p_referral: string; p_ttl_days?: number }
+        Returns: string
+      }
+      rotate_fingerprint_key: { Args: never; Returns: Json }
+      run_hire_maintenance: { Args: never; Returns: Json }
+      save_job_terms: {
+        Args: {
+          p_attested?: boolean
+          p_fee_basis?: Database["public"]["Enums"]["fee_basis"]
+          p_flat_currency?: string
+          p_flat_fee_minor?: number
+          p_guarantee_days?: number
+          p_guarantee_remedy?: Database["public"]["Enums"]["guarantee_remedy"]
+          p_job: string
+          p_min_fee_minor?: number
+          p_open: boolean
+          p_ownership_months?: number
+          p_payment_terms_days?: number
+          p_rate_bps?: number
+          p_search_type?: Database["public"]["Enums"]["search_type"]
+        }
+        Returns: {
+          created: boolean
+          notified_orgs: number
+          terms_version_id: string
+          version_no: number
+        }[]
+      }
+      save_network_rules_draft: {
+        Args: {
+          p_approval_reference?: string
+          p_draft: string
+          p_effective_on: string
+          p_label: string
+          p_legal_reason?: string
+          p_summaries: Json
+          p_texts: Json
+          p_type: string
+        }
         Returns: string
       }
       set_match_triage: {
@@ -2751,50 +4024,67 @@ export type Database = {
         }
         Returns: undefined
       }
-      set_organization_suspension: {
-        Args: { p_org: string; p_reason: string; p_suspend: boolean }
+      submit_authorization_evidence: {
+        Args: {
+          p_acting_org: string
+          p_attested: boolean
+          p_check: string
+          p_file_ids: string[]
+          p_statement: string
+        }
         Returns: undefined
       }
-      set_wallet_cashouts_enabled: {
-        Args: { p_enabled: boolean }
-        Returns: undefined
-      }
-      set_wallet_frozen: {
-        Args: { p_frozen: boolean; p_org: string; p_reason: string }
-        Returns: undefined
-      }
-      set_wallet_transfers_enabled: {
-        Args: { p_enabled: boolean }
+      submit_conduct_response: {
+        Args: {
+          p_body: string
+          p_file_ids?: string[]
+          p_notice: string
+          p_org: string
+        }
         Returns: undefined
       }
       submit_referral: {
         Args: {
+          p_acknowledge_pending?: boolean
           p_candidate: string
           p_consent: string
           p_document_ids: string[]
           p_fields: string[]
           p_idempotency_key: string
           p_job: string
+          p_new_consent?: Json
           p_note?: string
+          p_terms_version: string
         }
-        Returns: string
+        Returns: {
+          outcome: string
+          reference: string
+          referral_id: string
+        }[]
       }
       submit_referral_for_candidate: {
         Args: {
+          p_acknowledge_pending?: boolean
           p_candidate: string
           p_document_ids: string[]
           p_fields: string[]
           p_idempotency_key: string
           p_job: string
           p_note?: string
-          p_token_hash: string
+          p_terms_version: string
           p_ttl_days?: number
         }
         Returns: {
           created: boolean
           destination: string
+          outcome: string
+          reference: string
           referral_id: string
         }[]
+      }
+      transfer_member_portfolio: {
+        Args: { p_from: string; p_org: string; p_to: string }
+        Returns: Json
       }
       transition_referral: {
         Args: {
@@ -2806,94 +4096,15 @@ export type Database = {
         }
         Returns: number
       }
-      wallet_close_placement_charge: {
+      withdraw_referral: {
         Args: {
-          p_charge: string
-          p_status: Database["public"]["Enums"]["placement_charge_status"]
+          p_acting_org?: string
+          p_expected_version: number
+          p_reason: string
+          p_referral: string
+          p_release?: boolean
         }
-        Returns: undefined
-      }
-      wallet_complete_cashout: {
-        Args: { p_cashout: string; p_transfer: string }
-        Returns: string
-      }
-      wallet_fail_cashout: {
-        Args: { p_cashout: string; p_reason: string }
-        Returns: string
-      }
-      wallet_flag_placement_charge: {
-        Args: {
-          p_payment_intent: string
-          p_status: Database["public"]["Enums"]["placement_charge_status"]
-        }
-        Returns: string
-      }
-      wallet_reconcile: {
-        Args: never
-        Returns: {
-          account_id: string
-          cached_minor: number
-          computed_minor: number
-        }[]
-      }
-      wallet_record_funding: {
-        Args: {
-          p_amount_minor: number
-          p_currency: string
-          p_idempotency_key: string
-          p_org: string
-          p_placement: string
-          p_platform_fee_minor: number
-        }
-        Returns: string
-      }
-      wallet_release_pending: {
-        Args: {
-          p_amount_minor: number
-          p_currency: string
-          p_idempotency_key: string
-          p_org: string
-        }
-        Returns: string
-      }
-      wallet_release_placement_charge: {
-        Args: { p_charge: string }
-        Returns: string
-      }
-      wallet_set_payout_destination: {
-        Args: { p_account: string; p_org: string; p_user: string }
-        Returns: string
-      }
-      wallet_settle_placement_charge: {
-        Args: {
-          p_amount_minor: number
-          p_available_at: string
-          p_charge: string
-          p_currency: string
-          p_fee_minor: number
-          p_payment_intent: string
-          p_session: string
-        }
-        Returns: string
-      }
-      wallet_transfer: {
-        Args: {
-          p_amount_minor: number
-          p_currency: string
-          p_from_org: string
-          p_idempotency_key: string
-          p_memo: string
-          p_to_org: string
-        }
-        Returns: string
-      }
-      wallet_update_payout_destination: {
-        Args: {
-          p_account: string
-          p_details_submitted: boolean
-          p_payouts_enabled: boolean
-        }
-        Returns: undefined
+        Returns: number
       }
     }
     Enums: {
@@ -2910,7 +4121,6 @@ export type Database = {
         | "unavailable"
         | "archived"
         | "deleted"
-      cashout_status: "requested" | "paid" | "failed"
       consent_kind: "processing" | "job_sharing"
       contract_type: "permanent" | "contract" | "temporary" | "contract_to_hire"
       document_scan_status: "pending" | "clean" | "rejected"
@@ -2920,6 +4130,12 @@ export type Database = {
         | "platform_remittance"
         | "client_refund"
       evidence_status: "pending" | "verified" | "rejected"
+      fee_basis: "pct_base" | "pct_total_cash" | "flat"
+      guarantee_remedy:
+        | "replacement_only"
+        | "replacement_then_prorata"
+        | "prorata_refund"
+        | "full_refund"
       invitation_status: "pending" | "accepted" | "revoked" | "expired"
       job_status:
         | "draft"
@@ -2945,16 +4161,15 @@ export type Database = {
       match_band: "strong" | "potential" | "not_eligible"
       membership_role: "org_admin" | "recruiter_manager" | "recruiter"
       membership_status: "active" | "suspended"
+      network_rules_locale: "en" | "fr-CA" | "pt-BR"
+      network_rules_version_type:
+        | "initial"
+        | "material"
+        | "non_material"
+        | "legally_required"
       organization_kind: "agency" | "independent"
-      placement_charge_status:
-        | "created"
-        | "succeeded"
-        | "failed"
-        | "expired"
-        | "review"
-        | "disputed"
-        | "refunded"
       placement_status:
+        | "fee_pending"
         | "hire_reported"
         | "invoiced"
         | "payment_partially_verified"
@@ -2962,6 +4177,7 @@ export type Database = {
         | "settled"
         | "disputed"
         | "cancelled"
+      platform_basis: "collected" | "frozen"
       referral_side: "source" | "target"
       referral_status:
         | "awaiting_candidate"
@@ -2977,6 +4193,8 @@ export type Database = {
         | "hired"
         | "rejected"
         | "cancelled"
+        | "already_presented"
+      search_type: "contingent_exclusive" | "contingent_shared" | "retained"
       seniority_level:
         | "intern"
         | "junior"
@@ -2985,21 +4203,7 @@ export type Database = {
         | "lead"
         | "principal"
         | "executive"
-      wallet_account_kind:
-        | "available"
-        | "pending"
-        | "psp_clearing"
-        | "platform_revenue"
-        | "payout_in_transit"
-        | "psp_fees"
-      wallet_transaction_kind:
-        | "placement_funding"
-        | "release"
-        | "transfer"
-        | "cashout"
-        | "cashout_reversal"
-        | "reversal"
-        | "adjustment"
+      terms_kind: "job" | "amendment"
       work_arrangement: "remote" | "hybrid" | "onsite"
     }
     CompositeTypes: {
@@ -3146,7 +4350,6 @@ export const Constants = {
         "archived",
         "deleted",
       ],
-      cashout_status: ["requested", "paid", "failed"],
       consent_kind: ["processing", "job_sharing"],
       contract_type: ["permanent", "contract", "temporary", "contract_to_hire"],
       document_scan_status: ["pending", "clean", "rejected"],
@@ -3157,6 +4360,13 @@ export const Constants = {
         "client_refund",
       ],
       evidence_status: ["pending", "verified", "rejected"],
+      fee_basis: ["pct_base", "pct_total_cash", "flat"],
+      guarantee_remedy: [
+        "replacement_only",
+        "replacement_then_prorata",
+        "prorata_refund",
+        "full_refund",
+      ],
       invitation_status: ["pending", "accepted", "revoked", "expired"],
       job_status: [
         "draft",
@@ -3185,17 +4395,16 @@ export const Constants = {
       match_band: ["strong", "potential", "not_eligible"],
       membership_role: ["org_admin", "recruiter_manager", "recruiter"],
       membership_status: ["active", "suspended"],
-      organization_kind: ["agency", "independent"],
-      placement_charge_status: [
-        "created",
-        "succeeded",
-        "failed",
-        "expired",
-        "review",
-        "disputed",
-        "refunded",
+      network_rules_locale: ["en", "fr-CA", "pt-BR"],
+      network_rules_version_type: [
+        "initial",
+        "material",
+        "non_material",
+        "legally_required",
       ],
+      organization_kind: ["agency", "independent"],
       placement_status: [
+        "fee_pending",
         "hire_reported",
         "invoiced",
         "payment_partially_verified",
@@ -3204,6 +4413,7 @@ export const Constants = {
         "disputed",
         "cancelled",
       ],
+      platform_basis: ["collected", "frozen"],
       referral_side: ["source", "target"],
       referral_status: [
         "awaiting_candidate",
@@ -3219,7 +4429,9 @@ export const Constants = {
         "hired",
         "rejected",
         "cancelled",
+        "already_presented",
       ],
+      search_type: ["contingent_exclusive", "contingent_shared", "retained"],
       seniority_level: [
         "intern",
         "junior",
@@ -3229,23 +4441,7 @@ export const Constants = {
         "principal",
         "executive",
       ],
-      wallet_account_kind: [
-        "available",
-        "pending",
-        "psp_clearing",
-        "platform_revenue",
-        "payout_in_transit",
-        "psp_fees",
-      ],
-      wallet_transaction_kind: [
-        "placement_funding",
-        "release",
-        "transfer",
-        "cashout",
-        "cashout_reversal",
-        "reversal",
-        "adjustment",
-      ],
+      terms_kind: ["job", "amendment"],
       work_arrangement: ["remote", "hybrid", "onsite"],
     },
   },

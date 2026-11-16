@@ -55,12 +55,40 @@ export async function markMatchesSeen(ctx: RequestContext, matchIds: string[]) {
   if (error) console.error(JSON.stringify({ evt: "matches.mark_seen_failed", message: error.message.slice(0, 200) }));
 }
 
-/** Count of matches the organization hasn't looked at yet (sidebar badge). */
-export async function countNewOpportunities(ctx: RequestContext) {
+/** A match waiting in the Suggestions "To review" tab: needs a decision and isn't saved for later. */
+export const isToReview = (o: Opportunity) => needsDecision(o) && o.triage_state !== "saved";
+
+/** Suggestions waiting for a decision (sidebar badge). Same set as the Home card and the "To review" tab. */
+export async function countOpportunitiesToReview(ctx: RequestContext) {
   if (!can(ctx, "referrals:submit")) return 0;
   try {
-    return (await fetchAll(ctx)).filter((o) => o.is_new && needsDecision(o)).length;
+    return (await fetchAll(ctx)).filter(isToReview).length;
   } catch {
     return 0;
   }
+}
+
+/**
+ * N2: the partner card of an opportunity (BR-8, BR-9, T10): the job's current terms version, the current
+ * default split and the estimate (null on % bases when the hiring side keeps the band private).
+ */
+export type PartnerTerms = Pick<
+  Opportunity,
+  | "terms_version_id" | "terms_version_no" | "terms_published_at" | "terms_updated_at"
+  | "fee_basis" | "rate_bps" | "flat_fee_minor" | "min_fee_minor" | "fee_currency" | "search_type"
+  | "guarantee_days" | "guarantee_remedy" | "payment_terms_days" | "ownership_months"
+  | "rule_name" | "rule_version" | "sourcing_bps" | "job_owner_bps" | "platform_bps"
+  | "estimated_fee_minor" | "estimated_share_minor" | "client_label" | "internal"
+>;
+
+export function partnerTerms(o: Opportunity): PartnerTerms {
+  return {
+    terms_version_id: o.terms_version_id, terms_version_no: o.terms_version_no, terms_published_at: o.terms_published_at,
+    terms_updated_at: o.terms_updated_at, fee_basis: o.fee_basis, rate_bps: o.rate_bps, flat_fee_minor: o.flat_fee_minor,
+    min_fee_minor: o.min_fee_minor, fee_currency: o.fee_currency, search_type: o.search_type, guarantee_days: o.guarantee_days,
+    guarantee_remedy: o.guarantee_remedy, payment_terms_days: o.payment_terms_days, ownership_months: o.ownership_months,
+    rule_name: o.rule_name, rule_version: o.rule_version, sourcing_bps: o.sourcing_bps, job_owner_bps: o.job_owner_bps,
+    platform_bps: o.platform_bps, estimated_fee_minor: o.estimated_fee_minor, estimated_share_minor: o.estimated_share_minor,
+    client_label: o.client_label, internal: o.internal,
+  };
 }

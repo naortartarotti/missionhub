@@ -7,7 +7,9 @@
     "team": "Équipe",
     "privacy": "Demandes de confidentialité",
     "audit": "Journal d'audit",
-    "preferences": "Préférences"
+    "preferences": "Préférences",
+    "connectors": "Connecteurs",
+    "standing": "Statut réseau"
   },
   "organization": {
     "title": "Organisation",
@@ -47,7 +49,17 @@
     "suspend": "Suspendre",
     "reactivate": "Réactiver",
     "revoked": "Révoquée",
-    "revoke": "Révoquer"
+    "revoke": "Révoquer",
+    "owns": "{candidates} candidats · {jobs} offres",
+    "transfer": "Transférer le portefeuille",
+    "transferTitle": "Transférer le portefeuille de {name}",
+    "transferDescription": "{candidates} candidats et {jobs} offres, ainsi que les connecteurs que cette personne a configurés, appartiendront au collègue choisi. Les recommandations et l'historique ne changent pas.",
+    "transferTo": "Nouveau responsable",
+    "cancel": "Annuler",
+    "transferConfirm": "Transférer",
+    "rulesColumn": "Règles du réseau",
+    "rulesAccepted": "Version {label} acceptée",
+    "rulesNotAccepted": "Pas encore acceptée"
   },
   "privacy": {
     "metaTitle": "Demandes de confidentialité",
@@ -114,7 +126,26 @@
     "action": "Action",
     "entity": "Entité",
     "system": "Partenaire / système",
-    "empty": "Aucun événement pour l'instant."
+    "empty": "Aucun événement pour l'instant.",
+    "actions": {
+      "network_rules_org_accepted": "Règles du réseau acceptées pour l'organisation",
+      "network_rules_member_accepted": "Règles du réseau acceptées par un membre",
+      "conduct_report_filed": "Signalement envoyé",
+      "conduct_notice_sent": "Avis reçu de MissionHub",
+      "conduct_response_submitted": "Réponse à un avis envoyée",
+      "conduct_followup_sent": "Question complémentaire reçue",
+      "conduct_followup_answered": "Réponse à une question complémentaire envoyée",
+      "conduct_decided": "Décision enregistrée",
+      "sanction_applied": "Sanction appliquée",
+      "sanction_lifted": "Sanction levée",
+      "sanction_immediate_hold": "Restriction réseau immédiate appliquée",
+      "sanction_review_requested": "Révision demandée",
+      "sanction_reviewed": "Révision tranchée",
+      "settlement_mode_entered": "Mode finalisation commencé",
+      "settlement_mode_exited": "Mode finalisation terminé",
+      "conduct_incident_notice_sent": "Avis d'incident lié à des renseignements reçu",
+      "referral_closed_stale_by_admin": "Recommandation fermée par MissionHub (aucune activité)"
+    }
   },
   "preferences": {
     "title": "Préférences",

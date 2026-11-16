@@ -1,5 +1,5 @@
 {
-  "title": "Overview",
+  "title": "Home",
   "welcome": "Welcome back, {name}!",
   "welcomeFallbackName": "there",
   "subtitle": "Here's what needs your attention today.",
@@ -11,12 +11,12 @@
     "doneSr": "done",
     "candidate": {
       "title": "Add your first candidate",
-      "description": "Add someone you represent, or import a list from a CSV. Only you can see them.",
+      "description": "Add someone you represent, or import a CSV. Only your organization can see them.",
       "cta": "Add candidate"
     },
     "matching": {
       "title": "Turn on matching for a candidate",
-      "description": "Record their permission, then turn on matching so MissionHub can look for partner jobs that fit.",
+      "description": "Record their matching authorization, then turn on matching so MissionHub can look for partner jobs that fit.",
       "cta": "Go to candidates"
     },
     "job": {
@@ -27,14 +27,14 @@
     "referral": {
       "title": "Submit a candidate to a partner job",
       "description": "Review a match, check the fit, and submit when your candidate agrees.",
-      "cta": "See opportunities"
+      "cta": "See suggestions"
     },
     "open": "Open setup guide",
     "minimize": "Minimize setup guide"
   },
   "stats": {
     "label": "Summary",
-    "matches": "Matches to review",
+    "matches": "Suggestions to review",
     "referrals": "Referrals to review",
     "earned": "Commission earned",
     "earnedProjected": "~{amount} projected"
@@ -54,10 +54,14 @@
       "action": "Open queue"
     },
     "matches": {
-      "title": "Review matches",
+      "title": "Review suggestions",
       "body": {
-        "one": "{count} partner job fits your candidates",
-        "other": "{count} partner jobs fit your candidates"
+        "one": "{count} suggestion across {jobs} partner jobs",
+        "other": "{count} suggestions across {jobs} partner jobs"
+      },
+      "bodyOneJob": {
+        "one": "{count} suggestion for 1 partner job",
+        "other": "{count} suggestions for 1 partner job"
       },
       "fresh": {
         "one": "{count} new",
@@ -91,7 +95,7 @@
     }
   },
   "best": {
-    "title": "Best opportunities for your candidates",
+    "title": "Best suggestions for your candidates",
     "viewAll": "View all",
     "more": {
       "one": "+{count} more",

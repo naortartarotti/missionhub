@@ -1,5 +1,5 @@
 {
-  "title": "Visão geral",
+  "title": "Início",
   "welcome": "Bem-vindo de volta, {name}!",
   "welcomeFallbackName": "você",
   "subtitle": "Veja o que precisa da sua atenção hoje.",
@@ -11,12 +11,12 @@
     "doneSr": "concluída",
     "candidate": {
       "title": "Cadastre seu primeiro candidato",
-      "description": "Cadastre alguém que você representa ou importe uma lista de um CSV. Só você pode vê-los.",
+      "description": "Cadastre alguém que você representa ou importe um CSV. Só a sua organização pode vê-los.",
       "cta": "Cadastrar candidato"
     },
     "matching": {
       "title": "Ligue o matching de um candidato",
-      "description": "Registre a permissão dele e ligue o matching para o MissionHub procurar vagas de parceiros que combinem.",
+      "description": "Registre a autorização de matching dele e ligue o matching para o MissionHub procurar vagas de parceiros que combinem.",
       "cta": "Ir para candidatos"
     },
     "job": {
@@ -27,14 +27,14 @@
     "referral": {
       "title": "Envie um candidato para uma vaga de parceiro",
       "description": "Analise um match, confira se combina e envie quando o candidato concordar.",
-      "cta": "Ver oportunidades"
+      "cta": "Ver sugestões"
     },
     "open": "Abrir guia de primeiros passos",
     "minimize": "Minimizar guia"
   },
   "stats": {
     "label": "Resumo",
-    "matches": "Correspondências para revisar",
+    "matches": "Sugestões para revisar",
     "referrals": "Indicações para revisar",
     "earned": "Comissão ganha",
     "earnedProjected": "~{amount} previstos"
@@ -54,10 +54,14 @@
       "action": "Abrir fila"
     },
     "matches": {
-      "title": "Revisar correspondências",
+      "title": "Revisar sugestões",
       "body": {
-        "one": "{count} vaga de parceiro combina com seus candidatos",
-        "other": "{count} vagas de parceiros combinam com seus candidatos"
+        "one": "{count} sugestão em {jobs} vagas de parceiros",
+        "other": "{count} sugestões em {jobs} vagas de parceiros"
+      },
+      "bodyOneJob": {
+        "one": "{count} sugestão para 1 vaga de parceiro",
+        "other": "{count} sugestões para 1 vaga de parceiro"
       },
       "fresh": {
         "one": "{count} nova",
@@ -91,7 +95,7 @@
     }
   },
   "best": {
-    "title": "Melhores oportunidades para seus candidatos",
+    "title": "Melhores sugestões para seus candidatos",
     "viewAll": "Ver todas",
     "more": {
       "one": "+{count}",

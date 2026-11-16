@@ -72,7 +72,7 @@ export async function AttentionQueue({ base, data }: { base: string; data: Overv
           key: "matches",
           kind: "matches" as const,
           title: t("attention.matches.title"),
-          description: t("attention.matches.body", { count: a.matches.jobs }),
+          description: a.matches.jobs === 1 ? t("attention.matches.bodyOneJob", { count: a.matches.count }) : t("attention.matches.body", { count: a.matches.count, jobs: a.matches.jobs }),
           status: a.matches.fresh ? { label: t("attention.matches.fresh", { count: a.matches.fresh }), tone: "info" as const } : undefined,
           action: t("attention.matches.action"),
           href: `${base}/opportunities`,
@@ -112,7 +112,7 @@ export async function AttentionQueue({ base, data }: { base: string; data: Overv
       subject: p.jobTitle,
       description: p.candidate,
       action: t("attention.payout.action"),
-      href: `${base}/wallet/placements/${p.id}`,
+      href: `${base}/commissions/${p.id}`,
     })),
   ];
 

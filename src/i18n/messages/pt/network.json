@@ -1,0 +1,532 @@
+{
+  "accept": {
+    "title": "Regras da rede, versão {label}",
+    "gateIntro": "Antes de usar o MissionHub, leia e aceite as Regras da rede. Elas explicam como os membros compartilham informações, falam com candidatos e resolvem problemas.",
+    "reacceptIntro": "As Regras da rede vão mudar. Veja o que mudou e aceite a versão {label}.",
+    "effective": "Em vigor desde {date}",
+    "effectiveFuture": "Entra em vigor em {date}",
+    "language": "Idioma das regras",
+    "languageOption": {
+      "frCA": "Français",
+      "en": "English",
+      "ptBR": "Português"
+    },
+    "languageInline": {
+      "en": "inglês",
+      "frCA": "francês",
+      "ptBR": "português"
+    },
+    "languageShownSr": "Regras exibidas em {language}.",
+    "summaryTitle": "Resumo (não faz parte das regras)",
+    "changesTitle": "O que mudou",
+    "compare": "Comparar com a versão que você aceitou",
+    "newTabSr": "(abre em uma nova aba)",
+    "skip": "Ir para o aceite",
+    "contents": "Sumário",
+    "statementsLegend": "Seu aceite",
+    "member": "Li as Regras da rede e as aceito pessoalmente.",
+    "org": "Aceito as Regras da rede em nome de {org} e tenho poderes para isso.",
+    "orgAlready": "{org} aceitou estas regras em {date}.",
+    "needOne": "Marque a caixa para continuar.",
+    "needBoth": "Marque as duas caixas para continuar.",
+    "languageChanged": "O idioma mudou. Marque as caixas de novo.",
+    "submit": "Aceitar e continuar",
+    "submitting": "Aceitando…",
+    "submitReaccept": "Aceitar a versão {label}",
+    "done": "Regras da rede aceitas.",
+    "already": "Você aceitou a versão {label} das Regras da rede em {date}.",
+    "versionChanged": "Uma nova versão das Regras da rede está em vigor. Leia e aceite para continuar.",
+    "noVersion": "As Regras da rede não estão disponíveis no momento. Tente de novo mais tarde.",
+    "required": "Aceite as Regras da rede para criar sua organização.",
+    "saveError": "Não foi possível salvar seu aceite. Verifique sua conexão e tente de novo.",
+    "leaveBefore": "Não quer aceitar? Escreva para",
+    "leaveAfter": "para sair da rede.",
+    "history": "Histórico de versões"
+  },
+  "banner": {
+    "hold": {
+      "title": "Sua organização está com restrição de rede",
+      "body": "Você não pode abrir vagas para parceiros, enviar indicações nem receber novas. As indicações em andamento continuam normalmente."
+    },
+    "rules": {
+      "title": "Versão {label} das Regras da rede não aceita",
+      "body": "{org} não aceitou a versão em vigor desde {date}. Até um administrador da organização aceitar, você não pode abrir vagas para parceiros nem enviar indicações. As indicações em andamento continuam.",
+      "askAdmin": "Peça a um administrador da organização para aceitar."
+    },
+    "user": {
+      "title": "Aceite a versão {label} das Regras da rede",
+      "body": "Até você aceitar a versão em vigor desde {date}, não pode enviar indicações nem abrir vagas para parceiros. O resto funciona normalmente."
+    },
+    "notice": {
+      "title": "A versão {label} das Regras da rede entra em vigor em {date}",
+      "body": "Veja as mudanças e aceite antes dessa data.",
+      "orgPending": "{org} ainda não aceitou. Um administrador da organização precisa aceitar em nome dela."
+    },
+    "settlement": {
+      "suspended": {
+        "title": "Sua organização está suspensa",
+        "body": "Você ainda pode concluir as indicações em andamento, acertar as comissões e responder a disputas. Suas obrigações com os parceiros continuam."
+      },
+      "terminated": {
+        "title": "Sua organização foi retirada da rede em {date}",
+        "body": "Você pode concluir as indicações em andamento e acertar comissões e disputas. Quando tudo estiver acertado, os membros da sua organização perdem o acesso ao MissionHub."
+      }
+    },
+    "cta": {
+      "standing": "Ver situação na rede",
+      "accept": "Revisar e aceitar",
+      "changes": "Ver as mudanças",
+      "details": "Detalhes"
+    }
+  },
+  "versions": {
+    "metaTitle": "Regras da rede",
+    "title": "Regras da rede",
+    "description": "As regras que cada organização e cada membro aceitam para usar a rede MissionHub.",
+    "current": "Versão atual: {label}",
+    "inEffect": "Em vigor desde {date}",
+    "upcoming": "Próxima versão: {label}",
+    "takesEffect": "Entra em vigor em {date}",
+    "readFull": "Ler o texto completo",
+    "history": "Histórico de versões",
+    "historyCaption": "Versões publicadas das Regras da rede",
+    "col": {
+      "version": "Versão",
+      "type": "Tipo",
+      "effective": "Em vigor a partir de",
+      "changes": "O que mudou"
+    },
+    "read": "Ler a versão {label}",
+    "fingerprint": "Impressão digital (SHA-256)",
+    "fingerprintHint": "Um código único para este texto exato, neste idioma. Ele mostra qual texto foi aceito.",
+    "statusTitle": "Sua situação",
+    "youAccepted": "Você aceitou a versão {label} em {date}.",
+    "youHaveNot": "Você ainda não aceitou a versão {label}.",
+    "orgAccepted": "{org} aceitou a versão {label} em {date}.",
+    "orgHasNot": "{org} não aceitou a versão {label}.",
+    "legalReason": "Por que esta mudança entra em vigor antes: {reason}",
+    "empty": "As Regras da rede ainda não foram publicadas.",
+    "footerLink": "Regras da rede"
+  },
+  "partner": {
+    "notTakingReferrals": "{org} não está recebendo novas indicações no momento.",
+    "noLongerMember": "{org} não faz mais parte da rede MissionHub.",
+    "back": "Voltar para oportunidades"
+  },
+  "team": {
+    "lastAdmin": "Sua organização precisa de pelo menos um administrador ativo."
+  },
+  "errors": {
+    "acceptanceRequired": "Aceite as Regras da rede em vigor para fazer isso.",
+    "reviewRulesLink": "Ver as regras",
+    "partnerActivityRestricted": "Sua organização não pode fazer isso enquanto novas atividades com parceiros estão pausadas. As indicações em andamento não são afetadas.",
+    "settlementUnavailable": "Isso não está disponível enquanto sua organização estiver em modo de finalização."
+  },
+  "report": {
+    "button": "Relatar um problema",
+    "buttonAria": "Relatar um problema com {org}",
+    "title": "Relatar um problema com {org}",
+    "intro": "Use este formulário se você acha que {org} descumpriu as Regras da rede. Um relato trata de conduta. Ele não decide quem tem a prioridade, se houve contratação nem o que é devido.",
+    "messagesFirst": "Se não for urgente, você pode tentar primeiro as mensagens da indicação. Isso é opcional.",
+    "rightTool": {
+      "title": "É sobre prioridade, contratação ou dinheiro?",
+      "position": "É sobre quem apresentou o candidato primeiro?",
+      "positionText": "As objeções são registradas na própria indicação, em até 5 dias úteis após a entrega. Se a outra parte registrar uma, você pode contestar na indicação.",
+      "fileObjection": "Registrar objeção",
+      "contestObjection": "Contestar objeção",
+      "hire": "Seu candidato foi contratado?",
+      "hireTextBefore": "Escreva para {org} nas mensagens da indicação. Se não responderem, escreva para",
+      "hireTextAfter": ".",
+      "hireTextNoSupport": "Escreva para {org} nas mensagens da indicação.",
+      "amount": "Algum valor está errado ou não foi pago?",
+      "openDispute": "Abrir disputa",
+      "amountText": "Valores são resolvidos com uma disputa na colocação, não com um relato.",
+      "noAnswer": "O parceiro não responde?",
+      "noAnswerText": "Isso não é uma violação. Você pode retirar a indicação ou esperar o prazo de resposta.",
+      "noAnswerTextHiring": "Isso não é uma violação. Você pode recusar a indicação se não puder avançar.",
+      "noAnswerTextJob": "Isso não é uma violação das Regras da rede."
+    },
+    "category": "Qual é o problema?",
+    "categoryHint": {
+      "went_around": "Por exemplo, falaram com seu cliente sobre a vaga ou a taxa, ou com seu candidato sem você saber.",
+      "misused": "Por exemplo, usaram seu candidato para outras vagas, adicionaram ao banco de dados deles ou republicaram sua vaga.",
+      "shared_outside": "Por exemplo, enviaram o currículo de um candidato para outra agência ou empresa.",
+      "hire_payout": "Por exemplo, o cliente contratou seu candidato e isso não foi informado, ou seu repasse está atrasado.",
+      "false_info": "Por exemplo, um candidato que nunca concordou, uma confirmação falsa, comprovantes falsos ou um registro de contratação falso.",
+      "job_terms": "Por exemplo, vaga que não existe, vaga desatualizada, termos errados ou pressão para mudar os termos.",
+      "discrimination": "Tratamento injusto de um candidato com base em um motivo protegido pelas leis de direitos humanos.",
+      "retaliation": "Por exemplo, puniram você por um relato, acusaram você em público ou relataram você de má-fé.",
+      "other": "Outra regra que você acha que foi descumprida."
+    },
+    "hirePayoutMoney": "Um relato não cobra o valor. Para cobrar um valor, abra uma disputa na colocação.",
+    "what": "O que aconteceu?",
+    "whatHint": "Fatos, datas e onde aconteceu. Compartilhe só os dados do candidato ou do cliente de que precisamos.",
+    "counter": "{count} / {max}",
+    "counterSr": "{count} de {max} caracteres",
+    "when": "Quando aconteceu? (opcional)",
+    "approximate": "A data é aproximada.",
+    "files": "Comprovantes (opcional)",
+    "filesHint": "Até 5 arquivos: PDF, PNG ou JPEG, 10 MB cada. Só os admins da plataforma MissionHub podem abrir esses arquivos. {org} nunca os vê.",
+    "identity": "Nunca mostramos seu nome para {org}. Só informamos sua organização se for necessário para uma resposta justa. Como só duas organizações participam de uma indicação, ela ainda pode deduzir quem fez o relato. Retaliar um relato é uma violação (regra 7.1).",
+    "identityJob": "Nunca mostramos seu nome para {org}. Só informamos sua organização se for necessário para uma resposta justa. Ela ainda pode deduzir de onde veio o relato. Retaliar um relato é uma violação (regra 7.1).",
+    "attest": "Faço este relato de boa-fé e ele é verdadeiro até onde sei. Entendo que um relato de má-fé é uma violação.",
+    "submit": "Enviar relato",
+    "sending": "Enviando…",
+    "filesWaiting": "Aguarde a verificação de todos os arquivos.",
+    "removeRejected": "Remova o arquivo que não pode ser usado.",
+    "errorSummary": {
+      "one": "Corrija {count} campo para enviar o relato.",
+      "other": "Corrija {count} campos para enviar o relato."
+    },
+    "sentTitle": "Relato enviado",
+    "sentBody": "Buscamos responder em até 2 dias úteis, até {when} (horário de Toronto). Vamos informar o resultado.",
+    "view": "Ver seu relato",
+    "discardTitle": "Descartar este relato?",
+    "discardBody": "O texto e os arquivos que você adicionou serão perdidos.",
+    "discardConfirm": "Descartar relato",
+    "youReported": "Você relatou um problema em {date}.",
+    "youReportedLink": "Ver relato",
+    "errors": {
+      "notFound": "Não encontramos esta indicação ou vaga.",
+      "self": "Você não pode relatar sua própria organização.",
+      "userLimitBefore": "Você enviou 5 relatos nas últimas 24 horas. Tente de novo mais tarde ou escreva para",
+      "userLimitAfter": "se for urgente.",
+      "userLimitNoSupport": "Você enviou 5 relatos nas últimas 24 horas. Tente de novo mais tarde.",
+      "orgLimitBefore": "Sua organização enviou 10 relatos nas últimas 24 horas. Tente de novo mais tarde ou escreva para",
+      "orgLimitAfter": "se for urgente.",
+      "orgLimitNoSupport": "Sua organização enviou 10 relatos nas últimas 24 horas. Tente de novo mais tarde.",
+      "category": "Escolha qual é o problema.",
+      "attest": "Confirme que você está relatando de boa-fé.",
+      "dateFuture": "A data não pode ser no futuro."
+    }
+  },
+  "reports": {
+    "title": "Seus relatos",
+    "description": "Problemas que você relatou ao MissionHub. Só você e os administradores da sua organização podem vê-los.",
+    "menu": "Seus relatos",
+    "tabs": {
+      "mine": "Enviados por você",
+      "org": "Sua organização"
+    },
+    "orgDescription": "Relatos enviados por membros de {org}. Só administradores da organização veem esta lista.",
+    "sentBy": "Enviado por {name}",
+    "sentByFormer": "Enviado por um ex-membro",
+    "empty": "Você não relatou nenhum problema.",
+    "emptyDescription": "Para relatar um problema, use “Relatar um problema” em uma indicação ou vaga de parceiro.",
+    "orgEmpty": "Ninguém em {org} relatou um problema.",
+    "about": "Sobre {org} · enviado em {date}",
+    "open": "Abrir",
+    "openAria": "Abrir o relato sobre {org}",
+    "detailTitle": "Relato sobre {org}",
+    "status": {
+      "received": "Recebido",
+      "receivedBody": "Buscamos responder até {when} (horário de Toronto).",
+      "input": "Aguardando sua resposta",
+      "inputBody": "O MissionHub tem uma pergunta para você. Responda abaixo.",
+      "inputDeadline": "Responda até {when} (horário de Toronto).",
+      "inReview": "Em análise",
+      "inReviewBody": "Vamos informar o resultado assim que houver uma decisão."
+    },
+    "outcome": {
+      "action": "Medidas tomadas",
+      "actionBody": "Constatamos uma violação e tomamos medidas conforme as Regras da rede.",
+      "noBreach": "Nenhuma violação constatada",
+      "noBreachBody": "Analisamos e não constatamos violação das Regras da rede.",
+      "notEnough": "Comprovantes insuficientes para agir",
+      "notEnoughBody": "Os comprovantes disponíveis não permitem confirmar uma violação. Você pode enviar um novo relato se tiver novos comprovantes.",
+      "closed": "Encerrado sem constatação",
+      "closedBody": "O MissionHub encerrou este relato sem decidir se houve violação.",
+      "triageReason": "Motivo: {reason}",
+      "noChange": "Este relato não muda sua indicação, sua prioridade nem nenhum valor devido.",
+      "openReferral": "Abrir a indicação",
+      "updated": "Resultado atualizado em {date}."
+    },
+    "youSent": "O que você enviou",
+    "field": {
+      "category": "Problema",
+      "what": "O que aconteceu",
+      "when": "Quando",
+      "approximate": "(aproximada)",
+      "files": "Arquivos",
+      "noFiles": "Nenhum arquivo",
+      "filesNote": "Os arquivos não podem ser baixados depois do envio. Só os admins da plataforma podem abri-los."
+    },
+    "timeline": {
+      "title": "Andamento",
+      "sent": "Enviado · {when} (Toronto)",
+      "question": "Pergunta do MissionHub · {when} (Toronto)",
+      "replied": "Resposta enviada · {when} (Toronto)",
+      "closed": "Encerrado · {when} (Toronto)"
+    },
+    "question": "Pergunta do MissionHub",
+    "reply": "Sua resposta",
+    "replyHint": "Responda à pergunta. Você pode enviar uma única resposta, com arquivos se ajudarem.",
+    "replySubmit": "Enviar resposta",
+    "replySent": "Resposta enviada.",
+    "replyClosed": "O prazo para responder terminou em {when} (horário de Toronto).",
+    "yourReply": "Resposta enviada em {when} (horário de Toronto)"
+  },
+  "standing": {
+    "title": "Situação na rede",
+    "description": "Avisos, decisões e sanções de {org}. Só administradores da organização veem esta página.",
+    "current": "Situação atual",
+    "good": "Regular",
+    "goodBody": "Nenhuma sanção ativa.",
+    "warning": "Advertência ativa",
+    "warningUntil": "Conta até {date}.",
+    "hold": "Restrição de rede",
+    "since": "Desde {date}.",
+    "plannedReview": "Planejamos reavaliar em {date}.",
+    "plannedReviewHint": "A restrição não termina automaticamente nessa data.",
+    "suspended": "Suspensa",
+    "suspendedBody": "Sua organização está em modo de finalização.",
+    "terminated": "Retirada da rede",
+    "terminatedBody": "Desde {date}. Sua organização fica em modo de finalização até tudo ser acertado.",
+    "whatThisMeans": "O que isso significa",
+    "meaning": {
+      "pausedTitle": "Pausado",
+      "continuesTitle": "Continua",
+      "holdPaused": "Abrir vagas para parceiros, enviar indicações e receber novas indicações.",
+      "holdContinues": "Indicações em andamento, registros de contratação, faturas, repasses, reembolsos e disputas. Seu trabalho interno: candidatos, vagas, pipeline e equipe.",
+      "warning": "Uma advertência não limita seu trabalho. Ela conta por 12 meses se outra violação for constatada."
+    },
+    "rulesRow": "Versão {label} das Regras da rede não aceita",
+    "rulesRowBody": "Isso não é uma sanção. Termina assim que um administrador da organização aceitar.",
+    "openNotices": "Avisos em aberto",
+    "noNotices": "Nenhum aviso em aberto.",
+    "noticeRules": "Regras citadas: {rules}",
+    "noticeSent": "Enviado em {date}",
+    "deadlineLabel": "Prazo de resposta",
+    "open": "Abrir aviso",
+    "history": "Histórico",
+    "historyEmpty": "Nenhuma sanção nem aviso encerrado.",
+    "historyCaption": "Sanções e avisos encerrados",
+    "col": {
+      "date": "Data",
+      "result": "Resultado",
+      "status": "Status"
+    },
+    "acceptance": "Aceite das Regras da rede",
+    "acceptedBy": "Versão {label} aceita em {date} por {name}",
+    "notAcceptedOrg": "Versão {label} ainda não aceita",
+    "notAcceptedMembers": "Membros que não aceitaram a versão {label}",
+    "allMembersAccepted": "Todos os membros aceitaram a versão {label}."
+  },
+  "notice": {
+    "heading": "Aviso conforme as regras 8.3 e 9.3",
+    "headingImmediate": "Restrição de rede imediata conforme a regra 9.4",
+    "intro": "O MissionHub recebeu informações de que {org} pode ter descumprido as Regras da rede. Este aviso informa o que é alegado e dá 10 dias úteis para você responder. Nada foi decidido ainda.",
+    "introImmediate": "Conforme a regra 9.4, o MissionHub aplicou uma restrição de rede a {org} em {date}, por uma possível violação da regra {rule}. Este aviso informa o que é alegado. Você tem 10 dias úteis para responder. Nenhuma outra decisão foi tomada.",
+    "holdEffects": "Durante a restrição, suas vagas ficam ocultas para parceiros, e você não pode enviar indicações nem receber novas. As indicações em andamento continuam normalmente.",
+    "rules": "Regras envolvidas",
+    "ruleItem": "Regra {number}: {title}",
+    "version": "Conforme a versão {label} das Regras da rede",
+    "alleged": "O que é alegado",
+    "when": "Quando",
+    "evidence": "Resumo dos comprovantes",
+    "reportedBy": "Relatado por {org}",
+    "deadline": "Responda até {when} (horário de Toronto)",
+    "howToRespond": "Qualquer administrador da organização pode enviar uma única resposta pela página Situação na rede, com arquivos se ajudarem. Sem resposta até o prazo, o MissionHub decidirá com base no registro (regra 7.2).",
+    "possibleOutcomes": "Depois do prazo de resposta, o MissionHub pode decidir não tomar nenhuma medida ou aplicar uma advertência, uma restrição de rede, uma suspensão ou uma exclusão. Se houver uma constatação ou uma sanção, sua organização pode pedir uma única vez a revisão por outro admin da plataforma.",
+    "bilingualNote": "Versão em inglês abaixo."
+  },
+  "case": {
+    "metaTitle": "Aviso",
+    "back": "Voltar para situação na rede",
+    "noticeTitle": "Aviso",
+    "sentOn": "Enviado em {when} (horário de Toronto)",
+    "languageNote": "Este aviso está em {language}.",
+    "respond": "Sua resposta",
+    "respondHint": "Explique o que aconteceu e anexe o que puder ajudar. Só os admins da plataforma MissionHub podem abrir seus arquivos. Sua resposta não é compartilhada com outras organizações.",
+    "respondSubmit": "Enviar resposta",
+    "respondConfirmTitle": "Enviar sua resposta?",
+    "respondConfirmBody": "Sua organização pode enviar uma única resposta, e ela não pode ser alterada depois.",
+    "responded": "Resposta enviada em {when} (horário de Toronto) por {name}",
+    "respondedToast": "Resposta enviada. O MissionHub vai considerá-la antes de decidir.",
+    "windowClosed": "O prazo de resposta terminou em {when} (horário de Toronto). O MissionHub decidirá com base no registro (regra 7.2).",
+    "followup": "Pergunta complementar",
+    "followupDeadline": "Responda até {when} (horário de Toronto)",
+    "followupNoDeadline": "Sem prazo. Responda quando puder.",
+    "followupReply": "Sua resposta",
+    "followupSubmit": "Enviar resposta",
+    "followupSent": "Resposta enviada.",
+    "followupReplied": "Resposta enviada em {when} (horário de Toronto) por {name}",
+    "followupClosed": "O prazo para responder terminou em {when} (horário de Toronto).",
+    "files": "Arquivos",
+    "filesHint": "Até 5 arquivos: PDF, PNG ou JPEG, 10 MB cada. Só os admins da plataforma MissionHub podem abri-los.",
+    "reviewDeadline": "Prazo para revisão",
+    "requestReview": "Pedir revisão",
+    "reviewDialogTitle": "Pedir a revisão desta decisão?",
+    "reviewDialogBody": "Outro admin da plataforma vai revisar a decisão. A sanção continua valendo durante a revisão. Sua organização pode pedir uma única revisão.",
+    "reviewDialogBodyFinding": "Outro admin da plataforma vai revisar a constatação. Sua organização pode pedir uma única revisão.",
+    "reviewReason": "Por que a decisão deveria mudar?",
+    "reviewReasonHint": "Aponte os fatos ou as regras que a decisão avaliou mal. Você pode anexar arquivos.",
+    "reviewSubmit": "Pedir revisão",
+    "reviewRequestedToast": "Revisão solicitada. Vamos avisar o resultado.",
+    "reviewRequested": "Revisão solicitada em {date} por {name}",
+    "review": {
+      "confirmed": "Revisão: decisão confirmada",
+      "reduced": "Revisão: sanção reduzida para {level}",
+      "lifted": "Revisão: sanção encerrada",
+      "overturned": "Revisão: decisão anulada. A sanção foi encerrada e não conta em decisões futuras.",
+      "reason": "Motivo da revisão",
+      "reviewedOn": "Revisada em {date} por outro admin da plataforma MissionHub"
+    },
+    "errors": {
+      "closed": "O prazo de resposta terminou. Não é mais possível enviar resposta.",
+      "exists": "Sua organização já respondeu. Atualize a página para ver a resposta.",
+      "reviewClosed": "O prazo para pedir revisão terminou.",
+      "reviewExists": "Já foi pedida uma revisão desta decisão.",
+      "replyClosed": "O prazo para responder terminou."
+    }
+  },
+  "decision": {
+    "title": "Decisão",
+    "decidedOn": "Decidida em {date} por um admin da plataforma MissionHub",
+    "outcome": "Resultado",
+    "noBreachBody": "O MissionHub não constatou violação das Regras da rede. Nenhuma sanção se aplica.",
+    "notEnoughBody": "O MissionHub não encontrou comprovantes suficientes para concluir que houve violação. Nenhuma sanção se aplica.",
+    "finding": "Constatação",
+    "rules": "Regras descumpridas",
+    "residual": "Decidido com base na regra 7.4, porque nenhuma regra específica cobria este caso.",
+    "sanction": "Sanção",
+    "effects": {
+      "none": "A constatação fica registrada no histórico da sua organização. Nenhuma sanção se aplica.",
+      "warning": "Esta advertência conta por 12 meses, até {date}. Ela não limita seu trabalho.",
+      "hold": "A partir de {date}, suas vagas ficam ocultas para parceiros, e você não pode enviar indicações nem receber novas. As indicações em andamento continuam. A restrição vale até o MissionHub encerrá-la.",
+      "holdLifted": "A restrição de rede foi encerrada em {date}.",
+      "suspension": "A partir de {date}, sua organização está suspensa e em modo de finalização. Você pode concluir as indicações em andamento, acertar as comissões e responder a disputas. Nada mais fica disponível até a suspensão ser encerrada.",
+      "termination": "A partir de {date}, sua organização é retirada da rede. Você pode concluir as indicações em andamento e acertar comissões e disputas até cada uma ser encerrada. Sua organização pode pedir para entrar de novo após 12 meses (regra 9.7)."
+    },
+    "reviewLine": "Você pode pedir uma única revisão até {when} (horário de Toronto). Outro admin da plataforma vai revisar a decisão. A sanção continua valendo durante a revisão.",
+    "reviewLineFinding": "Você pode pedir uma única revisão até {when} (horário de Toronto). Outro admin da plataforma vai revisar a constatação."
+  },
+  "validation": {
+    "length": "Escreva entre {min} e {max} caracteres."
+  },
+  "incident": {
+    "section": "Avisos sobre como um parceiro tratou suas informações",
+    "sectionHint": "Estes avisos são sobre outra organização. Não tratam da situação da sua organização.",
+    "title": "Aviso de incidente com dados",
+    "cardSent": "Enviado em {date}",
+    "cardReferrals": {
+      "one": "{count} indicação envolvida",
+      "other": "{count} indicações envolvidas"
+    },
+    "intro": "O MissionHub constatou que uma organização parceira compartilhou informações das suas indicações fora da organização dela. Veja o que sabemos.",
+    "referrals": "Indicações envolvidas",
+    "referralUnavailable": "Uma indicação que você não pode mais abrir",
+    "what": "Informações envolvidas",
+    "when": "Quando",
+    "toWhom": "Compartilhadas com",
+    "toWhomUnknown": "Desconhecido",
+    "guidance": "Se seu candidato revogar a autorização, a outra organização perde na hora o acesso ao perfil compartilhado e aos documentos no MissionHub. Isso não recupera cópias já baixadas. Retirar a indicação mantém sua prioridade. Liberar o candidato faz você perder a prioridade.",
+    "guidanceHiring": "O MissionHub não consegue recuperar informações depois que elas foram compartilhadas. Este aviso não muda suas vagas nem suas indicações em andamento. Se as informações forem sobre seu cliente, talvez seja bom avisá-lo."
+  },
+  "settlement": {
+    "marker": "Modo de finalização",
+    "homeTitle": "Modo de finalização",
+    "canDo": "O que você ainda pode fazer",
+    "referrals": {
+      "one": "{count} indicação em andamento",
+      "other": "{count} indicações em andamento"
+    },
+    "placements": {
+      "one": "{count} colocação com etapas pendentes",
+      "other": "{count} colocações com etapas pendentes"
+    },
+    "disputes": {
+      "one": "{count} disputa para responder",
+      "other": "{count} disputas para responder"
+    },
+    "nothingLeft": "Nada a acertar aqui.",
+    "paused": "O que está pausado",
+    "pausedList": "Candidatos, vagas, oportunidades, importações, recursos de IA, conectores e chaves de API, convites e alterações de configurações.",
+    "continuesList": "Indicações em andamento, registros de contratação, faturas, repasses, reembolsos e disputas, além da situação na rede e da lista da equipe.",
+    "blockedTitle": "Esta página não está disponível no modo de finalização",
+    "blockedDescription": "Sua organização só pode concluir as indicações em andamento e acertar o que é devido.",
+    "goReferrals": "Ir para indicações",
+    "loadCountsError": "Não foi possível carregar os números. Os links continuam funcionando.",
+    "teamReadOnly": "No modo de finalização, você só pode desativar membros. Convites e mudanças de função estão pausados.",
+    "referralClosed": "Indicação encerrada. Ela não aparece mais no modo de finalização.",
+    "referralClosedTitle": "Esta indicação foi encerrada",
+    "referralClosedDescription": "Indicações encerradas não aparecem no modo de finalização. Suas outras indicações em andamento continuam na lista."
+  },
+  "notifications": {
+    "network_rules_published": {
+      "title": "Versão {label} das Regras da rede publicada",
+      "bodyAccept": "Veja o que mudou e aceite até {date}.",
+      "bodyInfo": "Veja o que mudou. Nenhuma ação necessária."
+    },
+    "network_rules_effective_not_accepted": {
+      "title": "A versão {label} das Regras da rede está em vigor",
+      "body": "Aceite para voltar a abrir vagas para parceiros e enviar indicações."
+    },
+    "network_rules_reminder": {
+      "title": "A versão {label} das Regras da rede entra em vigor em 7 dias",
+      "body": "Revise e aceite antes de {date}."
+    },
+    "conduct_report_received": {
+      "title": "Recebemos seu relato",
+      "body": "Buscamos responder até {when} (horário de Toronto)."
+    },
+    "conduct_report_info_requested": {
+      "title": "O MissionHub tem uma pergunta sobre seu relato",
+      "body": "Abra seu relato para responder."
+    },
+    "conduct_report_closed": {
+      "title": "Seu relato foi encerrado",
+      "titleOrg": "Um relato da sua organização foi encerrado",
+      "body": "Abra para ver o resultado."
+    },
+    "conduct_report_outcome_updated": {
+      "title": "O resultado do seu relato mudou",
+      "titleOrg": "O resultado de um relato da sua organização mudou",
+      "body": "Abra para ver o resultado."
+    },
+    "conduct_incident_notice": {
+      "title": "O MissionHub enviou um aviso de incidente com dados",
+      "body": "Ele envolve informações das suas indicações. Abra para ler os detalhes."
+    },
+    "conduct_notice_sent": {
+      "title": "Você recebeu um aviso do MissionHub",
+      "body": "Leia e responda até {when} (horário de Toronto)."
+    },
+    "sanction_immediate_hold": {
+      "title": "Você recebeu um aviso urgente do MissionHub",
+      "body": "Leia agora. Você pode responder até {when} (horário de Toronto)."
+    },
+    "conduct_followup": {
+      "title": "O MissionHub tem uma pergunta complementar",
+      "body": "Abra o aviso para responder."
+    },
+    "conduct_response_received": {
+      "title": "Resposta recebida em um caso de conduta",
+      "body": "Abra o caso para ler."
+    },
+    "conduct_decided": {
+      "title": "O MissionHub registrou uma decisão",
+      "body": "Leia na página Situação na rede."
+    },
+    "sanction_lifted": {
+      "title": "Uma sanção da sua organização foi encerrada",
+      "body": "Veja os detalhes na página Situação na rede."
+    },
+    "sanction_review_requested": {
+      "title": "Revisão solicitada em um caso de conduta",
+      "body": "Outro admin da plataforma precisa revisar a decisão."
+    },
+    "sanction_reviewed": {
+      "title": "Seu pedido de revisão foi decidido",
+      "body": "Veja o resultado na página Situação na rede."
+    },
+    "conduct_report_reply_received": {
+      "title": "O autor do relato respondeu em um caso de conduta",
+      "body": "Abra o caso para ler a resposta."
+    },
+    "conduct_followup_answered": {
+      "title": "Pergunta complementar respondida em um caso de conduta",
+      "body": "Abra o caso para ler a resposta."
+    }
+  }
+}

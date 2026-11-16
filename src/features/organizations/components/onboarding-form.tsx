@@ -3,7 +3,7 @@
 import { ActionForm } from "@/components/shared/action-form";
 
 import { useActionState, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, Building2, Check, EyeOff, Handshake, Pencil, ShieldCheck, UserRound } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, EyeOff, Handshake, Pencil, ShieldCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/shared/form-field";
@@ -14,27 +14,49 @@ import { cn } from "@/lib/utils";
 import { createOrganization } from "../actions";
 import { ONBOARDING_CURRENCIES, slugify, workspaceStepSchema } from "../schemas";
 import { TagInput } from "./tag-input";
+import { Combobox } from "@/components/shared/combobox";
+import { useCountryOptions } from "@/components/shared/location-fields";
+import { currencyForCountry } from "@/lib/money/currency";
 import { useGlobalT, useT } from "@/i18n/client";
 import { translateMarked } from "@/i18n/translate";
+import { useRouter } from "next/navigation";
+import { AcceptanceBlock, type AcceptanceTexts, type AcceptanceVersion } from "@/features/network-rules/components/acceptance-block";
+import type { RulesLocale } from "@/features/network-rules/domain";
+import { RULES_LOCALE_KEY } from "@/features/network-rules/locale";
 
-type Kind = "agency" | "independent";
-type Data = { kind: Kind; name: string; slug: string; currency: string; headline: string; specialties: string[]; regions: string[] };
+/** N10 (BR-5, BR-6): the current rules version for the onboarding step, rendered on the server. Null = none published. */
+export type OnboardingRules = { version: AcceptanceVersion; texts: AcceptanceTexts; defaultLocale: RulesLocale; historyHref: string } | null;
 
-const STEPS = ["kind", "workspace", "profile", "review"] as const;
+type Data = { name: string; slug: string; country: string; currency: string; headline: string; specialties: string[]; regions: string[] };
+
+// The workspace is the recruitment company; teammates join it later by invitation.
+// N10: Network Rules is its own step before Review (spec §2.1); both acceptances go with the create call.
+const STEPS = ["workspace", "profile", "rules", "review"] as const;
+const RULES_STEP = 2;
+const REVIEW_STEP = 3;
 export const SPECIALTIES = ["software", "data", "product", "design", "sales", "finance", "healthcare", "executive"] as const;
-export const REGIONS = ["ontario", "quebec", "bc", "alberta", "remoteCanada", "us", "remoteWorld"] as const;
+export const REGIONS = ["northAmerica", "latam", "europe", "ukIreland", "mena", "apac", "remoteWorld"] as const;
 
-export function OnboardingForm({ firstName }: { firstName?: string }) {
+export function OnboardingForm({ firstName, defaultCountry = "", rules = null }: { firstName?: string; defaultCountry?: string; rules?: OnboardingRules }) {
   const t = useT("onboarding");
   const tg = useGlobalT();
+  const tc = useT("common");
   const [state, action] = useActionState(createOrganization, null);
   const [step, setStep] = useState(0);
-  const [data, setData] = useState<Data>({ kind: "agency", name: "", slug: "", currency: "CAD", headline: "", specialties: [], regions: [] });
+  const [data, setData] = useState<Data>({ name: "", slug: "", country: defaultCountry, currency: defaultCountry ? currencyForCountry(defaultCountry) : "USD", headline: "", specialties: [], regions: [] });
+  const { options: countries, loading: countriesLoading } = useCountryOptions();
+  const [currencyTouched, setCurrencyTouched] = useState(false);
   const [slugTouched, setSlugTouched] = useState(false);
   const [errors, setErrors] = useState<Record<string, string[] | undefined>>({});
   const headingRef = useRef<HTMLHeadingElement>(null);
   const firstRender = useRef(true);
   const set = <K extends keyof Data>(k: K, v: Data[K]) => setData((d) => ({ ...d, [k]: v }));
+  const router = useRouter();
+  const tn = useT("network");
+  // N10: the accepted locale (both statements ticked) for the current version, or null.
+  const [accepted, setAccepted] = useState<{ versionId: string; locale: RulesLocale } | null>(null);
+  const [rulesAlert, setRulesAlert] = useState<string | null>(null);
+  const [rulesKey, setRulesKey] = useState(0);
 
   // Move focus to the new step's heading so keyboard and screen-reader users land in context.
   useEffect(() => {
@@ -48,13 +70,21 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
     setHandled(state);
     if (state && !state.ok && (state.fieldErrors?.slug || state.fieldErrors?.name)) {
       setErrors(state.fieldErrors);
-      setStep(1);
+      setStep(0);
+    } else if (state && !state.ok && (state.code === "rules_version_changed" || state.code === "rules_acceptance_required")) {
+      // The version changed (or the acceptance was missing): back to the rules step, boxes unticked,
+      // with the newly current version reloaded from the server.
+      setAccepted(null);
+      setRulesAlert(state.code === "rules_version_changed" ? tn("accept.versionChanged") : tn("accept.required"));
+      setRulesKey((k) => k + 1);
+      setStep(RULES_STEP);
+      router.refresh();
     }
   }
 
   const next = (e?: FormEvent) => {
     e?.preventDefault();
-    if (step === 1) {
+    if (step === 0) {
       const r = workspaceStepSchema.safeParse(data);
       if (!r.success) {
         setErrors(Object.fromEntries(r.error.issues.map((i) => [String(i.path[0]), [translateMarked(tg, i.message)]])));
@@ -65,12 +95,11 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
     setStep((s) => Math.min(s + 1, STEPS.length - 1));
   };
   const back = () => setStep((s) => Math.max(0, s - 1));
-  const isAgency = data.kind === "agency";
 
   const titles: [string, string][] = [
-    [firstName ? t("titles.kindNamed", { name: firstName }) : t("titles.kind"), t("titles.kindDescription")],
-    [t("titles.workspace"), t("titles.workspaceDescription")],
+    [firstName ? t("titles.companyNamed", { name: firstName }) : t("titles.company"), t("titles.companyDescription")],
     [t("titles.profile"), t("titles.profileDescription")],
+    [t("titles.rules"), t("titles.rulesDescription")],
     [t("titles.review"), t("titles.reviewDescription")],
   ];
 
@@ -84,47 +113,45 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
         <p className="sr-only" aria-live="polite">{t("stepStatus", { current: step + 1, total: STEPS.length, label: t(`steps.${STEPS[step]}`) })}</p>
       </div>
 
-      {step < 3 ? (
+      {step === RULES_STEP ? (
+        <div className="grid gap-6">
+          {rules ? (
+            <AcceptanceBlock
+              key={`${rules.version.id}-${rulesKey}`}
+              variant="onboarding"
+              orgName={data.name}
+              version={rules.version}
+              texts={rules.texts}
+              defaultLocale={rules.defaultLocale}
+              needOrg
+              supportEmail={null}
+              historyHref={rules.historyHref}
+              continueLabel={tg("common.actions.continue")}
+              initial={accepted?.versionId === rules.version.id ? { locale: accepted.locale, accepted: true } : undefined}
+              alert={rulesAlert}
+              onContinue={(locale) => {
+                setAccepted({ versionId: rules.version.id, locale });
+                setRulesAlert(null);
+                setStep(REVIEW_STEP);
+              }}
+            />
+          ) : (
+            <p role="status" className="rounded-2xl bg-muted px-4 py-3 text-sm">{tn("accept.noVersion")}</p>
+          )}
+          <Nav step={step} onBack={back}>
+            <span />
+          </Nav>
+        </div>
+      ) : step < RULES_STEP ? (
         <form onSubmit={next} className="grid gap-6" noValidate>
           {step === 0 ? (
-            <div role="radiogroup" aria-label={t("kind.label")} className="grid gap-3 sm:grid-cols-2">
-              {([
-                { v: "agency", icon: Building2, t: t("kind.agency"), d: t("kind.agencyDescription"), tone: "bg-tile-blue" },
-                { v: "independent", icon: UserRound, t: t("kind.independent"), d: t("kind.independentDescription"), tone: "bg-tile-yellow" },
-              ] as const).map((o) => {
-                const checked = data.kind === o.v;
-                return (
-                  <button
-                    key={o.v}
-                    type="button"
-                    role="radio"
-                    aria-checked={checked}
-                    onClick={() => set("kind", o.v)}
-                    className={cn(
-                      "relative grid gap-4 rounded-3xl border-2 p-5 text-left transition-colors focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
-                      checked ? "border-foreground" : "border-border hover:border-foreground/40",
-                    )}
-                  >
-                    <span className={cn("grid size-11 place-items-center rounded-2xl text-foreground", o.tone)} aria-hidden><o.icon className="size-5" /></span>
-                    <span>
-                      <span className="block font-semibold">{o.t}</span>
-                      <span className="mt-1 block text-sm text-muted-foreground">{o.d}</span>
-                    </span>
-                    {checked ? <span className="absolute top-4 right-4 grid size-6 place-items-center rounded-full bg-foreground text-background" aria-hidden><Check className="size-3.5" /></span> : null}
-                  </button>
-                );
-              })}
-            </div>
-          ) : null}
-
-          {step === 1 ? (
             <div className="grid gap-4">
-              <FormField id="name" label={isAgency ? t("workspace.agencyName") : t("workspace.displayName")} error={errors.name} required>
+              <FormField id="name" label={t("workspace.agencyName")} error={errors.name} required>
                 <Input
                   id="name"
                   autoFocus
                   value={data.name}
-                  placeholder={isAgency ? t("workspace.agencyPlaceholder") : t("workspace.displayPlaceholder")}
+                  placeholder={t("workspace.agencyPlaceholder")}
                   onChange={(e) => setData((d) => ({ ...d, name: e.target.value, slug: slugTouched ? d.slug : slugify(e.target.value) }))}
                   aria-invalid={!!errors.name}
                 />
@@ -141,15 +168,31 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
                   />
                 </div>
               </FormField>
-              <FormField id="currency" label={t("workspace.currency")} hint={t("workspace.currencyHint")}>
-                <NativeSelect id="currency" value={data.currency} onChange={(e) => set("currency", e.target.value)}>
-                  {ONBOARDING_CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                </NativeSelect>
-              </FormField>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <FormField id="country" label={t("workspace.country")} hint={t("workspace.countryHint")} error={errors.country} required>
+                  <Combobox
+                    id="country"
+                    name="country-picker"
+                    value={data.country}
+                    options={countries}
+                    loading={countriesLoading}
+                    invalid={!!errors.country}
+                    placeholder={t("workspace.countryPlaceholder")}
+                    searchPlaceholder={tc("location.search")}
+                    emptyText={tc("location.noResults")}
+                    onChange={(v) => setData((d) => ({ ...d, country: v, currency: currencyTouched || !v ? d.currency : currencyForCountry(v) }))}
+                  />
+                </FormField>
+                <FormField id="currency" label={t("workspace.currency")} hint={t("workspace.currencyHint")}>
+                  <NativeSelect id="currency" value={data.currency} onChange={(e) => { setCurrencyTouched(true); set("currency", e.target.value); }}>
+                    {ONBOARDING_CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                  </NativeSelect>
+                </FormField>
+              </div>
             </div>
           ) : null}
 
-          {step === 2 ? (
+          {step === 1 ? (
             <div className="grid gap-5">
               <FormField id="headline" label={t("profile.headline")} hint={t("profile.headlineHint")}>
                 <Input id="headline" autoFocus maxLength={160} value={data.headline} placeholder={t("profile.headlinePlaceholder")} onChange={(e) => set("headline", e.target.value)} />
@@ -166,7 +209,7 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
           ) : null}
 
           <Nav step={step} onBack={back}>
-            {step === 2 ? (
+            {step === 1 ? (
               <Button type="button" variant="ghost" onClick={() => next()}>{t("profile.skip")}</Button>
             ) : null}
             <Button type="submit" size="lg">{tg("common.actions.continue")} <ArrowRight className="size-4" aria-hidden /></Button>
@@ -174,23 +217,38 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
         </form>
       ) : (
         <ActionForm action={action} className="grid gap-6" noValidate>
-          {(["kind", "name", "slug", "currency", "headline"] as const).map((k) => <input key={k} type="hidden" name={k} value={data[k]} />)}
+          {(["name", "slug", "country", "currency", "headline"] as const).map((k) => <input key={k} type="hidden" name={k} value={data[k]} />)}
           <input type="hidden" name="specialties" value={data.specialties.join(", ")} />
           <input type="hidden" name="regions" value={data.regions.join(", ")} />
+          {rules && accepted ? (
+            <>
+              <input type="hidden" name="rulesVersionId" value={accepted.versionId} />
+              <input type="hidden" name="rulesLocale" value={accepted.locale} />
+              <input type="hidden" name="acceptOrg" value="true" />
+              <input type="hidden" name="acceptMember" value="true" />
+            </>
+          ) : null}
 
           <div className="grid gap-3">
-            <Summary label={t("review.organization")} editLabel={t("review.editOrganization")} onEdit={() => setStep(0)}>{isAgency ? t("review.agency") : t("review.independent")}</Summary>
-            <Summary label={t("review.workspace")} editLabel={t("review.editWorkspace")} onEdit={() => setStep(1)}>
+            <Summary label={t("review.workspace")} editLabel={t("review.editWorkspace")} onEdit={() => setStep(0)}>
               <span className="block font-medium">{data.name}</span>
-              <span className="block text-muted-foreground">missionhub.app/workspace/{data.slug} · {data.currency}</span>
+              <span className="block text-muted-foreground">missionhub.app/workspace/{data.slug}</span>
+              <span className="block text-muted-foreground">{countries.find((c) => c.value === data.country)?.label ?? data.country} · {data.currency}</span>
             </Summary>
-            <Summary label={t("review.profile")} editLabel={t("review.editProfile")} onEdit={() => setStep(2)}>
+            <Summary label={t("review.profile")} editLabel={t("review.editProfile")} onEdit={() => setStep(1)}>
               {data.headline || data.specialties.length || data.regions.length ? (
                 <>
                   {data.headline ? <span className="block font-medium">{data.headline}</span> : null}
                   <span className="block text-muted-foreground">{[...data.specialties, ...data.regions].join(" · ") || t("review.noTags")}</span>
                 </>
               ) : <span className="text-muted-foreground">{t("review.notFilled")}</span>}
+            </Summary>
+            <Summary label={t("review.rules")} editLabel={t("review.editRules")} onEdit={() => setStep(RULES_STEP)}>
+              {rules && accepted ? (
+                <span className="block font-medium">{t("review.rulesValue", { label: rules.version.label, language: tn(`accept.languageInline.${RULES_LOCALE_KEY[accepted.locale]}`) })}</span>
+              ) : (
+                <span className="text-muted-foreground">{tn("accept.required")}</span>
+              )}
             </Summary>
           </div>
 
@@ -209,7 +267,7 @@ export function OnboardingForm({ firstName }: { firstName?: string }) {
 
           {state && !state.ok && !state.fieldErrors?.slug && !state.fieldErrors?.name ? <FormMessage state={state} /> : null}
           <Nav step={step} onBack={back}>
-            <SubmitButton size="lg" pendingLabel={t("review.creating")}>{t("review.create")} <ArrowRight className="size-4" aria-hidden /></SubmitButton>
+            <SubmitButton size="lg" pendingLabel={t("review.creating")} disabled={!rules || !accepted}>{t("review.create")} <ArrowRight className="size-4" aria-hidden /></SubmitButton>
           </Nav>
         </ActionForm>
       )}

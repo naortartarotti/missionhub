@@ -20,7 +20,7 @@ test("new users set up a workspace through the step-by-step onboarding", async (
   await page.getByRole("button", { name: "Continue" }).click();
 
   // Step 2: workspace, client-side validation first
-  await expect(page.getByRole("heading", { name: "Name your workspace" })).toBeFocused();
+  await expect(page.getByRole("heading", { name: "Name your organization" })).toBeFocused();
   await page.getByRole("button", { name: "Continue" }).click();
   await expect(page.getByText("Enter your organization name")).toBeVisible();
   const name = `Rivera Talent ${Date.now().toString(36)}`;
@@ -47,7 +47,7 @@ test("new users set up a workspace through the step-by-step onboarding", async (
   await expect(page.getByText("Independent recruiter")).toBeVisible();
   await expect(page.getByText("Data & AI · Nova Scotia")).toBeVisible();
   await snap(page, "4-review");
-  await page.getByRole("button", { name: "Create workspace" }).click();
+  await page.getByRole("button", { name: "Create organization" }).click();
   await expect(page.getByText(/workspace URL is taken/)).toBeVisible();
   await expect(page.getByLabel("Business or display name")).toHaveValue(name);
   await snap(page, "2b-taken");
@@ -57,7 +57,7 @@ test("new users set up a workspace through the step-by-step onboarding", async (
   await page.getByRole("button", { name: "Continue" }).click();
   await expect(page.getByLabel("Headline")).toHaveValue(/Data recruiter/);
   await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByRole("button", { name: "Create workspace" }).click();
+  await page.getByRole("button", { name: "Create organization" }).click();
   await page.waitForURL(`**/workspace/${slug}/overview`);
 
   const db = admin();

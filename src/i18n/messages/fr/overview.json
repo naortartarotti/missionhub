@@ -1,5 +1,5 @@
 {
-  "title": "Aperçu",
+  "title": "Accueil",
   "welcome": "Bon retour, {name}!",
   "welcomeFallbackName": "vous",
   "subtitle": "Voici ce qui demande votre attention aujourd'hui.",
@@ -11,12 +11,12 @@
     "doneSr": "terminée",
     "candidate": {
       "title": "Ajoutez votre premier candidat",
-      "description": "Ajoutez une personne que vous représentez ou importez une liste à partir d'un CSV. Vous seul pouvez la voir.",
+      "description": "Ajoutez une personne que vous représentez ou importez un CSV. Seule votre organisation peut les voir.",
       "cta": "Ajouter un candidat"
     },
     "matching": {
       "title": "Activez le jumelage pour un candidat",
-      "description": "Enregistrez sa permission, puis activez le jumelage pour que MissionHub cherche des postes partenaires qui lui conviennent.",
+      "description": "Enregistrez son autorisation de jumelage, puis activez le jumelage pour que MissionHub cherche des postes partenaires qui lui conviennent.",
       "cta": "Voir les candidats"
     },
     "job": {
@@ -27,14 +27,14 @@
     "referral": {
       "title": "Soumettez un candidat à un poste partenaire",
       "description": "Examinez une correspondance, vérifiez l'adéquation et soumettez lorsque votre candidat est d'accord.",
-      "cta": "Voir les opportunités"
+      "cta": "Voir les suggestions"
     },
     "open": "Ouvrir le guide de démarrage",
     "minimize": "Réduire le guide"
   },
   "stats": {
     "label": "Résumé",
-    "matches": "Correspondances à examiner",
+    "matches": "Suggestions à examiner",
     "referrals": "Recommandations à examiner",
     "earned": "Commission gagnée",
     "earnedProjected": "~{amount} prévus"
@@ -54,10 +54,14 @@
       "action": "Ouvrir la file"
     },
     "matches": {
-      "title": "Examiner les correspondances",
+      "title": "Examiner les suggestions",
       "body": {
-        "one": "{count} poste partenaire correspond à vos candidats",
-        "other": "{count} postes partenaires correspondent à vos candidats"
+        "one": "{count} suggestion pour {jobs} postes partenaires",
+        "other": "{count} suggestions pour {jobs} postes partenaires"
+      },
+      "bodyOneJob": {
+        "one": "{count} suggestion pour 1 poste partenaire",
+        "other": "{count} suggestions pour 1 poste partenaire"
       },
       "fresh": {
         "one": "{count} nouvelle",
@@ -91,7 +95,7 @@
     }
   },
   "best": {
-    "title": "Meilleures opportunités pour vos candidats",
+    "title": "Meilleures suggestions pour vos candidats",
     "viewAll": "Tout voir",
     "more": {
       "one": "+{count} autre",

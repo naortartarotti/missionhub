@@ -1,0 +1,532 @@
+{
+  "accept": {
+    "title": "Network Rules {label}",
+    "gateIntro": "Before you use MissionHub, read and accept the Network Rules. They set out how members share information, contact candidates and resolve problems.",
+    "reacceptIntro": "The Network Rules are changing. Read what changed, then accept version {label}.",
+    "effective": "In effect since {date}",
+    "effectiveFuture": "Takes effect on {date}",
+    "language": "Language of the rules",
+    "languageOption": {
+      "frCA": "Français",
+      "en": "English",
+      "ptBR": "Português"
+    },
+    "languageInline": {
+      "en": "English",
+      "frCA": "French",
+      "ptBR": "Portuguese"
+    },
+    "languageShownSr": "Rules shown in {language}.",
+    "summaryTitle": "Summary (not part of the rules)",
+    "changesTitle": "What changed",
+    "compare": "Compare with the version you accepted",
+    "newTabSr": "(opens in a new tab)",
+    "skip": "Skip to acceptance",
+    "contents": "Contents",
+    "statementsLegend": "Your acceptance",
+    "member": "I’ve read the Network Rules and I accept them personally.",
+    "org": "I accept the Network Rules on behalf of {org}, and I have the authority to do so.",
+    "orgAlready": "{org} accepted these rules on {date}.",
+    "needOne": "Tick the box to continue.",
+    "needBoth": "Tick both boxes to continue.",
+    "languageChanged": "The language changed. Tick the boxes again.",
+    "submit": "Accept and continue",
+    "submitting": "Accepting…",
+    "submitReaccept": "Accept version {label}",
+    "done": "Network Rules accepted.",
+    "already": "You accepted Network Rules {label} on {date}.",
+    "versionChanged": "A new version of the Network Rules is now in effect. Read it and accept it to continue.",
+    "noVersion": "The Network Rules aren’t available right now. Try again later.",
+    "required": "Accept the Network Rules to create your organization.",
+    "saveError": "We couldn’t save your acceptance. Check your connection and try again.",
+    "leaveBefore": "Don’t want to accept? Email",
+    "leaveAfter": "to leave the network.",
+    "history": "Version history"
+  },
+  "banner": {
+    "hold": {
+      "title": "Your organization is on a network hold",
+      "body": "You can’t open jobs to partners, submit referrals or receive new ones. Referrals in progress continue as usual."
+    },
+    "rules": {
+      "title": "Network Rules {label} not accepted",
+      "body": "{org} hasn’t accepted the version in effect since {date}. Until an organization admin accepts it, you can’t open jobs to partners or submit referrals. Referrals in progress continue.",
+      "askAdmin": "Ask an organization admin to accept it."
+    },
+    "user": {
+      "title": "Accept Network Rules {label}",
+      "body": "Until you accept the version in effect since {date}, you can’t submit referrals or open jobs to partners. Everything else works as usual."
+    },
+    "notice": {
+      "title": "Network Rules {label} take effect on {date}",
+      "body": "Review the changes and accept them before that date.",
+      "orgPending": "{org} hasn’t accepted yet. An organization admin needs to accept for it."
+    },
+    "settlement": {
+      "suspended": {
+        "title": "Your organization is suspended",
+        "body": "You can still finish referrals in progress, settle commissions and answer disputes. Your obligations to partners continue."
+      },
+      "terminated": {
+        "title": "Your organization was removed from the network on {date}",
+        "body": "You can finish referrals in progress and settle commissions and disputes. When everything is settled, your organization’s members lose access to MissionHub."
+      }
+    },
+    "cta": {
+      "standing": "View network standing",
+      "accept": "Review and accept",
+      "changes": "What changed",
+      "details": "Details"
+    }
+  },
+  "versions": {
+    "metaTitle": "Network Rules",
+    "title": "Network Rules",
+    "description": "The rules every organization and member accepts to use the MissionHub network.",
+    "current": "Current version: {label}",
+    "inEffect": "In effect since {date}",
+    "upcoming": "Upcoming version: {label}",
+    "takesEffect": "Takes effect on {date}",
+    "readFull": "Read the full text",
+    "history": "Version history",
+    "historyCaption": "Published versions of the Network Rules",
+    "col": {
+      "version": "Version",
+      "type": "Type",
+      "effective": "In effect from",
+      "changes": "What changed"
+    },
+    "read": "Read version {label}",
+    "fingerprint": "Fingerprint (SHA-256)",
+    "fingerprintHint": "A unique code for this exact text, in this language. It shows which text was accepted.",
+    "statusTitle": "Your status",
+    "youAccepted": "You accepted version {label} on {date}.",
+    "youHaveNot": "You haven’t accepted version {label} yet.",
+    "orgAccepted": "{org} accepted version {label} on {date}.",
+    "orgHasNot": "{org} hasn’t accepted version {label}.",
+    "legalReason": "Why this change takes effect sooner: {reason}",
+    "empty": "The Network Rules aren’t published yet.",
+    "footerLink": "Network Rules"
+  },
+  "partner": {
+    "notTakingReferrals": "{org} isn’t taking new referrals right now.",
+    "noLongerMember": "{org} is no longer part of the MissionHub network.",
+    "back": "Back to opportunities"
+  },
+  "team": {
+    "lastAdmin": "Your organization needs at least one active organization admin."
+  },
+  "errors": {
+    "acceptanceRequired": "Accept the current Network Rules to do this.",
+    "reviewRulesLink": "Review the rules",
+    "partnerActivityRestricted": "Your organization can’t do this while new partner activity is paused. Referrals in progress aren’t affected.",
+    "settlementUnavailable": "This isn’t available while your organization is in settlement mode."
+  },
+  "report": {
+    "button": "Report a problem",
+    "buttonAria": "Report a problem with {org}",
+    "title": "Report a problem with {org}",
+    "intro": "Use this if you think {org} broke the Network Rules. A report is about behaviour. It doesn’t decide who was first, whether a hire happened or what’s owed.",
+    "messagesFirst": "If it isn’t urgent, you can first try the referral messages. That’s optional.",
+    "rightTool": {
+      "title": "Is this about first position, a hire or money?",
+      "position": "Is this about who presented the candidate first?",
+      "positionText": "Objections are filed from the referral within 5 business days of delivery. If the other side files one, you can contest it from the referral.",
+      "fileObjection": "File objection",
+      "contestObjection": "Contest objection",
+      "hire": "Was your candidate hired?",
+      "hireTextBefore": "Write to {org} in the referral messages. If they don’t answer, email",
+      "hireTextAfter": ".",
+      "hireTextNoSupport": "Write to {org} in the referral messages.",
+      "amount": "Is an amount wrong or unpaid?",
+      "openDispute": "Open a dispute",
+      "amountText": "Amounts are settled with a dispute on the placement, not with a report.",
+      "noAnswer": "No answer from the partner?",
+      "noAnswerText": "That isn’t a breach. You can withdraw the referral, or wait for the response deadline.",
+      "noAnswerTextHiring": "That isn’t a breach. You can decline the referral if you can’t move forward.",
+      "noAnswerTextJob": "That isn’t a breach of the Network Rules."
+    },
+    "category": "What’s the problem?",
+    "categoryHint": {
+      "went_around": "For example, they contacted your client about the job or fee, or your candidate behind your back.",
+      "misused": "For example, they used your candidate for other jobs, added them to their database or reposted your job.",
+      "shared_outside": "For example, they sent a candidate’s resume to another agency or company.",
+      "hire_payout": "For example, the client hired your candidate and it wasn’t reported, or your payout is late.",
+      "false_info": "For example, a candidate who never agreed, a fake confirmation, false evidence or a false hire report.",
+      "job_terms": "For example, no real opening, a stale job, wrong terms, or pressure to change the terms.",
+      "discrimination": "Unfair treatment of a candidate based on a ground protected by human rights laws.",
+      "retaliation": "For example, they punished you for a report, accused you in public or reported you in bad faith.",
+      "other": "Another rule you think was broken."
+    },
+    "hirePayoutMoney": "A report doesn’t collect the money. For an amount, open a dispute on the placement.",
+    "what": "What happened?",
+    "whatHint": "Facts, dates and where it happened. Share only the candidate or client details we need.",
+    "counter": "{count} / {max}",
+    "counterSr": "{count} of {max} characters used",
+    "when": "When did it happen? (optional)",
+    "approximate": "The date is approximate.",
+    "files": "Evidence (optional)",
+    "filesHint": "Up to 5 files: PDF, PNG or JPEG, 10 MB each. Only MissionHub platform admins can open them. {org} never sees them.",
+    "identity": "We never show your name to {org}. We name your organization only if they need it to respond fairly. Only two organizations are on a referral, so they may still guess who reported it. Retaliating against a report is a breach (rule 7.1).",
+    "identityJob": "We never show your name to {org}. We name your organization only if they need it to respond fairly. They may still be able to tell where the report came from. Retaliating against a report is a breach (rule 7.1).",
+    "attest": "I’m reporting this in good faith, and it’s accurate to the best of my knowledge. I understand that a report made in bad faith is a breach.",
+    "submit": "Send report",
+    "sending": "Sending…",
+    "filesWaiting": "Wait until every file is checked.",
+    "removeRejected": "Remove the file that can’t be used.",
+    "errorSummary": {
+      "one": "Fix {count} field to send your report.",
+      "other": "Fix {count} fields to send your report."
+    },
+    "sentTitle": "Report sent",
+    "sentBody": "We aim to respond within 2 business days, by {when} ET. We’ll tell you the outcome.",
+    "view": "View your report",
+    "discardTitle": "Discard this report?",
+    "discardBody": "What you wrote and the files you added will be lost.",
+    "discardConfirm": "Discard report",
+    "youReported": "You reported a problem on {date}.",
+    "youReportedLink": "View report",
+    "errors": {
+      "notFound": "We couldn’t find this referral or job.",
+      "self": "You can’t report your own organization.",
+      "userLimitBefore": "You’ve sent 5 reports in the last 24 hours. Try again later, or email",
+      "userLimitAfter": "if it’s urgent.",
+      "userLimitNoSupport": "You’ve sent 5 reports in the last 24 hours. Try again later.",
+      "orgLimitBefore": "Your organization has sent 10 reports in the last 24 hours. Try again later, or email",
+      "orgLimitAfter": "if it’s urgent.",
+      "orgLimitNoSupport": "Your organization has sent 10 reports in the last 24 hours. Try again later.",
+      "category": "Choose what the problem is.",
+      "attest": "Confirm that you’re reporting in good faith.",
+      "dateFuture": "The date can’t be in the future."
+    }
+  },
+  "reports": {
+    "title": "Your reports",
+    "description": "Problems you reported to MissionHub. Only you and your organization’s admins can see them.",
+    "menu": "Your reports",
+    "tabs": {
+      "mine": "Sent by you",
+      "org": "Your organization"
+    },
+    "orgDescription": "Reports sent by members of {org}. Only organization admins see this list.",
+    "sentBy": "Sent by {name}",
+    "sentByFormer": "Sent by a former member",
+    "empty": "You haven’t reported a problem.",
+    "emptyDescription": "To report a problem, use Report a problem on a referral or a partner job.",
+    "orgEmpty": "No one in {org} has reported a problem.",
+    "about": "About {org} · sent {date}",
+    "open": "Open",
+    "openAria": "Open the report about {org}",
+    "detailTitle": "Report about {org}",
+    "status": {
+      "received": "Received",
+      "receivedBody": "We aim to respond by {when} ET.",
+      "input": "Your input needed",
+      "inputBody": "MissionHub has a question for you. Reply below.",
+      "inputDeadline": "Reply by {when} ET.",
+      "inReview": "Looking into it",
+      "inReviewBody": "We’ll tell you the outcome when it’s decided."
+    },
+    "outcome": {
+      "action": "Action taken",
+      "actionBody": "We found a breach and took action under the Network Rules.",
+      "noBreach": "No breach found",
+      "noBreachBody": "We looked into it and didn’t find a breach of the Network Rules.",
+      "notEnough": "Not enough evidence to act",
+      "notEnoughBody": "We couldn’t confirm a breach with the evidence we have. You can send a new report if you have new evidence.",
+      "closed": "Closed without a finding",
+      "closedBody": "MissionHub closed this report without deciding whether a breach happened.",
+      "triageReason": "Reason: {reason}",
+      "noChange": "This report doesn’t change your referral, your first position or any amount owed.",
+      "openReferral": "Open the referral",
+      "updated": "Outcome updated on {date}."
+    },
+    "youSent": "What you sent",
+    "field": {
+      "category": "Problem",
+      "what": "What happened",
+      "when": "When",
+      "approximate": "(approximate)",
+      "files": "Files",
+      "noFiles": "No files",
+      "filesNote": "Files can’t be downloaded after sending. Only platform admins can open them."
+    },
+    "timeline": {
+      "title": "Status",
+      "sent": "Sent · {when} ET",
+      "question": "Question from MissionHub · {when} ET",
+      "replied": "Reply sent · {when} ET",
+      "closed": "Closed · {when} ET"
+    },
+    "question": "Question from MissionHub",
+    "reply": "Your reply",
+    "replyHint": "Answer the question. You can send one reply, with files if they help.",
+    "replySubmit": "Send reply",
+    "replySent": "Reply sent.",
+    "replyClosed": "The time to reply ended on {when} ET.",
+    "yourReply": "Reply sent on {when} ET"
+  },
+  "standing": {
+    "title": "Network standing",
+    "description": "Notices, decisions and sanctions for {org}. Only organization admins see this page.",
+    "current": "Current standing",
+    "good": "Good standing",
+    "goodBody": "No active sanctions.",
+    "warning": "Warning active",
+    "warningUntil": "Counts until {date}.",
+    "hold": "Network hold",
+    "since": "Since {date}.",
+    "plannedReview": "We plan to reassess it on {date}.",
+    "plannedReviewHint": "The hold doesn’t end automatically on this date.",
+    "suspended": "Suspended",
+    "suspendedBody": "Your organization is in settlement mode.",
+    "terminated": "Removed from the network",
+    "terminatedBody": "Since {date}. Your organization is in settlement mode until everything is settled.",
+    "whatThisMeans": "What this means",
+    "meaning": {
+      "pausedTitle": "Paused",
+      "continuesTitle": "Continues",
+      "holdPaused": "Opening jobs to partners, submitting referrals and receiving new referrals.",
+      "holdContinues": "Referrals in progress, hire reports, invoices, payouts, refunds and disputes. Your internal work: candidates, jobs, pipeline and team.",
+      "warning": "A warning doesn’t limit your work. It counts for 12 months if another breach is found."
+    },
+    "rulesRow": "Network Rules {label} not accepted",
+    "rulesRowBody": "This isn’t a sanction. It ends as soon as an organization admin accepts.",
+    "openNotices": "Open notices",
+    "noNotices": "No open notices.",
+    "noticeRules": "Rules cited: {rules}",
+    "noticeSent": "Sent {date}",
+    "deadlineLabel": "Response deadline",
+    "open": "Open notice",
+    "history": "History",
+    "historyEmpty": "No sanctions or closed notices.",
+    "historyCaption": "Sanctions and closed notices",
+    "col": {
+      "date": "Date",
+      "result": "Outcome",
+      "status": "Status"
+    },
+    "acceptance": "Network Rules acceptance",
+    "acceptedBy": "Version {label} accepted on {date} by {name}",
+    "notAcceptedOrg": "Version {label} not accepted yet",
+    "notAcceptedMembers": "Members who haven’t accepted version {label}",
+    "allMembersAccepted": "Every member has accepted version {label}."
+  },
+  "notice": {
+    "heading": "Notice under rules 8.3 and 9.3",
+    "headingImmediate": "Immediate network hold under rule 9.4",
+    "intro": "MissionHub received information that {org} may have broken the Network Rules. This notice tells you what is alleged and gives you 10 business days to respond. Nothing has been decided yet.",
+    "introImmediate": "Under rule 9.4, MissionHub put {org} on a network hold on {date}, because of a possible breach of rule {rule}. This notice tells you what is alleged. You have 10 business days to respond. No other decision has been made.",
+    "holdEffects": "While the hold lasts, your jobs are hidden from partners, and you can’t submit referrals or receive new ones. Referrals in progress continue as usual.",
+    "rules": "Rules concerned",
+    "ruleItem": "Rule {number}: {title}",
+    "version": "From Network Rules {label}",
+    "alleged": "What is alleged",
+    "when": "When",
+    "evidence": "Summary of the evidence",
+    "reportedBy": "Reported by {org}",
+    "deadline": "Respond by {when} ET",
+    "howToRespond": "Any organization admin can send one response from your Network standing page, with files if they help. If you don’t respond by the deadline, MissionHub will decide on the record (rule 7.2).",
+    "possibleOutcomes": "After the response period, MissionHub may decide to take no action, or to give a warning, a network hold, a suspension or termination. If there’s a finding or a sanction, your organization can ask once for a review by a different platform admin.",
+    "bilingualNote": "French version above."
+  },
+  "case": {
+    "metaTitle": "Notice",
+    "back": "Back to network standing",
+    "noticeTitle": "Notice",
+    "sentOn": "Sent on {when} ET",
+    "languageNote": "This notice is in {language}.",
+    "respond": "Your response",
+    "respondHint": "Explain what happened and attach anything that helps. Only MissionHub platform admins can open your files. Your response isn’t shared with other organizations.",
+    "respondSubmit": "Send response",
+    "respondConfirmTitle": "Send your response?",
+    "respondConfirmBody": "Your organization can send one response, and it can’t be changed after sending.",
+    "responded": "Response sent on {when} ET by {name}",
+    "respondedToast": "Response sent. MissionHub will read it before deciding.",
+    "windowClosed": "The response window closed on {when} ET. MissionHub will decide on the record (rule 7.2).",
+    "followup": "Follow-up question",
+    "followupDeadline": "Reply by {when} ET",
+    "followupNoDeadline": "No deadline. Reply when you can.",
+    "followupReply": "Your reply",
+    "followupSubmit": "Send reply",
+    "followupSent": "Reply sent.",
+    "followupReplied": "Reply sent on {when} ET by {name}",
+    "followupClosed": "The time to reply ended on {when} ET.",
+    "files": "Files",
+    "filesHint": "Up to 5 files: PDF, PNG or JPEG, 10 MB each. Only MissionHub platform admins can open them.",
+    "reviewDeadline": "Review deadline",
+    "requestReview": "Request a review",
+    "reviewDialogTitle": "Request a review of this decision?",
+    "reviewDialogBody": "A different platform admin will review the decision. The sanction stays in effect during the review. Your organization can request one review.",
+    "reviewDialogBodyFinding": "A different platform admin will review the finding. Your organization can request one review.",
+    "reviewReason": "Why should the decision change?",
+    "reviewReasonHint": "Point to the facts or rules the decision got wrong. You can add files.",
+    "reviewSubmit": "Request review",
+    "reviewRequestedToast": "Review requested. We’ll let you know the outcome.",
+    "reviewRequested": "Review requested on {date} by {name}",
+    "review": {
+      "confirmed": "Review: decision confirmed",
+      "reduced": "Review: sanction reduced to {level}",
+      "lifted": "Review: sanction lifted",
+      "overturned": "Review: decision overturned. The sanction is lifted and won’t count in later decisions.",
+      "reason": "Reason for the review outcome",
+      "reviewedOn": "Reviewed on {date} by a different MissionHub platform admin"
+    },
+    "errors": {
+      "closed": "The response window has closed. You can’t send a response now.",
+      "exists": "Your organization has already responded. Refresh the page to see the response.",
+      "reviewClosed": "The time to request a review has ended.",
+      "reviewExists": "A review was already requested for this decision.",
+      "replyClosed": "The time to reply has ended."
+    }
+  },
+  "decision": {
+    "title": "Decision",
+    "decidedOn": "Decided on {date} by a MissionHub platform admin",
+    "outcome": "Outcome",
+    "noBreachBody": "MissionHub didn’t find a breach of the Network Rules. No sanction applies.",
+    "notEnoughBody": "MissionHub didn’t find enough evidence to decide that a breach happened. No sanction applies.",
+    "finding": "Finding",
+    "rules": "Rules breached",
+    "residual": "Decided using rule 7.4, because no specific rule covered this case.",
+    "sanction": "Sanction",
+    "effects": {
+      "none": "The finding is recorded on your organization’s file. No sanction applies.",
+      "warning": "This warning counts for 12 months, until {date}. It doesn’t limit your work.",
+      "hold": "From {date}, your jobs are hidden from partners, and you can’t submit referrals or receive new ones. Referrals in progress continue. The hold lasts until MissionHub lifts it.",
+      "holdLifted": "The network hold is lifted from {date}.",
+      "suspension": "From {date}, your organization is suspended and in settlement mode. You can finish referrals in progress, settle commissions and answer disputes. Nothing else is available until the suspension is lifted.",
+      "termination": "From {date}, your organization is removed from the network. You can finish referrals in progress and settle commissions and disputes until each one is settled. Your organization can apply again after 12 months (rule 9.7)."
+    },
+    "reviewLine": "You can request one review by {when} ET. A different platform admin will review the decision. The sanction stays in effect during the review.",
+    "reviewLineFinding": "You can request one review by {when} ET. A different platform admin will review the finding."
+  },
+  "validation": {
+    "length": "Write between {min} and {max} characters."
+  },
+  "incident": {
+    "section": "Notices about how a partner handled your information",
+    "sectionHint": "These notices are about another organization. They aren’t about your organization’s standing.",
+    "title": "Data incident notice",
+    "cardSent": "Sent {date}",
+    "cardReferrals": {
+      "one": "{count} referral concerned",
+      "other": "{count} referrals concerned"
+    },
+    "intro": "MissionHub found that a partner organization shared information from your referrals outside its organization. Here’s what we know.",
+    "referrals": "Referrals concerned",
+    "referralUnavailable": "A referral you can no longer open",
+    "what": "What information",
+    "when": "When",
+    "toWhom": "Shared with",
+    "toWhomUnknown": "Unknown",
+    "guidance": "If your candidate revokes their authorization, the other organization loses access to the shared profile and documents on MissionHub right away. This doesn’t recall copies they already downloaded. Withdrawing the referral keeps your first position. Releasing the candidate gives it up.",
+    "guidanceHiring": "MissionHub can’t recall information once it has been shared. This notice doesn’t change your jobs or your referrals in progress. If the information is about your client, you may want to tell them."
+  },
+  "settlement": {
+    "marker": "Settlement mode",
+    "homeTitle": "Settlement mode",
+    "canDo": "What you can still do",
+    "referrals": {
+      "one": "{count} referral in progress",
+      "other": "{count} referrals in progress"
+    },
+    "placements": {
+      "one": "{count} placement with open steps",
+      "other": "{count} placements with open steps"
+    },
+    "disputes": {
+      "one": "{count} dispute to answer",
+      "other": "{count} disputes to answer"
+    },
+    "nothingLeft": "Nothing left to settle here.",
+    "paused": "What’s paused",
+    "pausedList": "Candidates, jobs, opportunities, imports, AI features, connectors and API keys, invitations and settings changes.",
+    "continuesList": "Referrals in progress, hire reports, invoices, payouts, refunds and disputes, plus Network standing and the team list.",
+    "blockedTitle": "This page isn’t available in settlement mode",
+    "blockedDescription": "Your organization can only finish referrals in progress and settle what’s owed.",
+    "goReferrals": "Go to referrals",
+    "loadCountsError": "We couldn’t load the counts. The links still work.",
+    "teamReadOnly": "In settlement mode, you can only deactivate members. Invitations and role changes are paused.",
+    "referralClosed": "Referral closed. It no longer appears in settlement mode.",
+    "referralClosedTitle": "This referral is closed",
+    "referralClosedDescription": "Closed referrals aren’t shown in settlement mode. Your other referrals in progress are still in the list."
+  },
+  "notifications": {
+    "network_rules_published": {
+      "title": "Network Rules {label} published",
+      "bodyAccept": "Read what changed and accept it by {date}.",
+      "bodyInfo": "Read what changed. No action needed."
+    },
+    "network_rules_effective_not_accepted": {
+      "title": "Network Rules {label} are now in effect",
+      "body": "Accept it to open jobs to partners and submit referrals again."
+    },
+    "network_rules_reminder": {
+      "title": "Network Rules {label} take effect in 7 days",
+      "body": "Review and accept it before {date}."
+    },
+    "conduct_report_received": {
+      "title": "We received your report",
+      "body": "We aim to respond by {when} ET."
+    },
+    "conduct_report_info_requested": {
+      "title": "MissionHub has a question about your report",
+      "body": "Open your report to reply."
+    },
+    "conduct_report_closed": {
+      "title": "Your report is closed",
+      "titleOrg": "A report from your organization is closed",
+      "body": "Open it to see the outcome."
+    },
+    "conduct_report_outcome_updated": {
+      "title": "The outcome of your report changed",
+      "titleOrg": "The outcome of a report from your organization changed",
+      "body": "Open it to see the outcome."
+    },
+    "conduct_incident_notice": {
+      "title": "MissionHub sent you a data incident notice",
+      "body": "It concerns information from your referrals. Open it to read the details."
+    },
+    "conduct_notice_sent": {
+      "title": "You have a notice from MissionHub",
+      "body": "Read it and respond by {when} ET."
+    },
+    "sanction_immediate_hold": {
+      "title": "You have an urgent notice from MissionHub",
+      "body": "Read it now. You can respond until {when} ET."
+    },
+    "conduct_followup": {
+      "title": "MissionHub has a follow-up question",
+      "body": "Open the notice to reply."
+    },
+    "conduct_response_received": {
+      "title": "Response received on a conduct case",
+      "body": "Open the case to read it."
+    },
+    "conduct_decided": {
+      "title": "MissionHub recorded a decision",
+      "body": "Read it on your Network standing page."
+    },
+    "sanction_lifted": {
+      "title": "A sanction on your organization was lifted",
+      "body": "See the details on your Network standing page."
+    },
+    "sanction_review_requested": {
+      "title": "Review requested on a conduct case",
+      "body": "Another platform admin must review the decision."
+    },
+    "sanction_reviewed": {
+      "title": "Your review request was decided",
+      "body": "See the outcome on your Network standing page."
+    },
+    "conduct_report_reply_received": {
+      "title": "The reporter replied on a conduct case",
+      "body": "Open the case to read the reply."
+    },
+    "conduct_followup_answered": {
+      "title": "Follow-up answered on a conduct case",
+      "body": "Open the case to read the reply."
+    }
+  }
+}

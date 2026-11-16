@@ -1,6 +1,6 @@
 {
-  "title": "Oportunidades",
-  "description": "Vagas de parceiros que combinam com seus candidatos. Envie alguém e acompanhe em Indicações enviadas; você ganha parte da taxa quando a pessoa for contratada.",
+  "title": "Sugestões",
+  "description": "Vagas de parceiros que combinam com seus candidatos. Envie alguém e acompanhe em Indicações › Enviadas; você ganha parte da taxa quando a pessoa for contratada.",
   "filteredByCandidate": "Mostrando matches de um candidato.",
   "statusNav": "Status dos matches",
   "newCount": {
@@ -38,7 +38,10 @@
       "one": "{count} candidato",
       "other": "{count} candidatos"
     },
-    "share": "sua parte estimada"
+    "share": "sua parte estimada",
+    "shareIfHired": "Sua parte se houver contratação",
+    "shareEstimated": "Sua parte estimada",
+    "feeOnly": "Taxa"
   },
   "groupBy": {
     "job": "Por vaga",
@@ -67,7 +70,7 @@
   "empty": {
     "inactive": {
       "title": "Ative o matching para ver oportunidades",
-      "description": "Nenhum dos seus candidatos está em matching ainda. Abra um candidato, registre a permissão dele e ative o matching. As vagas de parceiros que combinarem aparecerão aqui.",
+      "description": "Nenhum dos seus candidatos está em matching ainda. Abra um candidato, registre a autorização de matching dele e ative o matching. As vagas de parceiros que combinarem aparecerão aqui.",
       "action": "Ir para candidatos"
     },
     "caughtUp": {
@@ -160,8 +163,8 @@
   },
   "evidence": {
     "matchingOff": "O matching está desligado para este candidato",
-    "permissionMissing": "A permissão do candidato não foi registrada",
-    "jobClosed": "A vaga não aceita indicações externas",
+    "permissionMissing": "A autorização de matching do candidato não foi registrada",
+    "jobClosed": "A vaga não está aberta a indicações de parceiros",
     "arrangementMismatch": "A vaga é {jobArrangement}; o candidato prefere {candidateArrangements}",
     "relocationRequired": "A vaga exige presença em {country}; o candidato não aceita mudança",
     "requiredSkillsMatched": "Tem as skills obrigatórias: {skills}",
@@ -226,5 +229,10 @@
   "internal": {
     "badge": "Sua outra organização",
     "hint": "Você também é membro de {org}. Indicações aqui são internas: sem comissão de parceiro, só a taxa da plataforma."
+  },
+  "restricted": {
+    "title": "As oportunidades de parceiros estão pausadas",
+    "hold": "Sua organização está com restrição de rede, então você não vê vagas de parceiros nem pode enviar indicações. As indicações em andamento continuam.",
+    "rules": "Sua organização não aceitou a versão {label} das Regras da rede, então você não vê vagas de parceiros nem pode enviar indicações. As indicações em andamento continuam."
   }
 }

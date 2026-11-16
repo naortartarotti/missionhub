@@ -47,8 +47,9 @@ export function PageHeader({
 
 export function SectionTitle({ children, action }: { children: ReactNode; action?: ReactNode }) {
   return (
-    <div className="mb-3 flex items-center justify-between gap-3">
-      <h2 className="text-lg font-semibold tracking-tight">{children}</h2>
+    // Wraps: a long action (fr/pt button or status pill) drops below the title instead of widening the page (AC-62).
+    <div className="mb-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+      <h2 className="min-w-0 text-lg font-semibold tracking-tight">{children}</h2>
       {action}
     </div>
   );

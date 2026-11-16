@@ -106,5 +106,33 @@
     "expires": "Lien valide jusqu'au",
     "cta": "Vérifier et confirmer",
     "note": "Ce lien est personnel, ne le transférez pas. Si vous ne reconnaissez pas cette demande, ignorez ce courriel."
+  },
+  "claimFiled": {
+    "subject": "{partner} a déposé une objection sur votre recommandation",
+    "preheader": "Vous pouvez la contester jusqu'au {when} HE.",
+    "heading": "Objection pour présentation antérieure sur votre recommandation",
+    "body": "{partner} affirme avoir déjà eu {candidate} en processus de recrutement pour ce client et a refusé votre recommandation pour le poste {job}. Sur la recommandation, vous voyez les dates, le type de pièce justificative et sa note. La contestation est gratuite : un administrateur de la plateforme examine les pièces justificatives.",
+    "cta": "Voir l'objection"
+  },
+  "disputeOpened": {
+    "subject": "Objection sur {candidate} contestée",
+    "preheader": "Un administrateur de la plateforme l'examine maintenant.",
+    "heading": "Objection contestée",
+    "body": "L'objection pour présentation antérieure visant la recommandation de {candidate} pour le poste {job} a été contestée. Un administrateur de la plateforme examine les pièces justificatives et rédigera une résolution. Les deux organisations seront avisées du résultat.",
+    "cta": "Ouvrir la recommandation"
+  },
+  "disputeResolved": {
+    "subject": "Objection sur {candidate} : {outcome}",
+    "preheader": "Lisez la résolution de l'administrateur de la plateforme.",
+    "heading": "Un administrateur de la plateforme a tranché l'objection",
+    "body": "Un administrateur de la plateforme a tranché l'objection pour présentation antérieure visant la recommandation de {candidate} pour le poste {job}. Résultat : {outcome}. La résolution écrite se trouve sur la recommandation.",
+    "cta": "Lire la résolution"
+  },
+  "alreadyPresented": {
+    "subject": "Votre recommandation pour le poste {job} n'a pas été transmise",
+    "preheader": "Rien n'a été transmis à {partner}.",
+    "heading": "Recommandation non transmise",
+    "body": "{candidate} a confirmé, mais avait déjà été présenté à {partner} pour ce client : cette recommandation n'a donc pas été transmise.",
+    "cta": "Ouvrir la recommandation"
   }
 }

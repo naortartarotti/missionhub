@@ -69,5 +69,12 @@
   "countries": {
     "add": "Add a country",
     "remove": "Remove {country}"
-  }
+  },
+  "ownerScope": {
+    "label": "Whose records",
+    "team": "Whole team",
+    "mine": "Mine"
+  },
+  "imported": "Imported",
+  "charCount": "{count} of {max} characters"
 }

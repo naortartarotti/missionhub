@@ -9,7 +9,7 @@
       "one": "{count} candidat n'est pas encore en jumelage.",
       "other": "{count} candidats ne sont pas encore en jumelage."
     },
-    "notMatchingHint": "Consignez leur permission et activez le jumelage pour leur trouver des postes partenaires.",
+    "notMatchingHint": "Consignez leur autorisation et activez le jumelage pour leur trouver des postes partenaires.",
     "showThem": "Les afficher",
     "searchPlaceholder": "Rechercher par nom, titre ou compétence exacte",
     "searchLabel": "Rechercher des candidats",
@@ -25,14 +25,14 @@
       "candidate": "Candidat",
       "seniority": "Niveau",
       "skills": "Compétences principales",
-      "owner": "Recruteur",
+      "owner": "Responsable",
       "updated": "Mis à jour",
       "status": "Statut"
     }
   },
   "new": {
     "title": "Ajouter un candidat",
-    "description": "Seules les données professionnelles servent au jumelage. Après l'enregistrement, vous consignerez la permission du candidat et activerez le jumelage.",
+    "description": "Seules les données professionnelles servent au jumelage. Après l'enregistrement, vous consignerez l'autorisation du candidat et activerez le jumelage.",
     "submit": "Enregistrer le candidat"
   },
   "edit": {
@@ -43,8 +43,8 @@
   },
   "detail": {
     "metaTitle": "Candidat",
-    "created": "Candidat enregistré. Prochaine étape : consigner sa permission, puis activer le jumelage.",
-    "updated": "Modifications enregistrées. Les occasions seront actualisées dans un instant.",
+    "created": "Candidat enregistré. Prochaine étape : consigner son autorisation, puis activer le jumelage.",
+    "updated": "Modifications enregistrées. Les suggestions seront actualisées dans un instant.",
     "noHeadline": "Aucun titre pour l'instant",
     "edit": "Modifier",
     "profile": "Profil",
@@ -63,14 +63,14 @@
     "salary": "Attentes salariales",
     "salaryRange": "{min} – {max}",
     "availableFrom": "Disponible à partir du",
-    "owner": "Recruteur",
-    "opportunities": "Occasions",
-    "allOpportunities": "Toutes les occasions",
+    "owner": "Responsable",
+    "opportunities": "Suggestions",
+    "allOpportunities": "Toutes les suggestions",
     "matchingOff": "Activez le jumelage pour voir les postes partenaires qui conviennent.",
     "noOpportunities": "Aucun poste partenaire ne convient pour l'instant. Nous revérifions automatiquement.",
     "referrals": "Recommandations",
     "noReferrals": "Pas encore soumis à un poste partenaire.",
-    "permission": "Permission du candidat",
+    "permission": "Autorisation du candidat",
     "resume": "CV",
     "sourcePrivacy": "Source et confidentialité",
     "source": "Source",
@@ -97,7 +97,7 @@
     "tabs": {
       "label": "Sections du candidat",
       "profile": "Profil",
-      "opportunities": "Opportunités",
+      "opportunities": "Suggestions",
       "referrals": "Recommandations",
       "documents": "Documents",
       "privacy": "Confidentialité"
@@ -111,7 +111,7 @@
     "pageTitle": "Profil du candidat",
     "contactTitle": "Coordonnées",
     "country": "Pays",
-    "ownedBy": "Recruteur : {name}",
+    "ownedBy": "Responsable : {name}",
     "contactName": "Contacter {name}",
     "bestMatch": "Meilleure correspondance {score}",
     "mobilityTitle": "Mobilité et postes à l'international",
@@ -200,7 +200,7 @@
   },
   "setup": {
     "toast": {
-      "active_for_matching": "Le jumelage est activé. Les nouvelles occasions apparaissent généralement en moins d'une minute.",
+      "active_for_matching": "Le jumelage est activé. Les nouvelles suggestions apparaissent généralement en moins d'une minute.",
       "unavailable": "Marqué comme non disponible. Le jumelage est en pause jusqu'à ce que vous le réactiviez.",
       "archived": "Candidat archivé. Le jumelage est désactivé."
     },
@@ -216,18 +216,18 @@
     "getMatchedTitle": "Jumelez {name} avec des postes partenaires",
     "getMatchedBody": "Deux étapes rapides. Les partenaires ne voient jamais votre candidat, à moins que vous ne décidiez de le soumettre.",
     "stepProfile": "Profil enregistré",
-    "stepPermission": "Permission du candidat consignée",
+    "stepPermission": "Autorisation du candidat consignée",
     "stepPermissionHint": "Notez comment la personne a accepté d'être représentée (p. ex. un courriel ou un formulaire d'accueil signé).",
-    "stepPermissionLink": "Consigner la permission",
+    "stepPermissionLink": "Consigner l'autorisation",
     "stepMatching": "Jumelage activé",
     "stepMatchingReady": "MissionHub commencera à chercher des postes partenaires qui conviennent.",
-    "stepMatchingLocked": "Disponible une fois la permission consignée.",
+    "stepMatchingLocked": "Disponible une fois l'autorisation consignée.",
     "turnOn": "Activer le jumelage"
   },
   "consent": {
-    "none": "Aucune permission au dossier pour l'instant.",
-    "processing": "Permission de représenter et de jumeler",
-    "jobSharing": "Permission de partager pour un poste",
+    "none": "Aucune autorisation au dossier pour l'instant.",
+    "processing": "Autorisation de jumelage",
+    "jobSharing": "Autorisation de partage (un poste)",
     "revokedOn": "Révoquée le {date}",
     "active": "Active",
     "basis": "Fondement :",
@@ -237,12 +237,12 @@
     "expires": "expire le {date}",
     "revocationReason": "Motif de la révocation :",
     "revoke": "Révoquer",
-    "revokeTitle": "Révoquer cette permission?",
+    "revokeTitle": "Révoquer cette autorisation?",
     "revokeJobSharing": "Le recruteur partenaire perd immédiatement l'accès au profil et aux documents partagés pour cette recommandation. Cette action est irréversible; une nouvelle autorisation serait nécessaire.",
     "revokeProcessing": "Le jumelage s'arrête immédiatement pour ce candidat. Les dossiers antérieurs sont conservés pour votre piste d'audit.",
-    "revokeConfirm": "Révoquer la permission",
+    "revokeConfirm": "Révoquer l'autorisation",
     "reason": "Motif",
-    "recordTitle": "Consigner la permission du candidat",
+    "recordTitle": "Consigner l'autorisation du candidat",
     "basisLabel": "Fondement",
     "basisHint": "La plupart des recruteurs utilisent le consentement. Validez le bon fondement avec votre conseiller en protection de la vie privée.",
     "scope": "Ce à quoi la personne a consenti",
@@ -250,7 +250,7 @@
     "evidenceLabel": "Comment et quand la personne a consenti",
     "evidenceHint": "p. ex. « Confirmé par courriel le 3 nov. » ou « Formulaire d'accueil signé »",
     "expiresAt": "Expiration (facultatif)",
-    "save": "Enregistrer la permission",
+    "save": "Enregistrer l'autorisation",
     "details": "Détails"
   },
   "documents": {
@@ -337,7 +337,7 @@
   },
   "errors": {
     "notFound": "Candidat introuvable.",
-    "permissionRequired": "Consignez la permission du candidat avant d'activer le jumelage.",
+    "permissionRequired": "Consignez l'autorisation du candidat avant d'activer le jumelage.",
     "selectJob": "Sélectionnez le poste visé par cette autorisation.",
     "revokeReason": "Indiquez un motif pour la révocation.",
     "consentNotFound": "Autorisation introuvable ou déjà révoquée.",
@@ -360,7 +360,7 @@
     "photoSize": "La photo doit faire 2 Mo ou moins."
   },
   "success": {
-    "activated": "Candidat activé. Le jumelage s'exécute en arrière-plan.",
+    "activated": "Le jumelage est activé. Les nouvelles suggestions apparaissent généralement en moins d'une minute.",
     "statusUpdated": "Statut mis à jour.",
     "consentRecorded": "Autorisation consignée.",
     "consentRevoked": "Autorisation révoquée. Tout accès partenaire fondé sur celle-ci a été retiré.",

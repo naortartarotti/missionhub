@@ -19,7 +19,7 @@
     "candidate_declined": "Refusée par le candidat",
     "submitted": "Soumis",
     "under_review": "En examen",
-    "info_requested": "Infos demandées",
+    "info_requested": "Précisions demandées",
     "accepted": "Accepté",
     "declined": "Refusé",
     "withdrawn": "Retiré",
@@ -27,16 +27,18 @@
     "offer": "Offre",
     "hired": "Embauché",
     "rejected": "Non retenu",
-    "cancelled": "Annulé"
+    "cancelled": "Annulé",
+    "already_presented": "Déjà présenté"
   },
   "placementStatus": {
-    "hire_reported": "Embauche déclarée",
+    "hire_reported": "Embauche enregistrée",
     "invoiced": "Facturé",
     "payment_partially_verified": "Partiellement payé",
     "commission_payable": "Commission à verser",
     "settled": "Réglé",
     "disputed": "En litige",
-    "cancelled": "Annulé"
+    "cancelled": "Annulé",
+    "fee_pending": "Détails des honoraires en attente"
   },
   "placementStatusDescription": {
     "hire_reported": "Commission prévue — pas encore facturée.",
@@ -45,12 +47,13 @@
     "commission_payable": "Paiement du client vérifié; les parts sont dues.",
     "settled": "Toutes les obligations sont vérifiées comme payées.",
     "disputed": "Gelé en attendant l'examen de la plateforme.",
-    "cancelled": "Placement annulé."
+    "cancelled": "Placement annulé.",
+    "fee_pending": "L'embauche compte. Le recruteur du poste doit encore entrer la date d'entrée en fonction, le salaire et les honoraires facturés."
   },
   "evidenceKind": {
     "client_payment": "Paiement du client reçu",
     "sourcing_payout": "Versement au recruteur d'origine",
-    "platform_remittance": "Remise de la part de la plateforme",
+    "platform_remittance": "Versement à la plateforme",
     "client_refund": "Remboursement au client"
   },
   "band": {
@@ -93,5 +96,122 @@
     "none": "aucun déplacement",
     "occasional": "déplacements occasionnels",
     "frequent": "déplacements fréquents"
+  },
+  "commissionRule": {
+    "default": "Partage standard MissionHub"
+  },
+  "claimStatus": {
+    "open": "Ouverte",
+    "contested": "Contestée",
+    "final": "Définitive",
+    "upheld": "Retenue",
+    "rejected": "Rejetée"
+  },
+  "evidenceType": {
+    "file": "Fichiers",
+    "referral": "Recommandation antérieure reçue dans MissionHub"
+  },
+  "disputeType": {
+    "placement": "Placement",
+    "prior_presentation": "Présentation antérieure",
+    "conduct": "Conduite",
+    "hire_report": "Déclaration d'embauche"
+  },
+  "identifierMatch": {
+    "match": "Identique",
+    "no_match": "Différent",
+    "not_available": "Non disponible"
+  },
+  "feeBasis": {
+    "pct_base": "% du salaire de base",
+    "pct_total_cash": "% de la rémunération globale",
+    "flat": "Honoraires forfaitaires"
+  },
+  "searchType": {
+    "contingent_exclusive": "Au succès, exclusif",
+    "contingent_shared": "Au succès, non exclusif",
+    "retained": "Avec provision"
+  },
+  "guaranteeRemedy": {
+    "replacement_only": "Remplacement seulement",
+    "replacement_then_prorata": "Remplacement, puis remboursement au prorata",
+    "prorata_refund": "Remboursement au prorata",
+    "full_refund": "Remboursement complet"
+  },
+  "feeDifferenceReason": {
+    "client_discount": "Le client a négocié des honoraires plus bas",
+    "client_contract_rate": "Le contrat client prévoit d'autres honoraires",
+    "client_invoiced_other_currency": "Client facturé dans une autre devise",
+    "invoice_correction": "Correction de facture ou arrondi",
+    "other": "Autre",
+    "non_permanent_engagement": "Engagement non permanent (travailleur autonome, EOR, fournisseur de paie)"
+  },
+  "rulesVersionType": {
+    "initial": "Première version",
+    "material": "Modification importante",
+    "non_material": "Modification mineure",
+    "legally_required": "Exigée par la loi"
+  },
+  "conductCategory": {
+    "went_around": "Ils m'ont contourné auprès du candidat ou du client",
+    "misused": "Ils ont utilisé ce que j'ai partagé à d'autres fins",
+    "shared_outside": "Ils ont communiqué mes renseignements à l'extérieur de leur organisation",
+    "hire_payout": "Ils n'ont pas déclaré une embauche ou n'ont pas versé ma part à temps",
+    "false_info": "Renseignements faux ou falsifiés",
+    "job_terms": "Le poste ou ses conditions sont fictifs ou trompeurs",
+    "discrimination": "Discrimination",
+    "retaliation": "Représailles, accusations publiques ou signalement de mauvaise foi",
+    "other": "Autre chose"
+  },
+  "sanctionStatus": {
+    "active": "En cours",
+    "expired": "Expirée le {date}",
+    "lifted": "Levée le {date}",
+    "reduced": "Réduite après révision",
+    "overturned": "Annulée après révision"
+  },
+  "sanctionLevel": {
+    "none": "Constat sans sanction",
+    "warning": "Avertissement",
+    "network_hold": "Restriction réseau",
+    "suspension": "Suspension",
+    "termination": "Exclusion"
+  },
+  "conductOutcome": {
+    "no_breach": "Aucun manquement constaté",
+    "not_enough": "Pièces insuffisantes",
+    "breach": "Manquement constaté"
+  },
+  "hireLearnedVia": {
+    "candidate": "Le candidat me l'a dit",
+    "profile": "Changement de profil public",
+    "announcement": "Annonce de l'entreprise",
+    "contact": "Une connaissance commune",
+    "other": "Autre"
+  },
+  "hireEvidenceType": {
+    "candidate_message": "Message écrit du candidat",
+    "company_announcement": "Annonce ou organigramme de l'entreprise",
+    "profile_change": "Changement de profil public",
+    "third_party": "Témoignage d'un tiers",
+    "other": "Autre"
+  },
+  "hireReportStatus": {
+    "awaiting_answer": "En attente de réponse",
+    "unanswered": "En examen",
+    "contested": "Contestée",
+    "in_review": "En examen",
+    "confirmed": "Confirmée",
+    "closed_by_record": "Confirmée",
+    "deemed_confirmed": "Réputée confirmée",
+    "upheld": "Retenue",
+    "rejected": "Non retenue",
+    "void": "Fermée"
+  },
+  "hireContestReason": {
+    "not_hired": "Pas embauché par le client, ses sociétés affiliées, ses mandataires, un EOR ou un fournisseur de paie",
+    "outside_window": "Offre acceptée hors de la protection",
+    "different_person": "Une autre personne",
+    "not_this_client": "Pas ce client"
   }
 }

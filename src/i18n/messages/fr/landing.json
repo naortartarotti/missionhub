@@ -82,11 +82,11 @@
     "steps": {
       "one": {
         "title": "Ajoutez vos candidats en privé",
-        "body": "Importez un CSV ou saisissez des profils à la main. Consignez l'autorisation de traitement du candidat, puis activez-le pour la correspondance. Seule votre organisation le voit."
+        "body": "Importez un CSV ou saisissez des profils à la main. Consignez l'autorisation de jumelage du candidat, puis activez le jumelage. Seule votre organisation le voit."
       },
       "two": {
         "title": "Recevez des correspondances",
-        "body": "Le moteur compare vos candidats aux postes partenaires et les classe en Forte, Potentielle et Non admissible, avec une explication claire."
+        "body": "Le moteur compare vos candidats aux postes partenaires et les classe en correspondance forte, partielle ou non admissible, avec une explication claire."
       },
       "three": {
         "title": "Soumettez avec autorisation",
@@ -127,27 +127,27 @@
   "privacy": {
     "eyebrow": "Confidentialité dès la conception",
     "title": "Anonyme jusqu'à l'autorisation.",
-    "subtitle": "Le titulaire du poste voit le nombre de correspondances, jamais les identités. Un candidat n'est révélé que lorsque son recruteur le soumet, avec un consentement documenté pour ce poste précis.",
+    "subtitle": "Le recruteur du poste voit le nombre de correspondances, jamais les identités. Un candidat n'est révélé que lorsque son recruteur le soumet, avec l'autorisation documentée du candidat pour ce poste précis.",
     "mock": {
       "job": "Directeur·rice des finances · Montréal",
-      "visible": "Ce que voit le titulaire du poste",
+      "visible": "Ce que voit le recruteur du poste",
       "count": "4 candidats partenaires correspondent",
       "strong": "2 fortes",
-      "potential": "2 potentielles",
+      "potential": "2 partielles",
       "hidden": "Nom, coordonnées et CV restent masqués"
     },
     "features": {
       "isolation": {
         "title": "Isolation par organisation",
-        "body": "La sécurité au niveau des lignes garde les données de chaque agence dans son propre espace."
+        "body": "La sécurité au niveau des lignes garde les données de chaque organisation dans son propre espace."
       },
       "consent": {
-        "title": "Consentement documenté",
+        "title": "Autorisations consignées",
         "body": "Les autorisations de traitement et par poste sont consignées avant tout partage."
       },
       "audit": {
         "title": "Piste d'audit complète",
-        "body": "Chaque soumission, décision et écriture du registre est journalisée et vérifiable."
+        "body": "Chaque recommandation, décision et écriture du registre est journalisée et vérifiable."
       },
       "requests": {
         "title": "Demandes de confidentialité",
@@ -160,7 +160,7 @@
     "title": "Un partage que tout le monde voit venir.",
     "subtitle": "Convenez des modalités avant de commencer. Le registre indique exactement qui doit recevoir quoi, à chaque étape.",
     "split": {
-      "source": "Recruteur du candidat",
+      "source": "Recruteur d'origine",
       "job": "Recruteur du poste",
       "platform": "MissionHub"
     },
@@ -173,7 +173,7 @@
       "payableBody": "Paiement du client vérifié par la plateforme",
       "paidBody": "Réception du versement confirmée par le recruteur"
     },
-    "note": "Aucun fonds ne transite par MissionHub. Les paiements se font entre vous et vos partenaires, et la plateforme conserve les preuves.",
+    "note": "Aucun fonds ne transite par MissionHub. Les paiements se font entre vous et vos partenaires, et la plateforme conserve les pièces justificatives.",
     "configurable": "Les règles de partage sont configurables et versionnées."
   },
   "facts": {
@@ -200,15 +200,15 @@
     "items": {
       "a": {
         "q": "Les autres agences peuvent-elles voir mes candidats?",
-        "a": "Non. Vos candidats ne sont visibles que par votre organisation. Les titulaires de postes voient un nombre de correspondances anonymisé. Un candidat n'est révélé que lorsque vous le soumettez à un poste précis, avec uniquement les champs et documents choisis."
+        "a": "Non. Vos candidats ne sont visibles que par votre organisation. Les recruteurs des postes voient un nombre de correspondances anonymisé. Un candidat n'est révélé que lorsque vous le soumettez à un poste précis, avec uniquement les champs et documents choisis."
       },
       "b": {
         "q": "Comment la commission est-elle partagée?",
-        "a": "Par défaut, 45 % au recruteur qui a trouvé le candidat, 45 % au recruteur titulaire du poste et 10 % à MissionHub. Les règles sont configurables et versionnées, et les deux parties confirment une entente de collaboration avant de poursuivre."
+        "a": "Par défaut, 45 % au recruteur d'origine, 45 % au recruteur du poste et 10 % à MissionHub. Les règles sont configurables et versionnées, et les deux parties confirment une entente de collaboration avant de poursuivre."
       },
       "c": {
         "q": "MissionHub gère-t-il les paiements?",
-        "a": "Aucun fonds ne transite par la plateforme. Vous facturez votre client comme d'habitude et consignez les preuves. Les paiements des clients sont vérifiés par la plateforme, et les versements sont confirmés par le recruteur qui les reçoit."
+        "a": "Aucun fonds ne transite par la plateforme. Vous facturez votre client comme d'habitude et consignez les pièces justificatives. Les paiements des clients sont vérifiés par la plateforme, et les versements sont confirmés par le recruteur qui les reçoit."
       },
       "d": {
         "q": "Comment fonctionne la correspondance?",
@@ -244,7 +244,7 @@
     },
     "privacy": {
       "title": "Confidentialité dès la conception",
-      "description": "Les responsables de poste voient des nombres de correspondances anonymisés, jamais d'identités. Voyez comment MissionHub isole les données de chaque agence, consigne le consentement et garde une piste d'audit complète."
+      "description": "Les recruteurs des postes voient des nombres de correspondances anonymisés, jamais d'identités. Voyez comment MissionHub isole les données de chaque agence, consigne l'autorisation des candidats et garde une piste d'audit complète."
     },
     "commissions": {
       "title": "Commissions",

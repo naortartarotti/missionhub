@@ -1,0 +1,532 @@
+{
+  "accept": {
+    "title": "Règles du réseau, version {label}",
+    "gateIntro": "Avant d’utiliser MissionHub, lisez et acceptez les Règles du réseau. Elles expliquent comment les membres partagent l’information, communiquent avec les candidats et règlent les problèmes.",
+    "reacceptIntro": "Les Règles du réseau changent. Lisez ce qui change, puis acceptez la version {label}.",
+    "effective": "En vigueur depuis le {date}",
+    "effectiveFuture": "Entre en vigueur le {date}",
+    "language": "Langue des règles",
+    "languageOption": {
+      "frCA": "Français",
+      "en": "English",
+      "ptBR": "Português"
+    },
+    "languageInline": {
+      "en": "anglais",
+      "frCA": "français",
+      "ptBR": "portugais"
+    },
+    "languageShownSr": "Règles affichées en {language}.",
+    "summaryTitle": "Résumé (ne fait pas partie des règles)",
+    "changesTitle": "Ce qui change",
+    "compare": "Comparer avec la version que vous avez acceptée",
+    "newTabSr": "(s’ouvre dans un nouvel onglet)",
+    "skip": "Aller à l’acceptation",
+    "contents": "Table des matières",
+    "statementsLegend": "Votre acceptation",
+    "member": "J’ai lu les Règles du réseau et je les accepte personnellement.",
+    "org": "J’accepte les Règles du réseau au nom de {org}, et j’ai le pouvoir de le faire.",
+    "orgAlready": "{org} a accepté ces règles le {date}.",
+    "needOne": "Cochez la case pour continuer.",
+    "needBoth": "Cochez les deux cases pour continuer.",
+    "languageChanged": "La langue a changé. Cochez les cases de nouveau.",
+    "submit": "Accepter et continuer",
+    "submitting": "Acceptation…",
+    "submitReaccept": "Accepter la version {label}",
+    "done": "Règles du réseau acceptées.",
+    "already": "Vous avez accepté la version {label} des Règles du réseau le {date}.",
+    "versionChanged": "Une nouvelle version des Règles du réseau est en vigueur. Lisez-la et acceptez-la pour continuer.",
+    "noVersion": "Les Règles du réseau ne sont pas accessibles pour le moment. Réessayez plus tard.",
+    "required": "Acceptez les Règles du réseau pour créer votre organisation.",
+    "saveError": "Nous n’avons pas pu enregistrer votre acceptation. Vérifiez votre connexion et réessayez.",
+    "leaveBefore": "Vous ne voulez pas accepter? Écrivez à",
+    "leaveAfter": "pour quitter le réseau.",
+    "history": "Historique des versions"
+  },
+  "banner": {
+    "hold": {
+      "title": "Votre organisation fait l’objet d’une restriction réseau",
+      "body": "Vous ne pouvez pas ouvrir de postes aux partenaires, soumettre de recommandations ni en recevoir de nouvelles. Les recommandations en cours se poursuivent normalement."
+    },
+    "rules": {
+      "title": "Version {label} des Règles du réseau non acceptée",
+      "body": "{org} n’a pas accepté la version en vigueur depuis le {date}. Tant qu’un administrateur de l’organisation ne l’a pas acceptée, vous ne pouvez pas ouvrir de postes aux partenaires ni soumettre de recommandations. Les recommandations en cours se poursuivent.",
+      "askAdmin": "Demandez à un administrateur de l’organisation de l’accepter."
+    },
+    "user": {
+      "title": "Acceptez la version {label} des Règles du réseau",
+      "body": "Tant que vous n’avez pas accepté la version en vigueur depuis le {date}, vous ne pouvez pas soumettre de recommandations ni ouvrir de postes aux partenaires. Le reste fonctionne normalement."
+    },
+    "notice": {
+      "title": "La version {label} des Règles du réseau entre en vigueur le {date}",
+      "body": "Prenez connaissance des changements et acceptez-les avant cette date.",
+      "orgPending": "{org} n’a pas encore accepté. Un administrateur de l’organisation doit accepter en son nom."
+    },
+    "settlement": {
+      "suspended": {
+        "title": "Votre organisation est suspendue",
+        "body": "Vous pouvez encore finaliser les recommandations en cours, régler les commissions et répondre aux litiges. Vos obligations envers les partenaires continuent."
+      },
+      "terminated": {
+        "title": "Votre organisation a été retirée du réseau le {date}",
+        "body": "Vous pouvez finaliser les recommandations en cours et régler les commissions et les litiges. Une fois tout réglé, les membres de votre organisation n’auront plus accès à MissionHub."
+      }
+    },
+    "cta": {
+      "standing": "Voir le statut réseau",
+      "accept": "Examiner et accepter",
+      "changes": "Voir les changements",
+      "details": "Détails"
+    }
+  },
+  "versions": {
+    "metaTitle": "Règles du réseau",
+    "title": "Règles du réseau",
+    "description": "Les règles que chaque organisation et chaque membre acceptent pour utiliser le réseau MissionHub.",
+    "current": "Version en vigueur : {label}",
+    "inEffect": "En vigueur depuis le {date}",
+    "upcoming": "Prochaine version : {label}",
+    "takesEffect": "Entre en vigueur le {date}",
+    "readFull": "Lire le texte complet",
+    "history": "Historique des versions",
+    "historyCaption": "Versions publiées des Règles du réseau",
+    "col": {
+      "version": "Version",
+      "type": "Type",
+      "effective": "En vigueur à partir du",
+      "changes": "Ce qui a changé"
+    },
+    "read": "Lire la version {label}",
+    "fingerprint": "Empreinte (SHA-256)",
+    "fingerprintHint": "Un code unique pour ce texte exact, dans cette langue. Il permet de savoir quel texte a été accepté.",
+    "statusTitle": "Votre statut",
+    "youAccepted": "Vous avez accepté la version {label} le {date}.",
+    "youHaveNot": "Vous n’avez pas encore accepté la version {label}.",
+    "orgAccepted": "{org} a accepté la version {label} le {date}.",
+    "orgHasNot": "{org} n’a pas accepté la version {label}.",
+    "legalReason": "Pourquoi ce changement entre en vigueur plus tôt : {reason}",
+    "empty": "Les Règles du réseau ne sont pas encore publiées.",
+    "footerLink": "Règles du réseau"
+  },
+  "partner": {
+    "notTakingReferrals": "{org} n’accepte pas de nouvelles recommandations pour le moment.",
+    "noLongerMember": "{org} ne fait plus partie du réseau MissionHub.",
+    "back": "Retour aux occasions"
+  },
+  "team": {
+    "lastAdmin": "Votre organisation doit garder au moins un administrateur actif."
+  },
+  "errors": {
+    "acceptanceRequired": "Acceptez les Règles du réseau en vigueur pour faire cette action.",
+    "reviewRulesLink": "Voir les règles",
+    "partnerActivityRestricted": "Votre organisation ne peut pas faire cette action pendant que les nouvelles activités avec les partenaires sont en pause. Les recommandations en cours ne sont pas touchées.",
+    "settlementUnavailable": "Cette action n’est pas offerte pendant que votre organisation est en mode finalisation."
+  },
+  "report": {
+    "button": "Signaler un problème",
+    "buttonAria": "Signaler un problème avec {org}",
+    "title": "Signaler un problème avec {org}",
+    "intro": "Utilisez ce formulaire si vous pensez que {org} a enfreint les Règles du réseau. Un signalement porte sur un comportement. Il ne décide pas qui a la priorité, s’il y a eu une embauche ni ce qui est dû.",
+    "messagesFirst": "Si ce n’est pas urgent, vous pouvez d’abord essayer les messages de la recommandation. C’est facultatif.",
+    "rightTool": {
+      "title": "S’agit-il de priorité, d’embauche ou d’argent?",
+      "position": "Est-ce une question de priorité : qui a présenté le candidat en premier?",
+      "positionText": "Les objections se déposent à partir de la recommandation, dans les 5 jours ouvrables suivant sa transmission. Si l’autre partie en dépose une, vous pouvez la contester à partir de la recommandation.",
+      "fileObjection": "Déposer une objection",
+      "contestObjection": "Contester l’objection",
+      "hire": "Votre candidat a-t-il été embauché?",
+      "hireTextBefore": "Écrivez à {org} dans les messages de la recommandation. Sans réponse, écrivez à",
+      "hireTextAfter": ".",
+      "hireTextNoSupport": "Écrivez à {org} dans les messages de la recommandation.",
+      "amount": "Un montant est-il erroné ou impayé?",
+      "openDispute": "Ouvrir un litige",
+      "amountText": "Les montants se règlent par un litige sur le placement, pas par un signalement.",
+      "noAnswer": "Pas de réponse du partenaire?",
+      "noAnswerText": "Ce n’est pas un manquement. Vous pouvez retirer la recommandation ou attendre la fin du délai de réponse.",
+      "noAnswerTextHiring": "Ce n’est pas un manquement. Vous pouvez refuser la recommandation si vous ne pouvez pas avancer.",
+      "noAnswerTextJob": "Ce n’est pas un manquement aux Règles du réseau."
+    },
+    "category": "Quel est le problème?",
+    "categoryHint": {
+      "went_around": "Par exemple, ils ont joint votre client au sujet du poste ou des honoraires, ou votre candidat à votre insu.",
+      "misused": "Par exemple, ils ont proposé votre candidat pour d’autres postes, l’ont ajouté à leur base de données ou ont republié votre poste.",
+      "shared_outside": "Par exemple, ils ont envoyé le CV d’un candidat à une autre agence ou entreprise.",
+      "hire_payout": "Par exemple, le client a embauché votre candidat sans que ce soit déclaré, ou votre versement est en retard.",
+      "false_info": "Par exemple, un candidat qui n’a jamais accepté, une fausse confirmation, de fausses pièces justificatives ou une fausse déclaration d’embauche.",
+      "job_terms": "Par exemple, aucun poste réel à pourvoir, un poste périmé, des conditions inexactes ou des pressions pour changer les conditions.",
+      "discrimination": "Traitement injuste d’un candidat fondé sur un motif protégé par les lois sur les droits de la personne.",
+      "retaliation": "Par exemple : des mesures contre vous après un signalement, des accusations publiques ou un signalement de mauvaise foi.",
+      "other": "Une autre règle qui, selon vous, a été enfreinte."
+    },
+    "hirePayoutMoney": "Un signalement ne permet pas de récupérer l’argent. Pour un montant, ouvrez un litige sur le placement.",
+    "what": "Que s’est-il passé?",
+    "whatHint": "Les faits, les dates et l’endroit où c’est arrivé. Ne donnez que les renseignements sur le candidat ou le client dont nous avons besoin.",
+    "counter": "{count} / {max}",
+    "counterSr": "{count} caractères sur {max}",
+    "when": "Quand est-ce arrivé? (facultatif)",
+    "approximate": "La date est approximative.",
+    "files": "Pièces justificatives (facultatif)",
+    "filesHint": "Jusqu’à 5 fichiers : PDF, PNG ou JPEG, 10 Mo chacun. Seuls les administrateurs de la plateforme MissionHub peuvent les ouvrir. {org} ne les voit jamais.",
+    "identity": "Nous ne montrons jamais votre nom à {org}. Nous nommons votre organisation seulement si c’est nécessaire pour qu’elle puisse répondre équitablement. Comme une recommandation ne réunit que deux organisations, elle pourrait quand même deviner l’origine du signalement. Les représailles contre un signalement sont un manquement (règle 7.1).",
+    "identityJob": "Nous ne montrons jamais votre nom à {org}. Nous nommons votre organisation seulement si c’est nécessaire pour qu’elle puisse répondre équitablement. Elle pourrait quand même deviner l’origine du signalement. Les représailles contre un signalement sont un manquement (règle 7.1).",
+    "attest": "Je fais ce signalement de bonne foi et il est exact au meilleur de ma connaissance. Je comprends qu’un signalement fait de mauvaise foi est un manquement.",
+    "submit": "Envoyer le signalement",
+    "sending": "Envoi…",
+    "filesWaiting": "Attendez que chaque fichier soit vérifié.",
+    "removeRejected": "Retirez le fichier qui ne peut pas être utilisé.",
+    "errorSummary": {
+      "one": "Corrigez {count} champ pour envoyer le signalement.",
+      "other": "Corrigez {count} champs pour envoyer le signalement."
+    },
+    "sentTitle": "Signalement envoyé",
+    "sentBody": "Nous visons à répondre dans les 2 jours ouvrables, d’ici le {when} HE. Nous vous informerons du résultat.",
+    "view": "Voir votre signalement",
+    "discardTitle": "Abandonner ce signalement?",
+    "discardBody": "Votre texte et les fichiers ajoutés seront perdus.",
+    "discardConfirm": "Abandonner le signalement",
+    "youReported": "Vous avez signalé un problème le {date}.",
+    "youReportedLink": "Voir le signalement",
+    "errors": {
+      "notFound": "Nous n’avons pas trouvé cette recommandation ou ce poste.",
+      "self": "Vous ne pouvez pas signaler votre propre organisation.",
+      "userLimitBefore": "Vous avez envoyé 5 signalements au cours des dernières 24 heures. Réessayez plus tard, ou écrivez à",
+      "userLimitAfter": "si c’est urgent.",
+      "userLimitNoSupport": "Vous avez envoyé 5 signalements au cours des dernières 24 heures. Réessayez plus tard.",
+      "orgLimitBefore": "Votre organisation a envoyé 10 signalements au cours des dernières 24 heures. Réessayez plus tard, ou écrivez à",
+      "orgLimitAfter": "si c’est urgent.",
+      "orgLimitNoSupport": "Votre organisation a envoyé 10 signalements au cours des dernières 24 heures. Réessayez plus tard.",
+      "category": "Choisissez le type de problème.",
+      "attest": "Confirmez que vous faites ce signalement de bonne foi.",
+      "dateFuture": "La date ne peut pas être dans le futur."
+    }
+  },
+  "reports": {
+    "title": "Vos signalements",
+    "description": "Les problèmes que vous avez signalés à MissionHub. Seuls vous et les administrateurs de votre organisation pouvez les voir.",
+    "menu": "Vos signalements",
+    "tabs": {
+      "mine": "Envoyés par vous",
+      "org": "Votre organisation"
+    },
+    "orgDescription": "Signalements envoyés par des membres de {org}. Seuls les administrateurs de l’organisation voient cette liste.",
+    "sentBy": "Envoyé par {name}",
+    "sentByFormer": "Envoyé par un ancien membre",
+    "empty": "Vous n’avez signalé aucun problème.",
+    "emptyDescription": "Pour signaler un problème, utilisez « Signaler un problème » dans une recommandation ou un poste de partenaire.",
+    "orgEmpty": "Personne chez {org} n’a signalé de problème.",
+    "about": "Concernant {org} · envoyé le {date}",
+    "open": "Ouvrir",
+    "openAria": "Ouvrir le signalement concernant {org}",
+    "detailTitle": "Signalement concernant {org}",
+    "status": {
+      "received": "Reçu",
+      "receivedBody": "Nous visons à répondre d’ici le {when} HE.",
+      "input": "Votre réponse est requise",
+      "inputBody": "MissionHub a une question pour vous. Répondez ci-dessous.",
+      "inputDeadline": "Répondez d’ici le {when} HE.",
+      "inReview": "En examen",
+      "inReviewBody": "Nous vous informerons du résultat dès qu’il sera décidé."
+    },
+    "outcome": {
+      "action": "Mesures prises",
+      "actionBody": "Nous avons constaté un manquement et pris des mesures selon les Règles du réseau.",
+      "noBreach": "Aucun manquement constaté",
+      "noBreachBody": "Nous avons examiné la situation et n’avons pas constaté de manquement aux Règles du réseau.",
+      "notEnough": "Pièces insuffisantes pour agir",
+      "notEnoughBody": "Les pièces justificatives disponibles ne permettent pas de confirmer un manquement. Vous pouvez envoyer un nouveau signalement si vous avez de nouvelles pièces.",
+      "closed": "Fermé sans constat",
+      "closedBody": "MissionHub a fermé ce signalement sans se prononcer sur un manquement.",
+      "triageReason": "Motif : {reason}",
+      "noChange": "Ce signalement ne change rien à votre recommandation, à votre priorité ni aux montants dus.",
+      "openReferral": "Ouvrir la recommandation",
+      "updated": "Résultat mis à jour le {date}."
+    },
+    "youSent": "Ce que vous avez envoyé",
+    "field": {
+      "category": "Problème",
+      "what": "Ce qui s’est passé",
+      "when": "Quand",
+      "approximate": "(approximative)",
+      "files": "Fichiers",
+      "noFiles": "Aucun fichier",
+      "filesNote": "Les fichiers ne peuvent pas être téléchargés après l’envoi. Seuls les administrateurs de la plateforme peuvent les ouvrir."
+    },
+    "timeline": {
+      "title": "Suivi",
+      "sent": "Envoyé · {when} HE",
+      "question": "Question de MissionHub · {when} HE",
+      "replied": "Réponse envoyée · {when} HE",
+      "closed": "Fermé · {when} HE"
+    },
+    "question": "Question de MissionHub",
+    "reply": "Votre réponse",
+    "replyHint": "Répondez à la question. Vous pouvez envoyer une seule réponse, avec des fichiers au besoin.",
+    "replySubmit": "Envoyer la réponse",
+    "replySent": "Réponse envoyée.",
+    "replyClosed": "Le délai pour répondre a pris fin le {when} HE.",
+    "yourReply": "Réponse envoyée le {when} HE"
+  },
+  "standing": {
+    "title": "Statut réseau",
+    "description": "Avis, décisions et sanctions de {org}. Seuls les administrateurs de l’organisation voient cette page.",
+    "current": "Statut actuel",
+    "good": "En règle",
+    "goodBody": "Aucune sanction en cours.",
+    "warning": "Avertissement en cours",
+    "warningUntil": "Compte jusqu’au {date}.",
+    "hold": "Restriction réseau",
+    "since": "Depuis le {date}.",
+    "plannedReview": "Nous prévoyons de la réévaluer le {date}.",
+    "plannedReviewHint": "La restriction ne prend pas fin automatiquement à cette date.",
+    "suspended": "Suspendue",
+    "suspendedBody": "Votre organisation est en mode finalisation.",
+    "terminated": "Retirée du réseau",
+    "terminatedBody": "Depuis le {date}. Votre organisation est en mode finalisation jusqu’à ce que tout soit réglé.",
+    "whatThisMeans": "Ce que cela signifie",
+    "meaning": {
+      "pausedTitle": "En pause",
+      "continuesTitle": "Se poursuit",
+      "holdPaused": "Ouvrir des postes aux partenaires, soumettre des recommandations et en recevoir de nouvelles.",
+      "holdContinues": "Les recommandations en cours, les déclarations d’embauche, les factures, les versements, les remboursements et les litiges. Votre travail interne : candidats, postes, pipeline et équipe.",
+      "warning": "Un avertissement ne limite pas votre travail. Il compte pendant 12 mois si un autre manquement est constaté."
+    },
+    "rulesRow": "Version {label} des Règles du réseau non acceptée",
+    "rulesRowBody": "Ce n’est pas une sanction. Cela prend fin dès qu’un administrateur de l’organisation accepte.",
+    "openNotices": "Avis en cours",
+    "noNotices": "Aucun avis en cours.",
+    "noticeRules": "Règles citées : {rules}",
+    "noticeSent": "Envoyé le {date}",
+    "deadlineLabel": "Date limite de réponse",
+    "open": "Ouvrir l’avis",
+    "history": "Historique",
+    "historyEmpty": "Aucune sanction ni aucun avis fermé.",
+    "historyCaption": "Sanctions et avis fermés",
+    "col": {
+      "date": "Date",
+      "result": "Résultat",
+      "status": "Statut"
+    },
+    "acceptance": "Acceptation des Règles du réseau",
+    "acceptedBy": "Version {label} acceptée le {date} par {name}",
+    "notAcceptedOrg": "Version {label} pas encore acceptée",
+    "notAcceptedMembers": "Membres qui n’ont pas accepté la version {label}",
+    "allMembersAccepted": "Tous les membres ont accepté la version {label}."
+  },
+  "notice": {
+    "heading": "Avis selon les règles 8.3 et 9.3",
+    "headingImmediate": "Restriction réseau immédiate selon la règle 9.4",
+    "intro": "MissionHub a reçu de l’information selon laquelle {org} pourrait avoir enfreint les Règles du réseau. Cet avis vous indique ce qui est reproché et vous donne 10 jours ouvrables pour répondre. Rien n’a encore été décidé.",
+    "introImmediate": "En vertu de la règle 9.4, MissionHub a imposé une restriction réseau à {org} le {date}, en raison d’un possible manquement à la règle {rule}. Cet avis vous indique ce qui est reproché. Vous avez 10 jours ouvrables pour répondre. Aucune autre décision n’a été prise.",
+    "holdEffects": "Pendant la restriction, vos postes sont masqués aux partenaires, et vous ne pouvez pas soumettre de recommandations ni en recevoir de nouvelles. Les recommandations en cours se poursuivent normalement.",
+    "rules": "Règles en cause",
+    "ruleItem": "Règle {number} : {title}",
+    "version": "Selon la version {label} des Règles du réseau",
+    "alleged": "Ce qui est reproché",
+    "when": "Quand",
+    "evidence": "Résumé des pièces justificatives",
+    "reportedBy": "Signalé par {org}",
+    "deadline": "Répondez d’ici le {when} HE",
+    "howToRespond": "Tout administrateur de l’organisation peut envoyer une seule réponse à partir de la page Statut réseau, avec des fichiers au besoin. Sans réponse à la date limite, MissionHub décidera selon le dossier (règle 7.2).",
+    "possibleOutcomes": "Après le délai de réponse, MissionHub peut décider de ne prendre aucune mesure, ou d’imposer un avertissement, une restriction réseau, une suspension ou une exclusion. En cas de constat ou de sanction, votre organisation peut demander une seule fois une révision par un autre administrateur de la plateforme.",
+    "bilingualNote": "Version anglaise ci-dessous."
+  },
+  "case": {
+    "metaTitle": "Avis",
+    "back": "Retour au statut réseau",
+    "noticeTitle": "Avis",
+    "sentOn": "Envoyé le {when} HE",
+    "languageNote": "Cet avis est en {language}.",
+    "respond": "Votre réponse",
+    "respondHint": "Expliquez ce qui s’est passé et joignez tout ce qui peut aider. Seuls les administrateurs de la plateforme MissionHub peuvent ouvrir vos fichiers. Votre réponse n’est pas communiquée aux autres organisations.",
+    "respondSubmit": "Envoyer la réponse",
+    "respondConfirmTitle": "Envoyer votre réponse?",
+    "respondConfirmBody": "Votre organisation peut envoyer une seule réponse, qui ne pourra plus être modifiée.",
+    "responded": "Réponse envoyée le {when} HE par {name}",
+    "respondedToast": "Réponse envoyée. MissionHub en tiendra compte avant de décider.",
+    "windowClosed": "Le délai de réponse a pris fin le {when} HE. MissionHub décidera selon le dossier (règle 7.2).",
+    "followup": "Question complémentaire",
+    "followupDeadline": "Répondez d’ici le {when} HE",
+    "followupNoDeadline": "Aucune date limite. Répondez dès que possible.",
+    "followupReply": "Votre réponse",
+    "followupSubmit": "Envoyer la réponse",
+    "followupSent": "Réponse envoyée.",
+    "followupReplied": "Réponse envoyée le {when} HE par {name}",
+    "followupClosed": "Le délai pour répondre a pris fin le {when} HE.",
+    "files": "Fichiers",
+    "filesHint": "Jusqu’à 5 fichiers : PDF, PNG ou JPEG, 10 Mo chacun. Seuls les administrateurs de la plateforme MissionHub peuvent les ouvrir.",
+    "reviewDeadline": "Date limite de révision",
+    "requestReview": "Demander une révision",
+    "reviewDialogTitle": "Demander la révision de cette décision?",
+    "reviewDialogBody": "Un autre administrateur de la plateforme révisera la décision. La sanction reste en vigueur pendant la révision. Votre organisation peut demander une seule révision.",
+    "reviewDialogBodyFinding": "Un autre administrateur de la plateforme révisera le constat. Votre organisation peut demander une seule révision.",
+    "reviewReason": "Pourquoi la décision devrait-elle changer?",
+    "reviewReasonHint": "Indiquez les faits ou les règles que la décision a mal appréciés. Vous pouvez joindre des fichiers.",
+    "reviewSubmit": "Demander la révision",
+    "reviewRequestedToast": "Révision demandée. Le résultat vous sera communiqué.",
+    "reviewRequested": "Révision demandée le {date} par {name}",
+    "review": {
+      "confirmed": "Révision : décision confirmée",
+      "reduced": "Révision : sanction réduite (nouveau niveau : {level})",
+      "lifted": "Révision : sanction levée",
+      "overturned": "Révision : décision annulée. La sanction est levée et ne comptera pas dans les décisions futures.",
+      "reason": "Motifs de la révision",
+      "reviewedOn": "Révisée le {date} par un autre administrateur de la plateforme MissionHub"
+    },
+    "errors": {
+      "closed": "Le délai de réponse est terminé. Vous ne pouvez plus envoyer de réponse.",
+      "exists": "Votre organisation a déjà répondu. Actualisez la page pour voir la réponse.",
+      "reviewClosed": "Le délai pour demander une révision est terminé.",
+      "reviewExists": "Une révision a déjà été demandée pour cette décision.",
+      "replyClosed": "Le délai pour répondre est terminé."
+    }
+  },
+  "decision": {
+    "title": "Décision",
+    "decidedOn": "Décidée le {date} par un administrateur de la plateforme MissionHub",
+    "outcome": "Résultat",
+    "noBreachBody": "MissionHub n’a pas constaté de manquement aux Règles du réseau. Aucune sanction ne s’applique.",
+    "notEnoughBody": "MissionHub n’a pas trouvé assez de pièces justificatives pour conclure à un manquement. Aucune sanction ne s’applique.",
+    "finding": "Constat",
+    "rules": "Règles enfreintes",
+    "residual": "Décidé selon la règle 7.4, car aucune règle précise ne couvrait ce cas.",
+    "sanction": "Sanction",
+    "effects": {
+      "none": "Le constat est inscrit au dossier de votre organisation. Aucune sanction ne s’applique.",
+      "warning": "Cet avertissement compte pendant 12 mois, jusqu’au {date}. Il ne limite pas votre travail.",
+      "hold": "À partir du {date}, vos postes sont masqués aux partenaires, et vous ne pouvez pas soumettre de recommandations ni en recevoir de nouvelles. Les recommandations en cours se poursuivent. La restriction dure jusqu’à ce que MissionHub la lève.",
+      "holdLifted": "La restriction réseau est levée à partir du {date}.",
+      "suspension": "À partir du {date}, votre organisation est suspendue et en mode finalisation. Vous pouvez finaliser les recommandations en cours, régler les commissions et répondre aux litiges. Rien d’autre n’est offert tant que la suspension n’est pas levée.",
+      "termination": "À partir du {date}, votre organisation est retirée du réseau. Vous pouvez finaliser les recommandations en cours et régler les commissions et les litiges jusqu’au règlement de chacun. Votre organisation pourra présenter une nouvelle demande d’adhésion après 12 mois (règle 9.7)."
+    },
+    "reviewLine": "Vous pouvez demander une seule révision d’ici le {when} HE. Un autre administrateur de la plateforme révisera la décision. La sanction reste en vigueur pendant la révision.",
+    "reviewLineFinding": "Vous pouvez demander une seule révision d’ici le {when} HE. Un autre administrateur de la plateforme révisera le constat."
+  },
+  "validation": {
+    "length": "Écrivez entre {min} et {max} caractères."
+  },
+  "incident": {
+    "section": "Avis sur le traitement de vos renseignements par un partenaire",
+    "sectionHint": "Ces avis concernent une autre organisation. Ils ne portent pas sur le statut de votre organisation.",
+    "title": "Avis d’incident lié à des renseignements",
+    "cardSent": "Envoyé le {date}",
+    "cardReferrals": {
+      "one": "{count} recommandation visée",
+      "other": "{count} recommandations visées"
+    },
+    "intro": "MissionHub a constaté qu’une organisation partenaire a communiqué des renseignements provenant de vos recommandations à l’extérieur de son organisation. Voici ce que nous savons.",
+    "referrals": "Recommandations visées",
+    "referralUnavailable": "Une recommandation que vous ne pouvez plus ouvrir",
+    "what": "Renseignements concernés",
+    "when": "Quand",
+    "toWhom": "Communiqués à",
+    "toWhomUnknown": "Inconnu",
+    "guidance": "Si votre candidat révoque son autorisation, l’autre organisation perd immédiatement l’accès au profil partagé et aux documents dans MissionHub. Cela ne récupère pas les copies déjà téléchargées. Retirer la recommandation conserve votre priorité. Libérer le candidat vous la fait perdre.",
+    "guidanceHiring": "MissionHub ne peut pas récupérer des renseignements une fois qu’ils ont été communiqués. Cet avis ne change rien à vos postes ni à vos recommandations en cours. Si les renseignements concernent votre client, vous voudrez peut-être l’en informer."
+  },
+  "settlement": {
+    "marker": "Mode finalisation",
+    "homeTitle": "Mode finalisation",
+    "canDo": "Ce que vous pouvez encore faire",
+    "referrals": {
+      "one": "{count} recommandation en cours",
+      "other": "{count} recommandations en cours"
+    },
+    "placements": {
+      "one": "{count} placement avec des étapes à terminer",
+      "other": "{count} placements avec des étapes à terminer"
+    },
+    "disputes": {
+      "one": "{count} litige auquel répondre",
+      "other": "{count} litiges auxquels répondre"
+    },
+    "nothingLeft": "Rien à régler ici.",
+    "paused": "Ce qui est en pause",
+    "pausedList": "Candidats, postes, occasions, importations, fonctions d’IA, connecteurs et clés d’API, invitations et changements de paramètres.",
+    "continuesList": "Recommandations en cours, déclarations d’embauche, factures, versements, remboursements et litiges, ainsi que le statut réseau et la liste de l’équipe.",
+    "blockedTitle": "Cette page n’est pas offerte en mode finalisation",
+    "blockedDescription": "Votre organisation peut seulement finaliser les recommandations en cours et régler ce qui est dû.",
+    "goReferrals": "Aller aux recommandations",
+    "loadCountsError": "Nous n’avons pas pu charger les nombres. Les liens fonctionnent quand même.",
+    "teamReadOnly": "En mode finalisation, vous pouvez seulement désactiver des membres. Les invitations et les changements de rôle sont en pause.",
+    "referralClosed": "Recommandation fermée. Elle n’apparaît plus en mode finalisation.",
+    "referralClosedTitle": "Cette recommandation est fermée",
+    "referralClosedDescription": "Les recommandations fermées ne sont pas affichées en mode finalisation. Vos autres recommandations en cours sont toujours dans la liste."
+  },
+  "notifications": {
+    "network_rules_published": {
+      "title": "Version {label} des Règles du réseau publiée",
+      "bodyAccept": "Lisez ce qui change et acceptez-la d’ici le {date}.",
+      "bodyInfo": "Lisez ce qui change. Aucune action requise."
+    },
+    "network_rules_effective_not_accepted": {
+      "title": "La version {label} des Règles du réseau est en vigueur",
+      "body": "Acceptez-la pour pouvoir de nouveau ouvrir des postes aux partenaires et soumettre des recommandations."
+    },
+    "network_rules_reminder": {
+      "title": "La version {label} des Règles du réseau entre en vigueur dans 7 jours",
+      "body": "Examinez-la et acceptez-la avant le {date}."
+    },
+    "conduct_report_received": {
+      "title": "Nous avons reçu votre signalement",
+      "body": "Nous visons à répondre d’ici le {when} HE."
+    },
+    "conduct_report_info_requested": {
+      "title": "MissionHub a une question sur votre signalement",
+      "body": "Ouvrez votre signalement pour répondre."
+    },
+    "conduct_report_closed": {
+      "title": "Votre signalement est fermé",
+      "titleOrg": "Un signalement de votre organisation est fermé",
+      "body": "Ouvrez-le pour voir le résultat."
+    },
+    "conduct_report_outcome_updated": {
+      "title": "Le résultat de votre signalement a changé",
+      "titleOrg": "Le résultat d’un signalement de votre organisation a changé",
+      "body": "Ouvrez-le pour voir le résultat."
+    },
+    "conduct_incident_notice": {
+      "title": "MissionHub vous a envoyé un avis d’incident lié à des renseignements",
+      "body": "Il concerne des renseignements provenant de vos recommandations. Ouvrez-le pour lire les détails."
+    },
+    "conduct_notice_sent": {
+      "title": "Vous avez reçu un avis de MissionHub",
+      "body": "Lisez-le et répondez d’ici le {when} HE."
+    },
+    "sanction_immediate_hold": {
+      "title": "Vous avez reçu un avis urgent de MissionHub",
+      "body": "Lisez-le dès maintenant. Vous pouvez répondre jusqu’au {when} HE."
+    },
+    "conduct_followup": {
+      "title": "MissionHub a une question complémentaire",
+      "body": "Ouvrez l’avis pour répondre."
+    },
+    "conduct_response_received": {
+      "title": "Réponse reçue dans un dossier de conduite",
+      "body": "Ouvrez le dossier pour la lire."
+    },
+    "conduct_decided": {
+      "title": "MissionHub a rendu une décision",
+      "body": "Consultez-la sur la page Statut réseau."
+    },
+    "sanction_lifted": {
+      "title": "Une sanction visant votre organisation a été levée",
+      "body": "Consultez les détails sur la page Statut réseau."
+    },
+    "sanction_review_requested": {
+      "title": "Révision demandée dans un dossier de conduite",
+      "body": "Un autre administrateur de la plateforme doit réviser la décision."
+    },
+    "sanction_reviewed": {
+      "title": "Votre demande de révision a été tranchée",
+      "body": "Consultez le résultat sur la page Statut réseau."
+    },
+    "conduct_report_reply_received": {
+      "title": "Le signalant a répondu dans un dossier de conduite",
+      "body": "Ouvrez le dossier pour lire la réponse."
+    },
+    "conduct_followup_answered": {
+      "title": "Réponse à une question complémentaire dans un dossier de conduite",
+      "body": "Ouvrez le dossier pour lire la réponse."
+    }
+  }
+}

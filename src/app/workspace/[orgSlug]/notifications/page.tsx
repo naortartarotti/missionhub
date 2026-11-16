@@ -14,7 +14,7 @@ export async function generateMetadata() {
 
 export default async function NotificationsPage({ params }: PageProps<"/workspace/[orgSlug]/notifications">) {
   const { orgSlug } = await params;
-  const [ctx, t, f] = await Promise.all([getRequestContext(orgSlug), getT("activity"), getFormatter()]);
+  const [ctx, t, f] = await Promise.all([getRequestContext(orgSlug, { allowSettlement: true }), getT("activity"), getFormatter()]);
   const { data } = await ctx.db
     .from("notifications")
     .select("id, kind, title, body, link, read_at, created_at, organizations(slug)")

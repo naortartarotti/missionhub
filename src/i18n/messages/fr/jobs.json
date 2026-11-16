@@ -45,14 +45,13 @@
     "languages": "Langues",
     "location": "Lieu",
     "compensation": "Rémunération",
-    "placementFee": "Honoraires de placement",
     "visible": {
       "always": "Titre, niveau, mode de travail et compétences",
       "description": "Description",
       "location": "Lieu",
-      "compensation": "Rémunération",
-      "placementFee": "Honoraires de placement",
-      "clientName": "Nom du client"
+      "compensation": "Fourchette salariale et estimation des honoraires",
+      "clientName": "Nom du client",
+      "terms": "Conditions pour les partenaires"
     },
     "statSubmitted": "Soumis",
     "privacyShort": "Les candidats partenaires restent anonymes jusqu'à leur soumission.",
@@ -66,6 +65,7 @@
     "matchingClosed": "Fermé aux partenaires",
     "editCta": "Modifier le poste",
     "pipelineReview": "En évaluation",
+    "pipelineAccepted": "Acceptées",
     "pipelineInterviewing": "Entrevues",
     "pipelineOffer": "Offre",
     "pipelineHired": "Embauché",
@@ -89,7 +89,11 @@
     "submittedEmptyBody": "Vous serez averti dès qu'un partenaire soumettra un candidat.",
     "mobility": "Déplacements et mobilité",
     "visaSponsorship": "Parraine les visas",
-    "relocationSupport": "Aide à la relocalisation"
+    "relocationSupport": "Aide à la relocalisation",
+    "feeTerms": "Conditions d'honoraires",
+    "termsTitle": "Conditions pour les partenaires",
+    "termsEmpty": "Aucune condition pour l'instant. Les partenaires ne voient pas ce poste tant que vous ne les avez pas ajoutées.",
+    "editTerms": "Modifier les conditions"
   },
   "status": {
     "publish": "Publier",
@@ -132,6 +136,9 @@
     "salaryMin": "Salaire min.",
     "salaryMax": "Salaire max.",
     "currency": "Devise",
+    "splitJobOwner": "Vous (recruteur du poste) · {percent}",
+    "splitSourcing": "Recruteur d'origine · {percent}",
+    "splitPlatform": "Plateforme · {percent}",
     "partnerReferrals": "Recommandations de partenaires",
     "openToPartners": "Ouvrir ce poste aux recruteurs partenaires",
     "openToPartnersHint": "Les recruteurs ayant des candidats qui conviennent verront ce poste et pourront les soumettre. Vous verrez combien conviennent, mais pas qui, jusqu'à ce qu'une personne soit soumise.",
@@ -139,21 +146,84 @@
     "visibleHint": "Le titre, le niveau, le mode de travail et les compétences sont toujours affichés. Le nom du client suit le réglage ci-dessus.",
     "shareDescription": "Description du poste",
     "shareLocation": "Lieu",
-    "shareSalary": "Fourchette de rémunération",
-    "shareFee": "Honoraires de placement prévus",
-    "expectedFee": "Honoraires de placement prévus",
-    "expectedFeeHint": "Le montant total que vous prévoyez facturer au client",
-    "feeCurrency": "Devise des honoraires",
     "cancel": "Annuler",
     "saveDraft": "Enregistrer comme brouillon",
     "publish": "Publier le poste",
     "saveChanges": "Enregistrer les modifications",
     "travel": "Déplacements",
     "visaSponsorship": "Parraine les visas de travail",
-    "relocationSupport": "Offre une aide à la relocalisation"
+    "relocationSupport": "Offre une aide à la relocalisation",
+    "clientInternalHint": "Facultatif. Les partenaires ne voient jamais ce nom. Les administrateurs de la plateforme le voient seulement pour régler un litige. Si vous l'indiquez, MissionHub détecte les recommandations en double pour tous vos postes chez ce client. Sinon, la protection couvre seulement ce poste, et vous ne pourrez pas citer une recommandation reçue pour un autre poste dans une objection.",
+    "clientDuplicateHint": "MissionHub utilise aussi le nom du client pour détecter les recommandations en double pour tous vos postes chez ce client.",
+    "terms": {
+      "title": "Conditions pour les partenaires",
+      "description": "Les partenaires voient ces conditions avant de soumettre un candidat. Chaque recommandation conserve les conditions en vigueur au moment de sa soumission.",
+      "notPublished": "Pas encore publiées",
+      "versionPill": "Version {version} · {date}",
+      "feeLegend": "Honoraires de placement",
+      "basisHint": {
+        "pct_base": "Calculés à l'embauche sur le salaire de base de la première année.",
+        "pct_total_cash": "Calculés à l'embauche sur le salaire de base plus la prime cible. Les actions, la prime d'embauche, les avantages sociaux et les frais de réinstallation ne sont pas inclus.",
+        "pct_total_cash_br": "Vérifiez si votre contrat client inclut le 13e salaire et le tiers de vacances (1/3 de férias) dans la rémunération globale.",
+        "flat": "Un montant fixe, quel que soit le salaire."
+      },
+      "rate": "Taux des honoraires",
+      "ratePlaceholder": "p. ex. 20",
+      "minimum": "Honoraires minimaux (facultatif)",
+      "minimumHint": "S'appliquent si les honoraires calculés sont inférieurs.",
+      "flatAmount": "Honoraires forfaitaires",
+      "currency": "Devise",
+      "currencyFollowsSalary": "Devise des honoraires : {currency}, la même que celle du salaire.",
+      "previewTitle": "Estimation",
+      "previewFee": "Honoraires estimés ~{fee}",
+      "previewBonus": "plus {rate} de la prime cible",
+      "previewFlat": "En cas d'embauche",
+      "previewHint": "Selon le milieu de la fourchette salariale. Les honoraires sont calculés à l'embauche sur le salaire réel.",
+      "previewNoBand": "Ajoutez une fourchette salariale pour voir une estimation.",
+      "searchLegend": "Type de mandat",
+      "guaranteeLegend": "Garantie",
+      "guaranteeLength": "Durée",
+      "guaranteeNone": "Aucune garantie",
+      "guaranteeDays": {
+        "one": "{count} jour",
+        "other": "{count} jours"
+      },
+      "remedy": "Si la personne embauchée part pendant la garantie",
+      "noGuaranteeNote": "Les partenaires verront qu'il n'y a aucune garantie.",
+      "paymentTerms": "Conditions de paiement du client",
+      "paymentDays": "jours",
+      "paymentHint": "Nombre de jours dont le client dispose pour payer après la facture. La facture est émise à la date d'entrée en fonction.",
+      "window": "Période de propriété",
+      "windowMonths": {
+        "one": "{count} mois",
+        "other": "{count} mois"
+      },
+      "windowHint": "Durée pendant laquelle une recommandation transmise conserve sa priorité auprès de ce client. Elle ne peut pas être plus courte que la période de présentation prévue dans votre contrat client.",
+      "shareSalary": "Montrer aux partenaires la fourchette salariale et l'estimation des honoraires",
+      "shareSalaryHint": "Avec des honoraires en %, l'estimation révèle le salaire : la fourchette et l'estimation sont donc affichées ou masquées ensemble. Les partenaires voient toujours le taux.",
+      "splitTitle": "Partage de la commission",
+      "splitNote": "Fixé par MissionHub. Chaque recommandation conserve le partage en vigueur au moment de sa soumission.",
+      "attestation": "Nous détenons l'entente d'honoraires directement avec le client final.",
+      "attestationHint": "Un poste que vous gérez pour une autre agence ne peut pas être ouvert aux recommandations de partenaires.",
+      "attestationRequired": "Requis pour publier",
+      "lastAttested": "Dernière confirmation par {name} le {date}",
+      "willPublish": "L'enregistrement publiera la version {version} des conditions.",
+      "existingReferrals": {
+        "one": "{count} recommandation a été envoyée selon des conditions antérieures et les conserve. Les partenaires qui ont des recommandations en cours seront avisés du changement.",
+        "other": "{count} recommandations ont été envoyées selon des conditions antérieures et les conservent. Les partenaires qui ont des recommandations en cours seront avisés du changement."
+      },
+      "permanentOnly": "Seuls les postes permanents peuvent être ouverts aux recommandations de partenaires. Changez le type de contrat ou désactivez les recommandations de partenaires."
+    },
+    "clientRequiredForPartners": "Obligatoire pour ouvrir ce poste aux partenaires. Si vous masquez le nom du client, les partenaires ne le voient jamais.",
+    "restrictedHold": "Enregistré, mais masqué aux partenaires tant que votre organisation fait l'objet d'une restriction réseau.",
+    "restrictedRules": "Enregistré, mais masqué aux partenaires tant qu'un administrateur de l'organisation n'a pas accepté les Règles du réseau en vigueur.",
+    "userMustAccept": "Acceptez la version {label} des Règles du réseau pour ouvrir des postes aux partenaires.",
+    "errors": {
+      "userMustAccept": "Acceptez la version {label} des Règles du réseau avant d'ouvrir un poste aux partenaires, puis enregistrez de nouveau."
+    }
   },
   "messages": {
-    "activated": "Le poste est actif. Le jumelage s'exécute en arrière-plan.",
+    "activated": "Poste publié. Le nombre de correspondances s'affiche d'ici une minute.",
     "statusUpdated": "Statut mis à jour. Les correspondances des postes inactifs expirent immédiatement.",
     "statusUpdatedReleased": {
       "one": "Statut mis à jour. {count} recommandation en attente a été refusée (« Poste pourvu »).",
@@ -161,7 +231,8 @@
     }
   },
   "errors": {
-    "notFound": "Poste introuvable."
+    "notFound": "Poste introuvable.",
+    "termsIncomplete": "Remplissez les conditions pour les partenaires afin d'ouvrir ce poste aux recommandations de partenaires."
   },
   "validation": {
     "positiveAmount": "Entrez un montant positif",
@@ -170,7 +241,15 @@
     "countryCode": "Utilisez un code de pays à 2 lettres",
     "salaryRange": "Le maximum doit être au moins égal au minimum",
     "clientRequired": "Entrez le nom du client ou gardez-le confidentiel",
-    "descriptionTooLong": "La description est trop longue."
+    "descriptionTooLong": "La description est trop longue.",
+    "feeRateRange": "Entrez un taux de 1 à 50, avec au plus 2 décimales",
+    "flatAmountRequired": "Entrez des honoraires forfaitaires supérieurs à 0",
+    "minimumPositive": "Entrez des honoraires minimaux supérieurs à 0, ou laissez le champ vide",
+    "remedyRequired": "Choisissez ce qui se passe si la personne embauchée part",
+    "paymentDaysRange": "Entrez de 0 à 90 jours",
+    "attestationRequired": "Confirmez que vous détenez l'entente d'honoraires avec le client final",
+    "permanentForReferrals": "Choisissez Permanent, ou désactivez les recommandations de partenaires",
+    "clientRequiredForPartners": "Entrez le vrai nom du client pour ouvrir ce poste aux partenaires"
   },
   "import": {
     "title": "Remplissez ce poste en quelques secondes",
@@ -212,5 +291,106 @@
     "subtitleAi": "Collez l'offre, indiquez un lien ou importez un fichier (PDF numérisés compris). L'IA la lit et remplit ce qu'elle indique — vous vérifiez tout avant d'enregistrer.",
     "doneAi": "Lu par l'IA. Rien n'a été inventé : les champs vides n'étaient pas indiqués dans l'offre.",
     "fileHintAi": "Jusqu'à 5 Mo. Les PDF numérisés sont lus par l'IA."
+  },
+  "terms": {
+    "partnerTitle": "Conditions de ce poste",
+    "versionLine": "Version {version} des conditions · {date}",
+    "amendedLine": "Modifiées le {date} à la demande des deux organisations",
+    "originalTerms": "Conditions initiales",
+    "updatedChip": "Conditions modifiées le {date}",
+    "changedBadge": "Modifié",
+    "rows": {
+      "fee": "Honoraires de placement",
+      "minimum": "Honoraires minimaux",
+      "currency": "Devise des honoraires",
+      "searchType": "Type de mandat",
+      "guarantee": "Garantie",
+      "paymentTerms": "Conditions de paiement du client",
+      "window": "Période de propriété",
+      "split": "Partage de la commission",
+      "client": "Client",
+      "directClient": "Client direct",
+      "expectedShare": "Votre part attendue",
+      "expectedShareTarget": "Part attendue du recruteur d'origine"
+    },
+    "fee": {
+      "pctBase": "{rate} du salaire de base de la première année",
+      "pctTotalCash": "{rate} de la rémunération globale de la première année (salaire de base + prime cible)",
+      "flat": "Honoraires forfaitaires de {amount}"
+    },
+    "feeShort": {
+      "pctBase": "{rate} du salaire de base",
+      "pctTotalCash": "{rate} de la rémunération globale",
+      "flat": "{amount} (forfait)"
+    },
+    "currencyPct": "{currency}, la devise du salaire",
+    "searchTypeHint": {
+      "contingent_exclusive": "Le client confie ce poste uniquement au recruteur du poste. Les honoraires ne sont dus qu'en cas d'embauche.",
+      "contingent_shared": "Le client peut aussi faire appel à d'autres agences ou à sa propre équipe. Les honoraires ne sont dus qu'en cas d'embauche.",
+      "retained": "Une partie des honoraires est payée d'avance (provision). Le partage s'applique au total des honoraires, provision comprise."
+    },
+    "guarantee": {
+      "one": "{count} jour à partir de la date d'entrée en fonction · {remedy}",
+      "other": "{count} jours à partir de la date d'entrée en fonction · {remedy}"
+    },
+    "noGuarantee": "Aucune garantie",
+    "noGuaranteeHint": "Le client n'obtient ni remplacement ni remboursement si la personne embauchée part tôt.",
+    "paymentTerms": {
+      "one": "Net {count} jour après la facture (émise à la date d'entrée en fonction)",
+      "other": "Net {count} jours après la facture (émise à la date d'entrée en fonction)"
+    },
+    "paymentTermsZero": "Payable à la date de la facture (émise à la date d'entrée en fonction)",
+    "window": {
+      "one": "{count} mois à compter de la transmission",
+      "other": "{count} mois à compter de la transmission"
+    },
+    "split": "Origine {sourcing} · Poste {hiring} · Plateforme {platform}",
+    "splitRule": "{rule} v{version}",
+    "directClient": "Le recruteur du poste déclare détenir l'entente d'honoraires directement avec le client final.",
+    "clientConfidential": "Confidentiel",
+    "estimate": "Honoraires estimés ~{fee} · Votre part estimée ~{share} ({percent})",
+    "estimateHint": "Selon le milieu de la fourchette salariale. À l'embauche, les honoraires sont calculés sur le salaire réel. Les parts sont avant taxes.",
+    "estimateHidden": "{partner} garde la fourchette salariale confidentielle : aucune estimation n'est affichée.",
+    "flatShare": "Votre part en cas d'embauche : {share} ({percent})",
+    "flatShareHint": "Avant taxes. À verser une fois le paiement du client vérifié.",
+    "shareAtHire": {
+      "pctBase": "{percent} des honoraires (honoraires : {rate} du salaire de base à l'embauche)",
+      "pctTotalCash": "{percent} des honoraires (honoraires : {rate} de la rémunération globale à l'embauche)"
+    },
+    "notRecorded": "Conditions non enregistrées (recommandation antérieure aux conditions du poste)",
+    "network": {
+      "title": "Règles du réseau pour tous les postes",
+      "ownership": "Propriété : une recommandation transmise conserve sa priorité auprès de ce client et de ses sociétés affiliées, pour tout poste, pendant la période de propriété du poste à compter de la transmission.",
+      "priorPresentation": "Présentation antérieure : le recruteur du poste a 5 jours ouvrables après la transmission pour déposer une objection, pièces justificatives à l'appui.",
+      "response": "Réponse : le recruteur du poste donne suite à une recommandation transmise dans les 5 jours ouvrables. Sans suite après 10 jours ouvrables, le recruteur d'origine peut soumettre le candidat à d'autres postes, et la recommandation conserve sa priorité auprès de ce client.",
+      "payout": "Versement : le recruteur du poste verse directement la part du recruteur d'origine dans les 5 jours ouvrables suivant la réception du paiement du client. La part n'est pas retenue pendant la garantie.",
+      "tax": "Taxes : les parts sont avant taxes. Chaque organisation ajoute les taxes applicables lorsqu'elle facture.",
+      "draftMarker": "Ébauche des règles du réseau, en attente de révision juridique.",
+      "summary": "Règles du réseau"
+    },
+    "internalShare": "Aucune part pour le recruteur d'origine (recommandation interne)"
+  },
+  "nudge": {
+    "chipTerms": "Masqué aux partenaires : conditions à ajouter",
+    "chipPermanent": "Masqué aux partenaires : poste non permanent",
+    "chipCurrency": "Masqué aux partenaires : devise à vérifier",
+    "listBanner": {
+      "one": "{count} poste actif est masqué aux partenaires. Ouvrez-le pour voir ce qui manque.",
+      "other": "{count} postes actifs sont masqués aux partenaires. Ouvrez chacun d'eux pour voir ce qui manque."
+    },
+    "title": "Masqué aux partenaires",
+    "bodyTerms": "Les partenaires ne peuvent ni voir ce poste ni y soumettre de candidat tant que vous n'avez pas ajouté ses conditions pour les partenaires. Les recommandations déjà reçues ne sont pas touchées.",
+    "bodyPermanent": "Seuls les postes permanents peuvent être ouverts aux recommandations de partenaires. Changez le type de contrat ou désactivez les recommandations de partenaires. Les recommandations déjà reçues ne sont pas touchées.",
+    "bodyCurrency": "La devise des honoraires dans les conditions de ce poste ({termsCurrency}) ne correspond plus à la devise du salaire ({salaryCurrency}). Les partenaires ne voient pas ce poste tant que vous n'avez pas revu et enregistré ses conditions, ce qui publiera de nouvelles conditions en {salaryCurrency}. Les recommandations déjà reçues conservent leurs conditions.",
+    "ctaTerms": "Ajouter les conditions",
+    "ctaReview": "Revoir les conditions",
+    "ctaEdit": "Modifier le poste",
+    "chipClientName": "Invisible aux partenaires : ajoutez le nom du client",
+    "bodyClientName": "Les partenaires ne voient pas ce poste tant qu'il n'a pas le vrai nom du client. Si vous masquez le nom du client, il reste interne. Les recommandations déjà reçues ne sont pas touchées.",
+    "ctaClientName": "Ajouter le nom du client",
+    "bodyHold": "Votre organisation fait l'objet d'une restriction réseau, alors les partenaires ne voient pas ce poste. Ses paramètres sont conservés, et il redevient visible à la fin de la restriction. Les recommandations déjà reçues ne sont pas touchées.",
+    "bodyRules": "Votre organisation n'a pas accepté les Règles du réseau en vigueur, alors les partenaires ne voient pas ce poste. Il redevient visible dès qu'un administrateur de l'organisation les accepte. Les recommandations déjà reçues ne sont pas touchées.",
+    "chipHold": "Masqué aux partenaires : restriction réseau",
+    "chipRules": "Masqué aux partenaires : règles non acceptées"
   }
 }

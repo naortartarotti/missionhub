@@ -9,12 +9,7 @@ import { cn } from "@/lib/utils";
 import { isSubmitted } from "../triage";
 import { TriageActions, type OpportunityView } from "./opportunity-card";
 import { ScoreRing } from "./score-ring";
-
-const BAND_DOT: Record<OpportunityView["band"], string> = {
-  strong: "bg-success",
-  potential: "bg-amber-500",
-  not_eligible: "bg-danger",
-};
+import { shareFigure } from "@/features/jobs/terms-display";
 
 /**
  * One match inside a group card. `subject="candidate"` (default) names the candidate (inside a job
@@ -37,6 +32,7 @@ export function JobMatchRow({
   const t = useT("opportunities");
   const tg = useGlobalT();
   const f = useFormatter();
+  const share = shareFigure(opp, tg, f);
   const submitted = isSubmitted(opp);
   const canAct = !submitted && opp.band !== "not_eligible";
   const gaps = opp.gaps.length;
@@ -49,14 +45,15 @@ export function JobMatchRow({
   return (
     <div
       className={cn(
-        "group relative flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors hover:bg-muted/60",
+        // Wraps below sm: the actions drop under the name instead of truncating it to a letter at 375px.
+        "group relative flex flex-wrap items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors hover:bg-muted/60 sm:flex-nowrap",
         selected && "bg-muted",
         opp.triage_state === "dismissed" && "opacity-60",
       )}
     >
       <ScoreRing score={opp.score} className="size-11 [&_span]:text-xs" />
 
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 basis-40 sm:basis-auto">
         <div className="flex items-center gap-2">
           {opp.is_new && canAct ? <span className="size-2 shrink-0 rounded-full bg-info" aria-label={t("card.new")} /> : null}
           <Link
@@ -68,10 +65,6 @@ export function JobMatchRow({
           >
             {name}
           </Link>
-          <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground">
-            <span className={cn("size-1.5 rounded-full", BAND_DOT[opp.band])} aria-hidden />
-            {tg(`labels.band.${opp.band}`)}
-          </span>
           {subject === "job" && opp.internal ? <InternalBadge org={opp.job_org_name} /> : null}
         </div>
         <p className="mt-0.5 flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
@@ -81,14 +74,14 @@ export function JobMatchRow({
       </div>
 
       {/* Inside a candidate card each row is a different job, so its fee share differs: show it per row. */}
-      {subject === "job" && opp.your_share_minor ? (
+      {subject === "job" ? (
         <div className="hidden shrink-0 text-right sm:block">
-          <p className="text-sm font-semibold tabular-nums text-success">{f.money(opp.your_share_minor, opp.fee_currency ?? "CAD", { whole: true })}</p>
-          <p className="text-xs text-muted-foreground">{t("jobGroup.share")}</p>
+          {share.amount ? <p className="text-sm font-semibold tabular-nums text-success">{share.amount}</p> : <p className="text-sm font-medium">{share.text}</p>}
+          <p className="text-xs text-muted-foreground">{share.label}</p>
         </div>
       ) : null}
 
-      <div className="flex shrink-0 items-center gap-1">
+      <div className="ml-auto flex shrink-0 items-center gap-1">
         {submitted && opp.referral_id ? (
           <Button variant="outline" size="sm" asChild className="relative z-10">
             <Link href={`/workspace/${orgSlug}/referrals/${opp.referral_id}`}>{tg(`labels.referralStatus.${opp.referral_status as keyof typeof REFERRAL_STATUS}`)}</Link>

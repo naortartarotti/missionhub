@@ -42,6 +42,8 @@
   --color-danger-soft: var(--danger-soft);
   --color-info: var(--info);
   --color-info-soft: var(--info-soft);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
 
   /* Pastel KPI tiles */
   --color-tile-yellow: var(--tile-yellow);
@@ -49,6 +51,25 @@
   --color-tile-lilac: var(--tile-lilac);
   --color-tile-green: var(--tile-green);
   --color-tile-foreground: var(--tile-foreground);
+
+  /*
+   * Meaning, not hue. Use these in new UI so a color says the same thing on every screen:
+   * money = earnings and fees · attention = needs action / deadline · inbound = referrals to my jobs ·
+   * outbound = my candidates sent to partners · brand = MissionHub moments (hire reported, first referral).
+   * Text/icon color, soft background, and KPI tile variants.
+   */
+  --color-money: var(--success);
+  --color-money-soft: var(--success-soft);
+  --color-tile-money: var(--tile-green);
+  --color-attention: var(--warning);
+  --color-attention-soft: var(--warning-soft);
+  --color-inbound: var(--info);
+  --color-inbound-soft: var(--info-soft);
+  --color-tile-inbound: var(--tile-blue);
+  --color-outbound: var(--violet);
+  --color-outbound-soft: var(--violet-soft);
+  --color-tile-outbound: var(--tile-lilac);
+  --color-tile-brand: var(--tile-yellow);
 
   --radius-sm: calc(var(--radius) * 0.5);
   --radius-md: calc(var(--radius) * 0.75);
@@ -92,6 +113,8 @@
   --danger-soft: #fbe6e6;
   --info: #2f62a8;
   --info-soft: #e5eef9;
+  --violet: #6b4fa8;
+  --violet-soft: #efe8f8;
 
   --tile-yellow: #f7da82;
   --tile-blue: #cfdcea;
@@ -133,6 +156,8 @@
   --danger-soft: #3d1f1f;
   --info: #7fa9e6;
   --info-soft: #1d2a3d;
+  --violet: #b79cf0;
+  --violet-soft: #2c2340;
 
   --tile-yellow: #4d4220;
   --tile-blue: #233140;

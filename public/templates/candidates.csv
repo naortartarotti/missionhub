@@ -1,0 +1,2 @@
+external_id,full_name,email,phone,headline,skills,languages,seniority,years_experience,city,region,country,work_arrangements,salary_min,salary_max,salary_currency,linkedin_url,owner_email
+C-1001,Ana Souza,ana@example.com,+1 416 555 0100,Senior Product Designer,"figma; design systems; ux research","english; portuguese",senior,8,Toronto,ON,CA,"remote; hybrid",95000,115000,CAD,https://www.linkedin.com/in/example,
