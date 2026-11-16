@@ -280,8 +280,9 @@ describe("Journey B — revocation and expiry", () => {
       `select set_config('request.jwt.claims', json_build_object('sub', '${uid}', 'role', 'authenticated')::text, true);`;
     const total = (k: string) =>
       `insert into pg_temp.r select '${k}', (strong_count + potential_count)::text from public.get_job_match_summary('${jobB}');`;
-    // psql 14 prints only the last result of a multi-statement -c, so collect into a temp table.
-    const [row] = sql(`
+    // psql 14 prints only the last result of a multi-statement -c, newer psql prints every one
+    // (BEGIN, CREATE TABLE, ...): collect into a temp table and read the last line either way.
+    const row = sql(`
       begin isolation level repeatable read;
       create temp table r (k text, v text);
       grant all on pg_temp.r to authenticated;
@@ -291,7 +292,7 @@ describe("Journey B — revocation and expiry", () => {
         insert into pg_temp.r select 'updated', status::text from u;
       ${claims(b.id)} ${total("after")}
       commit;
-      select json_object_agg(k, v) from pg_temp.r;`);
+      select json_object_agg(k, v) from pg_temp.r;`).at(-1)!;
     const out = JSON.parse(row) as Record<string, string>;
     const [before, updated, after] = [Number(out.before), out.updated, Number(out.after)];
     expect(updated).toBe("unavailable");

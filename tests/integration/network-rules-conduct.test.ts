@@ -125,7 +125,7 @@ describe("filing a report (BR-15 to BR-18, BR-25)", () => {
     // The reporter view lists name and size only.
     const view = (await src.client.rpc("get_conduct_report", { p_org: sOrg.id, p_case: fCase })).data as { files: Record<string, unknown>[] };
     expect(view.files).toEqual([{ file_name: "proof.pdf", size_bytes: pdf().length }]);
-  });
+  }, 120_000); // drainQueue() runs every queued job, incl. matching work queued by parallel files
 });
 
 describe("reporting side readers (BR-15, N10-D23, AC-66, AC-145)", () => {
