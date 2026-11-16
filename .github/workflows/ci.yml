@@ -58,6 +58,8 @@ jobs:
             echo "SUPABASE_SECRET_KEY=$SECRET_KEY"
             echo "NEXT_PUBLIC_APP_URL=http://localhost:3000"
             echo "APP_ENV=test"
+            # duplicate-presentation.spec.ts checks the N1 stop's support link (hidden when unset).
+            echo "SUPPORT_EMAIL=support@example.test"
           } > .env.local
 
       - name: Generated DB types are up to date

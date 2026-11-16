@@ -13,7 +13,8 @@ test("resume uploads up to 10 MB work and larger files are refused", async ({ pa
   const org = await createOrg(acct, "Upload Co");
   const candidateId = await createCandidate(acct, org.id, "Robin Upload-E2E");
   await signIn(page, acct);
-  await page.goto(`/workspace/${org.slug}/candidates/${candidateId}`);
+  // The resume upload lives on the candidate's Documents tab.
+  await page.goto(`/workspace/${org.slug}/candidates/${candidateId}?tab=documents`);
 
   // Regression: Server Actions default to a 1 MB body limit.
   await page.getByLabel(/Upload resume/).setInputFiles({ name: "resume-3mb.pdf", mimeType: "application/pdf", buffer: pdf(3 * 1024 * 1024) });
