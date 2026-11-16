@@ -18,6 +18,8 @@ const schema = z.object({
   SEND_EMAIL_HOOK_SECRET: z.string().startsWith("v1,whsec_").optional(),
   // Support address shown with a stopped referral (N1, PD-025). Unset => the UI hides the support line.
   SUPPORT_EMAIL: z.email().optional(),
+  // Bearer secret for /api/cron/worker (hosted queue drain, called by Supabase pg_cron). Unset => route is off.
+  CRON_SECRET: z.string().min(32).optional(),
 });
 
 type Env = z.infer<typeof schema>;
@@ -51,6 +53,7 @@ function load(): Env {
     EMAIL_FROM: process.env.EMAIL_FROM || undefined,
     SEND_EMAIL_HOOK_SECRET: process.env.SEND_EMAIL_HOOK_SECRET || undefined,
     SUPPORT_EMAIL: process.env.SUPPORT_EMAIL || undefined,
+    CRON_SECRET: process.env.CRON_SECRET || undefined,
   });
   return cached;
 }
