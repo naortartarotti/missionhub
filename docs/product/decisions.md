@@ -1140,10 +1140,46 @@ Status values: `decided` · `needs user decision` · `superseded by PD-###`. Rec
 - **Links:** `qa-report.md` incident note; PD-078.
 - **Status:** decided
 
-## PD-066: Build N10 now, ahead of N5's spec; legal drafts ship as drafts
+## PD-081: N3 accepted; launch gates; `journey.test.ts` regression triaged
+- **Date:** 2026-11-16
+- **Decision:**
+  - **N3 is accepted** against brief rev. 2 (`docs/specs/referral-claims-two-sided-hire/acceptance.md`): 42 of 45 BRs accepted, BR-16 and BR-39 (Shoulds) not built, BR-30 moved to N7. QA PASS after fix round 1; N3 integration 96/96, N3 E2E 5/5, regression E2E 41/41, 308 unit tests, lint and typecheck clean.
+  - **Launch-gated, not acceptance blockers:** counsel Q-1 to Q-4 (user sends); `deemed_agreement_enabled` off in production; Network Rules 6.3 / 6.4 / 7.2 merge after counsel; client names at commit and delivery (PD-079) before the first real referral and before the N3 push; browser and visual pass (dark, 375px, fr wrapping, keyboard, remaining dialogs) plus a measured contrast check of design B-2 / B-3; N7 items (BR-30, delivery and bounce records, `fee_details_due_at`); holiday seed for 2030 by 2028-06-01; two hosted counts before the push (referral-open jobs without a client name, delivered external referrals on jobs without a client key).
+  - **Regression triaged: `journey.test.ts` "making a candidate unavailable removes them from B's counts".** Fails on a clean stack and alone; N3 doesn't touch matching, so it's **not an N3 blocker**, but it's a **major regression on a launch-checklist suite**. Owner: **main session assigns**, **backend-engineer** fixes (matching / candidates), **qa-engineer** first adds an assertion on the candidate update's error to separate "update refused" from "not counted". Due: before launch and before the next hosted push. Logged under Engineering hygiene.
+  - `network-rules-qa.test.ts` fixture interference → N10 session QA. **QA runs are serialised** across sessions (PD-078): one full run at a time, announced, no counting while another session migrates or resets.
+- **Why:** every Must trust rule holds and was verified adversarially; the open items are legal, data-dependent, visual or in other features, and each has an owner and a gate. Accepting now lets N4 start; none of the gates can be closed by more N3 build work except item 4 (client names), which is scheduled.
+- **Alternatives:** hold acceptance until the browser pass (rejected: the same pass is already a launch-checklist step for N1 and N2, and a blocker found there reopens the screen); count `journey.test.ts` against N3 (rejected: unrelated code path, and it fails alone on a clean stack).
+- **Links:** `acceptance.md`; `qa-report.md` Round 1 re-check; PD-066 to PD-080; roadmap N3, Engineering hygiene, launch checklist.
+- **Status:** decided
+
+## PD-084: Build N10 now, ahead of N5's spec; legal drafts ship as drafts
+- **Note:** first logged as a duplicate PD-066 (commit 9a2d5d3); renumbered to PD-084.
 - **Date:** 2026-11-16
 - **Decision:** The founder approved building N10 now from the frozen spec, without waiting for N5's spec. N10 builds its own first-access gate and its onboarding pieces; N5 adapts to them later. The counsel items (C-1, C-3, C-4, C-5, C-7) ship as draft text and are changed after counsel review, with no flow change expected. The three designer calls in spec §9 are built as the spec states them: only `decided_by` can't lift a termination; Lift is offered on both settling and settled terminations; nobody answers info requests once the reporter has left. The PM can revisit them at acceptance.
 - **Why:** the founder wants N10 running now. The legal text is data (versioned Rules plus copy keys), so changing it later is cheap.
 - **Alternatives:** wait for N5's spec (rejected by the founder).
 - **Links:** PD-056 to PD-058, PD-065; `docs/specs/network-rules-enforcement/spec.md`.
+- **Status:** decided
+
+## PD-082: N10 accepted with conditions
+- **Date:** 2026-11-16
+- **Decision:**
+  - **N10 is accepted** against brief rev. 2 (`docs/specs/network-rules-enforcement/acceptance.md`). QA round 2 is PASS: 126 of 145 Must ACs pass, AC-32 is deferred (PD-083), 15 are partial (UI states or settlement paths not rendered or exercised), 3 are not verified (accessibility, AC-118 to AC-120). The round-1 blocker (QA-N10-01, sanction columns readable by partners) and both majors (open redirect, gate deadlock) are fixed and re-verified.
+  - **Conditions before launch:** (1) publish v1 of the Rules in the same window as `supabase db push`, or onboarding is blocked; (2) counsel review of the Rules and legal copy (C-1, C-3, C-4, C-5, C-7), with the text shipping as drafts until then (PD-084); (3) hosted push only when the user asks, in timestamp order (N10 `20261116001000` to `001800` before N3 `20261117*`, PD-078), with two platform admins in place; (4) one full integration run on a clean local stack, because QA's round 2 did not re-run the full suite after the `organizations` column revoke and the backend's 530/530 is not QA-verified; (5) an accessibility and browser pass for AC-118 to AC-120; (6) named owners for conduct reports and reviews; (7) a scripted check of settlement-mode money and dispute paths (AC-101, AC-102).
+  - **Follow-ups, not gating:** minor frontend gaps 1 to 3 and 8 to 11; bilingual notices (after counsel C-5); the metrics card and planned-review reminder; the `settlement_mode.exited` event and "refund due" tag; moving the versions test to a rolled-back transaction.
+  - The three designer calls in PD-084 are confirmed as built.
+- **Why:** every hard constraint (isolation, reporter identity, partner-invisible sanctions, prior notice, second-admin review, closed settlement scope) held under adversarial testing, and the open items are legal, visual, operational or minor. Each has an owner and a gate. Holding acceptance for the accessibility pass would not change the build, since a blocker found there reopens a screen either way.
+- **Alternatives:** accept without conditions (rejected: v1 publication, counsel and the full-suite run are real gates); reject until the full suite and accessibility pass are done (rejected: they are verification and launch work, not build gaps).
+- **Links:** `acceptance.md`; `qa-report.md` round 2; `backend.md` §11 and §12; `frontend.md` §3; PD-056 to PD-058, PD-084, PD-078, PD-081; roadmap N10, Engineering hygiene, launch checklist.
+- **Status:** decided. The legal and publication items are the user's (`Needs user decision` where noted in `acceptance.md`).
+
+## PD-083: AC-32 deferred: no scheduler notification at a rules effective date; reminder Should deferred with it
+- **Date:** 2026-11-16
+- **Decision:** `network_rules.effective_not_accepted` (AC-32, a Must) and `network_rules.reminder` (7 days before an effective date, a Should) are not built in N10, because the project has no scheduler to detect that a version became effective. The lead deferred AC-32; the PM records it and counts it as accepted.
+  - **What still works:** the `rules_not_accepted` restriction is computed lazily, so it applies at the effective date with no job. Members see the persistent banner from publication to the effective date, and the publish notification goes out at publication (BR-8, BR-39). The org-admin Network standing page and the banners show the state. Nothing is blocked wrongly; the only missing piece is a push notification at the effective date.
+  - **When it must exist:** before the **first material or legally required version** is published. It is **not needed for v1** (type `initial`, effective at publication, no re-acceptance window). Until it ships, any material version must not be published.
+  - **How:** one worker maintenance step that finds versions that became effective since its last run and notifies each org's `org_admin`s and the members who haven't accepted, plus the 7-day reminder in the same step. N7 adds the emails. Backend owner, about 0.5 to 1 day [estimate].
+- **Why:** the missing notification is a courtesy on top of a gate that already works, and v1 can't trigger it. Building a scheduler for it now adds infrastructure for no v1 benefit.
+- **Alternatives:** build the scheduler now (rejected: out of the N10 effort bar, no v1 use); drop the notification (rejected: a member who hasn't accepted would find out only when blocked, which brief rev. 2 treated as the trust-sensitive moment for material versions).
+- **Links:** brief BR-8, BR-9, BR-39, §5 Should; `backend.md` §11.2; `qa-report.md` AC-32; `acceptance.md` G-1, G-2; roadmap N10 follow-ups.
 - **Status:** decided

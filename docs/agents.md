@@ -1,6 +1,6 @@
 # Time de Agents do MissionHub
 
-O MissionHub é construído com um time de 7 agents especializados (subagents do Claude Code), definidos em `.claude/agents/*.md`, e orquestrados pela skill `feature-team` (`.claude/skills/feature-team/SKILL.md`). Todos rodam no modelo **opus**.
+O MissionHub é construído com um time de 7 agents especializados (subagents do Claude Code), definidos em `.claude/agents/*.md`, e orquestrados pela skill `feature-team` (`.claude/skills/feature-team/SKILL.md`). Modelos: **sonnet** para product-manager, product-designer e ux-writer-marketing (velocidade); **opus** para recruitment-strategist, backend-engineer, frontend-engineer e qa-engineer (decisões de domínio, código e segurança).
 
 ## Visão geral
 
@@ -122,7 +122,7 @@ recruitment-strategist ──► product-manager ──► product-designer ─�
 - Migrations em `supabase/migrations/`; toda tabela nova com RLS, policies explícitas e grants mínimos; RPCs novas na allow-list de `tests/integration/api-surface.test.ts`. Aplica local com `npm run db:reset` + `npm run db:types`. **Nunca** aplica no projeto hospedado via MCP — só `supabase db push`, e só quando o usuário pede.
 - Sem IDOR (ids de URL re-resolvidos via RLS), dinheiro em unidades inteiras, Zod em toda fronteira, sem segredos/PII em logs.
 
-**Pronto quando:** testes de integração (isolamento, IDOR, permissão por papel, happy path) e unitários; `lint`, `typecheck`, `test` (e `test:integration` se o Supabase local estiver de pé) passando; `backend.md` escrito com o contrato exato para o frontend.
+**Pronto quando (CONSTRUIR):** migration aplicada local, `lint` + `typecheck` passando, resumo curto das actions/queries para o frontend. **ENDURECER:** testes de integração (isolamento, IDOR, permissão por papel, happy path) e unitários passando.
 
 ## 6. frontend-engineer
 
@@ -139,13 +139,13 @@ recruitment-strategist ──► product-manager ──► product-designer ─�
 - Todos os estados da spec, responsivo em 375px e desktop, acessível (HTML semântico, labels, foco visível, teclado).
 - Sem `dangerouslySetInnerHTML` com dados do usuário; links de input validados (`safeNext`).
 
-**Pronto quando:** `lint`, `typecheck`, `test` passando; telas checadas no app rodando (light/dark/mobile) se possível; `frontend.md` com rotas, componentes, chaves i18n e AC por tela.
+**Pronto quando (CONSTRUIR):** `lint` + `typecheck` passando e rotas + passos para validar cada AC. **ENDURECER:** `test` passando, telas checadas (light/dark/mobile), `frontend.md`.
 
 ## 7. qa-engineer
 
 **Quem é:** testador de QA e segurança. O trabalho é achar o que está quebrado, não confirmar que funciona. Adversarial e baseado em evidência.
 
-**Quando usar:** depois de backend e frontend terminarem uma feature; e para regressão antes de release.
+**Quando usar:** só na fase ENDURECER, depois que o usuário validou a feature no app; e para regressão antes de release.
 
 **Escopo:** escreve e corrige **só testes**. Nunca muda código da aplicação para um teste passar — reporta o bug com reprodução.
 
@@ -161,26 +161,54 @@ recruitment-strategist ──► product-manager ──► product-designer ─�
 
 ---
 
-## Fluxo de uma feature (skill `feature-team`)
+## Fluxo de uma feature (skill `feature-team`) — rápido primeiro, testes depois
 
-1. **Slug** — nome curto em kebab-case, passado a todos os agents.
-2. **Estratégia** — `recruitment-strategist` → `recruiting-input.md` + decisões RD-### (pula em trabalho puramente técnico).
-3. **Brief** — `product-manager` → `brief.md` com plano do time (até 2 rodadas de perguntas ao strategist).
-4. **Checkpoint com o usuário** — resumo do brief, plano e tudo marcado `Needs user decision`. Não segue sem resposta.
-5. **Execução do plano** (padrão): `product-designer` → `ux-writer-marketing` → `backend-engineer` → `frontend-engineer` → `qa-engineer`. Passos paralelos só se não editam os mesmos arquivos.
-6. **Loop de correção** — se QA der FAIL, cada bug vai para o dono e QA roda de novo (máx. 3 rodadas).
-7. **Reviews** (features com UI) — designer e ux-writer em modo review, em paralelo.
-8. **Aceite** — `product-manager` aceita ou rejeita contra o brief (`acceptance.md`, roadmap atualizado).
-9. **Relatório** — o que foi construído, cobertura de ACs e métricas, comandos e resultados reais, o que não foi verificado. Sem commit, push ou `supabase db push` sem o usuário pedir.
+Duas fases. **Nada da fase ENDURECER roda durante CONSTRUIR.**
+
+```
+CONSTRUIR (padrão)                                         ENDURECER (só depois que o usuário valida)
+escolhe trilha ─► implementa ─► lint + typecheck ─► usuário ──► qa-engineer (testes + segurança) ─► correções
+                                                     valida      ─► copy fr/pt ─► aceite do PM
+```
+
+### CONSTRUIR — a trilha mais leve que resolve
+
+| Trilha | Quando | Quem |
+|---|---|---|
+| **A. Ajuste** | bug, ajuste visual, copy, regra pequena, ajuste no que acabou de ser feito | **Sessão principal direto.** Sem agents, sem arquivos de spec. |
+| **B. Feature** | tela/ação/tabela nova com regras claras | Brief curto → `backend-engineer` → `frontend-engineer` (ou só um deles). |
+| **C. Feature com decisão de domínio** | pergunta de recrutamento em aberto ou fluxo grande com várias telas | `recruitment-strategist` (só as perguntas abertas) → `product-manager` → `product-designer` se houver várias telas novas → B. |
+
+Passos B/C:
+1. **Slug** em kebab-case; arquivos em `docs/specs/<slug>/`.
+2. **Brief** de uma página: objetivo, BR-#, ACs numerados (uma linha cada), fora de escopo, `Needs user decision`.
+3. **Checkpoint com o usuário só se** houver `Needs user decision`.
+4. **Implementação** — backend → frontend (em paralelo se as assinaturas já estão no brief e não mexem nos mesmos arquivos). O frontend escreve a copy en + rascunho fr/pt.
+5. **Checagem** — só `npm run lint && npm run typecheck` (+ `db:reset` e `db:types` se houver migration). Sem testes novos.
+6. **Entrega ao usuário** com uma lista **"Como validar"**: rotas, papel para logar, passos e resultado esperado por AC. Diz claramente que testes/QA ainda não rodaram.
+
+### ENDURECER — quando o usuário diz "validado" / "aprovado" / "pode testar"
+1. `qa-engineer` → testes de cada AC/BR (integração RLS/IDOR/permissões primeiro, unit, um e2e da jornada principal) + checklist de segurança → `qa-report.md`.
+2. Correções — bugs para o dono, QA de novo (máx. 2 rodadas).
+3. `ux-writer-marketing` finaliza fr/pt das strings novas.
+4. `product-manager` aceita (só itens do roadmap) → `acceptance.md` + roadmap.
+5. Relatório com comandos e resultados reais. Sem commit, push ou `supabase db push` sem o usuário pedir.
+
+### Nunca relaxado, nem em CONSTRUIR
+São regras de código, não testes — pular gera retrabalho:
+- Server Actions dentro de `guard()` com Zod em todo argumento; tenant via `getRequestContext`.
+- Tabelas novas com RLS e policies; client do usuário; sem IDOR; RPCs novas na allow-list de `api-surface.test.ts`.
+- Toda string via i18n (chaves en/fr/pt).
+- Nada de `apply_migration` via MCP no projeto hospedado.
+- Processos (PD-080): só para os PIDs que iniciou, nunca porta 3000, avisa antes de `db:reset`.
 
 ### Outras portas de entrada
-- **Pergunta de estratégia/mercado** → `recruitment-strategist`, depois `product-manager` para refletir no roadmap.
+- **Pergunta de estratégia/mercado** → `recruitment-strategist`, depois `product-manager` se o roadmap muda.
 - **Roadmap/priorização** → `product-manager`.
-- **Só marketing** → `ux-writer-marketing` (+ `frontend-engineer` para mudanças estruturais, + `qa-engineer` para regressão rápida).
-- **Bug pequeno** → direto para o agent dono, depois `qa-engineer`.
+- **Só marketing** → `ux-writer-marketing` (+ `frontend-engineer` para mudanças estruturais).
 
 ### Regras para a sessão principal (lead)
-- Dar a cada agent o slug e o contexto mínimo; os arquivos carregam o resto.
-- Nunca apresentar alegações de um agent como verificadas — conferir `qa-report.md` e o output dos comandos.
-- Agents nunca sobrepõem uma decisão do usuário; PM e strategist escalam preço, questões legais (⚖️) e escolhas irreversíveis.
-- Backend e frontend nunca editam o mesmo arquivo ao mesmo tempo.
+- Trilha A a sessão principal faz sozinha — lançar um agent custa mais que a maioria das edições pequenas.
+- Dizer a cada agent o slug e "modo CONSTRUIR: sem testes, sem docs além do pedido". Agents leem só o que precisam.
+- Nunca apresentar alegações de um agent como verificadas — conferir o output dos comandos.
+- Agents nunca sobrepõem uma decisão do usuário; preço, questões legais (⚖️) e escolhas irreversíveis vão para o usuário.

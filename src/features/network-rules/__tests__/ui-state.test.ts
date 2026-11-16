@@ -112,3 +112,15 @@ describe("misc", () => {
     expect(approxBusinessDaysLeft("2026-12-01T04:59:00Z", new Date("2026-11-16T16:00:00Z"))).toBe(10);
   });
 });
+
+describe("safeNext (QA-N10-04)", async () => {
+  const { safeNext } = await import("@/features/auth/schemas");
+  it("keeps internal paths, queries and fragments", () => {
+    for (const ok of ["/", "/onboarding", "/workspace/acme/overview", "/workspace/acme/accept-rules?v=1.1&next=%2Fworkspace%2Facme", "/network-rules#upcoming", "/workspace/acme/reports/3f2a?tab=org"]) expect(safeNext(ok, "/f")).toBe(ok);
+  });
+  it("refuses anything a browser could turn into another origin", () => {
+    for (const bad of ["/\t/evil.example", "/\n/evil.example", "/\r/evil.example", "/ /evil.example", "/\u0000/evil", "//evil.example", "/\\evil.example", "\\/evil.example", "https://evil.example", "javascript:alert(1)", "evil.example", "", "/ /evil"]) expect(safeNext(bad, "/f")).toBe("/f");
+    expect(safeNext(null, "/f")).toBe("/f");
+    expect(safeNext(undefined, "/f")).toBe("/f");
+  });
+});

@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { randomUUID } from "node:crypto";
-import { admin, createCandidate, createJob, createOrg, createUser, sql, type TestUser } from "./helpers";
+import { createCandidate, createJob, createOrg, createUser, sql, type TestUser } from "./helpers";
 import {
   addMember, adminCase, closeWindow, currentVersion, decide, err, immediateHold, liftAll, referralBetween, sendNotice, today, trySubmit, version,
 } from "./n10-helpers";
@@ -162,7 +162,7 @@ describe("reporter identity never reaches the reported org (BR-43, AC-69, AC-113
   // admin's user id in actor_id, readable by the org's org_admins through PostgREST (AC-148, N10-D28:
   // no platform admin name or id on any member-facing surface). The audit page shows "System" (the
   // profile isn't readable), but the id lets the org tell admins apart across cases.
-  it.fails("QA-N10-03: the reported org's audit rows don't expose the platform admin's id", async () => {
+  it("QA-N10-03: the reported org's audit rows don't expose the platform admin's id", async () => {
     const rows = (await tAdmin.client.from("audit_events").select("actor_id, action").eq("organization_id", tOrg.id).eq("entity_id", caseId)).data ?? [];
     expect(rows.length).toBeGreaterThan(0);
     expect(rows.filter((r) => r.actor_id === pa.id)).toEqual([]);
@@ -221,7 +221,7 @@ describe("the restriction reason never reaches partners (BR-14, BR-42, AC-49, AC
 
   // QA-N10-01 (MAJOR, backend): organizations_select_partners lets any partner org select the
   // sanction columns (suspended_at, terminated_at, suspended_reason) of the other org through PostgREST.
-  it.fails("QA-N10-01: a partner can't read the other org's suspension / termination columns", async () => {
+  it("QA-N10-01: a partner can't read the other org's suspension / termination columns", async () => {
     const su = await createUser("qa10-susp-cols");
     const suOrg = await createOrg(su, "QA Susp Columns");
     await referralBetween(sRec, sOrg.id, su, suOrg.id);
@@ -494,7 +494,7 @@ describe("first-access gate holes (BR-7, AC-19, AC-143)", () => {
 
   // QA-N10-02 (MINOR, backend): candidate_photos_delete has no app.assert_rules_gate(), so a gated
   // member deletes candidate photos through the Storage API (AC-143: any authenticated write).
-  it.fails("QA-N10-02: a gated member can't delete a candidate photo through Storage", async () => {
+  it("QA-N10-02: a gated member can't delete a candidate photo through Storage", async () => {
     const cand = await createCandidate(tAdmin, tOrg.id);
     const path = `${tOrg.id}/${cand}/photo-${randomUUID().slice(0, 6)}.png`;
     const png = Uint8Array.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0]);
@@ -539,7 +539,7 @@ describe("gate after a non-material version (frontend gap 14, AC-20, BR-7)", () 
   // refuses with rules_acceptance_required because the org hasn't accepted *that* version. The admin
   // can't pass the gate. Reproduced in one rolled-back transaction (nothing becomes visible to other
   // sessions; no publish notification is sent).
-  it.fails("QA-N10-05: a new org_admin can pass the gate with the personal statement the UI offers", async () => {
+  it("QA-N10-05: a new org_admin can pass the gate with the personal statement the UI offers", async () => {
     const owner = await createUser("qa10-nm-owner");
     const org = await createOrg(owner, "QA Non Material");
     const newcomer = await createUser("qa10-nm-admin", { acceptRules: false });
@@ -598,5 +598,105 @@ describe("org rate limit (BR-25, AC-63)", () => {
     const ref = (await referralBetween(c, org.id, tAdmin, tOrg.id)).referralId;
     expect(err(await fileReport(c, org.id, { p_referral: ref }))).toBe("report_rate_limited_org");
     expect(sql(`select count(*) from app.conduct_cases where reporter_org_id = '${org.id}'`)).toEqual(["10"]);
+  });
+});
+
+// ---------------------------------------------------------------------------------------------
+// QA round 2: probes around the round-1 fixes (20261116001800_n10_qa_fixes.sql).
+describe("round 2: no other way to the revoked organization columns (QA-N10-01)", () => {
+  let su: TestUser;
+  let suOrg: { id: string; slug: string };
+  beforeAll(async () => {
+    su = await createUser("qa10-r2-susp");
+    suOrg = await createOrg(su, "QA R2 Susp");
+    await referralBetween(sRec, sOrg.id, su, suOrg.id);
+    sql(`update public.organizations set suspended_at = now(), suspended_reason = 'QA R2 internal reason' where id = '${suOrg.id}'`);
+  });
+
+  it("partner and own members: no select, filter, order or embed on the three columns", async () => {
+    for (const u of [sRec, su]) {
+      const q = () => u.client.from("organizations");
+      expect.soft((await q().select("*").eq("id", suOrg.id)).error, "select *").not.toBeNull();
+      for (const col of ["suspended_at", "terminated_at", "suspended_reason"]) {
+        expect.soft((await q().select(`id, ${col}`).eq("id", suOrg.id)).error, `select ${col}`).not.toBeNull();
+        // Filtering or ordering on a column without SELECT privilege must not work as an oracle either.
+        const f = await q().select("id").eq("id", suOrg.id).not(col, "is", null);
+        expect.soft(f.error !== null || (f.data ?? []).length === 0, `filter ${col}`).toBe(true);
+        expect.soft((await q().select("id").eq("id", suOrg.id).order(col)).error, `order ${col}`).not.toBeNull();
+      }
+    }
+    // Embedded through a referral (both FK directions) — the partner side.
+    const emb = await sRec.client.from("referrals").select("id, target:organizations!referrals_target_org_id_fkey(suspended_at, suspended_reason)").eq("target_org_id", suOrg.id);
+    expect(emb.error).not.toBeNull();
+    // Safe columns still work for both.
+    expect((await sRec.client.from("organizations").select("id, name").eq("id", suOrg.id)).data).toEqual([{ id: suOrg.id, name: "QA R2 Susp" }]);
+  });
+
+  it("admin_organizations returns nothing to non-admins and the row to platform admins", async () => {
+    for (const u of [sRec, sAdmin, su, tAdmin]) {
+      const r = await u.client.from("admin_organizations" as never).select("id, suspended_at").eq("id", suOrg.id);
+      expect.soft(r.error ?? r.data, "member").toEqual([]);
+    }
+    const count = await sAdmin.client.from("admin_organizations" as never).select("id", { count: "exact", head: true });
+    expect(count.count ?? 0).toBe(0);
+    const a = await pa.client.from("admin_organizations" as never).select("id, suspended_reason").eq("id", suOrg.id);
+    expect(a.data).toEqual([{ id: suOrg.id, suspended_reason: "QA R2 internal reason" }]);
+    // The view isn't writable.
+    expect((await pa.client.from("admin_organizations" as never).update({ name: "x" } as never).eq("id", suOrg.id)).error).not.toBeNull();
+  });
+
+  it("RPCs that read the columns are platform-admin only", async () => {
+    for (const [fn, args] of [["admin_org_conduct_file", { p_org: suOrg.id }], ["admin_list_hire_reports", {}]] as const) {
+      expect(["forbidden", "not_found"]).toContain(err(await sRec.client.rpc(fn as never, args as never)));
+    }
+    expect(((await su.client.rpc("get_my_org_state", { p_org: suOrg.id })).data as { suspended_at: string | null }).suspended_at).not.toBeNull();
+    expect(err(await sRec.client.rpc("get_my_org_state", { p_org: suOrg.id }))).toBe("not_found");
+  });
+});
+
+describe("round 2: audit masking (QA-N10-03) and acceptance rule (QA-N10-05)", () => {
+  it("the admin copy of a masked audit row (org null) isn't readable by the org; the org row has no actor", async () => {
+    const rows = (await tAdmin.client.from("audit_events").select("organization_id, actor_id, action").eq("entity_id", caseId)).data ?? [];
+    expect(rows.length).toBeGreaterThan(0);
+    // Only the org's own rows; platform-admin actions have no actor (member actions keep theirs, below).
+    expect(rows.every((r) => r.organization_id === tOrg.id)).toBe(true);
+    expect(rows.filter((r) => r.actor_id === pa.id || r.actor_id === pb.id)).toEqual([]);
+    expect(rows.some((r) => r.action === "conduct.notice_sent" && r.actor_id === null)).toBe(true);
+    expect(sql(`select count(*) > 0 from public.audit_events where organization_id is null and entity_id = '${caseId}' and actor_id = '${pa.id}'`)).toEqual(["t"]);
+    // Member actions keep their actor (only platform admins are masked).
+    expect(sql(`select count(*) from public.audit_events where organization_id = '${tOrg.id}' and action = 'conduct.response_submitted' and actor_id = '${tAdmin.id}'`)).toEqual(["1"]);
+  });
+
+  it("an upcoming version still needs the org statement from an org_admin whose org hasn't accepted it; a recruiter gives the personal one", async () => {
+    const owner = await createUser("qa10-r2-up-owner");
+    const org = await createOrg(owner, "QA R2 Upcoming");
+    const rec = await createUser("qa10-r2-up-rec");
+    await addMember(org.id, rec, "recruiter");
+    const v1 = currentVersion().id;
+    const call = (uid: string, personal: boolean, forOrg: boolean) => `
+      begin
+        perform set_config('request.jwt.claims', json_build_object('sub', '${uid}', 'role', 'authenticated')::text, true);
+        perform public.accept_network_rules('${org.id}', (select id from public.network_rules_versions where label = '9.991'), 'en', ${personal}, ${forOrg});
+        insert into qa_out values ('${uid === owner.id ? "admin" : "rec"}_${personal}_${forOrg}', 'ok');
+      exception when others then insert into qa_out values ('${uid === owner.id ? "admin" : "rec"}_${personal}_${forOrg}', sqlerrm);
+      end;`;
+    const out = sql(`
+      begin;
+      with v as (
+        insert into public.network_rules_versions (label, type, status, effective_on, effective_at, approval_reference, rule_numbers)
+        select '9.991', 'material', 'draft', app.today_et() + 40, now() + interval '40 days', 'QA rollback only', rule_numbers
+          from public.network_rules_versions where id = '${v1}' returning id)
+      insert into public.network_rules_version_texts (version_id, locale, body, change_summary)
+      select v.id, t.locale, t.body || E'\\n', 'Material change for a QA rollback-only check.' from v, public.network_rules_version_texts t where t.version_id = '${v1}';
+      update public.network_rules_versions set status = 'published', published_at = now() where label = '9.991';
+      create temp table qa_out (step text, val text) on commit drop;
+      grant all on qa_out to authenticated;
+      set local role authenticated;
+      do $$ begin ${call(owner.id, true, false)} ${call(rec.id, true, false)} ${call(owner.id, true, true)} end $$;
+      select string_agg(step || '=' || val, ';' order by step) from qa_out;`);
+    expect(sql(`select count(*) from public.network_rules_versions where label = '9.991'`)).toEqual(["0"]);
+    expect(out.join(";")).toContain("admin_true_false=rules_acceptance_required");
+    expect(out.join(";")).toContain("admin_true_true=ok");
+    expect(out.join(";")).toContain("rec_true_false=ok");
   });
 });

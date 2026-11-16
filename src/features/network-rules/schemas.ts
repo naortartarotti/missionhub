@@ -63,7 +63,7 @@ const localeTexts = z.object({ en: z.string().max(200_000).default(""), "fr-CA":
 
 export const rulesDraftSchema = z.object({
   draftId: uuid.optional().nullable(),
-  label: z.string().trim().regex(/^\d{1,3}\.\d{1,3}$/, "i18n:admin.networkRules.errors.label"),
+  label: z.string().trim().regex(/^\d{1,3}\.\d{1,3}$/, "i18n:admin.networkRules.errors.labelFormat"),
   type: z.enum(VERSION_TYPES),
   effectiveOn: isoDate.optional().nullable(),
   texts: localeTexts,

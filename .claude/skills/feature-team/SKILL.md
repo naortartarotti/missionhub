@@ -1,74 +1,72 @@
 ---
 name: feature-team
-description: Build a MissionHub feature end to end with the team of agents — recruitment-strategist → product-manager (central hub) → product-designer → ux-writer-marketing → backend-engineer → frontend-engineer → qa-engineer → product-manager acceptance — with handoffs through docs/specs/<slug>/ and a fix loop until QA passes. Use when the user asks to create, build or implement a feature with the team, or asks for roadmap/prioritization with the team.
+description: Build or adjust a MissionHub feature with the team of agents, fast-first. Default is BUILD mode — the smallest set of agents (often none) implements the change with only lint + typecheck, then hands it to the user to validate in the app. Tests, QA, security probing, copy review and PM acceptance run only in HARDEN mode, after the user says the feature is validated. Use when the user asks to create, build, implement or adjust a feature, or asks for roadmap/prioritization with the team.
 ---
 
-# Feature team
+# Feature team — fast first, harden after validation
+
+Two phases. **Never run HARDEN work during BUILD.**
 
 ```
-recruitment-strategist ──► product-manager ──► product-designer ─► ux-writer-marketing
-                               ▲    │          ─► backend-engineer ─► frontend-engineer ─► qa-engineer
-                               └────┴──────────────── acceptance ◄──────────────────────────┘
+BUILD (default)                                        HARDEN (only after the user validates)
+pick track ─► implement ─► lint + typecheck ─► user ──► qa-engineer (tests + security) ─► fix loop
+                                               validates   ─► copy review fr/pt ─► PM acceptance
 ```
 
-The **product-manager** is the central piece: it receives domain decisions from the **recruitment-strategist** and
-writes the brief and team plan that direct everyone else. Agents can't call each other, so **you (the main session)
-run the plan the PM writes**. They communicate through files:
+## BUILD — pick the lightest track that fits
 
-| File | Written by | Read by |
+| Track | When | Who |
 |---|---|---|
-| `docs/strategy/decisions.md` (RD-###), `docs/strategy/*.md` | recruitment-strategist | product-manager, everyone |
-| `docs/product/roadmap.md`, `docs/product/decisions.md` (PD-###) | product-manager | everyone |
-| `recruiting-input.md` | recruitment-strategist | product-manager, product-designer |
-| `brief.md` (scope, BR-#, metrics, **team plan**) | product-manager | everyone |
-| `spec.md` | product-designer (§5 Copy finalized by ux-writer-marketing) | everyone (ACs are the contract) |
-| `docs/content/voice-and-tone.md` | ux-writer-marketing | everyone writing user-facing text |
-| `backend.md` | backend-engineer | frontend-engineer, qa-engineer |
-| `frontend.md` | frontend-engineer | qa-engineer, product-designer |
-| `qa-report.md` | qa-engineer | product-manager, backend, frontend |
-| `design-review.md`, `copy-review.md` | product-designer, ux-writer-marketing (review mode) | frontend-engineer, product-manager |
-| `acceptance.md` | product-manager | you, the user |
+| **A. Ajuste** | bug, visual tweak, copy change, small rule, adjustment to something just built | **You (main session) directly.** No agents, no spec files. |
+| **B. Feature** | new screen/action/table with clear rules | Short brief (you write it, or `product-manager` if scope is unclear) → `backend-engineer` → `frontend-engineer`. Or one engineer if it's only server or only UI. |
+| **C. Feature com decisão de domínio** | open recruiting question (fees, ownership, guarantees, workflow) or a large multi-screen flow | `recruitment-strategist` (only the open questions) → `product-manager` → `product-designer` only if there are several new screens/flows → B. |
 
-All per-feature files live in `docs/specs/<feature-slug>/`.
+Default to the lighter track when in doubt; escalate only if you actually hit an open question.
 
-## Steps
-1. **Slug** — pick a short kebab-case slug from the request. Pass it to every agent.
-2. **Strategy** — run `recruitment-strategist` with the user's request verbatim and the slug. It writes
-   `recruiting-input.md` and records RD-### decisions. Skip only for purely technical work (refactor, bug with no
-   domain question) — the PM can ask for it later.
-3. **Brief** — run `product-manager` with the request and slug. It writes `brief.md` with the team plan.
-   If the PM lists questions for the strategist, run the strategist on them, then the PM again (max 2 rounds).
-4. **User checkpoint** — show the user the brief summary, the plan, and **everything marked `Needs user decision`**
-   (from either agent). Don't continue past those without the user's answer; record answers in the decision logs.
-5. **Execute the PM's team plan**, in its order. The default is:
-   - `product-designer` → `spec.md` (show the user any new open questions)
-   - `ux-writer-marketing` → finalizes spec §5 (skip if no user-facing text)
-   - `backend-engineer` → code + `backend.md` (skip if no data/server change)
-   - `frontend-engineer` → code + `frontend.md`, after backend
-   - `qa-engineer` → `qa-report.md`
-   Steps the PM marks parallel may run together only if they don't edit the same files.
-6. **Fix loop** — if QA verdict is FAIL, send each blocker/major bug to its owner (continue that agent with
-   SendMessage if still addressable, otherwise start it again with the slug and the bug list), then run QA again.
-   Stop after 3 rounds and report what is still failing.
-7. **Reviews** (UI features) — `product-designer` and `ux-writer-marketing` in review mode, in parallel; send blocking
-   findings to frontend.
-8. **Acceptance** — run `product-manager` to accept or reject against the brief (`acceptance.md`, roadmap updated).
-   If changes are needed, loop back to the owners it names.
-9. **Report** — tell the user what was built, AC and metric coverage, test commands and real results, and anything not
-   verified. Do not commit, push, or run `supabase db push` unless the user asks.
+### Track B/C steps
+1. **Slug** — short kebab-case, passed to every agent. Files go in `docs/specs/<slug>/`.
+2. **Brief** — `brief.md`, one page max: goal, business rules (BR-#), numbered ACs (one line each), out of scope,
+   and anything `Needs user decision`. No metrics section, no team-plan essay. The ACs replace a separate spec unless
+   a designer was needed.
+3. **User checkpoint — only if** something is marked `Needs user decision`. Otherwise go straight to code.
+4. **Implement** — `backend-engineer` then `frontend-engineer`. They may run in parallel when backend's action/query
+   signatures are already in the brief and they don't touch the same files. Copy: frontend writes en and draft fr/pt
+   following `docs/content/voice-and-tone.md` — no `ux-writer-marketing` pass in BUILD.
+5. **Checks** — `npm run lint && npm run typecheck` only (plus `npm run db:reset && npm run db:types` if there was a
+   migration). Fix failures; no new tests, no `npm test` unless the change touched code that existing unit tests cover
+   and it's quick.
+6. **Hand to the user** — say what was built and give a **"Como validar"** checklist: route(s), role to log in as,
+   steps to click, expected result per AC. Say plainly that tests/QA have not run yet. Then stop.
 
-## Other entry points
-- **Strategy / market question** ("should we support retained search?", "how do we enter Brazil?") →
-  `recruitment-strategist`, then `product-manager` to translate the decision into roadmap changes.
-- **Roadmap / prioritization** → `product-manager` (it pulls in the strategist's decisions).
-- **Marketing-only** (landing, SEO, launch email) → `ux-writer-marketing` (with positioning from
-  `docs/strategy/`); `frontend-engineer` only for structural page changes, then `qa-engineer` for a quick regression.
-- **Small bug** → straight to the owner agent, then `qa-engineer`; tell the PM only if it changes scope or roadmap.
+### Track A (ajuste)
+Edit directly, run lint + typecheck on the result, tell the user what changed and where to look. If it touches
+something already HARDENed, also run the existing tests for that area (`npx vitest run <path>`), since those tests exist.
+
+## HARDEN — only when the user says it's validated ("validado", "aprovado", "pode testar", "harden")
+1. `qa-engineer` → tests for every AC/BR (unit + integration; e2e only for the main journey), security checklist,
+   `qa-report.md`.
+2. **Fix loop** — blockers/majors to their owner, re-run QA. Max 2 rounds, then report what's still failing.
+3. **Copy** — `ux-writer-marketing` finalizes fr/pt for the strings added (skip if none).
+4. **Acceptance** — `product-manager` only for roadmap items; updates roadmap and `acceptance.md`.
+5. Report test commands and real results. Do not commit, push, or run `supabase db push` unless the user asks.
+
+## Never relaxed, even in BUILD
+These are coding rules, not tests — skipping them causes rework:
+- Server Actions inside `guard()` with Zod on every argument; tenant from `getRequestContext`, never from the client.
+- New tables with RLS + explicit policies; user-scoped Supabase client; no IDOR. New RPCs added to the allow-list in
+  `tests/integration/api-surface.test.ts` (one line).
+- Every string through i18n (en/fr/pt keys exist, or typecheck fails).
+- No `apply_migration` via MCP on the hosted project; remote only via `supabase db push` when the user asks.
+- Processes (PD-080): stop only PIDs you started, never `pkill`/pattern kills, never port 3000, announce `db:reset`.
 
 ## Rules for you as lead
-- Give each agent the slug and the minimal context it needs; the files carry the rest.
-- Never present an agent's claims to the user as verified — check qa-report and command output yourself.
-- Agents never override a user decision; the PM and strategist escalate pricing, legal (⚖️) and irreversible choices.
-- Agents run sequentially when they touch the same files; backend and frontend never edit the same file at once.
-- Processes (PD-080): agents stop only the PIDs they started — never `pkill`/pattern kills — never use port 3000
-  (the user's `npm run dev`), announce any `db:reset` on the shared local DB, and list started/stopped processes in their report.
+- Give each agent the slug, the track (BUILD) and the minimal context; tell it explicitly **"BUILD mode: no tests,
+  no docs beyond what's listed"**. Agents read only the files they need, not the whole docs folder.
+- Prefer doing Track A yourself over launching an agent — an agent launch costs more than most small edits.
+- Never present an agent's claims as verified; check command output yourself.
+- Agents never override a user decision; pricing, legal (⚖️) and irreversible choices go to the user.
+
+## Other entry points
+- **Strategy / market question** → `recruitment-strategist`, then `product-manager` if the roadmap changes.
+- **Roadmap / prioritization** → `product-manager`.
+- **Marketing-only** → `ux-writer-marketing`; `frontend-engineer` only for structural page changes.

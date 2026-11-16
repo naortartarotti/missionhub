@@ -1,3 +1,4 @@
+import type { AdminOrganization } from "@/features/admin/queries";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -25,7 +26,7 @@ export default async function AdminOrganizationPage({ params }: PageProps<"/admi
   if (!isUuid(orgId)) notFound();
   const [db, t, tg, f] = await Promise.all([createClient(), getT("admin"), getGlobalT(), getFormatter()]);
   const [org, members, placements, audit] = await Promise.all([
-    db.from("organizations").select("*").eq("id", orgId).maybeSingle(),
+    db.from("admin_organizations").select("*").eq("id", orgId).maybeSingle(), // N10 QA-N10-01
     db
       .from("organization_memberships")
       .select("id, role, status, created_at, user:profiles!memberships_user_profile_fk(full_name, email)")
@@ -45,7 +46,7 @@ export default async function AdminOrganizationPage({ params }: PageProps<"/admi
       .limit(10),
   ]);
   if (org.error) throw org.error;
-  const o = org.data;
+  const o = org.data as AdminOrganization | null;
   if (!o) notFound();
   // N10 S19: the sanction file replaces the Suspend button (BR-29).
   const conduct = (await getOrgConductFile(db, orgId).catch(() => null)) as unknown as OrgConductFile | null;

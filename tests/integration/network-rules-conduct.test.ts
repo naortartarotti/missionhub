@@ -85,7 +85,7 @@ describe("filing a report (BR-15 to BR-18, BR-25)", () => {
   });
 
   it("a conduct case isn't an open dispute for any other rule (BR-19, AC-62)", async () => {
-    expect(sql(`select app.release_allowed('${referralId}')::text`)).toEqual(sql(`select app.release_allowed('${referralId}')::text`));
+    // (Before/after snapshot of release and claim eligibility: network-rules-qa.test.ts, QA-N10-07.)
     expect(sql(`select count(*) from public.disputes where status = 'open' and referral_id = '${referralId}'`)).toEqual(["0"]);
     expect(sql(`select coalesce(app.claim_blocker('${referralId}'), 'none')`)[0]).not.toBe("dispute_already_open");
   });

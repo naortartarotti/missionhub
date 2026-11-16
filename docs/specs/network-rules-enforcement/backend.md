@@ -1,6 +1,6 @@
 # Backend: Network Rules enforcement (N10)
 
-Owner: Backend Engineer · 2026-11-16 · Inputs: `brief.md` rev. 2 (BR-1 to BR-44, N10-D1 to N10-D38), `spec.md` (frozen, AC-1 to AC-151), `backend-estimate.md`, PD-066 (build now, legal text as drafts, the designer calls as written).
+Owner: Backend Engineer · 2026-11-16 · Inputs: `brief.md` rev. 2 (BR-1 to BR-44, N10-D1 to N10-D38), `spec.md` (frozen, AC-1 to AC-151), `backend-estimate.md`, PD-084 (build now, legal text as drafts, the designer calls as written).
 Status: built and applied **locally only** (`supabase db reset`). Not pushed. This file is the contract for frontend and QA.
 
 ## 0. Summary
@@ -28,6 +28,8 @@ Status: built and applied **locally only** (`supabase db reset`). Not pushed. Th
 | `20261116001500_conduct_reports.sql` | Evidence RPCs + storage policy `conduct_evidence_insert`; report RPCs; reporter views; admin queue / case / triage / notice / follow-up; org-side case page, response, follow-up reply. |
 | `20261116001600_sanctions.sql` | Drops `set_organization_suspension`; decision, immediate hold, lift, review request/decision, incident notices, standing, admin org file; final `app.no_sanction_allowed`. |
 | `20261116001700_conduct_audit_visibility.sql` | `audit_select` policy: sanction-related actions for `org_admin` only. |
+
+| `20261116001800_n10_qa_fixes.sql` | QA round 1: column SELECT on `organizations.suspended_at / terminated_at / suspended_reason` revoked from `authenticated` and `anon` (QA-N10-01) + platform-admin view `public.admin_organizations`; `accept_network_rules` compares the org acceptance with the required version (QA-N10-05); gate on `candidate_photos_delete` (QA-N10-02); trigger `audit_mask_platform_admin` nulls a platform admin's `actor_id` on member-readable conduct / sanction / settlement / stale-close audit rows and keeps it in an org-null copy (QA-N10-03). |
 
 `supabase/seed.sql` (new, **generated** by `npx tsx scripts/build-network-rules-seed.mts`, local `db reset` only): publishes v1.0 `initial` from `docs/content/network-rules/{en,fr-CA,pt-BR}.md` stripped with the PUBLISHING.md procedure (P0-3 shipped; N5, access expiry, P1-5 not shipped; remaining `[TODO: x]` → `(draft: x)`). Approval reference "Local seed: unapproved drafts (P0-1 pending)". Never reaches a hosted DB (`db push` doesn't run seeds).
 
@@ -328,3 +330,15 @@ AC coverage server-side (by test file): A (AC-1–9, 11) versions; B (AC-15, 16,
 10. **Job reports** require the reporting org to be unrestricted (a restricted org has no partner opportunities, so it has no visible partner job). Referral reports work in any state.
 11. **Internal referrals** (related orgs) return `report_self` on a direct call (Q-D7).
 12. **`candidate-confirmation-integrity-qa.test.ts`**: the pre-N10 assertion "a suspended source org can neither rotate nor issue a token" was superseded by BR-13/BR-34.1 (resend continues in settlement mode). The test now asserts the resend works and a deactivated member is still refused.
+
+## 12. QA round 1 fixes (2026-11-16)
+
+| Bug | Fix | Frontend / QA impact |
+|---|---|---|
+| QA-N10-01 | `authenticated` / `anon` can no longer select `organizations.suspended_at`, `terminated_at`, `suspended_reason` (any org, own included). Own state: `get_my_org_state` / `ctx.settlementMode` / `ctx.restriction`. Platform admins: `public.admin_organizations` (same columns + the three; zero rows for non-admins; embeds like `organization_memberships(count)` work). | **Any `select('*')` or explicit select of those columns on `organizations` with a user client now fails.** Admin pages (`/admin`, `/admin/organizations`, `/admin/organizations/[orgId]`) were switched to `admin_organizations`; row type `AdminOrganization` / `AdminOrganizationWithCount` in `src/features/admin/queries.ts`. The worker reads them with the service role (unchanged). |
+| QA-N10-05 | `accept_network_rules`: the org statement is required only when the org hasn't accepted the **required** version (for the current version) or the version itself (for an upcoming one). Matches `get_my_org_state.org_accepted_current` / `org_accepted_upcoming`. | AC-20 gate and the accept page now agree. |
+| QA-N10-02 | `candidate_photos_delete` requires `app.assert_rules_gate()`. | — |
+| QA-N10-03 | Member-readable audit rows of `conduct_report.* / conduct.* / sanction.* / settlement_mode.* / referral.closed_stale_by_admin` written by a platform admin have `actor_id = null`; an org-null copy (metadata + `organization_id`) keeps the actor for admins (stale close already had one). | Org audit page: these rows have no actor ("System"). Admin audit shows the copies. |
+| QA-N10-06 | `report_rate_limited_user/_org` default to `network.report.errors.userLimitNoSupport` / `orgLimitNoSupport`; `rulesDraftSchema` uses `admin.networkRules.errors.labelFormat`. | The report dialog keeps its own Before/After copy keyed on `code`. |
+| QA-N10-07 | Tautological assertion removed from `network-rules-conduct.test.ts` (covered by the QA before/after test). | — |
+| AC-32 | Not built (deferred; PM records it). | — |

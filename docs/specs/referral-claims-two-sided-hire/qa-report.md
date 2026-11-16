@@ -353,3 +353,80 @@ In-scope ACs:
   - `job-terms-card.spec.ts` and `review-regression.spec.ts`: BR-1, a client name is needed to open a job to partners;
   - `duplicate-presentation.spec.ts`: BR-35 / AC-76. B's line always carries "unless the sourcing recruiter released the candidate", so the old `not.toContainText(/releas/i)` became "no release state or action, and the generic AC-76 line".
 - **Not changed:** `onboarding.spec.ts` and `documents.spec.ts` (failing on non-N3 page redesigns; owner outside N3).
+
+---
+
+# Round 1 re-check (2026-11-16)
+
+Inputs:
+- backend v2.1 (`backend.md` §26–§28, migration `20261117001100_n3_qa_round1.sql`);
+- frontend "Fix loop, round 1" (`frontend.md` R1.1–R1.3);
+- spec rev. 2.2 (PD-079);
+- design-review B-1 to B-3.
+
+Branch: `n10-network-rules` (no switch, no commit). Record-scope md5 before any run: `dcd272097bdb90c8311662bf3752e01e` (unchanged).
+
+## Verdict: **PASS** for N3
+
+All nine QA findings and all three design blockers are fixed and verified. There are no open N3 blockers or majors. The remaining failures in the full run are outside N3; they're listed below with owners.
+
+## Findings re-tested
+
+| Finding | Re-test | Result |
+|---|---|---|
+| QA-N3-01 (blocker) uphold on in-progress referrals | `n3-qa` "QA-12" × `accepted` / `interviewing` / `offer` → `fee_pending/upheld` | **Fixed** |
+| QA-N3-02 (major) per-user limit | `n3-qa` "per user: the 6th…" (file) + **new** "refused attempts count on all four RPCs": request_authorization_check (`auth_check_not_available` ×5 → `rate_limited`), rebut (`hire_rebuttal_closed` ×5 → `rate_limited`), contest (`hire_report_answer_closed` ×5 → `rate_limited`), file (`hire_report_unavailable` ×5 → `rate_limited`) | **Fixed** |
+| Generic refusal still byte-identical | QA-1, **strengthened**: besides the normalised error object, it now compares the **raw** PostgREST response (`status`, `data`, `error`) across all 11 causes. All equal `{"status":200,"data":{"error":"hire_report_unavailable"},"error":null}`, including outsiders (C, C claiming A's org, A-rec, B, random id), which now also get a 200 result and not a raise | **Holds** |
+| QA-N3-03 HA-1 Ops query | All 11 blocks of `docs/ops/n3-hire-signals.sql` executed read-only: all OK. Backend added an HA-1 test (2 hires vs 1) | **Fixed** |
+| QA-N3-04 (major) success feedback | E2E test 2: the result state "Hire recorded" + `noAgreementResult` + **Done** shows, then closes. E2E test 3: toast "Fee details saved. Next: record the client invoice." Both are now **hard** assertions | **Fixed** |
+| QA-N3-05 reminders merged | `n3-qa` "when a sweep misses day 5…" → 2 reminders | **Fixed** |
+| QA-N3-06 `report_confirmed` origin | backend test in `n3-hire-reports` (+4) passes; code: `report_hire` sets it on a Confirm of `awaiting_answer` / `unanswered` | **Fixed** |
+| QA-N3-07 drop-2 Ops metrics | 5 new blocks present and run | **Fixed** |
+| QA-N3-08 stepper / Terms panel | E2E test 2: no "Sourcing recruiter's expected share" and no "Sourcing 45% · Hiring 45%" after a no-split hire. Screenshot `qa4/v4-after-record.png`: Under review / Interviewing / Offer unticked, timeline Submitted → Declined → Hired | **Fixed** |
+| QA-N3-09 AC-93 vs N10 | PD-079 #1 adopts N10 settlement mode; the existing QA-7 tests already assert that behaviour | **Closed (spec)** |
+| Design B-1 (AC-79) | Code: `claim-panel.tsx` renders `RequestAuthCheckDialog` for target + `contested`, then `requestedLine`. **New E2E** test 5: B asks from a contested N1 objection; the line shows; the button is gone; the row has `dispute_kind = prior_presentation`; A's page doesn't contain B's reason | **Fixed** |
+| Design B-2 / B-3 (AA) | Code: both lines now `text-foreground` on `bg-warning-soft` with a `text-warning` icon (placement page line 84, `hire-report-admin.tsx` line 386) | **Fixed** (not measured with a contrast tool) |
+| PD-079 AC-61 labels | en / fr / pt `clientKeyCommit` / `clientKeyDelivery` / `jobClientToday`; the old `clientCommit` / `clientDelivery` keys are gone | **OK** |
+| PD-079 AC-30 admin | Deferred to Ops / X9; no N3 test | N/A |
+
+## Review of backend's edits to `n3-qa.test.ts`
+
+- **`asError`** maps `{data: {error}}` back to the error object the assertions used. Every assertion keeps its expected code, so nothing is weakened for the code checks.
+- **One gap:** normalising would hide a raise-vs-result difference between refusal causes (HTTP 400 vs 200), which would be an oracle. I **added** the raw-response comparison to QA-1 (above). It passes.
+- **The `clearLimits()` calls** in QA-1 are needed now that refusals count. They don't weaken the identity check.
+- **The per-user limit:** covered without clearing in "per user: the 6th…", and in the new four-RPC test.
+
+## Commands run (real results)
+
+| Command | Result |
+|---|---|
+| `npm run lint` | exit 0, no warnings |
+| `npm run typecheck` | exit 0 (also `tsc --noEmit` after the last test edits: exit 0) |
+| `npm test` | **35 files, 308 passed, 1 expected fail** |
+| N3 integration (`n3-qa`, `n3-hire-reports`, `n3-record-hire`) | **3 files, 96 passed** |
+| Full integration, run 1 | 9 failed, 516 passed, 4 expected fail (2,600 s). Contended: another session's full integration run, an E2E run and a worker were running concurrently; `matches` grew 0.37 M → 4.2 M; then another session started a `db reset` (pid 53938) mid-rerun. All failures were 30 s scan / `drainQueue` timeouts, a `get_opportunities` null, a live-count mismatch (1458 vs 1460, concurrent writers), plus one flaky regex (see below) |
+| Full integration, run 2, on the freshly reset stack (reset by the other session, not by me) | **3 failed, 526 passed (529), 155 s**. All N1, N2, N3, N9 and record-scope files green. Failures: `network-rules-qa` ×2 (`partner_activity_restricted` in fixtures; the file is the N10 session's uncommitted edit; **passes alone**, 27 / 27) and `journey` "making a candidate unavailable removes them from B's counts" (657 vs 657; **fails alone too**) |
+| `npm run build` | exit 0. ⚠️ In place (shared `.next`); the user's dev server on 3000 answered 200 before and after |
+| E2E N3 (5 tests) | First run: 4 passed, 1 failed. Test 3 raced with pid 3880 (another session's integration run, whose N3 `afterEach` toggles the global deemed flag); `platform.setting_changed` audit rows at 20:46 confirm it. **Rerun after pid 3880 exited: 5 / 5 passed** |
+| E2E regression on 3117 with the worker: N1 (7), N9 (8, with the email stand-in), N2 (12), N10 (3), Journey A (7), review-regression (2), auth (2) | **41 passed, 0 failed** |
+
+## Remaining issues (not N3)
+
+| Item | Severity | Owner |
+|---|---|---|
+| `journey.test.ts` › "making a candidate unavailable removes them from B's counts" fails on a clean stack (the count doesn't drop). N3 doesn't touch matching or `get_job_match_summary`. The test doesn't check the update's error, so the cause needs triage (candidate update refused, or the candidate not counted). It was green at the start of the first pass | major (regression, outside N3) | main session → whoever owns candidates / matching changes on this branch |
+| `network-rules-qa.test.ts` (N10 session's uncommitted file) fails 2 tests in the full run and passes alone: test-order or shared-fixture interference | minor | N10 QA |
+| Shared-stack contention: concurrent sessions' integration runs toggle the global `deemed_agreement_enabled` flag (N3 `afterEach`) and grow `matches`, which makes the E2E flag tests and the drain-based tests flaky | process | main session (serialise QA runs per PD-078) |
+
+QA test edits this round (tests only):
+- `tests/integration/n3-qa.test.ts`: the raw generic-refusal check, and the new four-RPC per-user test;
+- `tests/e2e/referral-claims-two-sided-hire.spec.ts`: QA-N3-04 checks made hard, QA-N3-08 checks, and the new B-1 test;
+- `tests/integration/terms-card-qa.test.ts`: the candidate-page leak test failed by chance when a random fixture email contained "fee" (`qa-1feeea3d@`); it now drops `email` before the regex. That's a test bug, not a leak: the payload had no fee, rate or terms.
+
+## Processes (PD-080)
+
+- **Started:** `next start -p 3117` (npm pid 27546, next-server 27581) and the worker (npm pid 27547, tsx 27589, node 27590).
+- **Stopped:** those five, by PID only. Port 3117 is free.
+- **Not touched:** port 3000 (pid 4488), and the other session's worker 28784 / vitest / Playwright processes.
+- **Resets:** no `db reset` by me. The reset at about 20:40 was another session's (pid 53938).
+- **Flag:** `deemed_agreement_enabled` = `false` at the end.

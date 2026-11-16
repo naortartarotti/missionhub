@@ -1,6 +1,6 @@
 # Frontend: Network Rules enforcement (N10)
 
-Owner: Frontend Engineer · 2026-11-16 · Built against `spec.md` (frozen) and `backend.md` (incl. its deviations: `allowSettlement` opt-in + S22-c, `ActionResult.code/detail`, `setSuspension`/`SuspendButton` removed). PD-066: N10 owns the gate and the onboarding Rules step; legal copy ships as the §5 drafts.
+Owner: Frontend Engineer · 2026-11-16 · Built against `spec.md` (frozen) and `backend.md` (incl. its deviations: `allowSettlement` opt-in + S22-c, `ActionResult.code/detail`, `setSuspension`/`SuspendButton` removed). PD-084: N10 owns the gate and the onboarding Rules step; legal copy ships as the §5 drafts.
 
 ## 1. Routes and files
 

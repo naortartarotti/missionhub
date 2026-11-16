@@ -1,5 +1,6 @@
 import "server-only";
 import type { UserClient } from "@/server/supabase/server";
+import type { Database } from "@/server/db/database.types";
 
 /** Evidence kinds a platform admin verifies (sourcing payouts are confirmed by the recruiter). */
 export const ADMIN_EVIDENCE_KINDS = ["client_payment", "client_refund", "platform_remittance"] as const;
@@ -376,3 +377,11 @@ export async function getAdminAuthorizationChecks(db: UserClient, referralId: st
   }
   return data as unknown as AdminAuthorizationChecks;
 }
+
+/**
+ * N10 QA-N10-01: a row of the platform-admin view `admin_organizations` (organizations + the sanction
+ * columns members can't select). View columns are typed nullable by the generator; the base columns
+ * are NOT NULL, so admin pages read the view through this type.
+ */
+export type AdminOrganization = Database["public"]["Tables"]["organizations"]["Row"];
+export type AdminOrganizationWithCount = AdminOrganization & { organization_memberships: { count: number }[] };

@@ -142,7 +142,16 @@ describe("QA-1 generic refusal: one code, one payload, no oracle (BR-17, AC-35, 
     const shapes: Record<string, string> = {};
     // v2.1 (QA-N3-02): refused attempts now count toward the 5/h per-user bucket; this test makes more than 5.
     const clearLimits = () => sql(`delete from app.rate_limits where user_id in ('${a.id}', '${c.id}', '${aRec.id}')`);
+    // QA round 1: compare the RAW PostgREST response too (status, data, error), not only the asError-normalised
+    // object, so a raise-vs-result difference between causes (HTTP 400 vs 200) would show up as an oracle.
+    const raw: Record<string, string> = {};
     const take = async (label: string, referralId: string, u: TestUser = a, org = orgA.id) => {
+      clearLimits();
+      const args = { p_referral: referralId, p_acting_org: org, p_employer: "Qaemployer Analytics", p_start_month: month(), p_role: "Data analyst",
+        p_learned_via: "profile", p_statement: "QA statement: the candidate's public profile shows the new role.", p_tail_statement: false,
+        p_items: [item()], p_file_ids: [], p_attested: true };
+      const res = await u.client.rpc("file_hire_report", args as never);
+      raw[label] = JSON.stringify({ status: res.status, data: res.data, error: res.error });
       clearLimits();
       const r = await file(referralId, {}, u, org);
       expect(r.data, label).toBeNull();
@@ -189,6 +198,9 @@ describe("QA-1 generic refusal: one code, one payload, no oracle (BR-17, AC-35, 
     const distinct = new Set(Object.values(shapes));
     expect(distinct.size, JSON.stringify(shapes, null, 1)).toBe(1);
     expect([...distinct][0]).toMatch(/"message":"hire_report_unavailable"/);
+    const rawDistinct = new Set(Object.values(raw));
+    expect(rawDistinct.size, JSON.stringify(raw, null, 1)).toBe(1);
+    expect([...rawDistinct][0]).toBe(JSON.stringify({ status: 200, data: { error: "hire_report_unavailable" }, error: null }));
   });
 });
 
@@ -213,6 +225,32 @@ describe("QA-2 rate limits (BR-20, AC-37)", () => {
     for (let i = 0; i < 6; i++) codes.push((await file(randomUUID())).error?.message ?? "ok");
     expect(codes.slice(0, 5).every((m) => m.startsWith("hire_report_unavailable"))).toBe(true);
     expect(codes[5]).toMatch(/^rate_limited/);
+  });
+
+  it("QA round 1: refused attempts count on all four RPCs (file, contest, rebut, request_authorization_check); the 6th is rate_limited", async () => {
+    const reset = () => sql(`delete from app.rate_limits where user_id in ('${a.id}', '${b.id}')`);
+    const r = await referred();
+    expect((await file(r.referralId)).error).toBeNull();
+    const rid = reportId(r.referralId);
+    const six = async (label: string, call: () => PromiseLike<{ error: { message: string } | null }>, refusal: RegExp) => {
+      reset();
+      const codes: string[] = [];
+      for (let i = 0; i < 6; i++) codes.push((await call()).error?.message ?? "ok");
+      expect(codes.slice(0, 5).every((m) => refusal.test(m)), `${label}: ${codes.join(",")}`).toBe(true);
+      expect(codes[5], label).toMatch(/^rate_limited/);
+    };
+    // B: request an auth check while the report isn't contested → auth_check_not_available (a counted refusal).
+    await six("request_authorization_check", () => asError(b.client.rpc("request_authorization_check", { p_referral: r.referralId, p_acting_org: orgB.id,
+      p_reason: "QA: we doubt the candidate agreed to this.", p_file_ids: [] })), /^auth_check_not_available/);
+    // A: rebut before any contest → hire_rebuttal_closed.
+    await six("rebut_hire_report", () => rebut(rid), /^hire_rebuttal_closed/);
+    // B: contest after the answer deadline → hire_report_answer_closed.
+    sql(`update app.hire_reports set answer_due_at = now() - interval '1 minute' where id = '${rid}'`);
+    await six("contest_hire_report", () => contest(rid), /^hire_report_answer_closed/);
+    // A: file on the same referral (pending report) → hire_report_unavailable.
+    await six("file_hire_report", () => file(r.referralId), /^hire_report_unavailable/);
+    reset();
+    expect(status(rid)).toBe("awaiting_answer");
   });
 });
 

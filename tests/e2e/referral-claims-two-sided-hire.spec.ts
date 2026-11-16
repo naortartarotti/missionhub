@@ -145,10 +145,16 @@ test("B records a hire on a declined referral with the flag off: V4 and the reco
   await dlg.getByLabel("Start date").fill(ymd(new Date()));
   await dlg.getByRole("button", { name: "Record hire" }).click();
   // AC-23 / AC-26: the dialog shows the record-only result state (QA-N3-F1 when it doesn't).
-  await expect.soft(dlg.getByText(/No placement was created, because the referral had no confirmed agreement/)).toBeVisible({ timeout: 5_000 });
-  if (await dlg.getByRole("button", { name: "Done" }).isVisible()) await dlg.getByRole("button", { name: "Done" }).click();
+  // Round 1 (QA-N3-04 fixed): the result state is rendered by HireResultHost, outside the dialog that re-renders away.
+  await expect(pb.getByText("Hire recorded", { exact: true })).toBeVisible({ timeout: 5_000 });
+  await expect(pb.getByText(/No placement was created, because the referral had no confirmed agreement/)).toBeVisible();
+  await pb.getByRole("button", { name: "Done" }).click();
+  await expect(pb.getByText(/No placement was created, because the referral had no confirmed agreement/)).toHaveCount(0);
   // S4-e banner (BR-11) and no second Record hire.
   await expect(pb.getByText("Hire recorded without a split")).toBeVisible();
+  // QA-N3-08 (round 1): no split or expected share in the Terms panel after a no-split hire.
+  await expect(pb.getByText("Sourcing recruiter's expected share")).toHaveCount(0);
+  await expect(pb.getByText(/Sourcing 45% · Hiring 45%/)).toHaveCount(0);
   await expect(pb.getByRole("button", { name: "Record hire" })).toHaveCount(0);
   if (process.env.QA_SHOTS) await pb.screenshot({ path: `${process.env.QA_SHOTS}/v4-after-record.png`, fullPage: true });
   expect(sql(`select kind from public.hire_records where referral_id = '${rid}'`)).toEqual(["record_only_no_agreement"]);
@@ -195,7 +201,7 @@ test("admin upholds an unanswered report from the queue; B enters the fee detail
   await fd.getByLabel(/First-year base salary/).fill("100000");
   await fd.getByRole("button", { name: "Save" }).click();
   // AC-70 toast (QA-N3-F1 when the dialog unmounts on revalidation before its success effect runs).
-  await expect.soft(pb.getByText("Fee details saved. Next: record the client invoice.")).toBeVisible({ timeout: 5_000 });
+  await expect(pb.getByText("Fee details saved. Next: record the client invoice.")).toBeVisible({ timeout: 5_000 }); // round 1: QA-N3-04 fixed
   await expect.poll(() => sql(`select status from public.placements where id = '${pid}'`)[0]).toBe("hire_reported");
   await po.context().close();
   await pb.context().close();
@@ -249,4 +255,25 @@ test("AC-101: N3 screens at 375px in en, fr and pt have no horizontal scroll (pa
       await ctx.close();
     }
   }
+});
+
+test("design B-1 (AC-79): B asks for an authorization check from its contested N1 objection panel, once", async ({ browser }) => {
+  const rid = await referral(`N3 AuthCheck ${tag()}`);
+  sql(`insert into app.referral_claims (referral_id, source_org_id, target_org_id, filed_by, evidence_kind, prior_process_date, attested_at, contest_deadline_at, status)
+       select r.id, r.source_org_id, r.target_org_id, '${b.id}', 'file', current_date - 10, now(), now() + interval '3 days', 'contested' from public.referrals r where r.id = '${rid}'`);
+  const pb = await page(browser, b);
+  await pb.goto(`/workspace/${orgB.slug}/referrals/${rid}`);
+  await pb.getByRole("button", { name: "Ask for an authorization check" }).click();
+  const d = pb.getByRole("dialog");
+  await d.getByLabel("Why you're asking").fill("QA: the candidate says they never agreed to be presented by this agency.");
+  await d.getByRole("button", { name: "Send request" }).click();
+  await expect(pb.getByText(/Authorization check requested on/)).toBeVisible();
+  await expect(pb.getByRole("button", { name: "Ask for an authorization check" })).toHaveCount(0);
+  expect(sql(`select dispute_kind from app.auth_check_requests where referral_id = '${rid}'`)).toEqual(["prior_presentation"]);
+  // A never sees B's reason.
+  const pa = await page(browser, a);
+  await pa.goto(`/workspace/${orgA.slug}/referrals/${rid}`);
+  expect(await pa.content()).not.toContain("never agreed to be presented");
+  await pa.context().close();
+  await pb.context().close();
 });

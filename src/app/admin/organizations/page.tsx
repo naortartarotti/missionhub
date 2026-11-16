@@ -1,3 +1,4 @@
+import type { AdminOrganizationWithCount } from "@/features/admin/queries";
 import Link from "next/link";
 import { Building2, Search } from "lucide-react";
 import { createClient } from "@/server/supabase/server";
@@ -27,7 +28,8 @@ export default async function AdminOrganizationsPage({ searchParams }: PageProps
   const [db, t, f] = await Promise.all([createClient(), getT("admin"), getFormatter()]);
 
   let query = db
-    .from("organizations")
+    // N10 QA-N10-01: the sanction columns are readable only through the platform-admin view.
+    .from("admin_organizations")
     .select("id, name, slug, kind, country, default_currency, is_demo, suspended_at, suspended_reason, created_at, organization_memberships(count)", { count: "exact" })
     .order("created_at", { ascending: false })
     .range((page - 1) * ADMIN_PAGE_SIZE, page * ADMIN_PAGE_SIZE - 1);
@@ -37,7 +39,7 @@ export default async function AdminOrganizationsPage({ searchParams }: PageProps
   if (status === "demo") query = query.eq("is_demo", true);
   const { data, count, error } = await query;
   if (error) throw error;
-  const rows = data ?? [];
+  const rows = (data ?? []) as unknown as AdminOrganizationWithCount[];
 
   return (
     <div className="grid gap-6">

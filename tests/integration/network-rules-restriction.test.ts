@@ -155,3 +155,23 @@ describe("lift (AC-43, AC-51, scenario 14)", () => {
       .toEqual(["A sanction on your organization was lifted|See the details on your Network standing page."]);
   });
 });
+
+describe("sanction columns (QA-N10-01, BR-42)", () => {
+  it("members can't select suspended_at / terminated_at / suspended_reason, even of their own org; platform admins read them through admin_organizations", async () => {
+    sql(`update public.organizations set suspended_reason = 'internal' where id = '${heldOrg.id}'`);
+    try {
+      for (const col of ["suspended_at", "terminated_at", "suspended_reason"]) {
+        expect((await held.client.from("organizations").select(col).eq("id", heldOrg.id)).error).not.toBeNull();
+        expect((await partner.client.from("organizations").select(col).eq("id", heldOrg.id)).error).not.toBeNull();
+      }
+      // Other columns still work for members and partners.
+      expect((await held.client.from("organizations").select("id, name, locale").eq("id", heldOrg.id)).data).toHaveLength(1);
+      expect((await held.client.from("admin_organizations").select("id").eq("id", heldOrg.id)).data).toEqual([]);
+      const viaAdmin = await platform.client.from("admin_organizations").select("suspended_reason, organization_memberships(count)").eq("id", heldOrg.id).single();
+      expect(viaAdmin.data?.suspended_reason).toBe("internal");
+      expect((await anon().from("admin_organizations").select("id")).error).not.toBeNull();
+    } finally {
+      sql(`update public.organizations set suspended_reason = null where id = '${heldOrg.id}'`);
+    }
+  });
+});

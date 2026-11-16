@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { randomUUID } from "node:crypto";
-import { admin, createCandidate, createJob, createOrg, createUser, drainQueue, opportunityFor, sharingConsent, termsOf, effectiveTerms, type TestUser } from "./helpers";
+import { admin, createCandidate, createJob, createOrg, createUser, drainQueue, opportunityFor, sharingConsent, sql, termsOf, effectiveTerms, type TestUser } from "./helpers";
 import { allocateMinor } from "@/lib/money/allocate";
 
 let a: TestUser, b: TestUser, c: TestUser, platform: TestUser;
@@ -272,9 +272,33 @@ describe("Journey B — revocation and expiry", () => {
   });
 
   it("making a candidate unavailable removes them from B's counts", async () => {
-    const before = (await b.client.rpc("get_job_match_summary", { p_job: jobB })).data![0];
-    await a.client.from("candidates").update({ status: "unavailable" }).eq("id", candidateA);
-    const after = (await b.client.rpc("get_job_match_summary", { p_job: jobB })).data![0];
-    expect(after.strong_count + after.potential_count).toBeLessThan(before.strong_count + before.potential_count);
+    // Every fixture candidate matches jobB, so other files, sessions or the worker add matches to it
+    // while this runs; a before/after delta over separate requests can stay flat (seen: 657 = 657).
+    // One REPEATABLE READ transaction pins the snapshot (own writes stay visible): B's count, A's
+    // update under A's RLS, B's count again. The difference is exactly candidateA's one match.
+    const claims = (uid: string) =>
+      `select set_config('request.jwt.claims', json_build_object('sub', '${uid}', 'role', 'authenticated')::text, true);`;
+    const total = (k: string) =>
+      `insert into pg_temp.r select '${k}', (strong_count + potential_count)::text from public.get_job_match_summary('${jobB}');`;
+    // psql 14 prints only the last result of a multi-statement -c, so collect into a temp table.
+    const [row] = sql(`
+      begin isolation level repeatable read;
+      create temp table r (k text, v text);
+      grant all on pg_temp.r to authenticated;
+      set local role authenticated;
+      ${claims(b.id)} ${total("before")}
+      ${claims(a.id)} with u as (update public.candidates set status = 'unavailable' where id = '${candidateA}' returning status)
+        insert into pg_temp.r select 'updated', status::text from u;
+      ${claims(b.id)} ${total("after")}
+      commit;
+      select json_object_agg(k, v) from pg_temp.r;`);
+    const out = JSON.parse(row) as Record<string, string>;
+    const [before, updated, after] = [Number(out.before), out.updated, Number(out.after)];
+    expect(updated).toBe("unavailable");
+    expect(before).toBeGreaterThan(0);
+    expect(after).toBe(before - 1);
+    // And it persisted for the real client path.
+    const { data } = await admin().from("candidates").select("status").eq("id", candidateA).single();
+    expect(data!.status).toBe("unavailable");
   });
 });

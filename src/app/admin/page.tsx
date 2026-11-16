@@ -1,3 +1,4 @@
+import type { AdminOrganizationWithCount } from "@/features/admin/queries";
 import Link from "next/link";
 import { AlertTriangle, ArrowRight, Briefcase, Building2, FileCheck2, Handshake, Scale, Send, Users, type LucideIcon } from "lucide-react";
 import { createClient } from "@/server/supabase/server";
@@ -23,7 +24,7 @@ export default async function AdminOverviewPage() {
     db.from("organizations").select("id", { count: "exact", head: true }).eq("is_demo", false).gte("created_at", monthAgo),
     db.from("profiles").select("id", { count: "exact", head: true }).gte("created_at", monthAgo),
     getAdminQueues(db),
-    db.from("organizations").select("id, name, kind, is_demo, suspended_at, created_at, organization_memberships(count)").order("created_at", { ascending: false }).limit(6),
+    db.from("admin_organizations").select("id, name, kind, is_demo, suspended_at, created_at, organization_memberships(count)").order("created_at", { ascending: false }).limit(6),
     db
       .from("audit_events")
       .select("id, action, entity_type, created_at, actor:profiles!audit_events_actor_profile_fk(full_name), organization:organizations(name)")
@@ -131,7 +132,7 @@ export default async function AdminOverviewPage() {
         <Panel>
           <SectionTitle action={<Link href="/admin/organizations" className="text-sm font-medium text-muted-foreground hover:text-foreground">{t("overview.seeAll")}</Link>}>{t("overview.newOrgs")}</SectionTitle>
           <ul className="grid grid-cols-[minmax(0,1fr)] gap-3">
-            {(recentOrgs.data ?? []).map((o) => (
+            {((recentOrgs.data ?? []) as unknown as AdminOrganizationWithCount[]).map((o) => (
               <li key={o.id}>
                 <Link href={`/admin/organizations/${o.id}`} className="flex items-center gap-3 rounded-xl hover:bg-accent/60">
                   <InitialsAvatar name={o.name} className="size-9 rounded-xl" />

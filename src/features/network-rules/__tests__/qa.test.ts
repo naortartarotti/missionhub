@@ -105,11 +105,33 @@ describe("redirect guard for ?next= (accept-rules) and ?from= (versions page)", 
   // QA-N10-04 (MAJOR, frontend — shared helper in features/auth/schemas.ts): a tab or newline after the
   // first slash passes the guard, and browsers / the WHATWG URL parser strip it, so "/\t/evil.example"
   // becomes "//evil.example" (open redirect after accepting the rules: router.push(nextHref)).
-  it.fails("QA-N10-04: refuses a target that becomes protocol-relative once tabs / newlines are stripped", () => {
+  it("QA-N10-04: refuses a target that becomes protocol-relative once tabs / newlines are stripped", () => {
     for (const bad of ["/\t/evil.example", "/\n/evil.example", "/\r/evil.example"]) {
       // The URL parser turns these into another origin:
       expect(new URL(bad, "https://app.example").origin).toBe("https://evil.example");
       expect(safeNext(bad, "/fallback")).toBe("/fallback");
+    }
+  });
+});
+
+describe("round 2: safeNext bypass battery (QA-N10-04 fix)", () => {
+  const base = "https://app.example";
+  const hostile = [
+    "/\t/evil.example", "/\n/evil.example", "/\r/evil.example", "/\u000b/evil.example", "/\u000c/evil.example", "/\u0000/evil.example",
+    "\t//evil.example", " /evil", "/ /evil.example", "/ /evil.example", "/ /evil.example", "/　/evil.example",
+    "/\\evil.example", "\\\\evil.example", "/\\/evil.example", "//evil.example", "///evil.example", "https:evil.example",
+    "http://evil.example", "javascript:alert(1)", "/%09/evil.example".replace("%09", "\t"), "", "x".repeat(10),
+    `/${"a".repeat(2100)}`,
+  ];
+  it("refuses every hostile shape, and nothing it returns leaves the origin", () => {
+    for (const h of hostile) expect(safeNext(h, "/fallback"), JSON.stringify(h).slice(0, 40)).toBe("/fallback");
+    for (const h of [...hostile, "/%2F%2Fevil.example", "/.//evil.example", "/..//evil.example", "/%5Cevil.example", "/@evil.example", "/?next=//evil.example"]) {
+      expect(new URL(safeNext(h, "/fallback"), base).origin).toBe(base);
+    }
+  });
+  it("keeps normal in-app targets", () => {
+    for (const ok of ["/workspace/acme/overview", "/workspace/acme/accept-rules?v=1.0", "/network-rules?org=acme&lang=fr-CA#upcoming", "/workspace/acme/reports/4b0b7a3e-2f5c-4b8e-9a51-0c1d2e3f4a5b"]) {
+      expect(safeNext(ok, "/fallback")).toBe(ok);
     }
   });
 });

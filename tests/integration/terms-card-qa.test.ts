@@ -609,7 +609,8 @@ describe("estimate leakage (BR-9, BR-11, AC-19, AC-27)", () => {
     const token = await issueCandidateToken(out.data!.referral_id!, aRec.id);
     const { data, error } = await anon().rpc("get_candidate_request", { p_token: token });
     expect(error).toBeNull();
-    const text = JSON.stringify(data);
+    // QA N3 round 1: the candidate's random fixture email (e.g. "qa-1feeea3d@") made /fee/ match by chance; drop it.
+    const text = JSON.stringify(data, (k, v) => (k === "email" ? undefined : v));
     expect(text).not.toMatch(/fee|rate_bps|terms|guarantee|ownership|salary_min|salary_max|10000000|12000000|2200000/i);
   });
 });

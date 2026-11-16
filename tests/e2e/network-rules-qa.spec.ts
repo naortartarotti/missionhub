@@ -100,7 +100,7 @@ test("versions page: a French org opens the rules in fr-CA first (AC-12, AC-33)"
 
 // QA-N10-04 (MAJOR, frontend): `?next=/%09/evil.example` passes safeNext and the browser resolves the
 // link to https://evil.example (tab stripped). Expected: the Back link stays on the app origin.
-test.fail("QA-N10-04: the accept page's Back link never leaves the app origin", async ({ page, baseURL }) => {
+test("QA-N10-04: the accept page's Back link never leaves the app origin", async ({ page, baseURL }) => {
   await signIn(page, heldAdmin);
   await page.goto(`/workspace/${held.slug}/accept-rules?next=%2F%09%2Fevil.example%2Fphish`);
   const back = page.getByRole("link", { name: "Back" }).first();
@@ -146,4 +146,21 @@ test("onboarding Rules step: two unticked boxes, language switch unticks, accept
   const { data: ma } = await db.from("network_rules_member_acceptances").select("locale").eq("user_id", user.id);
   expect(oa).toEqual([{ locale: "fr-CA", accepted_by: user.id }]);
   expect(ma).toEqual([{ locale: "fr-CA" }]);
+});
+
+test("round 2: admin pages read the sanction columns through admin_organizations (QA-N10-01 fix)", async ({ page }) => {
+  await signIn(page, ops, /\/(workspace|onboarding|admin)/);
+  await page.goto("/admin");
+  await expect(page.getByRole("heading").first()).toBeVisible();
+  await page.goto(`/admin/organizations?status=suspended&q=${encodeURIComponent(settling.name)}`);
+  const row = page.getByRole("row", { name: new RegExp(settling.name) });
+  await expect(row).toBeVisible();
+  await expect(row.getByText("Suspended", { exact: true })).toBeVisible();
+  await page.goto(`/admin/organizations/${settling.id}`);
+  await expect(page.getByRole("heading", { name: settling.name })).toBeVisible();
+  await expect(page.getByText("Suspended (before N10)").first()).toBeVisible();
+  await expect(page.getByRole("button", { name: /Lift/ }).first()).toBeVisible();
+  // The held org shows its hold (not a suspension).
+  await page.goto(`/admin/organizations/${held.id}`);
+  await expect(page.getByRole("heading", { name: held.name })).toBeVisible();
 });
