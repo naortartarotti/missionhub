@@ -21,7 +21,7 @@ The source files carry three kinds of markers (see `README.md`). None of them ma
 | `[TODO: …]` | effective date, 6.8 pricing, 7.5 arbitration values, 8.1 support address, 10.6 governing version | **Must already be filled in the source.** If one is left in the output, stop (§4). |
 
 Two lines are also removed because the app shows them from the version record (S1, S4), and keeping them would duplicate or contradict it:
-- the H1 title (`# MissionHub Network Rules` / `# Règles du réseau MissionHub` / `# Regras da rede MissionHub`): the page already has its own `h1`, and the rules sections must start at `h2` (spec §6);
+- the H1 title (`# Workatent Network Rules` / `# Règles du réseau Workatent` / `# Regras da rede Workatent`): the page already has its own `h1`, and the rules sections must start at `h2` (spec §6);
 - the status line (`**Version:** v1 — draft · **Effective date:** …`, fr `**Version :** …`, pt `**Versão:** …`): the label and the effective date come from the published record.
 
 The one-sentence tagline under the title and the "Introduction" section stay.

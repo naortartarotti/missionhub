@@ -27,7 +27,7 @@ alter table public.referrals add constraint referrals_decline_reason_check check
 ));
 
 -- Who caused an event when there is no user actor: 'candidate' (confirmation page), 'system'
--- (MissionHub closed it, BR-8) or 'admin' (a platform admin resolved a claim). Null = legacy rule
+-- (Workatent closed it, BR-8) or 'admin' (a platform admin resolved a claim). Null = legacy rule
 -- (actor_side null meant the candidate).
 alter table public.referral_status_events
   add column actor_kind text check (actor_kind in ('candidate', 'system', 'admin'));
@@ -48,7 +48,7 @@ do $$
 begin
   if not exists (select 1 from vault.secrets where name = 'presentation_fingerprint_key_v1') then
     perform vault.create_secret(encode(extensions.gen_random_bytes(32), 'hex'), 'presentation_fingerprint_key_v1',
-      'MissionHub N1 fingerprint HMAC key (never leaves the database)');
+      'Workatent N1 fingerprint HMAC key (never leaves the database)');
   end if;
 end $$;
 

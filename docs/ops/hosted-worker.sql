@@ -6,15 +6,15 @@
 create extension if not exists pg_cron;
 create extension if not exists pg_net;
 
-select vault.create_secret('__CRON_SECRET__', 'missionhub_cron_secret', 'Bearer for /api/cron/worker')
- where not exists (select 1 from vault.secrets where name = 'missionhub_cron_secret');
+select vault.create_secret('__CRON_SECRET__', 'workatent_cron_secret', 'Bearer for /api/cron/worker')
+ where not exists (select 1 from vault.secrets where name = 'workatent_cron_secret');
 
-select cron.schedule('missionhub-worker', '* * * * *', $job$
+select cron.schedule('workatent-worker', '* * * * *', $job$
   select net.http_post(
-    url := 'https://missionhub-snowy.vercel.app/api/cron/worker',
+    url := 'https://workatent.vercel.app/api/cron/worker',
     headers := jsonb_build_object(
       'Authorization',
-      'Bearer ' || (select decrypted_secret from vault.decrypted_secrets where name = 'missionhub_cron_secret')
+      'Bearer ' || (select decrypted_secret from vault.decrypted_secrets where name = 'workatent_cron_secret')
     ),
     body := '{}'::jsonb,
     timeout_milliseconds := 300000
@@ -23,5 +23,5 @@ $job$);
 
 -- Check:   select jobname, schedule, active from cron.job;
 -- Runs:    select status, return_message, start_time from cron.job_run_details order by start_time desc limit 5;
--- Stop:    select cron.unschedule('missionhub-worker');
--- Rotate:  select vault.update_secret((select id from vault.secrets where name = 'missionhub_cron_secret'), '<new>');
+-- Stop:    select cron.unschedule('workatent-worker');
+-- Rotate:  select vault.update_secret((select id from vault.secrets where name = 'workatent_cron_secret'), '<new>');

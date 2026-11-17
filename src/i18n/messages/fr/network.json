@@ -1,7 +1,7 @@
 {
   "accept": {
     "title": "Règles du réseau, version {label}",
-    "gateIntro": "Avant d’utiliser MissionHub, lisez et acceptez les Règles du réseau. Elles expliquent comment les membres partagent l’information, communiquent avec les candidats et règlent les problèmes.",
+    "gateIntro": "Avant d’utiliser Workatent, lisez et acceptez les Règles du réseau. Elles expliquent comment les membres partagent l’information, communiquent avec les candidats et règlent les problèmes.",
     "reacceptIntro": "Les Règles du réseau changent. Lisez ce qui change, puis acceptez la version {label}.",
     "effective": "En vigueur depuis le {date}",
     "effectiveFuture": "Entre en vigueur le {date}",
@@ -69,7 +69,7 @@
       },
       "terminated": {
         "title": "Votre organisation a été retirée du réseau le {date}",
-        "body": "Vous pouvez finaliser les recommandations en cours et régler les commissions et les litiges. Une fois tout réglé, les membres de votre organisation n’auront plus accès à MissionHub."
+        "body": "Vous pouvez finaliser les recommandations en cours et régler les commissions et les litiges. Une fois tout réglé, les membres de votre organisation n’auront plus accès à Workatent."
       }
     },
     "cta": {
@@ -82,7 +82,7 @@
   "versions": {
     "metaTitle": "Règles du réseau",
     "title": "Règles du réseau",
-    "description": "Les règles que chaque organisation et chaque membre acceptent pour utiliser le réseau MissionHub.",
+    "description": "Les règles que chaque organisation et chaque membre acceptent pour utiliser le réseau Workatent.",
     "current": "Version en vigueur : {label}",
     "inEffect": "En vigueur depuis le {date}",
     "upcoming": "Prochaine version : {label}",
@@ -110,7 +110,7 @@
   },
   "partner": {
     "notTakingReferrals": "{org} n’accepte pas de nouvelles recommandations pour le moment.",
-    "noLongerMember": "{org} ne fait plus partie du réseau MissionHub.",
+    "noLongerMember": "{org} ne fait plus partie du réseau Workatent.",
     "back": "Retour aux occasions"
   },
   "team": {
@@ -166,7 +166,7 @@
     "when": "Quand est-ce arrivé? (facultatif)",
     "approximate": "La date est approximative.",
     "files": "Pièces justificatives (facultatif)",
-    "filesHint": "Jusqu’à 5 fichiers : PDF, PNG ou JPEG, 10 Mo chacun. Seuls les administrateurs de la plateforme MissionHub peuvent les ouvrir. {org} ne les voit jamais.",
+    "filesHint": "Jusqu’à 5 fichiers : PDF, PNG ou JPEG, 10 Mo chacun. Seuls les administrateurs de la plateforme Workatent peuvent les ouvrir. {org} ne les voit jamais.",
     "identity": "Nous ne montrons jamais votre nom à {org}. Nous nommons votre organisation seulement si c’est nécessaire pour qu’elle puisse répondre équitablement. Comme une recommandation ne réunit que deux organisations, elle pourrait quand même deviner l’origine du signalement. Les représailles contre un signalement sont un manquement (règle 7.1).",
     "identityJob": "Nous ne montrons jamais votre nom à {org}. Nous nommons votre organisation seulement si c’est nécessaire pour qu’elle puisse répondre équitablement. Elle pourrait quand même deviner l’origine du signalement. Les représailles contre un signalement sont un manquement (règle 7.1).",
     "attest": "Je fais ce signalement de bonne foi et il est exact au meilleur de ma connaissance. Je comprends qu’un signalement fait de mauvaise foi est un manquement.",
@@ -202,7 +202,7 @@
   },
   "reports": {
     "title": "Vos signalements",
-    "description": "Les problèmes que vous avez signalés à MissionHub. Seuls vous et les administrateurs de votre organisation pouvez les voir.",
+    "description": "Les problèmes que vous avez signalés à Workatent. Seuls vous et les administrateurs de votre organisation pouvez les voir.",
     "menu": "Vos signalements",
     "tabs": {
       "mine": "Envoyés par vous",
@@ -222,7 +222,7 @@
       "received": "Reçu",
       "receivedBody": "Nous visons à répondre d’ici le {when} HE.",
       "input": "Votre réponse est requise",
-      "inputBody": "MissionHub a une question pour vous. Répondez ci-dessous.",
+      "inputBody": "Workatent a une question pour vous. Répondez ci-dessous.",
       "inputDeadline": "Répondez d’ici le {when} HE.",
       "inReview": "En examen",
       "inReviewBody": "Nous vous informerons du résultat dès qu’il sera décidé."
@@ -235,7 +235,7 @@
       "notEnough": "Pièces insuffisantes pour agir",
       "notEnoughBody": "Les pièces justificatives disponibles ne permettent pas de confirmer un manquement. Vous pouvez envoyer un nouveau signalement si vous avez de nouvelles pièces.",
       "closed": "Fermé sans constat",
-      "closedBody": "MissionHub a fermé ce signalement sans se prononcer sur un manquement.",
+      "closedBody": "Workatent a fermé ce signalement sans se prononcer sur un manquement.",
       "triageReason": "Motif : {reason}",
       "noChange": "Ce signalement ne change rien à votre recommandation, à votre priorité ni aux montants dus.",
       "openReferral": "Ouvrir la recommandation",
@@ -254,11 +254,11 @@
     "timeline": {
       "title": "Suivi",
       "sent": "Envoyé · {when} HE",
-      "question": "Question de MissionHub · {when} HE",
+      "question": "Question de Workatent · {when} HE",
       "replied": "Réponse envoyée · {when} HE",
       "closed": "Fermé · {when} HE"
     },
-    "question": "Question de MissionHub",
+    "question": "Question de Workatent",
     "reply": "Votre réponse",
     "replyHint": "Répondez à la question. Vous pouvez envoyer une seule réponse, avec des fichiers au besoin.",
     "replySubmit": "Envoyer la réponse",
@@ -315,8 +315,8 @@
   "notice": {
     "heading": "Avis selon les règles 8.3 et 9.3",
     "headingImmediate": "Restriction réseau immédiate selon la règle 9.4",
-    "intro": "MissionHub a reçu de l’information selon laquelle {org} pourrait avoir enfreint les Règles du réseau. Cet avis vous indique ce qui est reproché et vous donne 10 jours ouvrables pour répondre. Rien n’a encore été décidé.",
-    "introImmediate": "En vertu de la règle 9.4, MissionHub a imposé une restriction réseau à {org} le {date}, en raison d’un possible manquement à la règle {rule}. Cet avis vous indique ce qui est reproché. Vous avez 10 jours ouvrables pour répondre. Aucune autre décision n’a été prise.",
+    "intro": "Workatent a reçu de l’information selon laquelle {org} pourrait avoir enfreint les Règles du réseau. Cet avis vous indique ce qui est reproché et vous donne 10 jours ouvrables pour répondre. Rien n’a encore été décidé.",
+    "introImmediate": "En vertu de la règle 9.4, Workatent a imposé une restriction réseau à {org} le {date}, en raison d’un possible manquement à la règle {rule}. Cet avis vous indique ce qui est reproché. Vous avez 10 jours ouvrables pour répondre. Aucune autre décision n’a été prise.",
     "holdEffects": "Pendant la restriction, vos postes sont masqués aux partenaires, et vous ne pouvez pas soumettre de recommandations ni en recevoir de nouvelles. Les recommandations en cours se poursuivent normalement.",
     "rules": "Règles en cause",
     "ruleItem": "Règle {number} : {title}",
@@ -326,8 +326,8 @@
     "evidence": "Résumé des pièces justificatives",
     "reportedBy": "Signalé par {org}",
     "deadline": "Répondez d’ici le {when} HE",
-    "howToRespond": "Tout administrateur de l’organisation peut envoyer une seule réponse à partir de la page Statut réseau, avec des fichiers au besoin. Sans réponse à la date limite, MissionHub décidera selon le dossier (règle 7.2).",
-    "possibleOutcomes": "Après le délai de réponse, MissionHub peut décider de ne prendre aucune mesure, ou d’imposer un avertissement, une restriction réseau, une suspension ou une exclusion. En cas de constat ou de sanction, votre organisation peut demander une seule fois une révision par un autre administrateur de la plateforme.",
+    "howToRespond": "Tout administrateur de l’organisation peut envoyer une seule réponse à partir de la page Statut réseau, avec des fichiers au besoin. Sans réponse à la date limite, Workatent décidera selon le dossier (règle 7.2).",
+    "possibleOutcomes": "Après le délai de réponse, Workatent peut décider de ne prendre aucune mesure, ou d’imposer un avertissement, une restriction réseau, une suspension ou une exclusion. En cas de constat ou de sanction, votre organisation peut demander une seule fois une révision par un autre administrateur de la plateforme.",
     "bilingualNote": "Version anglaise ci-dessous."
   },
   "case": {
@@ -337,13 +337,13 @@
     "sentOn": "Envoyé le {when} HE",
     "languageNote": "Cet avis est en {language}.",
     "respond": "Votre réponse",
-    "respondHint": "Expliquez ce qui s’est passé et joignez tout ce qui peut aider. Seuls les administrateurs de la plateforme MissionHub peuvent ouvrir vos fichiers. Votre réponse n’est pas communiquée aux autres organisations.",
+    "respondHint": "Expliquez ce qui s’est passé et joignez tout ce qui peut aider. Seuls les administrateurs de la plateforme Workatent peuvent ouvrir vos fichiers. Votre réponse n’est pas communiquée aux autres organisations.",
     "respondSubmit": "Envoyer la réponse",
     "respondConfirmTitle": "Envoyer votre réponse?",
     "respondConfirmBody": "Votre organisation peut envoyer une seule réponse, qui ne pourra plus être modifiée.",
     "responded": "Réponse envoyée le {when} HE par {name}",
-    "respondedToast": "Réponse envoyée. MissionHub en tiendra compte avant de décider.",
-    "windowClosed": "Le délai de réponse a pris fin le {when} HE. MissionHub décidera selon le dossier (règle 7.2).",
+    "respondedToast": "Réponse envoyée. Workatent en tiendra compte avant de décider.",
+    "windowClosed": "Le délai de réponse a pris fin le {when} HE. Workatent décidera selon le dossier (règle 7.2).",
     "followup": "Question complémentaire",
     "followupDeadline": "Répondez d’ici le {when} HE",
     "followupNoDeadline": "Aucune date limite. Répondez dès que possible.",
@@ -353,7 +353,7 @@
     "followupReplied": "Réponse envoyée le {when} HE par {name}",
     "followupClosed": "Le délai pour répondre a pris fin le {when} HE.",
     "files": "Fichiers",
-    "filesHint": "Jusqu’à 5 fichiers : PDF, PNG ou JPEG, 10 Mo chacun. Seuls les administrateurs de la plateforme MissionHub peuvent les ouvrir.",
+    "filesHint": "Jusqu’à 5 fichiers : PDF, PNG ou JPEG, 10 Mo chacun. Seuls les administrateurs de la plateforme Workatent peuvent les ouvrir.",
     "reviewDeadline": "Date limite de révision",
     "requestReview": "Demander une révision",
     "reviewDialogTitle": "Demander la révision de cette décision?",
@@ -370,7 +370,7 @@
       "lifted": "Révision : sanction levée",
       "overturned": "Révision : décision annulée. La sanction est levée et ne comptera pas dans les décisions futures.",
       "reason": "Motifs de la révision",
-      "reviewedOn": "Révisée le {date} par un autre administrateur de la plateforme MissionHub"
+      "reviewedOn": "Révisée le {date} par un autre administrateur de la plateforme Workatent"
     },
     "errors": {
       "closed": "Le délai de réponse est terminé. Vous ne pouvez plus envoyer de réponse.",
@@ -382,10 +382,10 @@
   },
   "decision": {
     "title": "Décision",
-    "decidedOn": "Décidée le {date} par un administrateur de la plateforme MissionHub",
+    "decidedOn": "Décidée le {date} par un administrateur de la plateforme Workatent",
     "outcome": "Résultat",
-    "noBreachBody": "MissionHub n’a pas constaté de manquement aux Règles du réseau. Aucune sanction ne s’applique.",
-    "notEnoughBody": "MissionHub n’a pas trouvé assez de pièces justificatives pour conclure à un manquement. Aucune sanction ne s’applique.",
+    "noBreachBody": "Workatent n’a pas constaté de manquement aux Règles du réseau. Aucune sanction ne s’applique.",
+    "notEnoughBody": "Workatent n’a pas trouvé assez de pièces justificatives pour conclure à un manquement. Aucune sanction ne s’applique.",
     "finding": "Constat",
     "rules": "Règles enfreintes",
     "residual": "Décidé selon la règle 7.4, car aucune règle précise ne couvrait ce cas.",
@@ -393,7 +393,7 @@
     "effects": {
       "none": "Le constat est inscrit au dossier de votre organisation. Aucune sanction ne s’applique.",
       "warning": "Cet avertissement compte pendant 12 mois, jusqu’au {date}. Il ne limite pas votre travail.",
-      "hold": "À partir du {date}, vos postes sont masqués aux partenaires, et vous ne pouvez pas soumettre de recommandations ni en recevoir de nouvelles. Les recommandations en cours se poursuivent. La restriction dure jusqu’à ce que MissionHub la lève.",
+      "hold": "À partir du {date}, vos postes sont masqués aux partenaires, et vous ne pouvez pas soumettre de recommandations ni en recevoir de nouvelles. Les recommandations en cours se poursuivent. La restriction dure jusqu’à ce que Workatent la lève.",
       "holdLifted": "La restriction réseau est levée à partir du {date}.",
       "suspension": "À partir du {date}, votre organisation est suspendue et en mode finalisation. Vous pouvez finaliser les recommandations en cours, régler les commissions et répondre aux litiges. Rien d’autre n’est offert tant que la suspension n’est pas levée.",
       "termination": "À partir du {date}, votre organisation est retirée du réseau. Vous pouvez finaliser les recommandations en cours et régler les commissions et les litiges jusqu’au règlement de chacun. Votre organisation pourra présenter une nouvelle demande d’adhésion après 12 mois (règle 9.7)."
@@ -413,15 +413,15 @@
       "one": "{count} recommandation visée",
       "other": "{count} recommandations visées"
     },
-    "intro": "MissionHub a constaté qu’une organisation partenaire a communiqué des renseignements provenant de vos recommandations à l’extérieur de son organisation. Voici ce que nous savons.",
+    "intro": "Workatent a constaté qu’une organisation partenaire a communiqué des renseignements provenant de vos recommandations à l’extérieur de son organisation. Voici ce que nous savons.",
     "referrals": "Recommandations visées",
     "referralUnavailable": "Une recommandation que vous ne pouvez plus ouvrir",
     "what": "Renseignements concernés",
     "when": "Quand",
     "toWhom": "Communiqués à",
     "toWhomUnknown": "Inconnu",
-    "guidance": "Si votre candidat révoque son autorisation, l’autre organisation perd immédiatement l’accès au profil partagé et aux documents dans MissionHub. Cela ne récupère pas les copies déjà téléchargées. Retirer la recommandation conserve votre priorité. Libérer le candidat vous la fait perdre.",
-    "guidanceHiring": "MissionHub ne peut pas récupérer des renseignements une fois qu’ils ont été communiqués. Cet avis ne change rien à vos postes ni à vos recommandations en cours. Si les renseignements concernent votre client, vous voudrez peut-être l’en informer."
+    "guidance": "Si votre candidat révoque son autorisation, l’autre organisation perd immédiatement l’accès au profil partagé et aux documents dans Workatent. Cela ne récupère pas les copies déjà téléchargées. Retirer la recommandation conserve votre priorité. Libérer le candidat vous la fait perdre.",
+    "guidanceHiring": "Workatent ne peut pas récupérer des renseignements une fois qu’ils ont été communiqués. Cet avis ne change rien à vos postes ni à vos recommandations en cours. Si les renseignements concernent votre client, vous voudrez peut-être l’en informer."
   },
   "settlement": {
     "marker": "Mode finalisation",
@@ -471,7 +471,7 @@
       "body": "Nous visons à répondre d’ici le {when} HE."
     },
     "conduct_report_info_requested": {
-      "title": "MissionHub a une question sur votre signalement",
+      "title": "Workatent a une question sur votre signalement",
       "body": "Ouvrez votre signalement pour répondre."
     },
     "conduct_report_closed": {
@@ -485,19 +485,19 @@
       "body": "Ouvrez-le pour voir le résultat."
     },
     "conduct_incident_notice": {
-      "title": "MissionHub vous a envoyé un avis d’incident lié à des renseignements",
+      "title": "Workatent vous a envoyé un avis d’incident lié à des renseignements",
       "body": "Il concerne des renseignements provenant de vos recommandations. Ouvrez-le pour lire les détails."
     },
     "conduct_notice_sent": {
-      "title": "Vous avez reçu un avis de MissionHub",
+      "title": "Vous avez reçu un avis de Workatent",
       "body": "Lisez-le et répondez d’ici le {when} HE."
     },
     "sanction_immediate_hold": {
-      "title": "Vous avez reçu un avis urgent de MissionHub",
+      "title": "Vous avez reçu un avis urgent de Workatent",
       "body": "Lisez-le dès maintenant. Vous pouvez répondre jusqu’au {when} HE."
     },
     "conduct_followup": {
-      "title": "MissionHub a une question complémentaire",
+      "title": "Workatent a une question complémentaire",
       "body": "Ouvrez l’avis pour répondre."
     },
     "conduct_response_received": {
@@ -505,7 +505,7 @@
       "body": "Ouvrez le dossier pour la lire."
     },
     "conduct_decided": {
-      "title": "MissionHub a rendu une décision",
+      "title": "Workatent a rendu une décision",
       "body": "Consultez-la sur la page Statut réseau."
     },
     "sanction_lifted": {

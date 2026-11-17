@@ -9,7 +9,7 @@ export function Logo({ className, compact = false }: { className?: string; compa
         <rect x="16" y="2" width="22" height="20" rx="10" className="fill-foreground" />
         <circle cx="19" cy="12" r="3" className="fill-tile-yellow" />
       </svg>
-      {!compact && <span className="text-lg font-semibold tracking-tight">MissionHub</span>}
+      {!compact && <span className="text-lg font-semibold tracking-tight">Workatent</span>}
     </span>
   );
 }

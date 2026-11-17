@@ -87,7 +87,7 @@ describe("misc", () => {
     expect(rulesLocaleOrder("en")[0]).toBe("en");
   });
   it("support address only when plain", () => {
-    expect(cleanSupportEmail("help@missionhub.app")).toBe("help@missionhub.app");
+    expect(cleanSupportEmail("help@workatent.app")).toBe("help@workatent.app");
     expect(cleanSupportEmail('x@y.z"><script>')).toBeNull();
     expect(cleanSupportEmail(null)).toBeNull();
   });

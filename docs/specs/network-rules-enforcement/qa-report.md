@@ -245,7 +245,7 @@ Test file shorthand: `V` versions, `G` gate, `R` restriction, `C` conduct, `S` s
 | 73 | Partial | QA one follow-up reply. Follow-up deadline expiry not tested |
 | 74 | Pass (test) | C |
 | 75 | Pass (test) | C; QAe |
-| 76 | Pass (test) | C admin cases. "Opened by MissionHub" label: code |
+| 76 | Pass (test) | C admin cases. "Opened by Workatent" label: code |
 | 77 | Pass (code) | `bad_faith_count` in `admin_list_conduct_cases` and the card |
 | 78 | Pass (code) | card overdue text |
 
@@ -540,7 +540,7 @@ E2E_BASE_URL=http://localhost:3140 npx playwright test tests/e2e/network-rules.s
 |---|---|---|
 | `candidate-confirmation-integrity.spec.ts` | Skipped | Needs the N9 email-capture harness |
 | `documents.spec.ts` | `setInputFiles` 60 s timeout | Load |
-| `duplicate-presentation.spec.ts:110` | Expects `support@example.test` | My E2E copy set `SUPPORT_EMAIL=support@missionhub.test` to test AC-24. QA environment artifact, not a bug; the rest of that serial file then didn't run |
+| `duplicate-presentation.spec.ts:110` | Expects `support@example.test` | My E2E copy set `SUPPORT_EMAIL=support@workatent.test` to test AC-24. QA environment artifact, not a bug; the rest of that serial file then didn't run |
 | `job-terms-card.spec.ts:251` | 375px sweep timed out at 60 s | Load |
 | `journey.spec.ts:143` | Record-hire navigation timeout | No local worker; N3 flow under load |
 | `onboarding.spec.ts` | Stale | Expects the removed "How do you work?" step |

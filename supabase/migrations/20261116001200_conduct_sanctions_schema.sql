@@ -399,21 +399,21 @@ create policy network_rules_org_acceptances_select on public.network_rules_org_a
 create or replace function app.notice_outcomes_line(p_language text) returns text
 language sql immutable set search_path = '' as $$
   select case p_language
-    when 'fr-CA' then 'Après le délai de réponse, MissionHub peut décider de ne prendre aucune mesure, ou d’imposer un avertissement, une restriction réseau, une suspension ou une exclusion. En cas de constat ou de sanction, votre organisation peut demander une seule fois une révision par un autre administrateur de la plateforme.'
-    when 'pt-BR' then 'Depois do prazo de resposta, o MissionHub pode decidir não tomar nenhuma medida ou aplicar uma advertência, uma restrição de rede, uma suspensão ou uma exclusão. Se houver uma constatação ou uma sanção, sua organização pode pedir uma única vez a revisão por outro admin da plataforma.'
-    else 'After the response period, MissionHub may decide to take no action, or to give a warning, a network hold, a suspension or termination. If there’s a finding or a sanction, your organization can ask once for a review by a different platform admin.'
+    when 'fr-CA' then 'Après le délai de réponse, Workatent peut décider de ne prendre aucune mesure, ou d’imposer un avertissement, une restriction réseau, une suspension ou une exclusion. En cas de constat ou de sanction, votre organisation peut demander une seule fois une révision par un autre administrateur de la plateforme.'
+    when 'pt-BR' then 'Depois do prazo de resposta, o Workatent pode decidir não tomar nenhuma medida ou aplicar uma advertência, uma restrição de rede, uma suspensão ou uma exclusão. Se houver uma constatação ou uma sanção, sua organização pode pedir uma única vez a revisão por outro admin da plataforma.'
+    else 'After the response period, Workatent may decide to take no action, or to give a warning, a network hold, a suspension or termination. If there’s a finding or a sanction, your organization can ask once for a review by a different platform admin.'
   end;
 $$;
 
 create or replace function app.incident_guidance_line(p_variant text, p_language text) returns text
 language sql immutable set search_path = '' as $$
   select case
-    when p_variant = 'sourcing' and p_language = 'fr-CA' then 'Si votre candidat révoque son autorisation, l’autre organisation perd immédiatement l’accès au profil partagé et aux documents dans MissionHub. Cela ne récupère pas les copies déjà téléchargées. Retirer la recommandation conserve votre priorité. Libérer le candidat vous la fait perdre.'
-    when p_variant = 'sourcing' and p_language = 'pt-BR' then 'Se seu candidato revogar a autorização, a outra organização perde na hora o acesso ao perfil compartilhado e aos documentos no MissionHub. Isso não recupera cópias já baixadas. Retirar a indicação mantém sua prioridade. Liberar o candidato faz você perder a prioridade.'
-    when p_variant = 'sourcing' then 'If your candidate revokes their authorization, the other organization loses access to the shared profile and documents on MissionHub right away. This doesn’t recall copies they already downloaded. Withdrawing the referral keeps your first position. Releasing the candidate gives it up.'
-    when p_language = 'fr-CA' then 'MissionHub ne peut pas récupérer des renseignements une fois qu’ils ont été communiqués. Cet avis ne change rien à vos postes ni à vos recommandations en cours. Si les renseignements concernent votre client, vous voudrez peut-être l’en informer.'
-    when p_language = 'pt-BR' then 'O MissionHub não consegue recuperar informações depois que elas foram compartilhadas. Este aviso não muda suas vagas nem suas indicações em andamento. Se as informações forem sobre seu cliente, talvez seja bom avisá-lo.'
-    else 'MissionHub can’t recall information once it has been shared. This notice doesn’t change your jobs or your referrals in progress. If the information is about your client, you may want to tell them.'
+    when p_variant = 'sourcing' and p_language = 'fr-CA' then 'Si votre candidat révoque son autorisation, l’autre organisation perd immédiatement l’accès au profil partagé et aux documents dans Workatent. Cela ne récupère pas les copies déjà téléchargées. Retirer la recommandation conserve votre priorité. Libérer le candidat vous la fait perdre.'
+    when p_variant = 'sourcing' and p_language = 'pt-BR' then 'Se seu candidato revogar a autorização, a outra organização perde na hora o acesso ao perfil compartilhado e aos documentos no Workatent. Isso não recupera cópias já baixadas. Retirar a indicação mantém sua prioridade. Liberar o candidato faz você perder a prioridade.'
+    when p_variant = 'sourcing' then 'If your candidate revokes their authorization, the other organization loses access to the shared profile and documents on Workatent right away. This doesn’t recall copies they already downloaded. Withdrawing the referral keeps your first position. Releasing the candidate gives it up.'
+    when p_language = 'fr-CA' then 'Workatent ne peut pas récupérer des renseignements une fois qu’ils ont été communiqués. Cet avis ne change rien à vos postes ni à vos recommandations en cours. Si les renseignements concernent votre client, vous voudrez peut-être l’en informer.'
+    when p_language = 'pt-BR' then 'O Workatent não consegue recuperar informações depois que elas foram compartilhadas. Este aviso não muda suas vagas nem suas indicações em andamento. Se as informações forem sobre seu cliente, talvez seja bom avisá-lo.'
+    else 'Workatent can’t recall information once it has been shared. This notice doesn’t change your jobs or your referrals in progress. If the information is about your client, you may want to tell them.'
   end;
 $$;
 

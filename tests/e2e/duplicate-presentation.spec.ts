@@ -125,7 +125,7 @@ test("stop: a presented candidate is stopped in the composer with the neutral me
   await expect(panel).toContainText(`Nothing was sent to the candidate or to ${orgB.name}.`);
   await expect(panel).not.toContainText(orgA1.name);
   await expect(panel).not.toContainText(/can.t be hired/i);
-  const support = page.getByRole("link", { name: "Contact MissionHub support" });
+  const support = page.getByRole("link", { name: "Contact Workatent support" });
   const href = (await support.getAttribute("href"))!;
   expect(href).toMatch(/^mailto:support@example\.test\?subject=Stopped(%20|\+)referral(%20|\+)\d{1,8}$/);
   expect(href).not.toMatch(/body=/);
@@ -202,7 +202,7 @@ test("contest: the sourcing side sees metadata and SHA only, then contests", asy
   await expect(page.getByRole("button", { name: /^Download/ })).toHaveCount(0);
   await page.getByRole("button", { name: "Contest objection" }).click();
   const dialog = page.getByRole("dialog");
-  await expect(dialog).toContainText("Only MissionHub platform admins read this.");
+  await expect(dialog).toContainText("Only Workatent platform admins read this.");
   await dialog.getByLabel("Why do you disagree with the objection?").fill("We introduced this candidate first <script>alert('reason')</script>.");
   await dialog.getByRole("button", { name: "Contest objection" }).click();
   await expect(main).toContainText(/Contested on /);
@@ -231,7 +231,7 @@ test("admin reject: the objection is rejected; the referral goes back to the hir
   const hiring = await asUser(browser, b);
   await hiring.page.goto(`/workspace/${orgB.slug}/referrals/${claimed}`);
   await expect(hiring.page.locator("main")).toContainText(/Objection rejected on/);
-  await expect(hiring.page.locator("main")).toContainText("MissionHub admin"); // timeline actor for the admin decision (m-7)
+  await expect(hiring.page.locator("main")).toContainText("Workatent admin"); // timeline actor for the admin decision (m-7)
   await expect(hiring.page.getByRole("button", { name: "File objection" })).toHaveCount(0);
   await expect(hiring.page.locator("main")).not.toContainText("We introduced this candidate first"); // contest reason: admins only
   await hiring.ctx.close();

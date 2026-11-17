@@ -116,7 +116,7 @@
       "agency": "agency",
       "independent": "independent"
     },
-    "description": "Every organization on MissionHub: members, region and access status.",
+    "description": "Every organization on Workatent: members, region and access status.",
     "search": "Search by name or workspace URL",
     "filter": {
       "all": "All organizations",
@@ -620,7 +620,7 @@
   "conduct": {
     "emptyFilter": "No open conduct cases.",
     "reportedBy": "{reported} · reported by {reporter}",
-    "openedByMissionHub": "{reported} · opened by MissionHub",
+    "openedByWorkatent": "{reported} · opened by Workatent",
     "filedOn": "Filed {when} ET",
     "firstResponseBy": "First response by",
     "stepDeadline": "Next step by",

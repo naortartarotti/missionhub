@@ -41,7 +41,7 @@ const slug = (v: string | undefined) => {
 async function getJson<T>(url: string): Promise<T> {
   let res: Response;
   try {
-    res = await fetch(url, { headers: { accept: "application/json", "user-agent": "MissionHub-Connector/1.0" }, signal: AbortSignal.timeout(20000), cache: "no-store" });
+    res = await fetch(url, { headers: { accept: "application/json", "user-agent": "Workatent-Connector/1.0" }, signal: AbortSignal.timeout(20000), cache: "no-store" });
   } catch {
     throw new ConnectorError("unreachable");
   }

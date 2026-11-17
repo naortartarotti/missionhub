@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "MissionHub · The private referral network for recruiters",
+    "title": "Workatent · The private referral network for recruiters",
     "description": "Match your private candidates to other recruiters' open jobs. Nothing is shared until you authorize it, and every placement ends in an auditable 45/45/10 commission split."
   },
   "nav": {
@@ -20,7 +20,7 @@
     "line1": "Your candidates.",
     "line2": "Their jobs.",
     "line3": "One shared win.",
-    "subtitle": "MissionHub matches the candidates sitting in your pipeline with open roles from partner agencies. Nothing leaves your hands until you say so, and every placement ends in a clear, auditable split.",
+    "subtitle": "Workatent matches the candidates sitting in your pipeline with open roles from partner agencies. Nothing leaves your hands until you say so, and every placement ends in a clear, auditable split.",
     "primary": "Create your workspace",
     "secondary": "See how it works",
     "note": "Free to start · No candidate data shared without authorization",
@@ -50,10 +50,10 @@
     }
   },
   "statement": {
-    "text": "Every recruiter has great candidates that don't fit any of their own open roles. Every recruiter has roles they can't fill fast enough. MissionHub connects the two, without anyone giving away their network."
+    "text": "Every recruiter has great candidates that don't fit any of their own open roles. Every recruiter has roles they can't fill fast enough. Workatent connects the two, without anyone giving away their network."
   },
   "explore": {
-    "eyebrow": "Explore MissionHub",
+    "eyebrow": "Explore Workatent",
     "title": "Everything you need to know, one page at a time.",
     "more": "Learn more",
     "items": {
@@ -162,7 +162,7 @@
     "split": {
       "source": "Sourcing recruiter",
       "job": "Hiring recruiter",
-      "platform": "MissionHub"
+      "platform": "Workatent"
     },
     "ledger": {
       "title": "Placement ledger",
@@ -173,7 +173,7 @@
       "payableBody": "Client payment verified by the platform",
       "paidBody": "Payout receipt confirmed by the recruiter"
     },
-    "note": "No funds move through MissionHub. Payments happen between you and your partners, and the platform keeps the evidence.",
+    "note": "No funds move through Workatent. Payments happen between you and your partners, and the platform keeps the evidence.",
     "configurable": "Split rules are configurable and versioned."
   },
   "facts": {
@@ -204,10 +204,10 @@
       },
       "b": {
         "q": "How is the commission split?",
-        "a": "By default, 45% to the sourcing recruiter, 45% to the hiring recruiter and 10% to MissionHub. Rules are configurable and versioned, and both sides confirm a collaboration agreement before the process continues."
+        "a": "By default, 45% to the sourcing recruiter, 45% to the hiring recruiter and 10% to Workatent. Rules are configurable and versioned, and both sides confirm a collaboration agreement before the process continues."
       },
       "c": {
-        "q": "Does MissionHub handle payments?",
+        "q": "Does Workatent handle payments?",
         "a": "No funds move through the platform. You invoice your client as usual and record the evidence. Client payments are verified by the platform, and payouts are confirmed by the recruiter receiving them."
       },
       "d": {
@@ -234,25 +234,25 @@
     "createAccount": "Create account",
     "signIn": "Sign in",
     "legal": "Terms and Privacy Policy are drafts pending legal review.",
-    "rights": "© {year} MissionHub",
+    "rights": "© {year} Workatent",
     "photos": "Photos: Unsplash"
   },
   "pages": {
     "how": {
       "title": "How it works",
-      "description": "See how MissionHub takes a candidate from your private pipeline to a partner's open role in four permissioned steps, and what it offers both the candidate's and the job's recruiter."
+      "description": "See how Workatent takes a candidate from your private pipeline to a partner's open role in four permissioned steps, and what it offers both the candidate's and the job's recruiter."
     },
     "privacy": {
       "title": "Privacy by design",
-      "description": "Hiring recruiters see match counts, never identities. Learn how MissionHub isolates agency data, records candidate authorizations and keeps an audit trail."
+      "description": "Hiring recruiters see match counts, never identities. Learn how Workatent isolates agency data, records candidate authorizations and keeps an audit trail."
     },
     "commissions": {
       "title": "Commissions",
-      "description": "How the default 45/45/10 split works, how placements move from projected to payable to paid, and why no funds pass through MissionHub."
+      "description": "How the default 45/45/10 split works, how placements move from projected to payable to paid, and why no funds pass through Workatent."
     },
     "faq": {
       "title": "Frequently asked questions",
-      "description": "Answers to what recruiters ask first about MissionHub: candidate privacy, commission splits, payments, matching and team access."
+      "description": "Answers to what recruiters ask first about Workatent: candidate privacy, commission splits, payments, matching and team access."
     }
   }
 }

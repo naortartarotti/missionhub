@@ -1,6 +1,6 @@
 ---
 name: feature-team
-description: Build or adjust a MissionHub feature with the team of agents, fast-first. Default is BUILD mode — the smallest set of agents (often none) implements the change with only lint + typecheck, then hands it to the user to validate in the app. Tests, QA, security probing, copy review and PM acceptance run only in HARDEN mode, after the user says the feature is validated. Use when the user asks to create, build, implement or adjust a feature, or asks for roadmap/prioritization with the team.
+description: Build or adjust a Workatent feature with the team of agents, fast-first. Default is BUILD mode — the smallest set of agents (often none) implements the change with only lint + typecheck, then hands it to the user to validate in the app. Tests, QA, security probing, copy review and PM acceptance run only in HARDEN mode, after the user says the feature is validated. Use when the user asks to create, build, implement or adjust a feature, or asks for roadmap/prioritization with the team.
 ---
 
 # Feature team — fast first, harden after validation

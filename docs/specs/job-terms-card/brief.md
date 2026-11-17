@@ -228,7 +228,7 @@ Fallback triggered (PD-044 addendum, PD-050). **Only Should 4 remains in N2.**
 Frozen-terms and floor clause wording; the amendment rule and the ban on conditioning; window not shorter than B's client terms; the network-rule lines on the card (payout timing, before-tax shares) shown as draft until N7; French-first agreement for Québec parties; sales tax on shares (accountant); contractor/PJ/EOR hires counting as hires.
 
 ### 8.4 Needs user decision
-- **Decided by the user on 2026-11-15: collected (PD-049).** **U-1 (RD-025 b, revenue):** when B discounts without A's prior written consent, is MissionHub's platform share computed on the fee **actually collected** or on the **frozen terms**? **Recommendation: collected.** MissionHub shouldn't profit from a penalty between members, and neutrality helps in disputes; the revenue difference exists only on discounted hires (I < C).
+- **Decided by the user on 2026-11-15: collected (PD-049).** **U-1 (RD-025 b, revenue):** when B discounts without A's prior written consent, is Workatent's platform share computed on the fee **actually collected** or on the **frozen terms**? **Recommendation: collected.** Workatent shouldn't profit from a penalty between members, and neutrality helps in disputes; the revenue difference exists only on discounted hires (I < C).
   - Recorded: rule ships `collected` (BR-28). Nothing else waits on the user for N2 except the hosted push.
 - **RD-008 / RD-009 unchanged:** the card shows the current default rule (45/45/10) read-only, as the job form already does. No new pricing statement.
 - **Hosted push** of N2 migrations: only on the user's request, after the Ops count in §7.

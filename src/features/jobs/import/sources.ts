@@ -78,7 +78,7 @@ export async function fetchDocument(raw: string, opts: { allowPdf?: boolean; max
         redirect: "manual",
         signal: AbortSignal.timeout(opts.allowPdf ? 15000 : 8000),
         headers: {
-          "user-agent": "MissionHub-Import/1.0",
+          "user-agent": "Workatent-Import/1.0",
           accept: `text/html,application/xhtml+xml,text/plain;q=0.8${opts.allowPdf ? ",application/pdf;q=0.9" : ""}`,
         },
         cache: "no-store",
@@ -129,7 +129,7 @@ export async function fetchPublicText(raw: string, opts: { accept: string; maxBy
       res = await fetch(url, {
         redirect: "manual",
         signal: AbortSignal.timeout(opts.timeoutMs ?? 15000),
-        headers: { "user-agent": "MissionHub-Connector/1.0", accept: opts.accept },
+        headers: { "user-agent": "Workatent-Connector/1.0", accept: opts.accept },
         cache: "no-store",
       });
     } catch {

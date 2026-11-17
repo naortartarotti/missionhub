@@ -13,7 +13,7 @@ const schema = z.object({
   OPENAI_REASONING_EFFORT: z.enum(["minimal", "low", "medium", "high"]).optional(),
   RESEND_API_KEY: z.string().min(10).optional(),
   // Until a domain is verified in Resend, onboarding@resend.dev can only deliver to the account owner.
-  EMAIL_FROM: z.string().min(3).default("MissionHub <onboarding@resend.dev>"),
+  EMAIL_FROM: z.string().min(3).default("Workatent <onboarding@resend.dev>"),
   // Supabase Auth "Send Email Hook" secret ("v1,whsec_…"). Set => auth emails go through /api/auth/send-email + Resend.
   SEND_EMAIL_HOOK_SECRET: z.string().startsWith("v1,whsec_").optional(),
   // Support address shown with a stopped referral (N1, PD-025). Unset => the UI hides the support line.

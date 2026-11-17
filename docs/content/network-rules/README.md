@@ -33,12 +33,12 @@ Obligations, numbers, deadlines and exceptions are unchanged. Changes by rule (e
 | 2.1 | "is for one purpose: that referral…" | "is only for that referral…" | Shorter. |
 | 2.2 | "That means no searching… no adding… no contacting…" | One list: "finding… adding… or contacting…" | Shorter. Same three prohibitions. |
 | 2.6 | Expiry sentence first, revocation second | Revocation first (can be published now), then expiry (ships later) | So the text that ships later is one sentence you can remove (as the source's internal note asks). |
-| 3.1 | "Tell the candidate you are working with {sourcing recruiter} through MissionHub." | "Name the sourcing recruiter to the candidate, and say you’re working together through MissionHub." | Removes the template placeholder. Same duty. |
+| 3.1 | "Tell the candidate you are working with {sourcing recruiter} through Workatent." | "Name the sourcing recruiter to the candidate, and say you’re working together through Workatent." | Removes the template placeholder. Same duty. |
 | 3.3 | "This applies for as long as the referral and the resulting placement last." | "This lasts as long as the referral and any resulting placement." | Shorter. "Any" covers referrals that end without a hire. Decided (PD-054): now explicit — through the guarantee and the final payout. |
 | 3.4 | "take a direct mandate from the client" | "take the same job directly from the client" | Plain language. fr-CA keeps « mandat direct » because it's the usual Québec term. |
 | 3.5 | "(signed terms, an invoice or an active job you can show)", "so you can agree…" | "(shown by signed terms, an invoice or an active job)", "to agree…" | Shorter. Keeps the internal note's point that evidence is needed only if challenged (it doesn't say to disclose anything up front). |
 | 3.6 | "neither the sourcing nor the hiring recruiter" | "neither recruiter" (en). fr-CA and pt-BR name both sides. | Shorter in en. In fr and pt, the short form was ambiguous. |
-| 4.3 | "If another recruiter wants to take part, they can join MissionHub." | "Other recruiters can join MissionHub to take part." | Shorter. |
+| 4.3 | "If another recruiter wants to take part, they can join Workatent." | "Other recruiters can join Workatent to take part." | Shorter. |
 | 4.5 | "jobs open to referrals" | "jobs open to partners" | Same phrase as 4.4 and 4.6. |
 | 4.6 | Three sentences | Same text. The last two are in "ships with P1-5" markers | As the source's internal note says. |
 | 4.8 | "claims, evidence…"; "Forged evidence and confirmations you control" | "objections, evidence…"; "Forged evidence and false candidate confirmations" | Glossary §5.3: "claim" is reserved for N3, and the hiring side's statement is an **objection**. "False candidate confirmations" is the same wording as 9.4. See the open items below. |
@@ -64,12 +64,12 @@ Obligations, numbers, deadlines and exceptions are unchanged. Changes by rule (e
 2. **Reading time** (see above). Decide whether a short summary is worth adding.
 3. **Promises that have to be true before publication.** These sentences describe the product, so the product has to do them:
    - 9.1 level 2: "Partners see only that you aren't taking new referrals" (network hold ships with P0-3).
-   - 9.5: obligations continue during a suspension. Today a suspension blocks all member access, so a suspended organization can't record payouts or answer disputes on MissionHub (the strategist's product gap for the PM).
+   - 9.5: obligations continue during a suspension. Today a suspension blocks all member access, so a suspended organization can't record payouts or answer disputes on Workatent (the strategist's product gap for the PM).
    - 4.5: "Only platform admins see it" (the end client, RD-020).
    - 6.6: "Late payouts show in your record" (RD-007, "% paid on time").
    - 8.4: "We aim to respond within 2 business days." This is a staffing commitment.
    - 10.1 to 10.3: versioned acceptance and blocking new partner activity (P0-2).
-4. **Placeholders to fill:** effective date, MissionHub fee terms (6.8, RD-008/009/012), support address (8.1, PD-025), and every value in 7.5 and 10.6.
+4. **Placeholders to fill:** effective date, Workatent fee terms (6.8, RD-008/009/012), support address (8.1, PD-025), and every value in 7.5 and 10.6.
 
 ## For counsel (beyond the ⚖️ index in each file)
 
@@ -83,5 +83,5 @@ Obligations, numbers, deadlines and exceptions are unchanged. Changes by rule (e
 ## Language notes
 
 - **fr-CA:** Québec vocabulary (*courriel, infolettre, entrevue, rétroaction, renseignements, en tout temps, se joindre à, site Web, lois sur les droits de la personne*), *vous*, glossary terms (*recommandation, recruteur d’origine, recruteur du poste, transmise, priorité, période de propriété, pièces justificatives, jour ouvrable*). I avoided *registre* (reserved for the ledger) and *transmettre* in the sense of "pass on" (reserved for **deliver**). **Typography:** the file uses regular spaces before « : » and inside « ». Convert them to non-breaking spaces (U+00A0) when publishing or in the renderer. My tools couldn't write that character reliably.
-- **pt-BR:** *você*, "o MissionHub" with the article, glossary terms (*indicação, recrutador de origem, recrutador da vaga, entregue, prioridade, período de titularidade, comprovantes, repasse, dia útil*). I avoided *repassar* for "pass on" (reserved for **payout**), *titularidade* for company ownership (reserved for the **ownership window**; 1.3 says *quadro societário*), and *indicações* for "leads" (reserved for **referral**; 3.2 keeps "leads", which recruiters use). "Quebec" is written without the accent, as is usual in Brazil.
+- **pt-BR:** *você*, "o Workatent" with the article, glossary terms (*indicação, recrutador de origem, recrutador da vaga, entregue, prioridade, período de titularidade, comprovantes, repasse, dia útil*). I avoided *repassar* for "pass on" (reserved for **payout**), *titularidade* for company ownership (reserved for the **ownership window**; 1.3 says *quadro societário*), and *indicações* for "leads" (reserved for **referral**; 3.2 keeps "leads", which recruiters use). "Quebec" is written without the accent, as is usual in Brazil.
 - **Terms a recruiter should check:** "engagement fees" (6.5) became « frais d’ouverture de mandat » and "taxas de abertura do processo". "Clean resume" (3.2) became « CV épuré » and currículo “limpo”.

@@ -98,7 +98,7 @@
     "frequent": "déplacements fréquents"
   },
   "commissionRule": {
-    "default": "Partage standard MissionHub"
+    "default": "Partage standard Workatent"
   },
   "claimStatus": {
     "open": "Ouverte",
@@ -109,7 +109,7 @@
   },
   "evidenceType": {
     "file": "Fichiers",
-    "referral": "Recommandation antérieure reçue dans MissionHub"
+    "referral": "Recommandation antérieure reçue dans Workatent"
   },
   "disputeType": {
     "placement": "Placement",

@@ -197,7 +197,7 @@ export default async function AdminConductCasePage({ params }: PageProps<"/admin
               <dd>
                 {c.reporter_user && c.reporter_org
                   ? t("conduct.case.reporterValue", { name: `${c.reporter_user.name || c.reporter_user.email}${c.reporter_user.active_member ? "" : ` (${tg("network.reports.sentByFormer")})`}`, org: c.reporter_org.name })
-                  : t("conduct.openedByMissionHub", { reported: c.reported_org.name })}
+                  : t("conduct.openedByWorkatent", { reported: c.reported_org.name })}
               </dd>
               {c.referral_id || c.job_id ? (
                 <>

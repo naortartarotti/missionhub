@@ -13,7 +13,7 @@ import { getConnector, SYNC_INTERVALS, type ConnectionConfig, type ConnectorDef 
 import { ConnectorError, fetchRecords, hasFetcher, readSheet, type FetchResult } from "./providers";
 import { runUpload } from "./sync";
 
-/** What the "Test" step shows: totals and a few records as they will look in MissionHub. */
+/** What the "Test" step shows: totals and a few records as they will look in Workatent. */
 export type ConnectorPreview = {
   jobs: number;
   candidates: number;
@@ -249,7 +249,7 @@ export async function createApiKey(orgSlug: string, _: ActionResult<{ key: strin
       created_by: ctx.userId,
     });
     if (error) return toActionError(error);
-    revalidatePath(`${base(orgSlug)}/missionhub_api`);
+    revalidatePath(`${base(orgSlug)}/workatent_api`);
     return { ok: true, data: { key }, message: msg("connectors.messages.keyCreated") };
   });
 }
@@ -268,7 +268,7 @@ export async function revokeApiKey(orgSlug: string, keyId: string): Promise<Acti
       .select("id");
     if (error) return toActionError(error);
     if (!data?.length) return { ok: false, error: msg("connectors.errors.notFoundKey") };
-    revalidatePath(`${base(orgSlug)}/missionhub_api`);
+    revalidatePath(`${base(orgSlug)}/workatent_api`);
     return { ok: true, message: msg("connectors.messages.keyRevoked") };
   });
 }

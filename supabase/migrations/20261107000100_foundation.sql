@@ -1,4 +1,4 @@
--- MissionHub foundation: identity, organizations, memberships, invitations, audit, notifications.
+-- Workatent foundation: identity, organizations, memberships, invitations, audit, notifications.
 -- Security model: RLS is defense in depth. Server code ALSO validates tenant context.
 -- Private helper functions live in schema `app` which is not exposed through the Data API.
 

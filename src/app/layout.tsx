@@ -12,7 +12,7 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "sw
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: { default: "MissionHub", template: "%s · MissionHub" },
+    title: { default: "Workatent", template: "%s · Workatent" },
     description: (await getT("auth"))("app.description"),
   };
 }

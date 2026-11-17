@@ -220,7 +220,7 @@
     "stepPermissionHint": "Note how they agreed to be represented (e.g. an email or signed intake form).",
     "stepPermissionLink": "Record authorization",
     "stepMatching": "Matching turned on",
-    "stepMatchingReady": "MissionHub will start looking for partner jobs that fit.",
+    "stepMatchingReady": "Workatent will start looking for partner jobs that fit.",
     "stepMatchingLocked": "Available once authorization is recorded.",
     "turnOn": "Turn on matching"
   },

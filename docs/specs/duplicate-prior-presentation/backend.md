@@ -35,7 +35,7 @@ Columns on `public.referrals` (readable by both sides, nothing sensitive):
 | `review_clock_started_at` | Fresh review clock after a rejected claim (N4 reads it). |
 | `decline_reason` | Check now allows `prior_presentation` (set by claims only) and keeps `duplicate` (legacy only). |
 
-`referral_status_events.actor_kind` (`candidate` \| `system` \| `admin` \| null): **use it to pick the timeline actor.** `system` = "MissionHub" (`referrals.detail.systemActor`, the `already_presented` closure), `admin` = platform admin (claim rejected → back to `submitted`, `reason = 'claim_rejected'`; **needs a new key, proposed `referrals.detail.adminActor`, copy pending from the ux-writer**; no key was added), `candidate` = the confirmation page. Null = legacy rule (actor_side null meant the candidate).
+`referral_status_events.actor_kind` (`candidate` \| `system` \| `admin` \| null): **use it to pick the timeline actor.** `system` = "Workatent" (`referrals.detail.systemActor`, the `already_presented` closure), `admin` = platform admin (claim rejected → back to `submitted`, `reason = 'claim_rejected'`; **needs a new key, proposed `referrals.detail.adminActor`, copy pending from the ux-writer**; no key was added), `candidate` = the confirmation page. Null = legacy rule (actor_side null meant the candidate).
 
 `public.disputes`: `placement_id` now nullable; new `kind` (`placement` \| `prior_presentation`), `referral_id`, `claim_id`, `outcome` (`claim_upheld` \| `claim_rejected`). Reason length is now 5–4000 (was 10). RLS: placement disputes as before; `prior_presentation` disputes readable by **platform admins and the contesting org only** (the hiring side has no read path to the contest reason, PD-027).
 

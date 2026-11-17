@@ -116,7 +116,7 @@
       "agency": "agência",
       "independent": "independente"
     },
-    "description": "Todas as organizações no MissionHub: membros, região e status de acesso.",
+    "description": "Todas as organizações no Workatent: membros, região e status de acesso.",
     "search": "Buscar por nome ou endereço do workspace",
     "filter": {
       "all": "Todas as organizações",
@@ -620,7 +620,7 @@
   "conduct": {
     "emptyFilter": "Nenhum caso de conduta em aberto.",
     "reportedBy": "{reported} · relato de {reporter}",
-    "openedByMissionHub": "{reported} · aberto pelo MissionHub",
+    "openedByWorkatent": "{reported} · aberto pelo Workatent",
     "filedOn": "Registrado em {when} (Toronto)",
     "firstResponseBy": "Primeira resposta até",
     "stepDeadline": "Próxima etapa até",

@@ -30,7 +30,7 @@
 | 1.6 | `landing:privacy.subtitle`, `landing:privacy.mock.visible`, `landing:faq.items.a.a`, `landing:faq.items.b.a`, `admin:rules.jobOwner` (**fr**) | "Titulaire du poste" means the **employee who holds the job**, not the recruiter. The meaning is wrong on the public site. | "Le titulaire du poste voit…" → "Le recruteur du poste voit…" · "Ce que voit le titulaire du poste" → "Ce que voit le recruteur du poste" · "Les titulaires de postes voient…" → "Les recruteurs des postes voient…" · "au recruteur titulaire du poste" → "au recruteur du poste" · "Titulaire du poste %" → "Recruteur du poste %" |
 | 1.7 | `labels:evidenceKind.platform_remittance`, `commissions:detail.recordPayout`, `commissions:detail.entryType.remittance`, `errors:remittance_exceeds_balance`, `admin:revenue.line` (**fr**) | "Remise" usually means **discount** in French, which is a dangerous misreading in a money screen. | "remise" → "versement à la plateforme" (e.g. "Enregistrer un versement / une remise" → "Enregistrer un versement"; entryType "remise" → "versement à la plateforme"; error "La remise dépasse…" → "Le versement à la plateforme dépasse le solde dû.") |
 | 1.8 | `connectors:providers.bullhorn.description` | Unverified market claim. | "Bullhorn is one of the most used agency ATS. This connector is being built." → "This connector is being built." |
-| 1.9 | `connectors:providers.bullhorn.does2` | Promises an unbuilt capability ("both ways"), while the page says MissionHub "never changes anything in the source". | "Will keep them in sync both ways." → "Will keep them in sync." |
+| 1.9 | `connectors:providers.bullhorn.does2` | Promises an unbuilt capability ("both ways"), while the page says Workatent "never changes anything in the source". | "Will keep them in sync both ways." → "Will keep them in sync." |
 
 ---
 
@@ -45,14 +45,14 @@ One onboarding form uses three words: title "Name your workspace", field "Agency
 |---|---|
 | `onboarding:titles.workspace` | "Name your workspace" → "Name your organization" |
 | `onboarding:titles.company` / `companyNamed` | "Set up your agency" → "Set up your organization" · "Welcome, {name}! Set up your agency" → "Welcome, {name}! Set up your organization" |
-| `onboarding:titles.companyDescription` | "This is your recruitment company on MissionHub…" → "This is your agency or recruiting business on MissionHub. Your recruiters join it by invitation, and its candidates and jobs are never visible to other organizations." |
+| `onboarding:titles.companyDescription` | "This is your recruitment company on Workatent…" → "This is your agency or recruiting business on Workatent. Your recruiters join it by invitation, and its candidates and jobs are never visible to other organizations." |
 | `onboarding:workspace.agencyName` / `agencyPlaceholder` | "Agency name" → "Organization name" (placeholder "e.g. Northbound Talent" can stay) |
 | `onboarding:workspace.countryHint` | "Where your agency is based." → "Where your organization is based." |
 | `onboarding:titles.workspaceDescription`, `review.protectionPrivate`, `review.creating`, `review.create`, `steps.workspace`, `review.workspace`, `review.editWorkspace`, `metaTitle` | "workspace" → "organization" ("Create workspace" → "Create organization"; "Set up your workspace" → "Set up your organization") — *pending the decision in §9.1* |
 | `errors:notFound.home` | "Go to my workspace" → "Go to my dashboard" |
-| `auth:signIn.subtitle` | "Sign in to your recruiter workspace." → "Sign in to MissionHub." |
-| `connectors:description`, `connectors:messages.disconnected`, `connectors:connection.disconnectDescription`, `connectors:api.note2`, `connectors:providers.missionhub_api.description` | "your workspace" → "your organization" |
-| `admin:orgs.description` | "Every workspace on the platform…" → "Every organization on MissionHub…" |
+| `auth:signIn.subtitle` | "Sign in to your recruiter workspace." → "Sign in to Workatent." |
+| `connectors:description`, `connectors:messages.disconnected`, `connectors:connection.disconnectDescription`, `connectors:api.note2`, `connectors:providers.workatent_api.description` | "your workspace" → "your organization" |
+| `admin:orgs.description` | "Every workspace on the platform…" → "Every organization on Workatent…" |
 | `admin:orgs.search` | "Search by name or slug" → "Search by name or workspace URL" |
 | `admin:orgDetail.slug` | "Slug" → "Workspace URL" |
 | **pt** `common:demo.title` | "Espaço de demonstração" vs "workspace" (33×) → "Organização de demonstração" |
@@ -148,7 +148,7 @@ fr "instantané" → "profil partagé" / "partage", and pt "snapshot" → "perfi
 | **pt** `commissions:detail.recordPayout`, `commissions:detail.entryType.remittance` | "repasse / remessa", "remessa" → "repasse", "repasse à plataforma" |
 | **pt** ledger: `landing:how.steps.four.body`, `privacy.features.audit.body`, `commissions.subtitle`, `facts.d.label`, `commissions.ledger.title`, `explore.items.commissions.body`, `admin:revenue.title`, `settings:integrations.paymentsDescription`, `commissions:detail.ledger`, `detail.ledgerCaption` | "ledger" / "livro-razão" / "Lançamentos" → "extrato" (e.g. "Ledger da contratação" → "Extrato da colocação"; "um ledger versionado" → "um extrato versionado"). Keep "lançamento" for an entry. |
 | `commissions:detail.ledgerEmpty`, `admin:dispute.resolveDescription` | "reversing entries" / "compensating evidence" vs `errors:immutable_record` "correcting entry" → "correcting entries" everywhere |
-| `commissions:detail.platformVerifies`, `commissions:forms.disputeDescription` | "platform administrator" → "MissionHub platform admin" / "platform admin" |
+| `commissions:detail.platformVerifies`, `commissions:forms.disputeDescription` | "platform administrator" → "Workatent platform admin" / "platform admin" |
 
 ### 2.9 Placement (pt): colocação vs contratação
 pt `landing` uses "contratação" for the placement object while the app uses "colocação".
@@ -207,7 +207,7 @@ pt `landing` uses "contratação" for the placement object while the app uses "c
 | `jobs:messages.activated` | "Job is active. Matching runs in the background." → "Job published. Match counts appear within a minute." |
 | `commissions:description` | "…Shares become owed once that payment is confirmed." → "…once that payment is verified." |
 | `auth:form.workEmail` vs `profile:fields.email` | "Work email" / "Email": OK as-is (sign-up context); no change. |
-| fr `connectors:entity.jobs`, `connectors:options.entity.jobs`, `connectors:description`, `connectors:connect.foundJobs.*`, `onboarding:titles.companyDescription`, `onboarding:messages.portfolioTransferred` | "Offres" / "offres" used for MissionHub jobs → "Postes" / "postes". "Offre (d'emploi)" stays only for the external posting being imported (`providers.*.tagline/does*`, `jobs:import.*`). |
+| fr `connectors:entity.jobs`, `connectors:options.entity.jobs`, `connectors:description`, `connectors:connect.foundJobs.*`, `onboarding:titles.companyDescription`, `onboarding:messages.portfolioTransferred` | "Offres" / "offres" used for Workatent jobs → "Postes" / "postes". "Offre (d'emploi)" stays only for the external posting being imported (`providers.*.tagline/does*`, `jobs:import.*`). |
 | pt `landing:faq.items.e.a` | "Configurações › Time" → "Configurações › Equipe" (matches `settings:nav.team`) |
 | pt `landing:nav.faq`, `landing:faq.eyebrow` | "Dúvidas" vs `explore.items.faq.title` / `pages.faq.title` "Perguntas frequentes" → choose one: "Perguntas frequentes" (nav may use "FAQ") |
 
@@ -247,7 +247,7 @@ pt `landing` uses "contratação" for the placement object while the app uses "c
 | 4.5 | `referrals:detail.agreement.internal` | "commission de recrutement" is vague for the sourcing share | "…il n'y a donc pas de commission de recrutement." → "…il n'y a donc pas de part pour le recruteur d'origine." |
 | 4.6 | `landing:pages.commissions.description` | Gender | "passage d'un placement de prévu à payable puis payé" → "passage de la commission de prévue à à verser, puis versée" |
 | 4.7 | `landing:commissions.ledger.payable` / `paid` | Ledger states don't match the app (`commissions:kpi.payable` "À vous verser") | "Payable" → "À verser" · "Payée" → "Versée" |
-| 4.8 | SEO lengths | `landing:meta.title` 62 characters (> 60). `meta.description` 194, `pages.privacy.description` 218, `pages.how.description` 184, `pages.faq.description` 170 (> 155) | Shorten. Title: "MissionHub · Réseau privé de recommandation pour recruteurs" (59) |
+| 4.8 | SEO lengths | `landing:meta.title` 62 characters (> 60). `meta.description` 194, `pages.privacy.description` 218, `pages.how.description` 184, `pages.faq.description` 170 (> 155) | Shorten. Title: "Workatent · Réseau privé de recommandation pour recruteurs" (59) |
 
 ## 5. pt-BR specific
 
@@ -264,9 +264,9 @@ pt `landing` uses "contratação" for the placement object while the app uses "c
 
 | # | Key(s) | Problem | Current → Proposed |
 |---|---|---|---|
-| 6.1 | en SEO: `landing:meta.description` (171), `pages.how.description` (181) | > 155 characters, will be cut off in search results | meta: "Match your private candidates to other recruiters' open jobs. Nothing is shared without your authorization. Every placement ends in a 45/45/10 split." (149) · how: "How MissionHub takes a candidate from your private pipeline to a partner's job in four steps, each one authorized and recorded." (127) |
+| 6.1 | en SEO: `landing:meta.description` (171), `pages.how.description` (181) | > 155 characters, will be cut off in search results | meta: "Match your private candidates to other recruiters' open jobs. Nothing is shared without your authorization. Every placement ends in a 45/45/10 split." (149) · how: "How Workatent takes a candidate from your private pipeline to a partner's job in four steps, each one authorized and recorded." (127) |
 | 6.2 | `connectors:providers.google_sheets.description`, `connectors:upload.columnsHint` | British spelling | "recognised" → "recognized" |
-| 6.3 | `connectors:providers.missionhub_api.does1`, `connectors:api.note1` | "ids/id" | "your own ids" → "your own IDs"; "your system's id" → "your system's ID" |
+| 6.3 | `connectors:providers.workatent_api.does1`, `connectors:api.note1` | "ids/id" | "your own ids" → "your own IDs"; "your system's id" → "your system's ID" |
 | 6.4 | `jobs:messages.statusUpdatedReleased.*`, `jobs:import.errors.blockedSite`, `jobs:import.errors.notHtml`, `connectors:providers.greenhouse.step2`, `google_sheets.step1`, `connectors:errors.notFound`, `connectors:api.revokeTitle`, `referrals:form.evidenceHint`, `candidates:errors.csvFullName` | Straight quotes `\"…\"` / `'…'` in visible text (the candidates and referrals files already use curly quotes elsewhere) | `\"Position filled\"` → `“Job filled”`; `'Candidate approved…'` → `“Candidate approved…”`; `'full_name'` → `“full_name”` |
 | 6.5 | `referrals:form.evidenceHint` (en/fr/pt) | ISO date in an example | "…on 2026-11-06…" → "…on Nov 6…" · fr "le 6 nov." · pt "em 6 nov." |
 | 6.6 | `auth:form.passwordHint` vs `profile:password.hint` | Two wordings for one rule | "At least 10 characters, including a letter and a number." (use it in both) |
@@ -298,7 +298,7 @@ The landing components (`src/features/landing/components/*`) are clean. All visi
 ## 8. Consistent things worth keeping (no change)
 - Errors are almost uniformly "what happened + how to fix", with no blame and no codes (`errors.*`).
 - Destructive dialogs name the object and the consequence (`candidates:anonymize.*`, `connectors:api.revokeDescription`).
-- Money copy is careful to say no funds move through MissionHub (`landing:commissions.note`, `settings:integrations.paymentsDescription`).
+- Money copy is careful to say no funds move through Workatent (`landing:commissions.note`, `settings:integrations.paymentsDescription`).
 - fr-CA vocabulary is good overall (courriel, téléverser, jumelage, entrevue, rétroaction) and follows Québec punctuation (no space before `?`).
 - pt-BR register is natural and consistent (*você*, "Informe…").
 
@@ -310,11 +310,11 @@ The landing components (`src/features/landing/components/*`) are clean. All visi
 |---|---|---|---|
 | 9.1 | **"Workspace" in marketing and onboarding** | `landing:hero.primary`, `landing:cta.primary`, `landing:cta.subtitle`, `onboarding:*` | The glossary makes **organization** the single term. "Create your workspace" is a common SaaS CTA and reads better in marketing. Decide: (a) "organization" everywhere (my default in §2.1), or (b) keep "workspace" as the marketing word for the thing you sign up for, and document it as the only allowed exception. |
 | 9.2 | **pt "match/matching" vs Portuguese words** | ~80 pt strings | The glossary keeps the anglicisms (common in Brazilian recruiting tech). The alternative is "compatibilidade". Confirm with a pt-BR recruiter. |
-| 9.3 | **"Free to start"** | `landing:hero.note` | No pricing exists in the product, and MissionHub takes 10% of each placement. "Free to start" may mislead. Confirm the pricing message, or change it to "No subscription · You only share a fee when a placement pays out" `[TODO: confirm pricing]`. |
+| 9.3 | **"Free to start"** | `landing:hero.note` | No pricing exists in the product, and Workatent takes 10% of each placement. "Free to start" may mislead. Confirm the pricing message, or change it to "No subscription · You only share a fee when a placement pays out" `[TODO: confirm pricing]`. |
 | 9.4 ⚖️ | Statutory deadline in UI | `settings:privacy.messages.logged` "Respond within the statutory timeline (PIPEDA: generally 30 days)." | Legal statement inside the product. It ignores Québec Law 25 and Alberta PIPA. Counsel to confirm, or replace with "Due date set to 30 days. Check the deadline that applies to you." |
 | 9.5 ⚖️ | Legal advice in hints | `candidates:form.legalBasisHint`, `candidates:consent.basisHint` "Most recruiters use Consent." | Unverified claim that nudges a legal choice. Proposed: "Choose the basis your privacy policy relies on. Ask your privacy counsel if you're not sure." |
 | 9.6 ⚖️ | Candidate consent wording | `candidate:consent` (en/fr/pt), `emails:candidateRequest.*` | This is the authorization record. The wording, the withdrawal method ("by contacting {org}") and the fr/pt equivalence need counsel (Law 25 requires clear, separate consent in French for Québec residents). |
 | 9.7 ⚖️ | Draft terms notices | `auth:form.terms`, `landing:footer.legal`, `referrals:agreement.description` | Keep them until Terms, Privacy Policy and the collaboration agreement template are approved. The sign-up checkbox text should link to the documents when they exist. |
-| 9.8 ⚖️ | Replacement guarantee field | `referrals:hire.guarantee` "Replacement guarantee (days)" | `security-and-privacy.md` lists replacement guarantees as an open legal item. The UI records them, but must not imply that MissionHub enforces them. |
+| 9.8 ⚖️ | Replacement guarantee field | `referrals:hire.guarantee` "Replacement guarantee (days)" | `security-and-privacy.md` lists replacement guarantees as an open legal item. The UI records them, but must not imply that Workatent enforces them. |
 | 9.9 ⚖️ | Data-residency claim | `settings:integrations.residency` (see 3.16) | Any "hosted in Canada" statement needs confirmation of the real region and the subprocessor list. |
 | 9.10 | **"Reply to this email"** | `emails:emailChanged.note` | Only keep it if the sender address goes to a monitored inbox. Otherwise: "If you didn't make this change, reset your password right away." |

@@ -55,7 +55,7 @@
   /*
    * Meaning, not hue. Use these in new UI so a color says the same thing on every screen:
    * money = earnings and fees · attention = needs action / deadline · inbound = referrals to my jobs ·
-   * outbound = my candidates sent to partners · brand = MissionHub moments (hire reported, first referral).
+   * outbound = my candidates sent to partners · brand = Workatent moments (hire reported, first referral).
    * Text/icon color, soft background, and KPI tile variants.
    */
   --color-money: var(--success);

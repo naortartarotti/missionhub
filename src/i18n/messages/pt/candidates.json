@@ -220,7 +220,7 @@
     "stepPermissionHint": "Anote como a pessoa concordou em ser representada (ex.: um e-mail ou formulário de entrada assinado).",
     "stepPermissionLink": "Registrar autorização",
     "stepMatching": "Matching ligado",
-    "stepMatchingReady": "O MissionHub vai começar a procurar vagas de parceiros compatíveis.",
+    "stepMatchingReady": "O Workatent vai começar a procurar vagas de parceiros compatíveis.",
     "stepMatchingLocked": "Disponível depois que a autorização for registrada.",
     "turnOn": "Ligar o matching"
   },

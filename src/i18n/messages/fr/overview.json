@@ -5,7 +5,7 @@
   "subtitle": "Voici ce qui demande votre attention aujourd'hui.",
   "gettingStarted": {
     "title": "Premiers pas",
-    "intro": "Vos candidats restent privés. MissionHub les jumelle avec des postes de recruteurs partenaires, vous décidez qui soumettre, et la commission est suivie lorsqu'une personne est embauchée.",
+    "intro": "Vos candidats restent privés. Workatent les jumelle avec des postes de recruteurs partenaires, vous décidez qui soumettre, et la commission est suivie lorsqu'une personne est embauchée.",
     "progress": "{done} sur {total} terminées",
     "stepSr": "Étape {n}",
     "doneSr": "terminée",
@@ -16,7 +16,7 @@
     },
     "matching": {
       "title": "Activez le jumelage pour un candidat",
-      "description": "Enregistrez son autorisation de jumelage, puis activez le jumelage pour que MissionHub cherche des postes partenaires qui lui conviennent.",
+      "description": "Enregistrez son autorisation de jumelage, puis activez le jumelage pour que Workatent cherche des postes partenaires qui lui conviennent.",
       "cta": "Voir les candidats"
     },
     "job": {

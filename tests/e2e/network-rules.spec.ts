@@ -49,7 +49,7 @@ test.beforeAll(async () => {
 
 test("first access: the gate replaces the workspace until the member accepts (BR-7)", async ({ page }) => {
   await signIn(page, newcomer);
-  await expect(page.getByText("Before you use MissionHub, read and accept the Network Rules.")).toBeVisible();
+  await expect(page.getByText("Before you use Workatent, read and accept the Network Rules.")).toBeVisible();
   // No workspace navigation behind the gate; the version history link stays.
   await expect(page.getByRole("navigation", { name: /main/i })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Version history" }).first()).toBeVisible();
@@ -62,7 +62,7 @@ test("first access: the gate replaces the workspace until the member accepts (BR
   await expect(accept).toBeEnabled();
   await accept.click();
   await expect(page.getByText("Network Rules accepted.")).toBeVisible();
-  await expect(page.getByText("Before you use MissionHub, read and accept the Network Rules.")).toHaveCount(0);
+  await expect(page.getByText("Before you use Workatent, read and accept the Network Rules.")).toHaveCount(0);
   const { data } = await admin().from("network_rules_member_acceptances").select("locale").eq("user_id", newcomer.id);
   expect(data?.length).toBe(1);
 });

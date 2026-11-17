@@ -42,7 +42,7 @@ export function LandingNav() {
             : "border-transparent bg-transparent",
         )}
       >
-        <Link href="/" aria-label="MissionHub" className="shrink-0 rounded-full">
+        <Link href="/" aria-label="Workatent" className="shrink-0 rounded-full">
           <Logo />
         </Link>
 

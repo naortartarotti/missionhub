@@ -92,7 +92,7 @@ export default async function ConnectorPage({ params }: PageProps<"/workspace/[o
               <SectionTitle>{t("detail.soonTitle")}</SectionTitle>
               <p className="text-sm text-muted-foreground">{t("detail.soonBody", { name: def.name })}</p>
               <div className="flex flex-wrap gap-2 text-sm">
-                <Link className="rounded-full border border-border px-3 py-1.5 font-medium hover:bg-accent" href={`/workspace/${orgSlug}/settings/connectors/missionhub_api`}>MissionHub API</Link>
+                <Link className="rounded-full border border-border px-3 py-1.5 font-medium hover:bg-accent" href={`/workspace/${orgSlug}/settings/connectors/workatent_api`}>Workatent API</Link>
                 <Link className="rounded-full border border-border px-3 py-1.5 font-medium hover:bg-accent" href={`/workspace/${orgSlug}/settings/connectors/google_sheets`}>Google Sheets</Link>
                 <Link className="rounded-full border border-border px-3 py-1.5 font-medium hover:bg-accent" href={`/workspace/${orgSlug}/settings/connectors/csv_upload`}>CSV</Link>
               </div>
@@ -154,7 +154,7 @@ export default async function ConnectorPage({ params }: PageProps<"/workspace/[o
           <CopyBlock
             label={t("api.exampleCandidates")}
             code={`curl -X POST ${apiBase}/candidates \\
-  -H "Authorization: Bearer $MISSIONHUB_API_KEY" \\
+  -H "Authorization: Bearer $WORKATENT_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
     "items": [{
@@ -173,7 +173,7 @@ export default async function ConnectorPage({ params }: PageProps<"/workspace/[o
           <CopyBlock
             label={t("api.exampleJobs")}
             code={`curl -X POST ${apiBase}/jobs \\
-  -H "Authorization: Bearer $MISSIONHUB_API_KEY" \\
+  -H "Authorization: Bearer $WORKATENT_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
     "externalId": "req-1042",

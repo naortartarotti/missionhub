@@ -176,7 +176,7 @@ describe("triage, notice, response (BR-20 to BR-22, AC-67 to AC-75, AC-129, AC-1
 
   it("an info request goes to the reporter only; one reply; the reported org sees nothing (AC-67)", async () => {
     expect(err(await pa.client.rpc("admin_request_conduct_info", { p_case: caseId, p_question: "Can you share when the profile was sent?", p_due_business_days: 3 }))).toBe("ok");
-    expect(sql(`select title from public.notifications where user_id = '${src.id}' and kind = 'conduct_report.info_requested'`)).toEqual(["MissionHub has a question about your report"]);
+    expect(sql(`select title from public.notifications where user_id = '${src.id}' and kind = 'conduct_report.info_requested'`)).toEqual(["Workatent has a question about your report"]);
     expect(((await src.client.rpc("get_conduct_report", { p_org: sOrg.id, p_case: caseId })).data as { status: string }).status).toBe("input_needed");
     expect(err(await src.client.rpc("reply_conduct_info_request", { p_org: sOrg.id, p_case: caseId, p_body: "It was sent on November 3 by email.", p_file_ids: [] }))).toBe("ok");
     expect(err(await src.client.rpc("reply_conduct_info_request", { p_org: sOrg.id, p_case: caseId, p_body: "A second reply is refused.", p_file_ids: [] }))).toBe("conduct_reply_closed");
@@ -196,9 +196,9 @@ describe("triage, notice, response (BR-20 to BR-22, AC-67 to AC-75, AC-129, AC-1
     expect(err(await pa.client.rpc("admin_send_conduct_notice", { ...base, p_conduct_date: "2000-01-01" }))).toBe("conduct_date_before_rules");
     noticeId = await sendNotice(pa, caseId, ["2.3", "3.4"]);
     expect(sql(`select (response_due_at = app.add_business_days(sent_at, 10))::text || '|' || has_outcomes_line::text || '|' || left(outcomes_line, 40)
-                from app.conduct_notices where id = '${noticeId}'`)).toEqual(["true|true|After the response period, MissionHub ma"]);
+                from app.conduct_notices where id = '${noticeId}'`)).toEqual(["true|true|After the response period, Workatent may"]);
     // The reported org's admins are notified (no allegation text); its audit starts here with no reporter data.
-    expect(sql(`select title from public.notifications where user_id = '${tgt.id}' and kind = 'conduct.notice_sent'`)).toEqual(["You have a notice from MissionHub"]);
+    expect(sql(`select title from public.notifications where user_id = '${tgt.id}' and kind = 'conduct.notice_sent'`)).toEqual(["You have a notice from Workatent"]);
     expect(sql(`select count(*) from public.notifications where kind = 'conduct.notice_sent' and user_id = '${tgtMgr.id}'`)).toEqual(["0"]);
     expect(sql(`select action || '|' || (metadata ? 'notice_id')::text || '|' || (metadata::text like '%${sOrg.id}%')::text
                 from public.audit_events where organization_id = '${tOrg.id}' and entity_id = '${caseId}'`)).toEqual(["conduct.notice_sent|true|false"]);
@@ -319,7 +319,7 @@ describe("immediate hold (BR-28, AC-81 to AC-83, AC-141)", () => {
     expect(sql(`select n.kind || '|' || array_to_string(n.rules_cited, ',') || '|' || (n.response_due_at = app.add_business_days(n.sent_at, 10))::text || '|' || s.level
                 from app.conduct_notices n join app.org_sanctions s on s.notice_id = n.id where n.case_id = '${c}'`)).toEqual(["immediate_hold|4.8|true|network_hold"]);
     expect(((await o.client.rpc("get_my_org_state", { p_org: org.id })).data as { restriction: string }).restriction).toBe("network_hold");
-    expect(sql(`select title from public.notifications where user_id = '${o.id}' and kind = 'sanction.immediate_hold'`)).toEqual(["You have an urgent notice from MissionHub"]);
+    expect(sql(`select title from public.notifications where user_id = '${o.id}' and kind = 'sanction.immediate_hold'`)).toEqual(["You have an urgent notice from Workatent"]);
     // A second immediate hold on the held org is refused, nothing created (N10-D16).
     const c2 = await adminCase(pa, org.id);
     expect(err(await pa.client.rpc("admin_apply_immediate_hold", { ...args, p_case: c2, p_ground: "2.3" }))).toBe("org_already_restricted");
@@ -403,7 +403,7 @@ describe("2.3 incident notice (RD-045, AC-132)", () => {
     expect(JSON.stringify(notice)).not.toMatch(/warning|sanction|Cond Leaker/i);
     expect(err(await bad.client.rpc("get_incident_notice", { p_org: badOrg.id, p_notice: sent.data as string }))).toBe("not_found");
     expect(err(await outsider.client.rpc("get_incident_notice", { p_org: xOrg.id, p_notice: sent.data as string }))).toBe("not_found");
-    expect(sql(`select title from public.notifications where user_id = '${victim.id}' and kind = 'conduct.incident_notice'`)).toEqual(["MissionHub sent you a data incident notice"]);
+    expect(sql(`select title from public.notifications where user_id = '${victim.id}' and kind = 'conduct.incident_notice'`)).toEqual(["Workatent sent you a data incident notice"]);
   });
 });
 

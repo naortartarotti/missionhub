@@ -1,6 +1,6 @@
 {
   "title": "Commissions",
-  "description": "Follow each placement from hire to payout. Amounts are estimates until the client pays. Shares become owed once that payment is verified. Shares are paid outside MissionHub and recorded here.",
+  "description": "Follow each placement from hire to payout. Amounts are estimates until the client pays. Shares become owed once that payment is verified. Shares are paid outside Workatent and recorded here.",
   "kpi": {
     "projected": "Projected",
     "projectedHint": "Hires not yet paid by client",
@@ -64,7 +64,7 @@
     "evidenceLineFees": "{amount} (fees {fees}) · {date} · ref {reference}",
     "review": "Review: {note}",
     "sourcingConfirms": "The sourcing recruiter confirms receipt.",
-    "platformVerifies": "Verified by a MissionHub platform admin.",
+    "platformVerifies": "Verified by a Workatent platform admin.",
     "ledger": "Ledger",
     "ledgerEmpty": "Empty until a client payment is verified. Entries are immutable; corrections are recorded as correcting entries.",
     "ledgerCaption": "Commission ledger",

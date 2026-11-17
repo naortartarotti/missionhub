@@ -8,7 +8,7 @@ import { safeNext } from "@/features/auth/schemas";
 /**
  * Supabase Auth "Send Email Hook". When enabled, Supabase stops sending auth emails itself
  * (signup confirmation, password reset, magic link, email change, reauthentication, security
- * notifications) and POSTs them here; we render MissionHub templates in the user's language and
+ * notifications) and POSTs them here; we render Workatent templates in the user's language and
  * deliver through Resend. Configure in Supabase: Authentication → Hooks → Send Email (HTTPS),
  * URL `<app>/api/auth/send-email`, and put the generated secret in SEND_EMAIL_HOOK_SECRET.
  *

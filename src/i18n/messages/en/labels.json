@@ -98,7 +98,7 @@
     "frequent": "frequent travel"
   },
   "commissionRule": {
-    "default": "MissionHub standard split"
+    "default": "Workatent standard split"
   },
   "claimStatus": {
     "open": "Open",
@@ -109,7 +109,7 @@
   },
   "evidenceType": {
     "file": "Files",
-    "referral": "Earlier referral through MissionHub"
+    "referral": "Earlier referral through Workatent"
   },
   "disputeType": {
     "placement": "Placement",

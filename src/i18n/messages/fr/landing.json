@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "MissionHub · Le réseau privé de recommandation pour recruteurs",
+    "title": "Workatent · Le réseau privé de recommandation pour recruteurs",
     "description": "Associez vos candidats privés aux postes ouverts d'autres recruteurs. Rien n'est partagé sans votre autorisation, et chaque placement se conclut par un partage de commission 45/45/10 vérifiable."
   },
   "nav": {
@@ -20,7 +20,7 @@
     "line1": "Vos candidats.",
     "line2": "Leurs postes.",
     "line3": "Une réussite partagée.",
-    "subtitle": "MissionHub associe les candidats de votre bassin aux postes ouverts d'agences partenaires. Rien ne sort de vos mains sans votre accord, et chaque placement se conclut par un partage clair et vérifiable.",
+    "subtitle": "Workatent associe les candidats de votre bassin aux postes ouverts d'agences partenaires. Rien ne sort de vos mains sans votre accord, et chaque placement se conclut par un partage clair et vérifiable.",
     "primary": "Créer votre espace",
     "secondary": "Voir le fonctionnement",
     "note": "Gratuit pour commencer · Aucune donnée de candidat partagée sans autorisation",
@@ -50,10 +50,10 @@
     }
   },
   "statement": {
-    "text": "Chaque recruteur a d'excellents candidats qui ne conviennent à aucun de ses postes. Chaque recruteur a des postes qu'il n'arrive pas à pourvoir assez vite. MissionHub relie les deux, sans que personne ne cède son réseau."
+    "text": "Chaque recruteur a d'excellents candidats qui ne conviennent à aucun de ses postes. Chaque recruteur a des postes qu'il n'arrive pas à pourvoir assez vite. Workatent relie les deux, sans que personne ne cède son réseau."
   },
   "explore": {
-    "eyebrow": "Découvrir MissionHub",
+    "eyebrow": "Découvrir Workatent",
     "title": "Tout ce qu'il faut savoir, une page à la fois.",
     "more": "En savoir plus",
     "items": {
@@ -162,7 +162,7 @@
     "split": {
       "source": "Recruteur d'origine",
       "job": "Recruteur du poste",
-      "platform": "MissionHub"
+      "platform": "Workatent"
     },
     "ledger": {
       "title": "Registre du placement",
@@ -173,7 +173,7 @@
       "payableBody": "Paiement du client vérifié par la plateforme",
       "paidBody": "Réception du versement confirmée par le recruteur"
     },
-    "note": "Aucun fonds ne transite par MissionHub. Les paiements se font entre vous et vos partenaires, et la plateforme conserve les pièces justificatives.",
+    "note": "Aucun fonds ne transite par Workatent. Les paiements se font entre vous et vos partenaires, et la plateforme conserve les pièces justificatives.",
     "configurable": "Les règles de partage sont configurables et versionnées."
   },
   "facts": {
@@ -204,10 +204,10 @@
       },
       "b": {
         "q": "Comment la commission est-elle partagée?",
-        "a": "Par défaut, 45 % au recruteur d'origine, 45 % au recruteur du poste et 10 % à MissionHub. Les règles sont configurables et versionnées, et les deux parties confirment une entente de collaboration avant de poursuivre."
+        "a": "Par défaut, 45 % au recruteur d'origine, 45 % au recruteur du poste et 10 % à Workatent. Les règles sont configurables et versionnées, et les deux parties confirment une entente de collaboration avant de poursuivre."
       },
       "c": {
-        "q": "MissionHub gère-t-il les paiements?",
+        "q": "Workatent gère-t-il les paiements?",
         "a": "Aucun fonds ne transite par la plateforme. Vous facturez votre client comme d'habitude et consignez les pièces justificatives. Les paiements des clients sont vérifiés par la plateforme, et les versements sont confirmés par le recruteur qui les reçoit."
       },
       "d": {
@@ -234,25 +234,25 @@
     "createAccount": "Créer un compte",
     "signIn": "Se connecter",
     "legal": "Les conditions et la politique de confidentialité sont des ébauches en attente de révision juridique.",
-    "rights": "© {year} MissionHub",
+    "rights": "© {year} Workatent",
     "photos": "Photos : Unsplash"
   },
   "pages": {
     "how": {
       "title": "Comment ça marche",
-      "description": "Découvrez comment MissionHub mène un candidat de votre bassin privé jusqu'au poste ouvert d'un partenaire en quatre étapes autorisées, et ce que la plateforme offre à chaque recruteur."
+      "description": "Découvrez comment Workatent mène un candidat de votre bassin privé jusqu'au poste ouvert d'un partenaire en quatre étapes autorisées, et ce que la plateforme offre à chaque recruteur."
     },
     "privacy": {
       "title": "Confidentialité dès la conception",
-      "description": "Les recruteurs des postes voient des nombres de correspondances anonymisés, jamais d'identités. Voyez comment MissionHub isole les données de chaque agence, consigne l'autorisation des candidats et garde une piste d'audit complète."
+      "description": "Les recruteurs des postes voient des nombres de correspondances anonymisés, jamais d'identités. Voyez comment Workatent isole les données de chaque agence, consigne l'autorisation des candidats et garde une piste d'audit complète."
     },
     "commissions": {
       "title": "Commissions",
-      "description": "Fonctionnement du partage par défaut 45/45/10, passage d'un placement de prévu à payable puis payé, et pourquoi aucun fonds ne transite par MissionHub."
+      "description": "Fonctionnement du partage par défaut 45/45/10, passage d'un placement de prévu à payable puis payé, et pourquoi aucun fonds ne transite par Workatent."
     },
     "faq": {
       "title": "Questions fréquentes",
-      "description": "Les réponses aux premières questions des recruteurs sur MissionHub : confidentialité des candidats, partage des commissions, paiements, correspondances et accès d'équipe."
+      "description": "Les réponses aux premières questions des recruteurs sur Workatent : confidentialité des candidats, partage des commissions, paiements, correspondances et accès d'équipe."
     }
   }
 }

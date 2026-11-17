@@ -5,7 +5,7 @@
   "subtitle": "Veja o que precisa da sua atenção hoje.",
   "gettingStarted": {
     "title": "Primeiros passos",
-    "intro": "Seus candidatos ficam privados. O MissionHub encontra vagas de recrutadores parceiros para eles, você decide quem enviar, e a comissão é acompanhada quando alguém é contratado.",
+    "intro": "Seus candidatos ficam privados. O Workatent encontra vagas de recrutadores parceiros para eles, você decide quem enviar, e a comissão é acompanhada quando alguém é contratado.",
     "progress": "{done} de {total} concluídas",
     "stepSr": "Etapa {n}",
     "doneSr": "concluída",
@@ -16,7 +16,7 @@
     },
     "matching": {
       "title": "Ligue o matching de um candidato",
-      "description": "Registre a autorização de matching dele e ligue o matching para o MissionHub procurar vagas de parceiros que combinem.",
+      "description": "Registre a autorização de matching dele e ligue o matching para o Workatent procurar vagas de parceiros que combinem.",
       "cta": "Ir para candidatos"
     },
     "job": {

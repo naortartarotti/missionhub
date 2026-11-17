@@ -1,7 +1,7 @@
 {
   "metaTitle": "Conectores",
   "title": "Conectores",
-  "description": "Traga as vagas e os candidatos da sua organização para o MissionHub a partir das ferramentas que vocês já usam. Conecte uma vez: o MissionHub mantém tudo sincronizado e nunca altera nada na origem.",
+  "description": "Traga as vagas e os candidatos da sua organização para o Workatent a partir das ferramentas que vocês já usam. Conecte uma vez: o Workatent mantém tudo sincronizado e nunca altera nada na origem.",
   "connected": {
     "title": "Conectados",
     "lastSync": "Sincronizado {when}",
@@ -142,7 +142,7 @@
         }
       }
     },
-    "missionhub_api": {
+    "workatent_api": {
       "tagline": "Envie candidatos e vagas dos seus sistemas, do Zapier ou do Make.",
       "description": "Uma API REST simples para seus desenvolvedores ou ferramentas no-code. Crie uma chave, envie JSON e os registros aparecem na sua organização.",
       "does1": "Cria e atualiza candidatos e vagas; seus próprios IDs tornam as chamadas repetidas seguras.",
@@ -232,7 +232,7 @@
       "one": "{count} linha não pôde ser lida",
       "other": "{count} linhas não puderam ser lidas"
     },
-    "previewHint": "É assim que os primeiros registros vão aparecer no MissionHub. Competências, senioridade e anos de experiência são lidos de cada descrição.",
+    "previewHint": "É assim que os primeiros registros vão aparecer no Workatent. Competências, senioridade e anos de experiência são lidos de cada descrição.",
     "test": "Testar",
     "testing": "Testando…",
     "connect": "Conectar",
@@ -281,7 +281,7 @@
     "resume": "Retomar",
     "disconnect": "Desconectar",
     "disconnectTitle": "Desconectar esta origem?",
-    "disconnectDescription": "O MissionHub para de sincronizá-la. Candidatos e vagas já importados continuam na sua organização e podem ser editados normalmente.",
+    "disconnectDescription": "O Workatent para de sincronizá-la. Candidatos e vagas já importados continuam na sua organização e podem ser editados normalmente.",
     "owner": "As importações pertencem a {name}",
     "next": "próxima verificação {when}"
   },
@@ -300,7 +300,7 @@
     "privacyCandidates": "Candidatos importados chegam como rascunhos privados. Eles não entram no matching nem são compartilhados com parceiros até um recrutador confirmar o aviso de privacidade e registrar a autorização do candidato.",
     "privacyJobs": "Vagas importadas pertencem à sua organização e nunca são mostradas a parceiros até você ativá-las e abri-las para parceiros.",
     "soonTitle": "Em breve",
-    "soonBody": "O conector do {name} está em desenvolvimento. Até lá, você pode enviar registros do {name} pela API do MissionHub (ou Zapier/Make), ou exportá-los para uma planilha.",
+    "soonBody": "O conector do {name} está em desenvolvimento. Até lá, você pode enviar registros do {name} pela API do Workatent (ou Zapier/Make), ou exportá-los para uma planilha.",
     "connect": "Conectar",
     "connectAnother": "Conectar outro",
     "adminOnly": "Apenas administradores da organização e gerentes de recrutamento podem conectar origens.",

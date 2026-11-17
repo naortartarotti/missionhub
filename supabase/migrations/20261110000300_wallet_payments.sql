@@ -186,13 +186,13 @@ begin
     insert into public.commission_ledger_entries
       (placement_id, entry_type, party, organization_id, amount_minor, currency, memo, idempotency_key)
     values (p.id, 'payout', 'sourcing', p.source_org_id, -c.sourcing_minor, c.currency,
-            'Paid through MissionHub', c.id || ':payout');
+            'Paid through Workatent', c.id || ':payout');
   end if;
   if c.platform_minor > 0 then
     insert into public.commission_ledger_entries
       (placement_id, entry_type, party, organization_id, amount_minor, currency, memo, idempotency_key)
     values (p.id, 'remittance', 'platform', null, -c.platform_minor, c.currency,
-            'Paid through MissionHub', c.id || ':remittance');
+            'Paid through Workatent', c.id || ':remittance');
   end if;
 
   select coalesce(sum(amount_minor) filter (where party = 'client'), 0),
@@ -201,7 +201,7 @@ begin
     into v_received, v_sourcing_due, v_platform_due
   from public.commission_ledger_entries where placement_id = p.id;
   if v_received > 0 and v_sourcing_due = 0 and v_platform_due = 0 then
-    perform app.placement_transition(p.id, 'settled', 'Shares paid through MissionHub');
+    perform app.placement_transition(p.id, 'settled', 'Shares paid through Workatent');
   end if;
 
   update public.placement_charges
@@ -216,7 +216,7 @@ begin
       p.currency || ' commission for a placement was paid. It becomes available once the payment clears.', '/wallet');
   end if;
   perform app.notify_org(c.payer_org_id, 'placement_charge.paid', 'Commission payment confirmed',
-    'Your payment through MissionHub was received and the partner shares were paid.', '/wallet/placements/' || p.id);
+    'Your payment through Workatent was received and the partner shares were paid.', '/wallet/placements/' || p.id);
   perform app.audit(c.payer_org_id, 'placement_charge.succeeded', 'placement', p.id,
     jsonb_build_object('charge_id', c.id, 'amount_minor', c.amount_minor, 'fee_minor', v_fee, 'currency', c.currency));
   perform app.audit(c.payee_org_id, 'wallet.funded', 'placement', p.id,
