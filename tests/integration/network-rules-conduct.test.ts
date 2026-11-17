@@ -196,7 +196,7 @@ describe("triage, notice, response (BR-20 to BR-22, AC-67 to AC-75, AC-129, AC-1
     expect(err(await pa.client.rpc("admin_send_conduct_notice", { ...base, p_conduct_date: "2000-01-01" }))).toBe("conduct_date_before_rules");
     noticeId = await sendNotice(pa, caseId, ["2.3", "3.4"]);
     expect(sql(`select (response_due_at = app.add_business_days(sent_at, 10))::text || '|' || has_outcomes_line::text || '|' || left(outcomes_line, 40)
-                from app.conduct_notices where id = '${noticeId}'`)).toEqual(["true|true|After the response period, Workatent ma"]);
+                from app.conduct_notices where id = '${noticeId}'`)).toEqual(["true|true|After the response period, Workatent may"]);
     // The reported org's admins are notified (no allegation text); its audit starts here with no reporter data.
     expect(sql(`select title from public.notifications where user_id = '${tgt.id}' and kind = 'conduct.notice_sent'`)).toEqual(["You have a notice from Workatent"]);
     expect(sql(`select count(*) from public.notifications where kind = 'conduct.notice_sent' and user_id = '${tgtMgr.id}'`)).toEqual(["0"]);
