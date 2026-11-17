@@ -37,7 +37,7 @@ Ordered by how fast they would kill trust in a live network.
 - Referrals carry `ownership_protected_until` (default **12 months**) and the UI shows "Ownership protected until {date}". Nothing acts on it.
 - **Disputes can only be opened on a placement.** Placements exist only after the *job owner* reports a hire. If B declines a candidate (or lets the referral sit), then hires them directly or through the client, A has **no in-product path**: no claim, no dispute, no evidence pack.
 - **The `duplicate` decline reason needs no evidence.** Declining "duplicate" is the classic backdoor move: "we already had them". Today it costs B nothing.
-- **Only the party that owes money reports the hire.** That's the weakest incentive design possible. It's also MissionHub's own revenue risk (the 10% is remitted by the same party).
+- **Only the party that owes money reports the hire.** That's the weakest incentive design possible. It's also Workatent's own revenue risk (the 10% is remitted by the same party).
 - **Fix direction:** RD-003 (ownership window bound to the job owner's client terms), RD-004 (first confirmed submission wins, and prior presentation needs evidence within 5 business days), referral-level claims and disputes, and letting the sourcing side report "my candidate told me they were hired", which B must confirm or contest.
 
 ### 3.2 Double submissions across agencies 🔴
@@ -49,7 +49,7 @@ Ordered by how fast they would kill trust in a live network.
 - `guarantee_until` is recorded at hire (default 90 days) and client refunds reverse the ledger pro rata. That's good. But:
   - there's no **fall-off event** (candidate left or was terminated within the guarantee) and no **replacement flow**;
   - the guarantee is entered *at hire*, after the sourcing recruiter has already done the work, so A never sees the terms before submitting;
-  - copy-audit 9.8 is right: the UI must not imply MissionHub enforces the guarantee.
+  - copy-audit 9.8 is right: the UI must not imply Workatent enforces the guarantee.
 - **Fix direction:** RD-006. Show guarantee terms on the job terms card before submission, freeze them into the agreement, and add a "fall-off within guarantee" event with two outcomes (refund → pro-rata reversal of all shares, or replacement → shares stand, and the sourcing partner gets first right to propose the replacement).
 
 ### 3.4 Fee terms visible too late 🟠
@@ -62,12 +62,12 @@ Ordered by how fast they would kill trust in a live network.
 - **Fix direction:** RD-007 (response SLA with reminders and auto-release) plus a lightweight partner reputation: median response time, % of referrals answered, % of placements paid on time, disputes. Show it to counterparts, not publicly.
 
 ### 3.6 Platform revenue and payment discipline 🟠
-- Platform fee = "remittance" recorded by the job owner after the client pays. No invoice comes from MissionHub, there's no due date, and nothing happens when it's overdue.
-- **Fix direction:** RD-009 (MissionHub is a named party to the agreement and records its own invoice; overdue blocks new referrals). Needs a user decision and counsel.
+- Platform fee = "remittance" recorded by the job owner after the client pays. No invoice comes from Workatent, there's no due date, and nothing happens when it's overdue.
+- **Fix direction:** RD-009 (Workatent is a named party to the agreement and records its own invoice; overdue blocks new referrals). Needs a user decision and counsel.
 
 ### 3.7 Member trust and vetting 🟠
 - Any org can sign up and open jobs to the whole network. There's no business verification, no references, and no licence check.
-- ⚖️ **Ontario:** since 1 July 2024, recruiters who find employees for a fee (permanent placements included, even when based outside Ontario) need a licence, and **other recruiters may not knowingly use an unlicensed recruiter**. A split partner is "using" the other recruiter, so members working Ontario roles have a real compliance need to verify their counterparts. ⚖️ **Québec:** CNESST licensing covers personnel placement agencies (staff leasing) and temporary-foreign-worker recruitment agencies. Whether permanent-placement boutiques fall in scope needs counsel. ⚖️ **MissionHub itself:** whether a platform that takes a fee per placement and runs matching is a "recruiter" under the Ontario ESA is the most important open legal question (RD-010).
+- ⚖️ **Ontario:** since 1 July 2024, recruiters who find employees for a fee (permanent placements included, even when based outside Ontario) need a licence, and **other recruiters may not knowingly use an unlicensed recruiter**. A split partner is "using" the other recruiter, so members working Ontario roles have a real compliance need to verify their counterparts. ⚖️ **Québec:** CNESST licensing covers personnel placement agencies (staff leasing) and temporary-foreign-worker recruitment agencies. Whether permanent-placement boutiques fall in scope needs counsel. ⚖️ **Workatent itself:** whether a platform that takes a fee per placement and runs matching is a "recruiter" under the Ontario ESA is the most important open legal question (RD-010).
 - **Fix direction:** RD-002 (curated network: application, business verification, licence fields where relevant, a verified badge).
 
 ### 3.8 Data quality 🟡
@@ -87,14 +87,14 @@ Ordered by how fast they would kill trust in a live network.
 | Fishing: opening fake jobs to see who has which candidates | Partners see counts only, never identities | Counts by niche can still reveal pipeline size. Acceptable. Vetting (RD-002) limits fake orgs. |
 | Spam submissions to every Strong match | Rate limit 30/h, candidate confirmation | Quality signal: accept rate per sourcing org, shown to job owners (reputation). |
 | Poaching the client (A contacts B's client directly) | Confidential client, per-field visibility | Add a non-solicitation clause to the agreement template ⚖️ |
-| Poaching the candidate (B re-presents A's candidate to another client) | Snapshot only, documents revocable | Ownership is per job/client. The agreement should say a candidate introduced through MissionHub stays A's for any role at B's clients during the window (RD-003) ⚖️ |
+| Poaching the candidate (B re-presents A's candidate to another client) | Snapshot only, documents revocable | Ownership is per job/client. The agreement should say a candidate introduced through Workatent stays A's for any role at B's clients during the window (RD-003) ⚖️ |
 | "Duplicate" declines used to dodge a split | None | RD-004: evidence within 5 business days, and the decline is visible to A with the evidence date |
 
 ## 4. Local vs global readiness
 
 | Market | Ready | Gaps |
 |---|---|---|
-| **Canada (ex-Québec)** | Product, CAD, en, consent model, hosting in `ca-central-1` recommended | ⚖️ Ontario recruiter licensing (member verification, MissionHub's own status). GST/HST on the platform fee. Real Terms, Privacy Policy and agreement template (copy-audit 9.7). |
+| **Canada (ex-Québec)** | Product, CAD, en, consent model, hosting in `ca-central-1` recommended | ⚖️ Ontario recruiter licensing (member verification, Workatent's own status). GST/HST on the platform fee. Real Terms, Privacy Policy and agreement template (copy-audit 9.7). |
 | **Québec** | fr-CA UI, separate consent records, privacy requests | ⚖️ Law 25: a PIA is required before transferring personal information outside Québec (OpenAI, email vendors, possibly US hosting); individuals must be told; fines up to C$25M or 4% of worldwide turnover. Consent text in French, clear and separate (copy-audit 9.6). Charter of the French Language applies to the B2B contract and UI. QST on fees. CNESST licensing scope ⚖️. |
 | **US** | Multi-currency, mobility and work authorization (TN, H-1B as "authorization" codes) | State pay-transparency laws (salary ranges in postings: the job has salary fields, keep them required for US roles). Non-competes and non-solicits vary by state ⚖️. Crowded split market. Sales tax on SaaS fees varies by state ⚖️. |
 | **Brazil** | pt-BR UI, BRL, SMS channel in the schema | ⚖️ LGPD: legal basis, DPO (*encarregado*). International transfers need ANPD standard contractual clauses incorporated verbatim (grace period ended 23 Aug 2025). Fee basis includes the 13th salary and bonus. **CLT vs PJ** must be a job field (changes fee basis and candidate expectations). *Nota fiscal* for platform fees. WhatsApp as the main channel. Withholding taxes on cross-border fees ⚖️. |
@@ -118,7 +118,7 @@ Minimum bar before inviting the cohort:
 | Don't build | Why |
 |---|---|
 | **Payments, escrow, wallets** (just removed) | Money-services licensing, KYC and chargebacks ⚖️, for little added trust at small volume. Revisit only when the platform fee is collected reliably *and* members ask for it. |
-| **Employer / client portal** | Agencies won't let MissionHub near their clients. It also turns MissionHub into a Paraform-style competitor to its own members. |
+| **Employer / client portal** | Agencies won't let Workatent near their clients. It also turns Workatent into a Paraform-style competitor to its own members. |
 | **A full ATS** (interview scheduling, email sequencing, CRM, career pages) | Agencies already own an ATS. Win through connectors. Single-player features should stay limited to "match and import". |
 | **Contract/temp staffing splits** | Timesheets, margin splits and weekly billing are a different product and a different regulation (Ontario THA licensing, Québec staff leasing). |
 | **Public candidate marketplace or "hot candidate" blasts** | Breaks privacy-first, the main differentiator, and Law 25/LGPD consent. |

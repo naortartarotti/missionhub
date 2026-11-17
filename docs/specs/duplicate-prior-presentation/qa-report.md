@@ -267,7 +267,7 @@ Two problems remain, both about the probing and abuse defence.
 | m-4 calendar ends in 2028 | **Fixed (fails loudly)** | QA business days expects `holiday_calendar_exhausted`; see r2-m4 |
 | m-5 sequential reference | **Fixed** | DP m-5 test plus QA lookup: 8 random digits, a sticky stop gets a fresh one, it doesn't appear in member-visible audit, and `get_stop_by_reference` is admin-only (anon, A, B and C refused; malformed input → `not_found`) |
 | m-6 upload percentage | **Accepted (PD-033)** | Copy `Uploading…` in en/fr/pt, no `{percent}`; the E2E sees the file row announce "ats-export.pdf Ready · …" |
-| m-7 admin actor label | **Fixed** | E2E admin reject: the hiring page timeline shows "MissionHub admin"; keys exist in en/fr/pt |
+| m-7 admin actor label | **Fixed** | E2E admin reject: the hiring page timeline shows "Workatent admin"; keys exist in en/fr/pt |
 | m-8 confidential client inference | **Accepted (PD-031, R-19)** | — |
 | m-9 expired links | **Fixed (PD-032)** | DP AC-76 test plus QA scenario 48 tail (no warning, status unchanged after the sweep, resend runs no check, confirmation → `already_presented` / `already_sent`) |
 
@@ -351,7 +351,7 @@ There are no blockers. Three majors stop acceptance: AC-18 fails as written, BR-
 | m-4 | minor | backend | The holiday table ends on 2028-12-31, with no guard. Deliveries from about 2028-12-22 get deadlines that ignore 2029 holidays, silently. |
 | m-5 | minor | backend | The support reference is `left(audit_id::text, 8)` of a global sequence. It leaks platform-wide audit volume between two stops and stops being unique after 10^8 events. |
 | m-6 | minor | frontend / backend | No upload percentage (AC-65 "with progress"). An indeterminate bar is shown instead. Already reported in `frontend.md`. |
-| m-7 | minor | copy / frontend | No admin actor label: `actor_kind = admin` events read "MissionHub" in the timeline. Already reported. |
+| m-7 | minor | copy / frontend | No admin actor label: `actor_kind = admin` events read "Workatent" in the timeline. Already reported. |
 | m-8 | minor | design / PM | A client-level stop tells a sourcing org that already presented X to J1 that confidential job J2 has the **same client**. This is inherent to BR-3b + BR-9, a residual of R-2. Confirm it is accepted. |
 | m-9 | minor | backend / PM | An `awaiting_candidate` referral whose link expired stays "pending" forever. It keeps producing pending warnings, and its fingerprints are never purged (BR-21). |
 

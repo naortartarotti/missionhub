@@ -746,7 +746,7 @@ begin
           case when p_due_business_days is not null then app.add_business_days(now(), p_due_business_days) end, auth.uid());
   update app.conduct_cases set status = 'info_requested', first_response_at = coalesce(first_response_at, now()) where id = c.id;
   perform app.audit(null, 'conduct.info_requested', 'conduct_case', c.id, '{}');
-  perform app.notify_conduct_reporter(c.id, 'conduct_report.info_requested', 'MissionHub has a question about your report',
+  perform app.notify_conduct_reporter(c.id, 'conduct_report.info_requested', 'Workatent has a question about your report',
     null, 'Open your report to reply.');
 end $$;
 
@@ -894,7 +894,7 @@ begin
                                  p_allegation, p_alleged_when, p_evidence_summary, p_name_reporter);
   -- BR-40: the reported org's audit starts here, with no reporter data.
   perform app.audit(c.reported_org_id, 'conduct.notice_sent', 'conduct_case', c.id, jsonb_build_object('notice_id', n.id));
-  perform app.notify_org_admins(c.reported_org_id, 'conduct.notice_sent', 'You have a notice from MissionHub',
+  perform app.notify_org_admins(c.reported_org_id, 'conduct.notice_sent', 'You have a notice from Workatent',
     'Read it and respond by ' || app.fmt_et(n.response_due_at) || ' ET.', '/settings/standing/' || c.id);
   return n.id;
 end $$;
@@ -923,7 +923,7 @@ begin
           auth.uid())
   returning id into v_id;
   perform app.audit(c.reported_org_id, 'conduct.followup_sent', 'conduct_case', c.id, jsonb_build_object('followup_id', v_id));
-  perform app.notify_org_admins(c.reported_org_id, 'conduct.followup', 'MissionHub has a follow-up question',
+  perform app.notify_org_admins(c.reported_org_id, 'conduct.followup', 'Workatent has a follow-up question',
     'Open the notice to reply.', '/settings/standing/' || c.id);
   return v_id;
 end $$;

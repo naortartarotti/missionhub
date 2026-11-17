@@ -1,6 +1,6 @@
 {
   "title": "Commissions",
-  "description": "Suivez chaque placement de l'embauche au versement. Les montants sont des estimations jusqu'à ce que le client paie. Les parts deviennent dues une fois ce paiement vérifié. Les parts sont payées hors de MissionHub et consignées ici.",
+  "description": "Suivez chaque placement de l'embauche au versement. Les montants sont des estimations jusqu'à ce que le client paie. Les parts deviennent dues une fois ce paiement vérifié. Les parts sont payées hors de Workatent et consignées ici.",
   "kpi": {
     "projected": "Prévu",
     "projectedHint": "Embauches pas encore payées par le client",
@@ -64,7 +64,7 @@
     "evidenceLineFees": "{amount} (frais {fees}) · {date} · réf. {reference}",
     "review": "Examen : {note}",
     "sourcingConfirms": "Le recruteur d'origine confirme la réception.",
-    "platformVerifies": "Vérifiée par un administrateur de la plateforme MissionHub.",
+    "platformVerifies": "Vérifiée par un administrateur de la plateforme Workatent.",
     "ledger": "Registre",
     "ledgerEmpty": "Vide jusqu'à ce qu'un paiement du client soit vérifié. Les écritures sont immuables; les corrections sont enregistrées comme écritures de correction.",
     "ledgerCaption": "Registre des commissions",

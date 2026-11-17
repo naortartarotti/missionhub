@@ -1,7 +1,7 @@
 import "server-only";
 
 /**
- * One branded layout for every MissionHub email (auth, invitations, candidate requests).
+ * One branded layout for every Workatent email (auth, invitations, candidate requests).
  * Table-based with inline styles so it renders in Gmail, Outlook and Apple Mail; every
  * template also gets a plain-text version. All dynamic text is escaped here.
  */
@@ -36,7 +36,7 @@ const BRAND = "#f6d365";
 const logo = `<table role="presentation" cellpadding="0" cellspacing="0"><tr>
 <td style="width:22px;height:20px;background:${BRAND};border-radius:10px"></td>
 <td style="width:22px;height:20px;background:${INK};border-radius:10px;position:relative;left:-6px"></td>
-<td style="padding-left:6px;font:600 17px ${FONT};color:${INK};letter-spacing:-0.2px">MissionHub</td>
+<td style="padding-left:6px;font:600 17px ${FONT};color:${INK};letter-spacing:-0.2px">Workatent</td>
 </tr></table>`;
 
 export function renderEmail(c: EmailContent): { html: string; text: string } {
@@ -82,7 +82,7 @@ ${c.preheader ? `<div style="display:none;max-height:0;overflow:hidden;opacity:0
 ${c.paragraphs.map((p) => `<p style="margin:0 0 16px;font:15px/1.6 ${FONT};color:#333333">${para(p)}</p>`).join("\n")}
 ${details}${code}${quote}${cta}${note}${fallback}
 </div></td></tr>
-<tr><td style="padding:20px 8px 0;font:12px/1.5 ${FONT};color:#8a8a8f;text-align:center">${escapeHtml(c.chrome.footer)}<br>MissionHub</td></tr>
+<tr><td style="padding:20px 8px 0;font:12px/1.5 ${FONT};color:#8a8a8f;text-align:center">${escapeHtml(c.chrome.footer)}<br>Workatent</td></tr>
 </table></td></tr></table></body></html>`;
 
   const text = [

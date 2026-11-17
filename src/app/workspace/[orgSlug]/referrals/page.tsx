@@ -450,7 +450,7 @@ async function SentTable({ orgSlug }: { orgSlug: string }) {
                         ? feeShort({ feeBasis: r.terms.fee_basis, rateBps: r.terms.rate_bps, flatFeeMinor: r.terms.flat_fee_minor, currency: r.terms.currency }, tg, f)
                         : tg("jobs.terms.notRecorded")}
                     </p>
-                    {/* The "already presented" closure is recorded by MissionHub, not by either recruiter. */}
+                    {/* The "already presented" closure is recorded by Workatent, not by either recruiter. */}
                     {ev && ev.to_status !== "submitted" && ev.to_status !== "already_presented" ? (
                       <p className="mt-1 text-sm text-muted-foreground">
                         {ev.actor_side === "target"

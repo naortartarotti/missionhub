@@ -44,7 +44,7 @@
     "workAuthorization": "Autorisation de travail",
     "passport": "Passeport"
   },
-  "consent": "J'autorise {org} à partager les informations ci-dessus avec {partner} pour le poste {job}. MissionHub utilise mes coordonnées pour vérifier si mon profil a déjà été transmis à {partner} pour la même entreprise. Je sais que je peux retirer cette autorisation à tout moment en contactant {org}.",
+  "consent": "J'autorise {org} à partager les informations ci-dessus avec {partner} pour le poste {job}. Workatent utilise mes coordonnées pour vérifier si mon profil a déjà été transmis à {partner} pour la même entreprise. Je sais que je peux retirer cette autorisation à tout moment en contactant {org}.",
   "consentRequired": "Cochez l'autorisation pour confirmer.",
   "confirm": "Confirmer et autoriser",
   "confirming": "Confirmation…",
@@ -78,7 +78,7 @@
     },
     "already_sent": {
       "title": "Votre profil a déjà été transmis",
-      "body": "{partner} a déjà reçu votre profil par MissionHub. {org} ne l'a donc pas transmis de nouveau pour le poste {job}. Vous n'avez rien d'autre à faire. Pour toute question, contactez {org}."
+      "body": "{partner} a déjà reçu votre profil par Workatent. {org} ne l'a donc pas transmis de nouveau pour le poste {job}. Vous n'avez rien d'autre à faire. Pour toute question, contactez {org}."
     }
   },
   "nameRequired": "Indiquez votre nom"

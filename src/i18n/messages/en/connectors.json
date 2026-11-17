@@ -1,7 +1,7 @@
 {
   "metaTitle": "Connectors",
   "title": "Connectors",
-  "description": "Bring your organization's jobs and candidates into MissionHub from the tools you already use. Connect once; MissionHub keeps them in sync and never changes anything in the source.",
+  "description": "Bring your organization's jobs and candidates into Workatent from the tools you already use. Connect once; Workatent keeps them in sync and never changes anything in the source.",
   "connected": {
     "title": "Connected",
     "lastSync": "Synced {when}",
@@ -142,7 +142,7 @@
         }
       }
     },
-    "missionhub_api": {
+    "workatent_api": {
       "tagline": "Send candidates and jobs from your own systems, Zapier or Make.",
       "description": "A simple REST API for your developers or no-code tools. Create a key, send JSON, and records appear in your organization.",
       "does1": "Creates and updates candidates and jobs; your own ids make repeated calls safe.",
@@ -232,7 +232,7 @@
       "one": "{count} row can't be read",
       "other": "{count} rows can't be read"
     },
-    "previewHint": "This is how the first records will look in MissionHub. Skills, seniority and years are read from each description.",
+    "previewHint": "This is how the first records will look in Workatent. Skills, seniority and years are read from each description.",
     "test": "Test",
     "testing": "Testing…",
     "connect": "Connect",
@@ -281,7 +281,7 @@
     "resume": "Resume",
     "disconnect": "Disconnect",
     "disconnectTitle": "Disconnect this source?",
-    "disconnectDescription": "MissionHub stops syncing it. Candidates and jobs already imported stay in your organization and can be edited as usual.",
+    "disconnectDescription": "Workatent stops syncing it. Candidates and jobs already imported stay in your organization and can be edited as usual.",
     "owner": "Imports belong to {name}",
     "next": "next check {when}"
   },
@@ -300,7 +300,7 @@
     "privacyCandidates": "Imported candidates arrive as private drafts. They can't be matched or shared with partners until a recruiter confirms the privacy notice and records the candidate's authorization.",
     "privacyJobs": "Imported jobs belong to your organization and are never shown to partners until you activate them and open them to partners.",
     "soonTitle": "Coming soon",
-    "soonBody": "The {name} connector is in development. Until it's ready, you can send records from {name} with the MissionHub API (or Zapier/Make), or export them to a spreadsheet.",
+    "soonBody": "The {name} connector is in development. Until it's ready, you can send records from {name} with the Workatent API (or Zapier/Make), or export them to a spreadsheet.",
     "connect": "Connect",
     "connectAnother": "Connect another",
     "adminOnly": "Only organization admins and recruiter managers can connect sources.",

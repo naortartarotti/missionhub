@@ -109,13 +109,13 @@ test("A files a hire report; B sees text (no XSS, no links) and contests 'not th
   await expect(pb.getByText(xss)).toBeVisible();
   await expect(pb.locator('a[href*="n3-e2e-secret-link"]')).toHaveCount(0);
   expect(await pb.content()).not.toContain("n3-e2e-secret-link");
-  await expect(pb.getByText(/Only .* and MissionHub admins can see the links\./)).toBeVisible();
+  await expect(pb.getByText(/Only .* and Workatent admins can see the links\./)).toBeVisible();
   expect(await xssFired(pb)).toBeNull();
   await expect(pb.getByRole("button", { name: "Report a hire" })).toHaveCount(0);
   await pb.getByRole("button", { name: "Contest" }).click();
   const cdlg = pb.getByRole("dialog");
   await cdlg.getByRole("radio", { name: "Not this client" }).click();
-  await expect(cdlg.getByText("Only MissionHub admins read this.")).toBeVisible();
+  await expect(cdlg.getByText("Only Workatent admins read this.")).toBeVisible();
   await cdlg.getByLabel("Statement").fill(`The candidate works at a rival of ${CLIENT}, not at our client.`);
   await cdlg.getByText(/I confirm this contest is true/).click();
   await cdlg.getByRole("button", { name: "Contest report" }).click();

@@ -10,11 +10,11 @@ export async function marketingMetadata(page: "home" | PageKey, path: string): P
   const description = page === "home" ? t("meta.description") : t(`pages.${page}.description`);
   return {
     metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
-    // Internal pages go through the root "%s · MissionHub" template; the home title already has the brand.
+    // Internal pages go through the root "%s · Workatent" template; the home title already has the brand.
     title: page === "home" ? { absolute: title } : title,
     description,
     alternates: { canonical: path },
-    openGraph: { type: "website", siteName: "MissionHub", url: path, title, description },
+    openGraph: { type: "website", siteName: "Workatent", url: path, title, description },
     twitter: { card: "summary_large_image", title, description },
   };
 }

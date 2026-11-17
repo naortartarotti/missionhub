@@ -116,7 +116,7 @@
       "agency": "agence",
       "independent": "indépendant"
     },
-    "description": "Toutes les organisations sur MissionHub : membres, région et statut d'accès.",
+    "description": "Toutes les organisations sur Workatent : membres, région et statut d'accès.",
     "search": "Rechercher par nom ou adresse de l'espace",
     "filter": {
       "all": "Toutes les organisations",
@@ -620,7 +620,7 @@
   "conduct": {
     "emptyFilter": "Aucun dossier de conduite ouvert.",
     "reportedBy": "{reported} · signalement de {reporter}",
-    "openedByMissionHub": "{reported} · ouvert par MissionHub",
+    "openedByWorkatent": "{reported} · ouvert par Workatent",
     "filedOn": "Déposé le {when} HE",
     "firstResponseBy": "Première réponse d'ici le",
     "stepDeadline": "Prochaine étape d'ici le",

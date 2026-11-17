@@ -6,14 +6,14 @@ Owner: Recruitment Strategist · First version: 2026-11-12 · Status: initial an
 
 ---
 
-## 1. The job MissionHub does
+## 1. The job Workatent does
 
 Every agency recruiter has two kinds of waste:
 
 1. **Orphan candidates.** These are good, interested people who don't fit any of the recruiter's own open roles. They go stale in the ATS.
 2. **Orphan jobs.** These are roles the recruiter won but can't fill fast enough, usually in a niche or location outside their network.
 
-A split placement turns both into revenue. One recruiter has the candidate, another has the job, and they share the fee. Splits have existed for decades, through formal networks (Top Echelon, NPAworldwide) and, far more often, through informal LinkedIn and WhatsApp groups and personal relationships. **[Estimate]** The informal channel is MissionHub's real incumbent. Most splits in Canada happen between recruiters who already know each other, on a handshake or a one-page email agreement.
+A split placement turns both into revenue. One recruiter has the candidate, another has the job, and they share the fee. Splits have existed for decades, through formal networks (Top Echelon, NPAworldwide) and, far more often, through informal LinkedIn and WhatsApp groups and personal relationships. **[Estimate]** The informal channel is Workatent's real incumbent. Most splits in Canada happen between recruiters who already know each other, on a handshake or a one-page email agreement.
 
 The work is always the same, and recruiters always hate it:
 - finding a counterpart;
@@ -23,27 +23,27 @@ The work is always the same, and recruiters always hate it:
 - chasing feedback;
 - chasing money.
 
-MissionHub's product already automates the first step (matching) and makes the trust steps *recordable*: authorization, frozen agreements, an immutable ledger and an audit trail. It doesn't yet make them *enforceable* (see `product-assessment.md`).
+Workatent's product already automates the first step (matching) and makes the trust steps *recordable*: authorization, frozen agreements, an immutable ledger and an audit trail. It doesn't yet make them *enforceable* (see `product-assessment.md`).
 
 ## 2. Market map
 
 ### 2.1 Categories
 
-| Category | Who | Model | Relevance to MissionHub |
+| Category | Who | Model | Relevance to Workatent |
 |---|---|---|---|
 | **Recruiter-to-recruiter split networks (membership)** | Top Echelon (US), NPAworldwide (global, member-owned), Recruit Alliance (US), SplitFee (UK) | Monthly dues and/or a brokerage % per split. Vetted membership. Shared job and candidate boards. | **Direct competitors.** Same buyer, same job. |
 | **Employer-to-agency vendor marketplaces** | BountyJobs, Paraform, Hunt Club, RecruitiFi | The employer posts a role (sometimes with a listing fee). Many agencies or freelance recruiters compete. The platform takes a cut. | Adjacent. They compete for the *job side* (they bring employer demand) and set recruiter expectations on ownership windows and guarantees. |
 | **Managed recruiting capacity** | Recruiter.com (legacy) | Started as a split marketplace, then pivoted to selling recruiter capacity and AI sourcing. Assets were sold to Job Mobz in 2024. | **Cautionary tale.** A split marketplace that couldn't sustain liquidity and moved toward employer-paid services. |
-| **ATS / recruiting CRMs** | Bullhorn, Loxo, Recruit CRM, Manatal, JobAdder, Vincere, Zoho Recruit | SaaS per seat | Systems of record, not split networks. The Bullhorn Marketplace is an integration catalogue, not a split network (I found no recruiter-to-recruiter placement feature). **Partners via connectors, not competitors**, unless MissionHub drifts into being an ATS. |
+| **ATS / recruiting CRMs** | Bullhorn, Loxo, Recruit CRM, Manatal, JobAdder, Vincere, Zoho Recruit | SaaS per seat | Systems of record, not split networks. The Bullhorn Marketplace is an integration catalogue, not a split network (I found no recruiter-to-recruiter placement feature). **Partners via connectors, not competitors**, unless Workatent drifts into being an ATS. |
 | **Informal splits** | LinkedIn groups, WhatsApp groups, personal partnerships | Handshake, usually 50/50 | **The real incumbent.** Free and trusted, but unprotected, unrecorded and hard to scale. |
 
 ### 2.2 Competitor snapshot
 
-| Player | Economics | Ownership / guarantee | Strengths | Weaknesses vs MissionHub |
+| Player | Economics | Ownership / guarantee | Strengths | Weaknesses vs Workatent |
 |---|---|---|---|---|
 | **Top Echelon** (US) | 50/50 split. Each side pays a 3% brokerage fee to the network, so each recruiter keeps 47%. Monthly membership was about US$130 in an old (2017-era) post. **[Source: Top Echelon blog; price outdated]** | Network policies, including a no-contact period after placement and a "but for" causation test for disputes. **[Source: Top Echelon policies post]** | Decades of history, a vetted membership, published dispute rules and payment-protection reputation. | US-centric and English-only. Job orders and candidates are marketed openly inside the network, so they aren't privacy-first. Manual matching. Subscription plus fee. |
 | **NPAworldwide** | Member-owned. Dues not public. **[Source: NPA site]** | Bylaws: a split applies when the candidate firm was the "procuring cause". No separate split agreement is needed because members agree to network policies. **[Source: NPA]** | Global (about 1,200 recruiters in 30 countries, per its own press release). Strong governance and member vetting (independent firms, two references, board approval). | Club-like and slow to join. Older tooling. Dues before value. |
-| **SplitFee** (UK) | Reportedly **45/45/10**, the platform fee only on placement, plus a reported £97/month tier. **[Source: aggregator listing, unverified]** | n/a | Same split structure as MissionHub. Shows that 45/45/10 is a model the market can read. | UK only. Young and small. |
+| **SplitFee** (UK) | Reportedly **45/45/10**, the platform fee only on placement, plus a reported £97/month tier. **[Source: aggregator listing, unverified]** | n/a | Same split structure as Workatent. Shows that 45/45/10 is a model the market can read. | UK only. Young and small. |
 | **Recruit Alliance** (US) | About US$75/month after a free trial. **[Source: vendor page]** | Honor period (KB article) | Cheap | Thin liquidity, basic tooling. |
 | **BountyJobs** | Reportedly 5% of the placement fee charged by the platform. **[Source: vendor page, conflicting third-party figures]** | Six-month candidate ownership window, 60-day guarantee. **[Source: third-party summary]** | Brings employer demand. Standardised terms. | Employer-to-agency, not recruiter-to-recruiter. Agencies compete rather than collaborate. |
 | **Paraform** | Employer fee about 20–25% of first-year salary, plus a job listing fee. Take rate not published. Recruiters reportedly keep about 70%. **[Source: Paraform's own pages and competitor blogs; estimate]** | 90-day guarantee with installment payments (per a competitor comparison) | Strong employer demand in US startups. A slick freelance-recruiter supply side. | US tech startups only. The platform owns the client relationship, which recruiters with their own clients won't accept. |
@@ -55,11 +55,11 @@ MissionHub's product already automates the first step (matching) and makes the t
 | **Canada** | 15–25% of first-year base. Executive search 20–30%+. **[Source: IQ Partners, Manatal, RecruitBPM]** | 30–90 days, by refund (often pro-rata) or replacement. **[Source: general guides; no Canadian survey found]** | Fee basis varies (base, total cash, total comp). Invoices are usually due on the start date, net 30. **[Estimate]** |
 | **US** | 20–30%. Top Echelon reports a network average of about 22.5%, around US$20k per placement. **[Source: Top Echelon]** | 60–90 days | Most crowded split market. |
 | **Brazil** | 15–35% of annual compensation, often including target bonus. **[Source: Randstad BR FAQ, contract templates, industry blogs]** | Often a three-month replacement without new fees. **[Source: consultancy listing]** | Annual comp includes the 13th salary and often bonus. CLT vs PJ changes the "salary" definition. Invoicing needs a *nota fiscal*. |
-| **Split norm** | 50/50 between candidate side and job side is the default everywhere I've worked. Networks take 0–6% (Top Echelon) or ~10% (SplitFee). | | MissionHub's 45/45/10 is a 50/50 with the platform fee taken equally from both sides. That's readable, but **10% is at the top of the range** for a recruiter-to-recruiter network. |
+| **Split norm** | 50/50 between candidate side and job side is the default everywhere I've worked. Networks take 0–6% (Top Echelon) or ~10% (SplitFee). | | Workatent's 45/45/10 is a 50/50 with the platform fee taken equally from both sides. That's readable, but **10% is at the top of the range** for a recruiter-to-recruiter network. |
 
-**Implication.** On a C$100k role at 20%, a C$20k fee pays each recruiter C$9k and MissionHub C$2k. Under Top Echelon's model each recruiter keeps C$9.4k and pays dues. A 10% platform fee holds up only if MissionHub gives clearly more than a job board: privacy, matching, enforcement and payment discipline. See RD-008.
+**Implication.** On a C$100k role at 20%, a C$20k fee pays each recruiter C$9k and Workatent C$2k. Under Top Echelon's model each recruiter keeps C$9.4k and pays dues. A 10% platform fee holds up only if Workatent gives clearly more than a job board: privacy, matching, enforcement and payment discipline. See RD-008.
 
-## 3. Where MissionHub wins and loses
+## 3. Where Workatent wins and loses
 
 ### Wins (real today, in the code)
 1. **Privacy-first matching.** Partners see anonymized match counts. A candidate is revealed only through a submission authorized for a specific job, ideally confirmed by the candidate on their own link (`referral_candidate_requests`). Networks market candidates and job orders openly. For agencies afraid of being poached, and in Québec under Law 25 or Brazil under LGPD, this is a genuine differentiator.
@@ -71,12 +71,12 @@ MissionHub's product already automates the first step (matching) and makes the t
 7. **No subscription.** That's an easy yes for independents.
 
 ### Losses (today)
-1. **No liquidity, brand or track record.** Networks sell "you'll get paid", backed by decades of history. MissionHub can't yet.
+1. **No liquidity, brand or track record.** Networks sell "you'll get paid", backed by decades of history. Workatent can't yet.
 2. **No member vetting.** Any org can open jobs to the whole network. Top Echelon and NPA screen members, and that screening *is* their trust product.
 3. **Ownership and backdoor protection is displayed, not enforced.** The 12-month "ownership protected" date has no mechanism behind it. Disputes exist only once a hire is reported. See `product-assessment.md` §3.
-4. **Platform revenue depends on the honesty of the party that owes it.** Only the job owner reports the hire. No funds move through MissionHub, so the platform fee is a remittance MissionHub has to chase.
+4. **Platform revenue depends on the honesty of the party that owes it.** Only the job owner reports the hire. No funds move through Workatent, so the platform fee is a remittance Workatent has to chase.
 5. **The fee is higher than Top Echelon's 6%** and there's no reputation layer to justify it yet.
-6. **No employer demand generation.** Paraform and BountyJobs bring jobs. MissionHub depends on recruiters bringing them.
+6. **No employer demand generation.** Paraform and BountyJobs bring jobs. Workatent depends on recruiters bringing them.
 
 ## 4. Wedge: who to win first
 
@@ -88,7 +88,7 @@ MissionHub's product already automates the first step (matching) and makes the t
 Why this segment:
 - **Independents and boutiques feel both pains hardest.** They have no internal desk to pass orphan candidates to, and no BD capacity to win more jobs. Splits are already part of how they work, informally.
 - **They decide in a day.** The owner is the buyer and the user. Mid-size agencies (50+ recruiters) have internal split policies, ATS lock-in (Bullhorn), procurement and legal review. They come later, through ATS connectors.
-- **Québec and Ontario together are a defensible start.** Bilingual product, Law 25-grade consent and Canadian hosting give MissionHub a moat in Québec. Toronto supplies the job volume. The corridor shares clients, so cross-province splits happen naturally.
+- **Québec and Ontario together are a defensible start.** Bilingual product, Law 25-grade consent and Canadian hosting give Workatent a moat in Québec. Toronto supplies the job volume. The corridor shares clients, so cross-province splits happen naturally.
 - **The niches are where matching works best.** Skills, seniority and salary are explicit, so deterministic matching performs well. Healthcare, construction and trades bring licensing, union and temp-staffing complexity. Executive search is relationship-driven, retained, and resists anonymized matching.
 
 **Not first:**
@@ -122,7 +122,7 @@ A split marketplace has value only when a recruiter's candidates find partner jo
 
 ## 6. Positioning statement
 
-> **For** independent and boutique recruiters in Canada **who** have great candidates that don't fit their own roles and roles they can't fill alone, **MissionHub is** a private referral network **that** matches your candidates to trusted partners' open jobs, and partners' candidates to yours, without exposing anyone until the candidate says yes. **Unlike** split-fee job boards and informal LinkedIn groups, every referral is authorized by the candidate, protected by agreed terms, and tracked to payment in an auditable ledger.
+> **For** independent and boutique recruiters in Canada **who** have great candidates that don't fit their own roles and roles they can't fill alone, **Workatent is** a private referral network **that** matches your candidates to trusted partners' open jobs, and partners' candidates to yours, without exposing anyone until the candidate says yes. **Unlike** split-fee job boards and informal LinkedIn groups, every referral is authorized by the candidate, protected by agreed terms, and tracked to payment in an auditable ledger.
 
 Short version (landing): **"Split placements, without the risk."** Supporting pillars:
 1. **Private until the candidate says yes.**
@@ -162,8 +162,8 @@ Claims to avoid until they're true: "you'll always get paid", "backdoor protecti
 - Needs: pt-BR (built), WhatsApp or SMS candidate confirmation (the `sms` channel already exists in the schema), *nota fiscal*-friendly invoicing records, an LGPD-compliant consent trail. Churns on English-centric UX or foreign-currency friction.
 
 ### Non-users who shape the product
-- **Candidate:** sees one email or SMS and one page. Needs to know who will see what, for which job, and that they can say no. Their confirmation is the strongest trust asset MissionHub has, and also the best ownership evidence.
-- **Employer client:** not a user. Fears its name leaking. Must never feel that MissionHub is "shopping" its role around. Confidential client and per-field visibility handle this.
+- **Candidate:** sees one email or SMS and one page. Needs to know who will see what, for which job, and that they can say no. Their confirmation is the strongest trust asset Workatent has, and also the best ownership evidence.
+- **Employer client:** not a user. Fears its name leaking. Must never feel that Workatent is "shopping" its role around. Confidential client and per-field visibility handle this.
 
 ## Sources
 - Top Echelon split economics and membership: [How split placements work (Top Echelon)](https://topechelon.com/?p=84332), [Top 10 fees 2017 / membership](https://pinnacle.topechelon.com/?p=40590), [Network policies](https://pinnacle.topechelon.com/?p=40701), [Typical placement fees](https://topechelon.com/blog/typical-placement-recruitment-fees-average/)

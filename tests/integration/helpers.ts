@@ -35,7 +35,7 @@ export async function acceptRulesFor(userId: string, versionId?: string) {
 }
 
 export async function createUser(label: string, opts: { platformAdmin?: boolean; acceptRules?: boolean } = {}): Promise<TestUser> {
-  const email = `${label}-${randomUUID().slice(0, 8)}@test.missionhub.local`;
+  const email = `${label}-${randomUUID().slice(0, 8)}@test.workatent.local`;
   const password = `Pw-${randomUUID()}`;
   const a = admin();
   const { data, error } = await a.auth.admin.createUser({ email, password, email_confirm: true, user_metadata: { full_name: label } });

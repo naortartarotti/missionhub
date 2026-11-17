@@ -5,7 +5,7 @@
 -- 3. API keys: per-organization keys for the public REST API (/api/v1). Only a SHA-256 hash is stored.
 -- 4. Connectors: an organization connects an external system (ATS job board, spreadsheet, …).
 --    Secrets live in Supabase Vault, never in a table. Syncs run on the background queue.
--- 5. External references: map an external id to the MissionHub record so a sync never duplicates.
+-- 5. External references: map an external id to the Workatent record so a sync never duplicates.
 
 -- ---------------------------------------------------------------------------
 -- 1. Origin of imported records
@@ -201,7 +201,7 @@ begin
   if char_length(p_secret) > 4000 then raise exception 'invalid_secret' using errcode = '22023'; end if;
   if c.secret_id is null then
     update public.connections
-       set secret_id = vault.create_secret(p_secret, 'connection:' || c.id, 'MissionHub connector credential')
+       set secret_id = vault.create_secret(p_secret, 'connection:' || c.id, 'Workatent connector credential')
      where id = c.id;
   else
     perform vault.update_secret(c.secret_id, p_secret);

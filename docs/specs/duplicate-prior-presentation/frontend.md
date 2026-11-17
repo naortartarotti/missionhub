@@ -50,7 +50,7 @@ Test change: `src/i18n/__tests__/messages.test.ts` now compares placeholder **se
 | AC-8, 63, 64 (UI part) | S1-c two-step, Cancel, Submit anyway; S1-b/c/d rendered from outcomes, no toast |
 | AC-12, 13 | S1-b client-side (disabled submit + Edit candidate) and server `identifier_required` |
 | AC-15, 16, 69, 74 (UI) | S7 `already_sent` |
-| AC-17 | S2-b (pill + Info icon, neutral banner, "MissionHub" actor (admin events: `detail.adminActor`), not-delivered footer, no actions, commission hidden); S6 pill with no track |
+| AC-17 | S2-b (pill + Info icon, neutral banner, "Workatent" actor (admin events: `detail.adminActor`), not-delivered footer, no actions, commission hidden); S6 pill with no track |
 | AC-19, 20, 21 | S3 WithdrawDialog (release option only with `can_release_on_withdraw`; Back keeps reason and tick; toasts) |
 | AC-22, 22a | S3b ReleaseDialog only with `can_release`; footer "Released on…" |
 | AC-23, 68 (UI) | Hiring side: no release flag in the view model; standard footer |
@@ -142,5 +142,5 @@ Local Supabase only. I served the production build with `next start` on :3100, u
 3. **Closed (brief rev. 4.2).** The picker renders what the RPC returns. It supports an optional `revoked` field, but none is required.
 4. **No business days left for "Resolve by".** `ReferralDispute.dispute.resolve_by` comes without a days-left count, so the admin card shows only the date.
 5. **Toast keys with missing parameters.** `referrals.success.withdrawn` now needs `{date}`, but `withdrawReferral` returns it without one. The UI builds its own toasts (withdraw, objection filed, contest). Any other caller showing the server message would print `{date}`.
-6. **Done.** Admin actor: `referrals.detail.adminActor` (en/fr/pt) is used in the referral page's `who()` for `actor_kind = "admin"`; `system` keeps "MissionHub".
+6. **Done.** Admin actor: `referrals.detail.adminActor` (en/fr/pt) is used in the referral page's `who()` for `actor_kind = "admin"`; `system` keeps "Workatent".
 7. **Closed (PD-030).** N1 notifications are in-app only. The `emails.*` keys stay unused, and no N1 UI text says an email was sent (closure, objection filed, dispute opened, dispute resolved).

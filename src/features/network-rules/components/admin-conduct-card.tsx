@@ -68,7 +68,7 @@ export async function AdminConductCard({ c }: { c: AdminConductListItem }) {
             {c.decision_overdue ? <Badge variant="destructive">{t("conduct.decisionOverdue")}</Badge> : null}
           </div>
           <p className="text-base font-semibold text-pretty">
-            {c.reporter_org ? t("conduct.reportedBy", { reported: c.reported_org.name, reporter: c.reporter_org.name }) : t("conduct.openedByMissionHub", { reported: c.reported_org.name })}
+            {c.reporter_org ? t("conduct.reportedBy", { reported: c.reported_org.name, reporter: c.reporter_org.name }) : t("conduct.openedByWorkatent", { reported: c.reported_org.name })}
           </p>
           <p className="text-muted-foreground">
             {c.admin_category && c.admin_category !== c.category ? t("conduct.categories", { admin: tg(`labels.conductCategory.${c.admin_category}`), reporter: reporterCat }) : reporterCat}

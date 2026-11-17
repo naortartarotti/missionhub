@@ -1,6 +1,6 @@
-# Time de Agents do MissionHub
+# Time de Agents do Workatent
 
-O MissionHub é construído com um time de 7 agents especializados (subagents do Claude Code), definidos em `.claude/agents/*.md`, e orquestrados pela skill `feature-team` (`.claude/skills/feature-team/SKILL.md`). Modelos: **sonnet** para product-manager, product-designer e ux-writer-marketing (velocidade); **opus** para recruitment-strategist, backend-engineer, frontend-engineer e qa-engineer (decisões de domínio, código e segurança).
+O Workatent é construído com um time de 7 agents especializados (subagents do Claude Code), definidos em `.claude/agents/*.md`, e orquestrados pela skill `feature-team` (`.claude/skills/feature-team/SKILL.md`). Modelos: **sonnet** para product-manager, product-designer e ux-writer-marketing (velocidade); **opus** para recruitment-strategist, backend-engineer, frontend-engineer e qa-engineer (decisões de domínio, código e segurança).
 
 ## Visão geral
 

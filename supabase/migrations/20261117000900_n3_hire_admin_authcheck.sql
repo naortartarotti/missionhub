@@ -286,7 +286,7 @@ begin
   returning id into v_id;
   if v_due is not null then
     perform app.notify_org(r.source_org_id, 'auth_check.requested', 'Authorization evidence needed',
-      'MissionHub needs evidence of the candidate''s authorization for ' || r.candidate_label || ' by ' || app.fmt_et(v_due) || ' ET.',
+      'Workatent needs evidence of the candidate''s authorization for ' || r.candidate_label || ' by ' || app.fmt_et(v_due) || ' ET.',
       '/referrals/' || r.id);
   end if;
   perform app.audit(null, 'auth_check.opened', 'referral', r.id, jsonb_build_object('check_id', v_id, 'evidence_requested', v_due is not null));

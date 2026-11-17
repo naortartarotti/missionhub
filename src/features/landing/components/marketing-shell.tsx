@@ -94,7 +94,7 @@ function Footer({ t, year }: { t: T; year: number }) {
             </ul>
           </nav>
         </div>
-        <p aria-hidden className={cn(display, "mt-10 text-center text-[clamp(4rem,17vw,15rem)] leading-[0.8] text-foreground/[0.06] select-none")}>MissionHub</p>
+        <p aria-hidden className={cn(display, "mt-10 text-center text-[clamp(4rem,17vw,15rem)] leading-[0.8] text-foreground/[0.06] select-none")}>Workatent</p>
         <div className="mt-8 flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>{t("footer.rights", { year: String(year) })}</p>
           <p>{t("footer.legal")}</p>

@@ -5,7 +5,7 @@
   "subtitle": "Here's what needs your attention today.",
   "gettingStarted": {
     "title": "Get started",
-    "intro": "Your candidates stay private. MissionHub matches them with jobs from partner recruiters, you decide who to submit, and the commission is tracked when someone gets hired.",
+    "intro": "Your candidates stay private. Workatent matches them with jobs from partner recruiters, you decide who to submit, and the commission is tracked when someone gets hired.",
     "progress": "{done} of {total} done",
     "stepSr": "Step {n}",
     "doneSr": "done",
@@ -16,7 +16,7 @@
     },
     "matching": {
       "title": "Turn on matching for a candidate",
-      "description": "Record their matching authorization, then turn on matching so MissionHub can look for partner jobs that fit.",
+      "description": "Record their matching authorization, then turn on matching so Workatent can look for partner jobs that fit.",
       "cta": "Go to candidates"
     },
     "job": {

@@ -123,10 +123,10 @@ All deadlines use RD-018: business days, ET, the ON ∪ QC holiday table, the ev
 
 - "We already had them" isn't a contest reason. That was the 5-day claim (RD-004.3, RD-030).
 - **Deemed confirmation on silence** runs only if the report notice was emailed (N7) to the job owner **and** at least one org admin or manager of B, and the emails didn't bounce. Otherwise the report goes to the admin queue as "unanswered, notice not delivered". Silence never wins on in-app notices alone (RD-053).
-- **Reopening a deemed confirmation:** only by an admin, within 10 business days, and only if MissionHub's own logs show the notice failed. "I didn't check" doesn't reopen it.
+- **Reopening a deemed confirmation:** only by an admin, within 10 business days, and only if Workatent's own logs show the notice failed. "I didn't check" doesn't reopen it.
 
 ### 4.5 After the hire is established (confirmed, deemed or upheld)
-- B enters the fee details (start date, base, bonus on total cash, invoiced fee and reason if I ≠ C) within 10 business days. Until then the placement shows **"fee details pending from the hiring recruiter"**, plus the **frozen estimate** from submission when one exists, labelled as an estimate. MissionHub never invents a fee (rule 7.5).
+- B enters the fee details (start date, base, bonus on total cash, invoiced fee and reason if I ≠ C) within 10 business days. Until then the placement shows **"fee details pending from the hiring recruiter"**, plus the **frozen estimate** from submission when one exists, labelled as an estimate. Workatent never invents a fee (rule 7.5).
 - If B doesn't enter them: the admin sends a rule 6.4 notice, and the ladder applies with notice and a response window (N10). **No automatic pause.** This replaces RD-030's "Should: pause B's new partner jobs", which predates the N10 ladder.
 - Money disagreements (base, discount, engagement type) → placement dispute → rule 7.5 (negotiation, mediation, arbitration). The admin's decision covers whether the hire counts, never the amount.
 
@@ -143,10 +143,10 @@ All deadlines use RD-018: business days, ET, the ON ∪ QC holiday table, the ev
 | HE-1 | Both sides report the same hire | The first valid record wins. If B records while A's report is pending, A's report closes as "confirmed by the hiring recruiter". If A files after B recorded, A is refused and pointed to the placement. |
 | HE-2 | Candidate hired, then leaves in week 2 | Hire still counts. Guarantee and remedy come from the snapshot (RD-006, RD-027). |
 | HE-3 | Offer accepted, then reneged before start | Not a hire if the person never started. B records the fall-off (existing flow). If the candidate starts later inside the protection, it's a hire again. |
-| HE-4 | Client hires through another agency (on or off MissionHub) | Still a hire on A's referral with B. B records it. If B's client won't pay B, it's a collection shortfall, shared pro rata (RD-025). If B **waives** its claim without A's prior written consent, the floor applies (RD-025, RD-031). Money → 7.5. |
+| HE-4 | Client hires through another agency (on or off Workatent) | Still a hire on A's referral with B. B records it. If B's client won't pay B, it's a collection shortfall, shared pro rata (RD-025). If B **waives** its claim without A's prior written consent, the floor applies (RD-025, RD-031). Money → 7.5. |
 | HE-5 | Two hiring orgs (B1, B2) each had a counting referral of the same person at the same client (two agencies on one client) | Never decided across hiring orgs (RD-013). Each B records the hire on its own referral, and each A's share follows what its B collects. Admins see both. |
 | HE-6 | Hired as contractor, PJ, through an EOR or payroll provider, or by an affiliate | Counts as a hire (RD-055). B records it with the I ≠ C reason "non-permanent engagement" if the client fee differs. Floor and 7.5 apply. ⚖️ wording. |
-| HE-7 | Hire into a role in another country or currency | Snapshot currency and rate apply. No FX by MissionHub (RD-025, RD-034). |
+| HE-7 | Hire into a role in another country or currency | Snapshot currency and rate apply. No FX by Workatent (RD-025, RD-034). |
 | HE-8 | Legacy (pre-N2) referral | 12-month window. Free fee entry (BR-26). Deemed agreement uses the legacy default rule version in force at submission. |
 | HE-9 | Candidate revoked authorization after delivery | Revocation stops data access, not ownership. The hire still counts. |
 | HE-10 | B's member who owned the job left the agency | Notices and deadlines go to org admins and managers (RD-036). Clocks don't pause. |
@@ -196,7 +196,7 @@ All deadlines use RD-018: business days, ET, the ON ∪ QC holiday table, the ev
 | Sourcing recruiter | "If they hire my candidate, I'll know and get paid" | Reports → placements ≥ 50% **[estimate]**; median report → resolution ≤ 15 business days |
 | Hiring recruiter | Clear duty, no ambushes, fair contest | Self-recorded hires on non-`offer` referrals > 0 (honest B's use it); contested-and-upheld rate (A's report upheld) < 30% **[estimate]** |
 | Candidate | Not caught in a fee fight, asked at most once | Admin candidate contacts per dispute ≤ 1 |
-| MissionHub | Platform share protected; neutral | Share of placements first reported by A; deemed confirmations later reopened ≈ 0 |
+| Workatent | Platform share protected; neutral | Share of placements first reported by A; deemed confirmations later reopened ≈ 0 |
 
 ## 9. Local and global notes
 
@@ -224,7 +224,7 @@ All deadlines use RD-018: business days, ET, the ON ∪ QC holiday table, the ev
 - **Q-2 ⚖️** The 6-month filing tail after the window (+3 with the re-engagement tail): acceptable next to provincial limitation periods, and worded as a platform rule only?
 - **Q-3 ⚖️** "Client and its affiliates, agents, EORs and payroll providers" and non-permanent engagements (contractor, PJ) counting as a hire: wording, and fit with members' client contracts.
 - **Q-4 ⚖️** Admin contact with the candidate to verify a hire, and evidence files about the candidate's new employer: purpose, consent-text coverage (Law 25 / PIPEDA) and retention. Proposed: files kept until the dispute closes + 2 years, then deleted (PIA N7).
-- **Q-5 (pricing, RD-056)** Should MissionHub's platform share on a hire surfaced by A's report (backdoor) be the normal rate on the fee collected (recommended), or carry a surcharge on the hiring side? Recommendation: normal rate, no surcharge. That keeps us neutral (PD-049 spirit), and sanctions run through the ladder, not through money.
+- **Q-5 (pricing, RD-056)** Should Workatent's platform share on a hire surfaced by A's report (backdoor) be the normal rate on the fee collected (recommended), or carry a surcharge on the hiring side? Recommendation: normal rate, no surcharge. That keeps us neutral (PD-049 spirit), and sanctions run through the ladder, not through money.
 
 ## 12. Next steps for the PM
 

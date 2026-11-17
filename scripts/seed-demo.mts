@@ -85,7 +85,7 @@ const jobs = [
 async function main() {
   const alex = await user("alex@agency-a.demo", "Alex Morgan (demo)");
   const blair = await user("blair@agency-b.demo", "Blair Chen (demo)");
-  await user("ops@missionhub.demo", "Platform Ops (demo)", true);
+  await user("ops@workatent.demo", "Platform Ops (demo)", true);
 
   const orgA = await org(alex, "Demo · Northern Talent Partners", "demo-northern-talent");
   const orgB = await org(blair, "Demo · Lakeshore Search", "demo-lakeshore-search");
@@ -128,7 +128,7 @@ async function main() {
   console.info(`\nDemo data ready (${processed} background jobs processed).\n`);
   console.info("  Agency A (candidate owner):  alex@agency-a.demo");
   console.info("  Agency B (job owner):        blair@agency-b.demo");
-  console.info("  Platform admin:              ops@missionhub.demo");
+  console.info("  Platform admin:              ops@workatent.demo");
   console.info(`  Password (all):              ${PASSWORD}\n`);
 }
 

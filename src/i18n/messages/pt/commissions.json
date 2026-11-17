@@ -1,6 +1,6 @@
 {
   "title": "Comissões",
-  "description": "Acompanhe cada colocação da contratação ao repasse. Os valores são estimativas até o cliente pagar. As partes passam a ser devidas quando esse pagamento é verificado. As partes são pagas fora do MissionHub e registradas aqui.",
+  "description": "Acompanhe cada colocação da contratação ao repasse. Os valores são estimativas até o cliente pagar. As partes passam a ser devidas quando esse pagamento é verificado. As partes são pagas fora do Workatent e registradas aqui.",
   "kpi": {
     "projected": "Previsto",
     "projectedHint": "Contratações ainda não pagas pelo cliente",
@@ -64,7 +64,7 @@
     "evidenceLineFees": "{amount} (tarifas {fees}) · {date} · ref. {reference}",
     "review": "Análise: {note}",
     "sourcingConfirms": "O recrutador de origem confirma o recebimento.",
-    "platformVerifies": "Verificado por um admin da plataforma MissionHub.",
+    "platformVerifies": "Verificado por um admin da plataforma Workatent.",
     "ledger": "Extrato",
     "ledgerEmpty": "Vazio até que um pagamento do cliente seja verificado. Os lançamentos são imutáveis; correções são registradas como lançamentos de correção.",
     "ledgerCaption": "Extrato da comissão",

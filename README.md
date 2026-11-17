@@ -1,4 +1,4 @@
-# MissionHub
+# Workatent
 
 A private, permission-based referral marketplace for recruiters. Recruiter A's private candidates are matched to recruiter B's open jobs. B sees only anonymized match counts until A submits a candidate with documented authorization. Accepted referrals run through a permission-aware workflow and end in an auditable 45/45/10 commission ledger (configurable and versioned).
 
@@ -20,7 +20,7 @@ npm run dev               # web (http://localhost:3000) + background worker
 Demo accounts (synthetic, local only) — password `Demo-password-2026`:
 - `alex@agency-a.demo`: Agency A, owns candidates
 - `blair@agency-b.demo`: Agency B, owns jobs
-- `ops@missionhub.demo`: platform admin (`/admin`)
+- `ops@workatent.demo`: platform admin (`/admin`)
 
 ## Scripts
 | Script | Purpose |

@@ -23,7 +23,7 @@ type AgreementBps = { sourcing_bps: number; job_owner_bps: number; platform_bps:
  * (P = I). Pass the placement's computed fee C for snapshot placements: when I < C the sourcing share is on C
  * and the job-owner share can be negative. Without C (legacy placements) it's today's split.
  */
-/** N3 (BR-31): a fee-pending placement has no fee yet, so there's no projection (MissionHub never invents a fee). */
+/** N3 (BR-31): a fee-pending placement has no fee yet, so there's no projection (Workatent never invents a fee). */
 export function projectedSplit(feeMinor: number | null, bps: AgreementBps, computedFeeMinor: number | null = null) {
   if (feeMinor === null) return null;
   const s = allocatePlacement(

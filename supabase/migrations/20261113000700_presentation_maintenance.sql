@@ -78,7 +78,7 @@ declare
   n integer := 0;
 begin
   perform vault.create_secret(encode(extensions.gen_random_bytes(32), 'hex'), 'presentation_fingerprint_key_v' || v_new::text,
-    'MissionHub N1 fingerprint HMAC key (never leaves the database)');
+    'Workatent N1 fingerprint HMAC key (never leaves the database)');
   update app.presentation_config set key_version = v_new, rotated_at = now() where id;
   for v in
     select p.referral_id, p.candidate_id from app.referral_presentations p

@@ -1,20 +1,20 @@
 {
   "chrome": {
     "linkFallback": "Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :",
-    "footer": "Vous recevez ce courriel à la suite d’une action sur MissionHub.",
+    "footer": "Vous recevez ce courriel à la suite d’une action sur Workatent.",
     "hello": "Bonjour {name},",
     "helloAnonymous": "Bonjour,"
   },
   "signup": {
-    "subject": "Confirmez votre courriel pour MissionHub",
+    "subject": "Confirmez votre courriel pour Workatent",
     "preheader": "Plus qu’une étape pour activer votre compte.",
     "heading": "Confirmez votre courriel",
-    "body": "Plus qu’une étape avant d’utiliser MissionHub. Confirmez que {email} est bien votre adresse.",
+    "body": "Plus qu’une étape avant d’utiliser Workatent. Confirmez que {email} est bien votre adresse.",
     "cta": "Confirmer le courriel",
     "note": "Le lien expire dans 1 heure. Si vous n'avez pas créé de compte, ignorez ce courriel."
   },
   "recovery": {
-    "subject": "Réinitialisez votre mot de passe MissionHub",
+    "subject": "Réinitialisez votre mot de passe Workatent",
     "preheader": "Utilisez le lien pour choisir un nouveau mot de passe.",
     "heading": "Réinitialisez votre mot de passe",
     "body": "Nous avons reçu une demande de réinitialisation du mot de passe pour {email}. Cliquez sur le bouton pour en choisir un nouveau.",
@@ -22,18 +22,18 @@
     "note": "Le lien expire dans 1 heure. Si vous n'avez rien demandé, ignorez ce courriel; votre mot de passe reste le même."
   },
   "magiclink": {
-    "subject": "Votre lien de connexion MissionHub",
+    "subject": "Votre lien de connexion Workatent",
     "preheader": "Connectez-vous en un clic.",
-    "heading": "Connectez-vous à MissionHub",
+    "heading": "Connectez-vous à Workatent",
     "body": "Utilisez le bouton ci-dessous pour vous connecter avec {email}.",
     "cta": "Se connecter",
     "note": "Le lien expire dans 1 heure et ne fonctionne qu'une fois. Si vous ne l'avez pas demandé, ignorez ce courriel."
   },
   "invite": {
-    "subject": "Vous êtes invité sur MissionHub",
+    "subject": "Vous êtes invité sur Workatent",
     "preheader": "Acceptez l’invitation et créez votre compte.",
     "heading": "Vous êtes invité",
-    "body": "Vous êtes invité à créer un compte MissionHub avec {email}.",
+    "body": "Vous êtes invité à créer un compte Workatent avec {email}.",
     "cta": "Accepter l'invitation",
     "note": "Si vous n'attendiez pas cette invitation, ignorez ce courriel."
   },
@@ -46,10 +46,10 @@
     "note": "Si ce n'était pas vous, ignorez ce courriel et changez votre mot de passe."
   },
   "emailChangeNew": {
-    "subject": "Confirmez votre nouveau courriel MissionHub",
+    "subject": "Confirmez votre nouveau courriel Workatent",
     "preheader": "Confirmez la nouvelle adresse de votre compte.",
     "heading": "Confirmez votre nouveau courriel",
-    "body": "Confirmez que {newEmail} est le nouveau courriel de votre compte MissionHub.",
+    "body": "Confirmez que {newEmail} est le nouveau courriel de votre compte Workatent.",
     "cta": "Confirmer le nouveau courriel",
     "note": "Le lien expire dans 1 heure. Si vous n'avez pas demandé ce changement, ignorez ce courriel."
   },
@@ -62,7 +62,7 @@
     "note": "Le code expire dans 1 heure. Ne le partagez jamais."
   },
   "passwordChanged": {
-    "subject": "Votre mot de passe MissionHub a été modifié",
+    "subject": "Votre mot de passe Workatent a été modifié",
     "preheader": "Si ce n'était pas vous, réinitialisez-le maintenant.",
     "heading": "Votre mot de passe a été modifié",
     "body": "Le mot de passe de {email} vient d’être modifié.",
@@ -70,23 +70,23 @@
     "note": "Si c'était vous, vous n'avez rien à faire."
   },
   "emailChanged": {
-    "subject": "Le courriel de votre compte MissionHub a été modifié",
+    "subject": "Le courriel de votre compte Workatent a été modifié",
     "preheader": "Si ce n'était pas vous, prévenez-nous.",
     "heading": "Votre courriel a été modifié",
     "body": "Le courriel de votre compte est passé de {oldEmail} à {email}.",
     "note": "Si vous n'avez pas fait ce changement, réinitialisez votre mot de passe et répondez à ce courriel."
   },
   "securityNotice": {
-    "subject": "Changement de sécurité sur votre compte MissionHub",
+    "subject": "Changement de sécurité sur votre compte Workatent",
     "preheader": "Vérifiez que c’était vous.",
     "heading": "Votre compte a changé",
     "body": "Nous avons enregistré un changement de sécurité sur {email} ({event}).",
     "note": "Si ce n'était pas vous, réinitialisez votre mot de passe immédiatement."
   },
   "teamInvite": {
-    "subject": "{inviter} vous invite à rejoindre {org} sur MissionHub",
+    "subject": "{inviter} vous invite à rejoindre {org} sur Workatent",
     "preheader": "Rejoignez {org} en tant que {role}.",
-    "heading": "Rejoignez {org} sur MissionHub",
+    "heading": "Rejoignez {org} sur Workatent",
     "body": "{inviter} vous invite à rejoindre {org}. Connectez-vous ou créez un compte avec {email} pour accepter.",
     "org": "Organisation",
     "role": "Rôle",

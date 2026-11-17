@@ -13,7 +13,7 @@
 | S-N10-2 | Category only | **Category only, with 4 outcomes instead of 3** ("not enough evidence" is separate). **Plus one exception:** when a 2.3 data-leak breach is found, the admin sends each org whose candidates were affected a factual incident notice (what data, when). It never names the sanction. ⚖️ | BR-23 outcome list; new admin action on 2.3 findings |
 | S-N10-3 | (a) as written; (b) no freeze, escalate to suspension | (a) **confirmed.** (b) **No freeze during an immediate hold: agreed.** **But escalating to suspension doesn't contain anything**, because settlement mode (BR-34) keeps read access to received shared profiles. The containment point is the **breach finding**, not the hold. In v1, that means the incident notice (S-N10-2) and the candidate's revocation. Follow-up: a "pause received shared profiles" effect on a 2.3 finding. | Remove "escalate to suspension" as the R-5 mitigation; R-5 text; follow-up item |
 | S-N10-4 | Full in-flight continuity | **Confirmed.** One addition for **terminated** orgs: an admin can close in-flight referrals that have gone stale (no activity for 60 days **[estimate]**) as cancelled, so settlement mode can't be kept open forever. The sourcing side's ownership window is unaffected. | One admin action on the terminated-org obligations list |
-| S-N10-5 | Same neutral sentence | **Same sentence while the org is in settlement mode.** Once settlement mode ends, partners see **"{Org} is no longer part of the MissionHub network."** The same sentence later covers voluntary exits, so it never reveals a sanction. | BR-14 gets a second sentence for one state; QA scenario 13 changes |
+| S-N10-5 | Same neutral sentence | **Same sentence while the org is in settlement mode.** Once settlement mode ends, partners see **"{Org} is no longer part of the Workatent network."** The same sentence later covers voluntary exits, so it never reveals a sanction. | BR-14 gets a second sentence for one state; QA scenario 13 changes |
 | S-N10-6 | Yes, if facts and rules are unchanged | **Yes, on one condition:** every notice, immediate or not, must say that the decision can be any level up to termination. Without that line, escalation needs a new notice. Also flag an immediate hold whose decision is overdue in the admin queue (no automatic lift). | Mandatory line in BR-21/BR-28 templates; overdue flag (Should) |
 
 ---
@@ -118,7 +118,7 @@ Rules for the product:
   - **What:** the admin sends each organization whose candidates' or clients' information was shown to be shared a **factual notice**: which referral(s), what information, when, to whom if known.
   - **To whom:** every affected organization, not only the reporter, since a leak can involve several sourcing partners.
   - **What it never contains:** the sanction.
-  - **Why:** those organizations hold the candidate relationship and may have their own duties. Under Québec's private-sector act, an organization that has reason to believe a confidentiality incident happened must take reasonable measures to reduce the risk of injury. Where the risk of serious injury is present, it must notify the Commission d'accès à l'information and the people concerned ([LegisQuébec P-39.1 s. 3.5](https://www.legisquebec.gouv.qc.ca/en/document/cs/P-39.1%20/20230630); [Gowling WLG on Law 25](https://gowlingwlg.com/en/insights-resources/articles/2022/how-well-do-you-know-quebec-s-law-25)). PIPEDA has a parallel breach regime. **Counsel decides** who the "enterprise" is in this chain (sourcing org, hiring org, MissionHub) and whether MissionHub itself must notify. Add it to C-4.
+  - **Why:** those organizations hold the candidate relationship and may have their own duties. Under Québec's private-sector act, an organization that has reason to believe a confidentiality incident happened must take reasonable measures to reduce the risk of injury. Where the risk of serious injury is present, it must notify the Commission d'accès à l'information and the people concerned ([LegisQuébec P-39.1 s. 3.5](https://www.legisquebec.gouv.qc.ca/en/document/cs/P-39.1%20/20230630); [Gowling WLG on Law 25](https://gowlingwlg.com/en/insights-resources/articles/2022/how-well-do-you-know-quebec-s-law-25)). PIPEDA has a parallel breach regime. **Counsel decides** who the "enterprise" is in this chain (sourcing org, hiring org, Workatent) and whether Workatent itself must notify. Add it to C-4.
   - **Product:** an admin action on a "breach found" outcome citing 2.3. It sends an in-case message to selected affected orgs (an admin picks them from the parties of the referrals named in the finding). It's audited and PII-free in notifications, like BR-39.
 
 ### Rationale
@@ -141,7 +141,7 @@ Rules for the product:
 
 ### Signal to revisit
 - Repeat reports on the same org and issue after "action taken" (reporters don't believe it).
-- Public accusations (7.1 cases) that cite "MissionHub did nothing".
+- Public accusations (7.1 cases) that cite "Workatent did nothing".
 - Counsel's C-4 answer on who notifies.
 
 ---
@@ -214,7 +214,7 @@ Rules for the product:
 
 **Why:**
 - **The real-world process doesn't stop.**
-  - When the suspended org is the **hiring** side: the client is its client, and the client doesn't know or care about MissionHub's sanctions. Interviews and offers will happen anyway, off-platform. Blocking them in-platform only takes them off the record. The sourcing partner loses visibility, and the hire report gets harder to verify. In recruiting, a record that goes dark is where backdoor hires happen **[experience-based]**.
+  - When the suspended org is the **hiring** side: the client is its client, and the client doesn't know or care about Workatent's sanctions. Interviews and offers will happen anyway, off-platform. Blocking them in-platform only takes them off the record. The sourcing partner loses visibility, and the hire report gets harder to verify. In recruiting, a record that goes dark is where backdoor hires happen **[experience-based]**.
   - When the suspended org is the **sourcing** side: its candidate is in the innocent partner's process. The partner advances the stages, but the sourcing recruiter has to carry the candidate through the offer: counter-offer handling, notice period, start date. If that recruiter can't message, candidates fall off at offer. That's the most expensive fall-off for everyone, and the innocent partner loses its fee.
 - **"Close only" creates a perverse incentive.** The suspended hiring side would decline everything in-platform and hire off-platform. RD-003 still protects the fee, but now through a dispute instead of a clean record.
 - Interviews and offers on existing referrals are not "new partner activity", which is what the ladder takes away.
@@ -253,7 +253,7 @@ Rules for the product:
 |---|---|
 | Hold, rules not accepted, network pending, suspension | "{Org} isn't taking new referrals right now." (BR-14, unchanged) |
 | **Terminated, still in settlement mode** | **Same sentence.** No change on existing referrals. |
-| **Terminated, settlement mode ended** (no in-flight referral or open obligation with anyone) | **"{Org} is no longer part of the MissionHub network."** |
+| **Terminated, settlement mode ended** (no in-flight referral or open obligation with anyone) | **"{Org} is no longer part of the Workatent network."** |
 | Voluntary exit (support-handled today, self-serve later) once its obligations are settled | The same "no longer part of" sentence |
 
 - "No longer a member" **never states a cause**, and it's shared with voluntary exits, so it doesn't reveal a sanction.
@@ -331,10 +331,10 @@ After an immediate hold and its 10-business-day window, the admin may decide any
 | **Reported org** | Knows the case, the evidence summary and the stakes before any decision (except the two 9.4 cases). Has one response and one review. Can always settle what it owes. |
 | **Innocent partner of a sanctioned org** | Notices nothing on in-flight referrals. Its candidates keep moving, and payouts and refunds still work. |
 | **Candidate** | Their process isn't frozen by a dispute between recruiters. Can revoke at any time. Is told by their recruiter if their data leaked. |
-| **MissionHub** | Fewer public accusations. Sanctions that survive review. No money decisions. A conduct record that shows who the repeat offenders are. |
+| **Workatent** | Fewer public accusations. Sanctions that survive review. No money decisions. A conduct record that shows who the repeat offenders are. |
 
 ## Items for counsel ⚖️ (add to the brief's C-list)
 
-- **C-4 addition:** in a 2.3 leak, who is the "enterprise" with Law 25 s. 3.5 / PIPEDA breach duties (sourcing org, hiring org, MissionHub)? Does MissionHub have to notify, or pause deliveries to the held org on a "reason to believe"? (S-N10-2, S-N10-3)
+- **C-4 addition:** in a 2.3 leak, who is the "enterprise" with Law 25 s. 3.5 / PIPEDA breach duties (sourcing org, hiring org, Workatent)? Does Workatent have to notify, or pause deliveries to the held org on a "reason to believe"? (S-N10-2, S-N10-3)
 - **C-3 addition:** is the fixed "possible outcomes" line on every notice enough to support escalation on the same notice? (S-N10-6)
-- **New:** "{Org} is no longer part of the MissionHub network" for terminated and exited orgs after settlement. Any defamation or privacy concern? (S-N10-5)
+- **New:** "{Org} is no longer part of the Workatent network" for terminated and exited orgs after settlement. Any defamation or privacy concern? (S-N10-5)

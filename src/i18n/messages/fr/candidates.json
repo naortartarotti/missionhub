@@ -220,7 +220,7 @@
     "stepPermissionHint": "Notez comment la personne a accepté d'être représentée (p. ex. un courriel ou un formulaire d'accueil signé).",
     "stepPermissionLink": "Consigner l'autorisation",
     "stepMatching": "Jumelage activé",
-    "stepMatchingReady": "MissionHub commencera à chercher des postes partenaires qui conviennent.",
+    "stepMatchingReady": "Workatent commencera à chercher des postes partenaires qui conviennent.",
     "stepMatchingLocked": "Disponible une fois l'autorisation consignée.",
     "turnOn": "Activer le jumelage"
   },

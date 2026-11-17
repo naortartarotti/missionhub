@@ -1,5 +1,5 @@
 <!--
-MissionHub Network Rules v1, French (fr-CA). Offered first in Québec (Charter of the French language, Bill 96).
+Workatent Network Rules v1, French (fr-CA). Offered first in Québec (Charter of the French language, Bill 96).
 Source: docs/strategy/network-rules-v1.md (2026-11-15). Localized from en.md, not translated word for word.
 Rule numbers are identical in en.md, fr-CA.md and pt-BR.md. Comments are in English for the team and counsel; they don't render.
 
@@ -16,23 +16,23 @@ FOUNDER. 3.3 duration decided (PD-054): through the guarantee and final payout.
 PLACEHOLDERS. Every open value is written [TODO: ...].
 -->
 
-# Règles du réseau MissionHub
+# Règles du réseau Workatent
 
 **Version :** v1 — ébauche · **Date d’entrée en vigueur :** [TODO: date d’entrée en vigueur]
 
-Ces règles expliquent comment les membres du réseau MissionHub travaillent ensemble, pour protéger les candidats, les clients et les honoraires.
+Ces règles expliquent comment les membres du réseau Workatent travaillent ensemble, pour protéger les candidats, les clients et les honoraires.
 
 ## Introduction
 
-Ces règles font partie de l’entente que votre organisation accepte en adhérant à MissionHub.
+Ces règles font partie de l’entente que votre organisation accepte en adhérant à Workatent.
 
-MissionHub est un logiciel et un historique de ce qui s’est passé. Nous jumelons les candidats et les postes, conservons des dossiers datés et décidons de ce qui se passe sur MissionHub quand les règles ne sont pas respectées. Nous ne sommes pas un recruteur. Nous ne détenons ni ne transférons d’argent entre les membres, et nous ne tranchons pas les litiges financiers. <!-- ⚖️ counsel: positioning must match the Terms of Service -->
+Workatent est un logiciel et un historique de ce qui s’est passé. Nous jumelons les candidats et les postes, conservons des dossiers datés et décidons de ce qui se passe sur Workatent quand les règles ne sont pas respectées. Nous ne sommes pas un recruteur. Nous ne détenons ni ne transférons d’argent entre les membres, et nous ne tranchons pas les litiges financiers. <!-- ⚖️ counsel: positioning must match the Terms of Service -->
 
 ## 1. Adhésion et acceptation
 
 **1.1** C’est votre organisation qui adhère au réseau. Un administrateur de l’organisation accepte ces règles en son nom, et chaque membre les accepte avant d’utiliser le réseau. <!-- ⚖️ counsel: acceptance by the organization and by each member -->
 
-**1.2** Votre organisation est responsable de ce que font ses membres sur MissionHub. Un manquement d’un membre est un manquement de l’organisation. <!-- ⚖️ counsel: organization liability by legal form and province -->
+**1.2** Votre organisation est responsable de ce que font ses membres sur Workatent. Un manquement d’un membre est un manquement de l’organisation. <!-- ⚖️ counsel: organization liability by legal form and province -->
 
 **1.3** Gardez le profil de votre organisation exact et à jour : nom légal, site Web et permis de recrutement là où la loi l’exige. Avisez-nous dans les 30 jours de tout changement de propriété ou de contrôle. <!-- ⚖️ counsel: licences (Ontario, Québec CNESST) and change-of-control duty -->
 
@@ -54,17 +54,17 @@ MissionHub est un logiciel et un historique de ce qui s’est passé. Nous jumel
 
 **2.4** N’annoncez pas et ne republiez pas le poste d’un partenaire, où que ce soit (sites d’emploi, médias sociaux, votre site Web, infolettres), sans l’accord écrit préalable du recruteur du poste.
 
-**2.5** Si vous recevez quelque chose par erreur, ne l’utilisez pas. Avisez le partenaire et MissionHub, et supprimez toute copie.
+**2.5** Si vous recevez quelque chose par erreur, ne l’utilisez pas. Avisez le partenaire et Workatent, et supprimez toute copie.
 
-**2.6** Si le candidat révoque son autorisation, cessez d’utiliser ce que vous avez reçu et supprimez les copies faites à l’extérieur de MissionHub, sauf si la loi vous oblige à les conserver. <!-- ships with access expiry (after N3) -->L’accès à un profil partagé est aussi limité dans le temps : quand il prend fin, la même règle s’applique.<!-- /ships with access expiry (after N3) --> <!-- ⚖️ counsel: retention and deletion (Law 25, PIPEDA) -->
+**2.6** Si le candidat révoque son autorisation, cessez d’utiliser ce que vous avez reçu et supprimez les copies faites à l’extérieur de Workatent, sauf si la loi vous oblige à les conserver. <!-- ships with access expiry (after N3) -->L’accès à un profil partagé est aussi limité dans le temps : quand il prend fin, la même règle s’applique.<!-- /ships with access expiry (after N3) --> <!-- ⚖️ counsel: retention and deletion (Law 25, PIPEDA) -->
 
 ## 3. Contacts avec les candidats et les clients des partenaires
 
-**3.1** Comme recruteur du poste, communiquez avec le candidat d’un partenaire seulement pour l’évaluer pour ce poste et mener ce processus d’embauche. Indiquez au candidat le nom du recruteur d’origine et précisez que vous collaborez par MissionHub.
+**3.1** Comme recruteur du poste, communiquez avec le candidat d’un partenaire seulement pour l’évaluer pour ce poste et mener ce processus d’embauche. Indiquez au candidat le nom du recruteur d’origine et précisez que vous collaborez par Workatent.
 
 **3.2** Ne demandez pas au candidat d’un partenaire un CV « épuré », des pistes, d’autres candidats ou des contacts d’affaires, et ne l’invitez pas à travailler avec vous plutôt qu’avec le partenaire.
 
-**3.3** Comme recruteur d’origine, ne communiquez jamais avec le client du recruteur du poste au sujet du poste, du candidat, des entrevues, de l’offre, des honoraires ou du paiement. Tout passe par le recruteur du poste. Signalez les retards de paiement sur MissionHub. Cette règle s’applique tant que dure la recommandation et, s’il y a embauche, jusqu’à la fin de la garantie et au dernier versement. <!-- ⚖️ counsel: Competition Act s.45 -->
+**3.3** Comme recruteur d’origine, ne communiquez jamais avec le client du recruteur du poste au sujet du poste, du candidat, des entrevues, de l’offre, des honoraires ou du paiement. Tout passe par le recruteur du poste. Signalez les retards de paiement sur Workatent. Cette règle s’applique tant que dure la recommandation et, s’il y a embauche, jusqu’à la fin de la garantie et au dernier versement. <!-- ⚖️ counsel: Competition Act s.45 -->
 
 **3.4** Tant que votre recommandation est en cours, n’offrez pas vos services de recrutement à ce client et n’acceptez pas de mandat direct du client pour le même poste sans l’accord écrit du recruteur du poste. Si le client vous contacte au sujet de ce poste ou de ce candidat, dirigez-le vers le recruteur du poste et avisez celui-ci dans les messages de la recommandation dans les 2 jours ouvrables. <!-- ⚖️ counsel: Competition Act s.45(1)(b), ancillary-restraint defence s.45(4) -->
 
@@ -74,11 +74,11 @@ MissionHub est un logiciel et un historique de ce qui s’est passé. Nous jumel
 
 ## 4. Ne représenter que ce qui vous revient
 
-**4.1** Soumettez seulement des candidats que votre organisation représente, avec leur autorisation pour ce poste et ce recruteur du poste, enregistrée sur MissionHub. Un CV dans votre base de données n’est pas une autorisation.
+**4.1** Soumettez seulement des candidats que votre organisation représente, avec leur autorisation pour ce poste et ce recruteur du poste, enregistrée sur Workatent. Un CV dans votre base de données n’est pas une autorisation.
 
 **4.2** Quand vous enregistrez vous-même une autorisation, vous confirmez que vous ou un membre de votre organisation avez parlé au candidat de ce poste, qu’il est intéressé et que ce que vous avez enregistré est exact.
 
-**4.3** Ne soumettez pas le candidat d’un autre recruteur, ni un candidat obtenu de quelqu’un à l’extérieur de votre organisation. Les autres recruteurs peuvent se joindre à MissionHub pour participer.
+**4.3** Ne soumettez pas le candidat d’un autre recruteur, ni un candidat obtenu de quelqu’un à l’extérieur de votre organisation. Les autres recruteurs peuvent se joindre à Workatent pour participer.
 
 **4.4** N’ouvrez aux partenaires que des postes que votre organisation détient : un vrai poste à pourvoir, une entente d’honoraires avec le client final et des conditions qui y correspondent. Votre période de propriété ne peut pas être plus courte que celle prévue dans vos conditions avec le client. <!-- ⚖️ counsel: ownership window vs client terms (RD-028) -->
 
@@ -88,7 +88,7 @@ MissionHub est un logiciel et un historique de ce qui s’est passé. Nous jumel
 
 **4.7** Gardez vos candidats à jour. Indiquez qu’un candidat n’est plus disponible quand il est placé ou qu’il ne cherche plus.
 
-**4.8** Tout ce que vous déclarez sur MissionHub doit être vrai : objections, pièces justificatives, déclarations d’embauche, attestations, autorisations et confirmations de candidats. Les pièces justificatives falsifiées et les fausses confirmations de candidats sont parmi les manquements les plus graves.
+**4.8** Tout ce que vous déclarez sur Workatent doit être vrai : objections, pièces justificatives, déclarations d’embauche, attestations, autorisations et confirmations de candidats. Les pièces justificatives falsifiées et les fausses confirmations de candidats sont parmi les manquements les plus graves.
 
 ## 5. Traitement équitable
 
@@ -96,7 +96,7 @@ MissionHub est un logiciel et un historique de ce qui s’est passé. Nous jumel
 
 **5.2** Les exigences du poste et les motifs de refus doivent porter sur le poste. Ne demandez pas aux partenaires de filtrer les candidats selon l’âge, le sexe, l’origine, la situation familiale ou tout autre motif semblable.
 
-**5.3** Vous êtes responsable des postes et des renseignements sur les candidats que vous publiez. MissionHub ne les vérifie pas. <!-- ⚖️ counsel: member content responsibility; no waiver of MissionHub's own duties -->
+**5.3** Vous êtes responsable des postes et des renseignements sur les candidats que vous publiez. Workatent ne les vérifie pas. <!-- ⚖️ counsel: member content responsibility; no waiver of Workatent's own duties -->
 
 ## 6. Conditions, propriété et versements
 
@@ -106,7 +106,7 @@ MissionHub est un logiciel et un historique de ce qui s’est passé. Nous jumel
 
 **6.3** La première recommandation transmise a la priorité. Si le client embauche un candidat recommandé, à n’importe quel poste, pendant la période de propriété, le partage est dû, même si la recommandation a été refusée, retirée, annulée ou laissée sans réponse. Il n’est pas dû si le recruteur d’origine a libéré le candidat, ou si une objection pour présentation antérieure a été retenue ou n’a pas été contestée.
 
-**6.4** Comme recruteur du poste, enregistrez sur MissionHub chaque embauche, par le client, d’un candidat recommandé pendant la période, ainsi que les factures et les paiements. Comme recruteur d’origine, si vous apprenez que votre candidat a été embauché pendant la période, déclarez-le sur MissionHub.
+**6.4** Comme recruteur du poste, enregistrez sur Workatent chaque embauche, par le client, d’un candidat recommandé pendant la période, ainsi que les factures et les paiements. Comme recruteur d’origine, si vous apprenez que votre candidat a été embauché pendant la période, déclarez-le sur Workatent.
 
 **6.5** La part du recruteur d’origine est calculée selon les conditions de la recommandation. Les provisions et les frais d’ouverture de mandat font partie des honoraires. Si vous facturez moins au client, la part reste calculée selon les conditions, sauf si le recruteur d’origine a donné son accord écrit avant le changement.
 
@@ -114,23 +114,23 @@ MissionHub est un logiciel et un historique de ce qui s’est passé. Nous jumel
 
 **6.7** Si un candidat placé quitte son poste pendant la garantie, le recours prévu aux conditions s’applique. Les remboursements sont partagés au prorata. Si un remplacement est prévu, le recruteur d’origine a 10 jours ouvrables pour en proposer un en premier.
 
-**6.8** Les frais de MissionHub et leur facturation sont précisés dans [TODO: conditions de tarification et de frais].
+**6.8** Les frais de Workatent et leur facturation sont précisés dans [TODO: conditions de tarification et de frais].
 
 ## 7. Litiges
 
-**7.1** Réglez les problèmes sur MissionHub : d’abord dans les messages de la recommandation, puis par une objection, une déclaration d’embauche, un litige ou un signalement. N’accusez pas un partenaire publiquement et n’exercez pas de représailles.
+**7.1** Réglez les problèmes sur Workatent : d’abord dans les messages de la recommandation, puis par une objection, une déclaration d’embauche, un litige ou un signalement. N’accusez pas un partenaire publiquement et n’exercez pas de représailles.
 
 **7.2** Les délais comptent. Déposez une objection pour présentation antérieure dans les 5 jours ouvrables suivant la transmission, avec des pièces justificatives datées. Vous avez 10 jours ouvrables pour contester une objection ou pour répondre à une déclaration d’embauche. Si vous ne répondez pas à temps, nous décidons selon le dossier. Vous pouvez faire appel à un avocat, mais cela n’arrête pas les délais.
 
-**7.3** Les administrateurs de la plateforme décident seulement de ce qui se passe sur MissionHub : si une recommandation compte, les statuts, les accès, les sanctions et le dossier. Ils peuvent demander des documents aux deux parties et communiquer avec le candidat. Ils communiquent avec un client seulement si le recruteur du poste est d’accord. <!-- ⚖️ counsel: admin access to personal information; client contact -->
+**7.3** Les administrateurs de la plateforme décident seulement de ce qui se passe sur Workatent : si une recommandation compte, les statuts, les accès, les sanctions et le dossier. Ils peuvent demander des documents aux deux parties et communiquer avec le candidat. Ils communiquent avec un client seulement si le recruteur du poste est d’accord. <!-- ⚖️ counsel: admin access to personal information; client contact -->
 
-**7.4** Quand aucune règle précise ne couvre un cas, les administrateurs de la plateforme cherchent de qui vient l’action qui a mené au résultat, à partir des dossiers de MissionHub et de pièces justificatives datées. Cela ne l’emporte jamais sur la priorité, la période de propriété, l’issue d’une objection ou une libération.
+**7.4** Quand aucune règle précise ne couvre un cas, les administrateurs de la plateforme cherchent de qui vient l’action qui a mené au résultat, à partir des dossiers de Workatent et de pièces justificatives datées. Cela ne l’emporte jamais sur la priorité, la période de propriété, l’issue d’une objection ou une libération.
 
-**7.5** MissionHub ne tranche pas et ne perçoit pas les sommes entre membres. En cas de litige financier, les deux organisations négocient d’abord de bonne foi pendant 30 jours, et les dossiers de MissionHub peuvent servir de pièces justificatives. Viennent ensuite la médiation, puis l’arbitrage final et exécutoire sous l’égide de [TODO: institution d’arbitrage], avec siège à [TODO: ville], selon les lois de [TODO: province], en [TODO: langue], avec répartition des frais selon [TODO: règle de répartition des frais]. <!-- ⚖️ counsel: whole dispute clause; Québec adhesion contract (CCQ 2638+), Ontario Arbitration Act, 1991 -->
+**7.5** Workatent ne tranche pas et ne perçoit pas les sommes entre membres. En cas de litige financier, les deux organisations négocient d’abord de bonne foi pendant 30 jours, et les dossiers de Workatent peuvent servir de pièces justificatives. Viennent ensuite la médiation, puis l’arbitrage final et exécutoire sous l’égide de [TODO: institution d’arbitrage], avec siège à [TODO: ville], selon les lois de [TODO: province], en [TODO: langue], avec répartition des frais selon [TODO: règle de répartition des frais]. <!-- ⚖️ counsel: whole dispute clause; Québec adhesion contract (CCQ 2638+), Ontario Arbitration Act, 1991 -->
 
 ## 8. Signalements
 
-**8.1** Si vous pensez qu’un membre a enfreint ces règles, signalez-le à MissionHub<!-- ships with P0-3 --> avec « Signaler un problème » dans la recommandation ou le poste<!-- /ships with P0-3 --><!-- until P0-3 ships --> par courriel à [TODO: adresse de soutien]<!-- /until P0-3 ships -->. Décrivez ce qui s’est passé et quand, et joignez des pièces justificatives si vous en avez.
+**8.1** Si vous pensez qu’un membre a enfreint ces règles, signalez-le à Workatent<!-- ships with P0-3 --> avec « Signaler un problème » dans la recommandation ou le poste<!-- /ships with P0-3 --><!-- until P0-3 ships --> par courriel à [TODO: adresse de soutien]<!-- /until P0-3 ships -->. Décrivez ce qui s’est passé et quand, et joignez des pièces justificatives si vous en avez.
 
 **8.2** Si ce n’est pas urgent, vous pouvez d’abord tenter de régler la situation avec le partenaire dans les messages de la recommandation. Vous pouvez nous demander d’intervenir en tout temps.
 
@@ -146,7 +146,7 @@ MissionHub est un logiciel et un historique de ce qui s’est passé. Nous jumel
 
 1. **Avertissement :** inscrit au dossier de votre organisation.
 2. **Restriction réseau :** vous ne pouvez pas ouvrir de postes aux partenaires, soumettre de recommandations ni en accepter de nouvelles. Les recommandations en cours se poursuivent. Les partenaires voient seulement que vous n’acceptez pas de nouvelles recommandations.
-3. **Suspension :** l’accès de votre organisation à MissionHub est suspendu.
+3. **Suspension :** l’accès de votre organisation à Workatent est suspendu.
 4. **Exclusion :** votre organisation est retirée du réseau.
 
 **9.2** Nous choisissons le niveau selon la gravité du manquement, le tort causé, l’intention, les manquements antérieurs et la collaboration. Un manquement grave peut commencer à un niveau plus élevé. Les avertissements comptent pendant 12 mois.
@@ -163,7 +163,7 @@ MissionHub est un logiciel et un historique de ce qui s’est passé. Nous jumel
 
 ## 10. Modifications de ces règles
 
-**10.1** Chaque version des règles est numérotée. La version en vigueur et un résumé des changements sont toujours accessibles sur MissionHub.
+**10.1** Chaque version des règles est numérotée. La version en vigueur et un résumé des changements sont toujours accessibles sur Workatent.
 
 **10.2** Pour toute modification importante, nous donnons un préavis de 30 jours, et l’administrateur de votre organisation et chaque membre doivent accepter la nouvelle version.
 

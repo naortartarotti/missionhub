@@ -18,12 +18,12 @@ Owner: Recruitment Strategist · Date: 2026-11-12 · Brief: [`brief.md`](./brief
 - **Client claims have a deadline.** A client that says "we already had them" must say so within the period in its agreement, or the introduction stands ([Paraform](https://knowledge.paraform.com/articles/5997859648-candidate-ownership)). Split networks use the same pattern (NPA "procuring cause", Top Echelon "but for"; see `market-and-positioning.md` §2.2).
 - **Consistency beats the perfect rule.** A rule published in advance and applied identically to everyone survives; exceptions for whoever complains loudest destroy it ([PitchNHire](https://www.pitchnhire.com/answers/how-to-stop-duplicate-vendor-submissions)).
 
-### 1.3 Where MissionHub is stronger than a typical network
+### 1.3 Where Workatent is stronger than a typical network
 - The **candidate's own confirmation** gives a timestamp no one can forge, and it proves consent. Networks rely on emails and the recruiter's word.
 - The duplicate check happens **before** the candidate is contacted a second time, so the fight never starts.
 - The job owner's claim is **dated, evidenced and time-boxed**, and the sourcing side sees it. That removes the free backdoor.
 
-### 1.4 What MissionHub can't know
+### 1.4 What Workatent can't know
 - The hiring org's own pipeline and its client's ATS. We must not look at them (it would leak B's pipeline to the network), so B's prior possession is proven by evidence, not by a lookup.
 - Candidates with different emails and phones on two records (exact hashing misses them; L3 later).
 - Whether a recorded authorization was real. The candidate-confirmed path is stronger; the recorded path relies on attestation and the network rules.
@@ -76,7 +76,7 @@ Owner: Recruitment Strategist · Date: 2026-11-12 · Brief: [`brief.md`](./brief
 ### Q-4 Can the sourcing side see the evidence → RD-016
 **Decision:** **No file access for the sourcing side in v1.** They see: that a claim was filed, the claim date, the declared prior-process date, the evidence type(s), the file's upload time and SHA-256 (proves it can't be swapped later), B's note, and the deadline to contest. The file itself: the claiming org and platform admins only. Contesting costs A nothing, so A doesn't need the file to decide.
 
-Plus one evidence type the brief lacks: **an earlier MissionHub referral as evidence.** When B received the same person earlier from another partner for the same job or client (the fingerprint missed them, e.g., different emails), B picks that referral in the claim form instead of uploading a file. The system checks it was delivered earlier and is still a presentation (RD-015). Admins see both referrals; the sourcing side sees only "earlier referral through MissionHub", never which one.
+Plus one evidence type the brief lacks: **an earlier Workatent referral as evidence.** When B received the same person earlier from another partner for the same job or client (the fingerprint missed them, e.g., different emails), B picks that referral in the claim form instead of uploading a file. The system checks it was delivered earlier and is still a presentation (RD-015). Admins see both referrals; the sourcing side sees only "earlier referral through Workatent", never which one.
 
 - **Why:** evidence files typically show the confidential client's name, other agencies' names and fees, and internal ATS notes. Showing them to A breaks client confidentiality (the reason the client field is confidential) and exposes third parties ⚖️. Mature networks route evidence to a neutral party, not the opponent.
 - **Rejected:** full file to A (confidentiality, third-party data, defamation risk); no information to A (then the claim is a black box and contests become reflexive).
@@ -112,7 +112,7 @@ Plus one evidence type the brief lacks: **an earlier MissionHub referral as evid
 | # | Abuse | Who | Defence in N1 | Residual risk / later |
 |---|---|---|---|---|
 | A-1 | **Fishing for who holds a candidate:** create a candidate with a target's email, submit to a job, read the stop | Sourcing recruiter | Check runs only inside a real submission with an authorization (BR-22); 30/h limit; every hit audited; one neutral message that reveals no org, date, status, count or whether it was this job or the client (RD-013); no standalone check endpoint. **Add:** flag an org to admins when it has > 5 stops in 7 days or a stop rate far above the network's **[threshold is an estimate, calibrate]** | What leaks is "someone presented this person to this hiring partner for this client". Acceptable in a vetted network (RD-002) |
-| A-2 | **Evading the check:** delete or alter email/phone/LinkedIn to slip past | Sourcing recruiter | ≥ 1 identifier required; sticky stop for 30 days; re-check at delivery; B can claim using the earlier MissionHub referral as evidence (RD-014, RD-016) | Fully different identifiers on a new record: L3 fuzzy matching |
+| A-2 | **Evading the check:** delete or alter email/phone/LinkedIn to slip past | Sourcing recruiter | ≥ 1 identifier required; sticky stop for 30 days; re-check at delivery; B can claim using the earlier Workatent referral as evidence (RD-014, RD-016) | Fully different identifiers on a new record: L3 fuzzy matching |
 | A-3 | **CV-bombing to grab first position:** recorded-authorization submissions with no real consent | Sourcing recruiter | Attestation is audited; false attestation breaches network rules; candidate-confirmed path is the stronger default | **Later:** a stopped submitter can ask admins to verify the first presentation's authorization without learning who it was; an invalid authorization voids first position (consent-level rule, as Paraform applies) |
 | A-4 | **Fake evidence:** a fabricated ATS screenshot or doctored email | Hiring recruiter | Prior-process date must precede `submitted_at` and fall within 6 months; attestation checkbox ("true and accurate; false claims can lead to suspension"); SHA-256 and upload time frozen; sourcing side can contest for free; admin can ask for a native export or live check; fabricated = RD-002 breach | **Later:** auto-extract file metadata (creation date) for admins; accept `.eml` with headers |
 | A-5 | **Backdated claim after seeing the profile:** B uses the 5 days to contact the candidate directly, then claims "we had them" | Hiring recruiter | Evidence must predate delivery; contacts made after delivery don't qualify; the referral counts as a presentation while the claim is open | Direct hire after a false claim is a backdoor: N3 |
@@ -134,8 +134,8 @@ Plus one evidence type the brief lacks: **an earlier MissionHub referral as evid
 | BR-6 | Confirmed: stop. Add the sticky stop (30 days, same record × same job or client) (RD-014) |
 | BR-9 | One message for job-level and client-level hits (RD-013) |
 | BR-10 | **Replaced:** partner referrals need at least one identifier (email, phone or LinkedIn) on both paths. "% with ≥ 1 identifier" becomes 100% by construction for partner referrals (RD-014) |
-| BR-12 | Evidence = at least one file **or** an earlier MissionHub referral B received for the same job or client, delivered earlier and still counting. Add the attestation checkbox. The 6-month look-back stays (aligns with the job's declared window once N2 ships). One claim per referral (RD-016, RD-017) |
-| BR-15 | Confirmed: sourcing side sees date, declared prior-process date, evidence type, upload time, SHA-256, note; not the file. For referral-type evidence: "earlier referral through MissionHub" only (RD-016) |
+| BR-12 | Evidence = at least one file **or** an earlier Workatent referral B received for the same job or client, delivered earlier and still counting. Add the attestation checkbox. The 6-month look-back stays (aligns with the job's declared window once N2 ships). One claim per referral (RD-016, RD-017) |
+| BR-15 | Confirmed: sourcing side sees date, declared prior-process date, evidence type, upload time, SHA-256, note; not the file. For referral-type evidence: "earlier referral through Workatent" only (RD-016) |
 | BR-16 | Confirmed: 10 business days. Uncontested = final (RD-017) |
 | BR-17 | Mon–Fri in `America/Toronto` minus the ON ∪ QC statutory holiday table; event day doesn't count; deadline 23:59:59 ET on day N; deadlines stored at start (RD-018) |
 | BR-18 | Confirmed: rejected → back to `submitted`, flagged, fresh review clock, no second claim. Upheld/uncontested → referral stops counting, flagged for N3. Ownership dates unchanged (RD-017) |
@@ -150,7 +150,7 @@ Plus one evidence type the brief lacks: **an earlier MissionHub referral as evid
 - **Hiring recruiter:** never gets the same person twice from two partners; can make a legitimate claim in under 2 minutes with a file or an earlier referral. Signal: claims per 100 delivered referrals stays low and evenly spread across orgs.
 - **Candidate:** contacted once per job/client; their confirmation decides between racing recruiters.
 - **Employer/client:** receives one CV per person, from one agency; no fee argument lands on their desk.
-- **MissionHub:** duplicate-related disputes under 1 per 100 delivered referrals **[estimate]**; admins resolve contested claims within 5 business days.
+- **Workatent:** duplicate-related disputes under 1 per 100 delivered referrals **[estimate]**; admins resolve contested claims within 5 business days.
 
 ---
 

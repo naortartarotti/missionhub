@@ -104,8 +104,8 @@ export const CONNECTORS: readonly ConnectorDef[] = [
     fields: [{ key: "entity", kind: "select", required: true, options: ["candidates", "jobs"] }],
   },
   {
-    id: "missionhub_api",
-    name: "MissionHub API",
+    id: "workatent_api",
+    name: "Workatent API",
     category: "developer",
     entities: ["candidates", "jobs"],
     mode: "api",

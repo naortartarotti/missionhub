@@ -25,7 +25,7 @@
     "emailName": "Transactional email",
     "emailDescription": "Without it, notifications are in-app only.",
     "paymentsName": "Payments provider",
-    "paymentsDescription": "Settlement is recorded through a verified manual ledger. No funds move through MissionHub.",
+    "paymentsDescription": "Settlement is recorded through a verified manual ledger. No funds move through Workatent.",
     "configured": "Configured",
     "notConfigured": "Not configured",
     "manualLedger": "Manual ledger",
@@ -131,7 +131,7 @@
       "network_rules_org_accepted": "Network Rules accepted for the organization",
       "network_rules_member_accepted": "Network Rules accepted by a member",
       "conduct_report_filed": "Conduct report sent",
-      "conduct_notice_sent": "Notice received from MissionHub",
+      "conduct_notice_sent": "Notice received from Workatent",
       "conduct_response_submitted": "Response to a notice sent",
       "conduct_followup_sent": "Follow-up question received",
       "conduct_followup_answered": "Follow-up question answered",
@@ -144,13 +144,13 @@
       "settlement_mode_entered": "Settlement mode started",
       "settlement_mode_exited": "Settlement mode ended",
       "conduct_incident_notice_sent": "Data incident notice received",
-      "referral_closed_stale_by_admin": "Referral closed by MissionHub (no activity)"
+      "referral_closed_stale_by_admin": "Referral closed by Workatent (no activity)"
     }
   },
   "preferences": {
     "title": "Preferences",
     "language": "Language",
-    "languageHint": "Used across MissionHub on this browser.",
+    "languageHint": "Used across Workatent on this browser.",
     "theme": "Appearance",
     "themeHint": "Choose light, dark, or follow your device.",
     "themes": {

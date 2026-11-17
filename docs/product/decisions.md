@@ -72,7 +72,7 @@ Status values: `decided` · `needs user decision` · `superseded by PD-###`. Rec
 
 ## PD-008: Two-sided hire reporting ships without RD-009
 - **Date:** 2026-11-12
-- **Decision:** N3 (claims and sourcing-side hire reports) creates placements under the current remittance model. MissionHub's own invoice (X1) is a separate item, blocked on RD-009.
+- **Decision:** N3 (claims and sourcing-side hire reports) creates placements under the current remittance model. Workatent's own invoice (X1) is a separate item, blocked on RD-009.
 - **Why:** Detecting the hire protects the sourcing recruiter whatever the collection model. Coupling it to RD-009 would block the most important trust feature on a legal decision.
 - **Alternatives:** Wait for RD-009 and build both together.
 - **Links:** RD-003, RD-009.
@@ -690,8 +690,8 @@ Status values: `decided` · `needs user decision` · `superseded by PD-###`. Rec
 
 ## PD-049: U-1 decided by the user: platform share on the fee actually collected
 - **Date:** 2026-11-15
-- **Decision:** The user chose **collected** for RD-025 (b). When the hiring side discounts the fee without the sourcing side's prior written consent, MissionHub's platform share is computed on the fee actually collected, not on the frozen terms. The `commission_rules` platform basis ships as `collected` (BR-28); `frozen` stays implemented and tested but unused.
-- **Why:** MissionHub stays neutral and doesn't profit from a penalty between members (strategist and PM recommendation).
+- **Decision:** The user chose **collected** for RD-025 (b). When the hiring side discounts the fee without the sourcing side's prior written consent, Workatent's platform share is computed on the fee actually collected, not on the frozen terms. The `commission_rules` platform basis ships as `collected` (BR-28); `frozen` stays implemented and tested but unused.
+- **Why:** Workatent stays neutral and doesn't profit from a penalty between members (strategist and PM recommendation).
 - **Links:** RD-025 (b); PD-046; N2 brief BR-27, BR-28, §8.4 U-1.
 - **Status:** decided (user)
 
@@ -753,15 +753,15 @@ Status values: `decided` · `needs user decision` · `superseded by PD-###`. Rec
 ## PD-053: Network rules and governance, founder decisions on the Top Echelon analysis
 - **Date:** 2026-11-15
 - **Decision:** the founder answered the seven open questions in `docs/research/top-echelon-policies-analysis.md` §6.1:
-  1. **Non-circumvention (P1-3): rejected.** MissionHub does **not** charge its fee on splits that two orgs close off-platform after meeting through a referral. No pre-existing-partner declaration is built. Retention relies on product value (matching, frozen terms, evidence, payout tracking). P1-3 is removed from the plan; the "pairs that stop after one placement" signal (RD-008) is still tracked as a metric only.
-  2. **MissionHub's role in disputes (P0-5): platform effects only.** The admin decides in-platform effects (statuses, holds, sanctions, reputation) and provides records as evidence. Money disputes go negotiation → mediation → external commercial arbitration. Institution, seat (Toronto or Montréal), governing law, language and costs are still open, for the lawyer to propose.
+  1. **Non-circumvention (P1-3): rejected.** Workatent does **not** charge its fee on splits that two orgs close off-platform after meeting through a referral. No pre-existing-partner declaration is built. Retention relies on product value (matching, frozen terms, evidence, payout tracking). P1-3 is removed from the plan; the "pairs that stop after one placement" signal (RD-008) is still tracked as a metric only.
+  2. **Workatent's role in disputes (P0-5): platform effects only.** The admin decides in-platform effects (statuses, holds, sanctions, reputation) and provides records as evidence. Money disputes go negotiation → mediation → external commercial arbitration. Institution, seat (Toronto or Montréal), governing law, language and costs are still open, for the lawyer to propose.
   3. **Sanctions (P0-3): 4-level ladder approved.** Warning → partial network hold (no new partner activity; in-flight referrals continue) → suspension → termination. Immediate hold without prior notice only for data leaks and evidence or confirmation fraud; every other step gives notice and a response window.
   4. **Notice for material rule changes (P0-2): 30 days**, with re-acceptance of the new version.
   5. **Client non-solicitation (P0-6): during the process only in v1.** Network Rules v1 forbid contacting the partner's client while a referral is in flight. Any post-process non-solicit waits for the competition-law opinion (Competition Act s.45).
   6. **Expiry of the job owner's access to the shared snapshot (P1-4): approved**, built after N3. Durations come from the strategist (S-TE-2) and retention review (Law 25 / PIPEDA PIA).
   7. **Network Rules text (P0-1):** recruitment-strategist drafts the domain content, ux-writer-marketing produces en / fr-CA / pt-BR (French offered first in Québec), then founder and lawyer approve.
-- **Why:** keep MissionHub positioned as software and record (RD-010) rather than an arbiter or agency; prefer proportionate, access-based sanctions because no funds pass through the platform; avoid a non-circumvention clause that would slow founding-group adoption.
-- **Alternatives:** non-circumvention for 12 months with exemption for declared partners (rejected by founder); MissionHub as binding arbiter like Top Echelon (rejected); suspension-only sanctions (rejected).
+- **Why:** keep Workatent positioned as software and record (RD-010) rather than an arbiter or agency; prefer proportionate, access-based sanctions because no funds pass through the platform; avoid a non-circumvention clause that would slow founding-group adoption.
+- **Alternatives:** non-circumvention for 12 months with exemption for declared partners (rejected by founder); Workatent as binding arbiter like Top Echelon (rejected); suspension-only sanctions (rejected).
 - **Links:** `docs/research/top-echelon-policies-analysis.md` §5, §6; RD-003, RD-008, RD-010.
 - **Status:** decided
 
@@ -802,7 +802,7 @@ Status values: `decided` · `needs user decision` · `superseded by PD-###`. Rec
 
 ## PD-057: RD-048 approved, settled terminated orgs show "no longer part of"
 - **Date:** 2026-11-15
-- **Decision:** The founder approved RD-048. While a terminated org is still settling, partners see the same neutral sentence as every other restriction ("{Org} isn't taking new referrals right now."). Once settlement ends, former partners see "{Org} is no longer part of the MissionHub network." The same sentence covers voluntary exits, so it never reveals a sanction. Spec AC-136 is in scope; QA scenario 13 becomes "identical in every state except terminated or exited after settlement". Counsel still checks the wording (⚖️).
+- **Decision:** The founder approved RD-048. While a terminated org is still settling, partners see the same neutral sentence as every other restriction ("{Org} isn't taking new referrals right now."). Once settlement ends, former partners see "{Org} is no longer part of the Workatent network." The same sentence covers voluntary exits, so it never reveals a sanction. Spec AC-136 is in scope; QA scenario 13 becomes "identical in every state except terminated or exited after settlement". Counsel still checks the wording (⚖️).
 - **Why:** after settlement there is nothing left to protect by staying silent, and partners need to know the org is gone; using one sentence for terminations and voluntary exits keeps sanctions private.
 - **Alternatives:** neutral sentence in every state (rejected).
 - **Links:** RD-048; `docs/specs/network-rules-enforcement/spec.md` AC-136; brief BR-14.
@@ -842,7 +842,7 @@ Status values: `decided` · `needs user decision` · `superseded by PD-###`. Rec
   4. §2.12 notice composer: version selector defaulting to the version in force on the conduct date, a conduct-date field prefilled from the report, and the org's acceptance state of the chosen version (info); AC-134 adds "from that notice's version" (Q-D2).
   5. Decision form and AC for "no level": disabled in the UI and refused by the RPC under the 12-month rule; error key needed (Q-D5).
   6. §2.13 admin org page: **Lift termination…** (reason required, hidden for the deciding admin, refused for them by direct call); legacy-suspension row as specified (Q-D14, Q-D15).
-  7. §2.11 / §5.7: the deciding admin isn't named either ("a MissionHub platform admin") (Q-D13).
+  7. §2.11 / §5.7: the deciding admin isn't named either ("a Workatent platform admin") (Q-D13).
   8. §2.12 immediate hold: hidden and refused (`org_already_restricted`) on held, suspended or terminated orgs; available on `rules_not_accepted` (Q7). Add an AC.
   9. §2.10 settlement mode: confirmation state when an action closes a referral and it leaves the list; settlement first-access gate with the personal statement only; deactivation of self or last `org_admin` refused (already AC-104).
   10. §2.13 / AC-135: stale close counts a settled-in-guarantee placement as an obligation (BR-37 definition) in the remaining-obligations list.
@@ -958,7 +958,7 @@ Status values: `decided` · `needs user decision` · `superseded by PD-###`. Rec
 
 ## PD-065: RD-048 en wording, "no longer part of"
 - **Date:** 2026-11-16
-- **Decision:** `network.partner.noLongerMember` in en reads "{org} is no longer part of the MissionHub network." This amends the en text approved in PD-057 ("…is no longer a member of…"). fr and pt are unchanged. The key name stays as is.
+- **Decision:** `network.partner.noLongerMember` in en reads "{org} is no longer part of the Workatent network." This amends the en text approved in PD-057 ("…is no longer a member of…"). fr and pt are unchanged. The key name stays as is.
 - **Why:** the glossary keeps "member" for people (voice-and-tone §5.1). The new text also matches fr/pt.
 - **Alternatives:** "is no longer a member of" (rejected: breaks the glossary).
 - **Links:** PD-057; RD-048; `docs/specs/network-rules-enforcement/spec.md` §2.7, §5 (`network.partner.noLongerMember`), AC-136; counsel C-7.
@@ -1022,11 +1022,11 @@ Status values: `decided` · `needs user decision` · `superseded by PD-###`. Rec
 ## PD-071: N3 brief approved at user checkpoint (U-N3-1 to U-N3-3)
 - **Date:** 2026-11-16
 - **Decision:** The user approved the N3 brief rev. 1 ("Sim, aprovar") with the PM's recommendations:
-  - **U-N3-1 (RD-056, pricing): (a).** MissionHub's platform share on hires surfaced by the sourcing side's report is the normal rate on the fee collected (PD-049), with no surcharge. RD-056 is decided; no build change.
+  - **U-N3-1 (RD-056, pricing): (a).** Workatent's platform share on hires surfaced by the sourcing side's report is the normal rate on the fee collected (PD-049), with no surcharge. RD-056 is decided; no build change.
   - **U-N3-2 (counsel posture): approved** as in PD-067. `deemed_agreement_enabled` stays off in production until counsel confirms Q-1 and N10 rules acceptance is live. Q-2 to Q-4 ship as drafts and are launch-gated. Sending Q-1 to Q-4 to counsel is the user's own action, tracked as pending on the launch checklist (Legal).
   - **U-N3-3 (effort): accepted.** About 20 backend days (range ~18–23), two internal drops, one QA pass, PD-069 cut rule.
   - Brief marked "rev. 1, approved". Roadmap N3 → **in design**.
-- **Why:** user decision on pricing and legal posture; recommendations kept MissionHub neutral and both counsel outcomes shippable.
+- **Why:** user decision on pricing and legal posture; recommendations kept Workatent neutral and both counsel outcomes shippable.
 - **Links:** RD-056; PD-049, PD-066 to PD-070; brief §8.4, §11.
 - **Status:** decided (user)
 

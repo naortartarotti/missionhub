@@ -59,7 +59,7 @@ export default async function PlacementPage({ params, searchParams }: PageProps<
 
   /**
    * S9 Fee-pending panel (BR-31, spec §2.4): the hire counts, the fee details aren't in yet. The estimate line is
-   * labelled as an estimate; MissionHub never invents a fee. B gets **Enter fee details** while the status is
+   * labelled as an estimate; Workatent never invents a fee. B gets **Enter fee details** while the status is
    * `fee_pending` (a dispute opened from it keeps the panel, without the button).
    */
   function feePendingPanel() {

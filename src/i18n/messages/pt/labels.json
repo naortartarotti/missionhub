@@ -98,7 +98,7 @@
     "frequent": "viagens frequentes"
   },
   "commissionRule": {
-    "default": "Divisão padrão do MissionHub"
+    "default": "Divisão padrão do Workatent"
   },
   "claimStatus": {
     "open": "Aberta",
@@ -109,7 +109,7 @@
   },
   "evidenceType": {
     "file": "Arquivos",
-    "referral": "Indicação anterior pelo MissionHub"
+    "referral": "Indicação anterior pelo Workatent"
   },
   "disputeType": {
     "placement": "Colocação",

@@ -185,7 +185,7 @@ begin
   perform app.audit(c.reported_org_id, 'conduct.decided', 'conduct_case', c.id,
     jsonb_build_object('decision_id', d.id, 'outcome', p_outcome, 'level', p_level));
   perform app.after_sanction_change(c.reported_org_id, v_tr, v_was);
-  perform app.notify_org_admins(c.reported_org_id, 'conduct.decided', 'MissionHub recorded a decision',
+  perform app.notify_org_admins(c.reported_org_id, 'conduct.decided', 'Workatent recorded a decision',
     'Read it on your Network standing page.', '/settings/standing/' || c.id);
   perform app.notify_conduct_reporter(c.id, 'conduct_report.closed', 'Your report is closed',
     'A report from your organization is closed', 'Open it to see the outcome.');
@@ -227,7 +227,7 @@ begin
   returning * into s;
   perform app.audit(c.reported_org_id, 'sanction.immediate_hold', 'conduct_case', c.id,
     jsonb_build_object('notice_id', n.id, 'sanction_id', s.id, 'ground', p_ground));
-  perform app.notify_org_admins(c.reported_org_id, 'sanction.immediate_hold', 'You have an urgent notice from MissionHub',
+  perform app.notify_org_admins(c.reported_org_id, 'sanction.immediate_hold', 'You have an urgent notice from Workatent',
     'Read it now. You can respond until ' || app.fmt_et(n.response_due_at) || ' ET.', '/settings/standing/' || c.id);
   return jsonb_build_object('notice_id', n.id, 'sanction_id', s.id, 'response_due_at', n.response_due_at);
 end $$;
@@ -457,7 +457,7 @@ begin
     -- No sanction, outcome or reporter in the recipient's audit or notification.
     perform app.audit(v_org, 'conduct.incident_notice_sent', 'incident_notice', v_id, jsonb_build_object('notice_id', v_id,
       'referral_ids', (select jsonb_agg(r.id) from public.referrals r where r.id = any (v_refs) and v_org in (r.source_org_id, r.target_org_id))));
-    perform app.notify_org_admins(v_org, 'conduct.incident_notice', 'MissionHub sent you a data incident notice',
+    perform app.notify_org_admins(v_org, 'conduct.incident_notice', 'Workatent sent you a data incident notice',
       'It concerns information from your referrals. Open it to read the details.', '/settings/standing/incidents/' || v_id);
   end loop;
   perform app.audit(null, 'conduct.incident_notice_sent', 'conduct_case', c.id, jsonb_build_object('notice_id', v_id, 'recipients', to_jsonb(v_orgs)));

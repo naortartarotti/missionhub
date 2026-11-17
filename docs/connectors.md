@@ -19,7 +19,7 @@ How external jobs and candidates get into an organization.
 ## Rules
 
 - **Idempotent.** Every external record has an `externalId` in a namespace (`api` or `connection:<id>`).
-  `external_refs` maps it to the MissionHub record; a content hash skips unchanged records.
+  `external_refs` maps it to the Workatent record; a content hash skips unchanged records.
 - **Never overwrite the team's work.** A candidate matched by email or LinkedIn (not by its own ref)
   is linked and only its empty fields are filled.
 - **Private by default.** Imported candidates are drafts without a privacy notice: they can't be

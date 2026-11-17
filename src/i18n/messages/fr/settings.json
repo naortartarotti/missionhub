@@ -25,7 +25,7 @@
     "emailName": "Courriels transactionnels",
     "emailDescription": "Sans cela, les notifications sont uniquement dans l'application.",
     "paymentsName": "Fournisseur de paiements",
-    "paymentsDescription": "Le règlement est consigné dans un registre manuel vérifié. Aucun fonds ne transite par MissionHub.",
+    "paymentsDescription": "Le règlement est consigné dans un registre manuel vérifié. Aucun fonds ne transite par Workatent.",
     "configured": "Configuré",
     "notConfigured": "Non configuré",
     "manualLedger": "Registre manuel",
@@ -131,7 +131,7 @@
       "network_rules_org_accepted": "Règles du réseau acceptées pour l'organisation",
       "network_rules_member_accepted": "Règles du réseau acceptées par un membre",
       "conduct_report_filed": "Signalement envoyé",
-      "conduct_notice_sent": "Avis reçu de MissionHub",
+      "conduct_notice_sent": "Avis reçu de Workatent",
       "conduct_response_submitted": "Réponse à un avis envoyée",
       "conduct_followup_sent": "Question complémentaire reçue",
       "conduct_followup_answered": "Réponse à une question complémentaire envoyée",
@@ -144,13 +144,13 @@
       "settlement_mode_entered": "Mode finalisation commencé",
       "settlement_mode_exited": "Mode finalisation terminé",
       "conduct_incident_notice_sent": "Avis d'incident lié à des renseignements reçu",
-      "referral_closed_stale_by_admin": "Recommandation fermée par MissionHub (aucune activité)"
+      "referral_closed_stale_by_admin": "Recommandation fermée par Workatent (aucune activité)"
     }
   },
   "preferences": {
     "title": "Préférences",
     "language": "Langue",
-    "languageHint": "Utilisée partout dans MissionHub sur ce navigateur.",
+    "languageHint": "Utilisée partout dans Workatent sur ce navigateur.",
     "theme": "Apparence",
     "themeHint": "Choisissez clair, sombre ou suivez votre appareil.",
     "themes": {

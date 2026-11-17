@@ -12,7 +12,7 @@ export type Account = { id: string; email: string; password: string; name: strin
 
 /** Creates a confirmed user with a known synthetic password (local test stack only). */
 export async function createAccount(name: string, opts: { platformAdmin?: boolean; acceptRules?: boolean } = {}): Promise<Account> {
-  const email = `e2e-${name.toLowerCase().replace(/\W+/g, "-")}-${randomUUID().slice(0, 8)}@test.missionhub.local`;
+  const email = `e2e-${name.toLowerCase().replace(/\W+/g, "-")}-${randomUUID().slice(0, 8)}@test.workatent.local`;
   const password = `E2e-${randomUUID()}`;
   const { data, error } = await admin().auth.admin.createUser({ email, password, email_confirm: true, user_metadata: { full_name: name } });
   if (error) throw error;

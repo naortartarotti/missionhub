@@ -29,7 +29,7 @@ The north-star metric for the period is **verified placements per month in the c
 
 ### 2. Referral-level claims and two-sided hire reporting
 - **Problem:** Ownership protection is only a date on screen. Disputes exist only after B reports a hire. A can't flag a backdoor, and only the paying party reports hires.
-- **For:** sourcing recruiters, and MissionHub revenue.
+- **For:** sourcing recruiters, and Workatent revenue.
 - **Build:**
   - "Report a hire / raise a claim" on any referral inside the ownership window, including declined, released and withdrawn ones;
   - B must confirm (which creates the placement) or contest (which opens a referral dispute in the admin queue);
@@ -89,9 +89,9 @@ The north-star metric for the period is **verified placements per month in the c
 
 ### 7. Platform invoice and collection discipline
 - **Problem:** The platform fee is a remittance recorded by the payer, with no invoice, due date or consequence.
-- **For:** MissionHub revenue.
+- **For:** Workatent revenue.
 - **Build (if the user approves RD-009):**
-  - a MissionHub invoice record when the client payment is verified (net 15, tax fields);
+  - a Workatent invoice record when the client payment is verified (net 15, tax fields);
   - reminders;
   - overdue > 30 days pauses new partner activity for that org;
   - an admin collections view.

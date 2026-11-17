@@ -101,7 +101,7 @@ All commands ran through `local-env.sh` (abbreviated `W`) unless noted.
 | `W npm run test:integration` (run 1, on the migrated DB) | 7 files, **199 passed**, 0 skipped (37.9 s) |
 | `W npm run test:integration` (run 2, no reset in between) | 7 files, **199 passed**, 0 skipped (58.6 s) |
 | `W env NEXT_PUBLIC_APP_URL=http://localhost:3100 RESEND_API_KEY=… npx next build` | exit 0 |
-| `W npx playwright test tests/e2e/duplicate-presentation.spec.ts` (first server, without `SUPPORT_EMAIL`) | 1 failed: "stop…" timed out waiting for the "Contact MissionHub support" link, because `SUPPORT_EMAIL` wasn't set on the server (environment, not N9). Re-run below |
+| `W npx playwright test tests/e2e/duplicate-presentation.spec.ts` (first server, without `SUPPORT_EMAIL`) | 1 failed: "stop…" timed out waiting for the "Contact Workatent support" link, because `SUPPORT_EMAIL` wasn't set on the server (environment, not N9). Re-run below |
 | `W env E2E_BASE_URL=http://localhost:3100 QA_EMAIL_CAPTURE_DIR=… QA_SERVER_LOG=… npx playwright test tests/e2e/duplicate-presentation.spec.ts tests/e2e/candidate-confirmation-integrity.spec.ts` (server restarted with `SUPPORT_EMAIL`) | **15 passed** (37.3 s): N9 8/8, N1 7/7 |
 | N9 spec alone, first server | 8 passed (20.1 s) |
 | `docker logs --since 30m` for kong, rest, db and auth, grepped for the 8 captured tokens and their SHA-256 | 0 hits in every container |

@@ -13,7 +13,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 - **Rationale:**
   - These buyers feel both pains (orphan candidates, orphan jobs) hardest and already split informally.
   - The owner is both buyer and user, so decisions are fast.
-  - Québec rewards MissionHub's fr-CA product and Law 25-grade consent, which no US/UK network offers. Toronto brings job volume.
+  - Québec rewards Workatent's fr-CA product and Law 25-grade consent, which no US/UK network offers. Toronto brings job volume.
   - The chosen niches have explicit, structured requirements, which is where deterministic matching works.
 - **Rejected:**
   - Mid-size agencies first: ATS lock-in, procurement, internal splits.
@@ -105,7 +105,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
   - **On a fall-off within the guarantee, B records one of two outcomes:**
     - **(a) Refund to the client** (full or pro-rata). All three shares reverse pro rata (the ledger already supports `client_refund` reversals), the platform fee included.
     - **(b) Replacement.** Original shares stand, and no new fee is charged on the replacement. The **sourcing partner gets first right to propose a replacement within 10 business days**. If they can't, B fills it, and the original shares still stand. Exception: if B's client terms require a refund because no replacement was found, (a) applies.
-  - **No enforcement claims.** MissionHub records the terms and outcome. It doesn't enforce or guarantee them (copy-audit 9.8).
+  - **No enforcement claims.** Workatent records the terms and outcome. It doesn't enforce or guarantee them (copy-audit 9.8).
 - **Rationale:** It mirrors how splits are usually unwound. Refunds share the pain proportionally, replacements keep the deal whole, and the sourcing partner's first right is a fair chance to protect their share. Showing terms before submission removes the "I didn't know it was a 6-month guarantee" dispute.
 - **Rejected:**
   - Holding sourcing payouts until the guarantee ends: slows cash, unusual in splits.
@@ -134,14 +134,14 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 
 ## RD-008: Pricing direction
 - **Date:** 2026-11-12
-- **Question:** How does MissionHub make money at launch?
+- **Question:** How does Workatent make money at launch?
 - **Recommendation:**
   - **Success fee only, no subscription. Keep 10% of the placement fee as the list rate.**
   - **Founding-member rate:** 5% for the first 12 months for the first 50 approved orgs.
   - **Later, test a "Pro" plan for boutiques** (ATS connectors, reporting, private partner circles) with a lower success fee rather than a subscription on top of 10%.
 - **Rationale:**
   - Independents won't pay dues before seeing value. Success-only removes the objection.
-  - 10% is high next to Top Echelon (about 3% from each recruiter plus dues), but it matches SplitFee UK's reported 45/45/10, and MissionHub offers more (matching, privacy, enforcement).
+  - 10% is high next to Top Echelon (about 3% from each recruiter plus dues), but it matches SplitFee UK's reported 45/45/10, and Workatent offers more (matching, privacy, enforcement).
   - The founding discount buys early liquidity without permanently anchoring a lower price.
 - **Rejected:**
   - Subscription plus 10%: double-dipping for small users.
@@ -153,13 +153,13 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 
 ## RD-009: Platform fee collection ⚖️
 - **Date:** 2026-11-12
-- **Question:** How is MissionHub's share actually collected when no funds move through the platform?
+- **Question:** How is Workatent's share actually collected when no funds move through the platform?
 - **Recommendation:**
-  - **Party to the agreement.** MissionHub becomes a named party to every collaboration agreement.
-  - **Own invoice.** MissionHub records its own invoice to the **job-owner org** when the client payment is verified (the moment the share becomes payable), net 15, with sales tax where applicable (GST/HST/QST ⚖️).
+  - **Party to the agreement.** Workatent becomes a named party to every collaboration agreement.
+  - **Own invoice.** Workatent records its own invoice to the **job-owner org** when the client payment is verified (the moment the share becomes payable), net 15, with sales tax where applicable (GST/HST/QST ⚖️).
   - **Overdue.** An overdue platform invoice (> 30 days) pauses that org's ability to open new jobs to partners or accept new referrals, without touching work already in progress.
-  - **Reporting the hire.** The sourcing side may report a hire too (B must confirm or contest), so MissionHub isn't relying on the payer alone.
-- **Rationale:** Today the platform fee is a "remittance" recorded by the same party that owes it, with no invoice or due date. That leaves MissionHub's revenue to goodwill.
+  - **Reporting the hire.** The sourcing side may report a hire too (B must confirm or contest), so Workatent isn't relying on the payer alone.
+- **Rationale:** Today the platform fee is a "remittance" recorded by the same party that owes it, with no invoice or due date. That leaves Workatent's revenue to goodwill.
 - **Rejected:**
   - Collecting from both recruiters separately: two invoices, double admin, and A has no cash until B pays A.
   - Bringing back payments now: see `product-assessment.md` §6.
@@ -169,12 +169,12 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 
 ## RD-010: Licensing posture ⚖️
 - **Date:** 2026-11-12
-- **Question:** Does MissionHub need a recruiter licence, and must it verify members' licences?
+- **Question:** Does Workatent need a recruiter licence, and must it verify members' licences?
 - **Recommendation:**
   - **Get Ontario counsel's opinion before the founding cohort.** Since 1 July 2024, the Ontario ESA requires a licence for any person who "for a fee" finds or attempts to find employees, permanent roles included and regardless of where the recruiter is located, and it prohibits recruiters from knowingly using unlicensed recruiters. Ask whether a matching platform that takes a per-placement fee falls in scope.
   - **Ask the same of Québec counsel** for CNESST personnel-placement licensing.
-  - **Meanwhile:** collect members' licence numbers (RD-002), position MissionHub in the Terms as a software and record-keeping provider rather than a recruiter, and avoid language like "we find you candidates".
-- **Rationale:** If MissionHub is in scope, operating unlicensed exposes it and every member who "uses" it. That's existential and irreversible.
+  - **Meanwhile:** collect members' licence numbers (RD-002), position Workatent in the Terms as a software and record-keeping provider rather than a recruiter, and avoid language like "we find you candidates".
+- **Rationale:** If Workatent is in scope, operating unlicensed exposes it and every member who "uses" it. That's existential and irreversible.
 - **Rejected:** Ignoring it until scale.
 - **Risks:** A licence brings security deposits (Ontario: an irrevocable letter of credit was required initially, since changed for some recruiters), annual renewal and compliance duties.
 - **Signal to revisit:** Counsel's opinion. Ministry guidance updates.
@@ -200,7 +200,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 - **Date:** 2026-11-12
 - **Question:** Keep the "Free to start" hero note?
 - **Recommendation:**
-  - **Replace it** with a transparent pricing line in the spirit of: "No subscription · MissionHub earns only when a placement pays out". The ux-writer finalises the wording.
+  - **Replace it** with a transparent pricing line in the spirit of: "No subscription · Workatent earns only when a placement pays out". The ux-writer finalises the wording.
   - **The FAQ and commissions page** state the 10% (or founding rate, per RD-008) plainly.
 - **Rationale:**
   - "Free to start" implies a paid tier later and reads as bait to recruiters, who distrust hidden fees.
@@ -259,7 +259,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 - **Question:** May the sourcing side open the prior-presentation evidence file?
 - **Decision:**
   - **No file access in v1.** The sourcing side sees: claim filed, claim date, declared prior-process date, evidence type, upload time, SHA-256, B's note and the contest deadline. The file: claiming org and platform admins only.
-  - **New evidence type:** an **earlier MissionHub referral** B received for the same job or client (delivered earlier, still counting). The sourcing side sees only "earlier referral through MissionHub".
+  - **New evidence type:** an **earlier Workatent referral** B received for the same job or client (delivered earlier, still counting). The sourcing side sees only "earlier referral through Workatent".
   - Claim form includes an attestation ("true and accurate; false claims can lead to suspension").
 - **Rationale:** evidence often shows the confidential client, other agencies and internal notes. A neutral admin, not the opponent, should weigh it. Contesting is free, so A doesn't need the file to decide. The referral evidence type covers duplicates the fingerprint missed.
 - **Rejected:** full file to A (confidentiality, third-party data, defamation risk); nothing shown to A (black box).
@@ -330,7 +330,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
   - **Yes, it's normal practice.** Every agency ATS links a job order to a client company record (for example, Bullhorn's API requires a client corporation to create a job, [StackOne guide](https://hub.stackone.com/connection-guides/ats/bullhorn.md)). "Confidential" in recruiting means "not disclosed to candidates and partners". It doesn't mean "not recorded". Recruiters hesitate because they're not sure they can trust a network platform with the client name, not because recording it is unusual **[experience-based]**. Networks treat sharing client details as a trust question ([NPAworldwide, building trust](https://npaworldwide.com/blog/2025/04/28/building-trust-in-a-recruitment-network/)).
   - **N1: keep it optional** (PD-017 and BR-32 as written). We can't require it until members trust the platform with it, and a required field filled with "Confidential" gives no client key anyway.
   - **Network rules (expectation, not a hard rule yet):** members record the actual end client on jobs open to referrals. It is internal-only, never shown to partners or used in matching displays, and only platform admins see it, when resolving a dispute. ⚖️ wording with C-1.
-  - **The job-form helper should give the hiring side its own reason to fill it in.** Without a client name, B is protected only on that job. B won't be protected from receiving the same person for this client's other roles, and can't cite an earlier MissionHub referral from another job as evidence (BR-26). The ux-writer turns this into the helper text.
+  - **The job-form helper should give the hiring side its own reason to fill it in.** Without a client name, B is protected only on that job. B won't be protected from receiving the same person for this client's other roles, and can't cite an earlier Workatent referral from another job as evidence (BR-26). The ux-writer turns this into the helper text.
   - **Required before N3 (ownership enforcement).** For jobs open to external referrals, a real client name (not a placeholder, BR-23) becomes required before N3 ships. Connector and API jobs without one can still be created, but they can't be opened to external referrals until the name is added. **Pull this forward** if coverage is below 50% after the founding cohort's first 4 weeks (PD-017 signal).
 - **Rationale:**
   - RD-003 ownership is "same end client, any role". If there's no client identity, a hire into another role at that client can't be linked to the first referral. That's a split-free backdoor for the hiring side, and N3 can't close it. Optional is fine for duplicate protection, but ownership enforcement needs the client recorded.
@@ -354,7 +354,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
   - **Monitoring (Should, admin-only):** record on the fingerprint-hit audit, in a field **only platform admins** can read, whether the earlier referral was internal. Then admins can see when a hiring org's stops against outside partners mostly come from its own sister org. Flag when internal referrals cause more than half of a hiring org's stops against outside partners, with at least 5 such stops in 30 days **[estimate, calibrate]**. Flag only, no automatic action. The submitter must never see this field (BR-9).
 - **Rationale:**
   - When a sister org delivered the candidate, the hiring org really does already have them, just as if it had sourced them itself. An outside partner coming second couldn't earn the split under RD-004.1 anyway. Stopping them saves the candidate a second call.
-  - If internal referrals didn't count, B would have to upload a file to prove something MissionHub already knows.
+  - If internal referrals didn't count, B would have to upload a file to prove something Workatent already knows.
   - Same rules for everyone are what make a published rule last (recruiting-input §1.2).
 - **Rejected:**
   - Exclude internal referrals entirely: outside partners double-submit people B already received, and internal referrals become a way to shed the split.
@@ -421,8 +421,8 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
   - If B records a different invoiced amount, it must give a reason, and A is notified with both numbers and can dispute.
   - **A's share is computed on the frozen terms unless A agreed in writing before the change.**
   - Shortfalls caused by the client not paying, or by a refund the snapshot's guarantee allows, are shared pro rata (paid when paid).
-  - Currency: one per snapshot. No conversion by MissionHub. The split applies to the amount actually received when the client pays in another currency.
-  - (b) **Platform share when B discounts without consent:** on the fee actually collected, or on the frozen terms? Recommendation: **on the fee actually collected** (MissionHub stays neutral and doesn't profit from a penalty).
+  - Currency: one per snapshot. No conversion by Workatent. The split applies to the amount actually received when the client pays in another currency.
+  - (b) **Platform share when B discounts without consent:** on the fee actually collected, or on the frozen terms? Recommendation: **on the fee actually collected** (Workatent stays neutral and doesn't profit from a penalty).
 - **Rationale:** B's discounting at offer stage, sometimes in exchange for other business, is a classic way the candidate-side partner gets short-changed. NPA requires advance written permission before submitting a partner's candidate below its minimum fee ([NPA](https://members.npaworldwide.com/Stories/minimum-fee-field-explained)).
 - **Rejected:** split always on what B invoiced (A bears B's commercial concessions); B pays A on frozen terms even when the client never paid (B can't pay from money it didn't collect; that's not market practice).
 - **Risks:** the ledger allocates from client payments today. Flooring A's share means a separate "A share due" computed from the snapshot. That's an engineering cost for the brief.
@@ -484,7 +484,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 - **Rationale:**
   - Creating a record and confirming the same day is the honest fresh-sourcing flow. Imports and connectors create "new" records for long-known people, and candidates often switch to a personal email. A recency rule mostly hits honest recruiters.
   - Downgrading to recorded authorization changes nothing, because both count equally (RD-003).
-  - Market right-to-represent is a dated written statement from the candidate. No one verifies mailbox ownership. Disputes are settled by asking the candidate **[experience-based]**. MissionHub matches that after the fact, with voiding as the deterrent.
+  - Market right-to-represent is a dated written statement from the candidate. No one verifies mailbox ownership. Disputes are settled by asking the candidate **[experience-based]**. Workatent matches that after the fact, with voiding as the deterrent.
 - **Rejected:** a 7–30-day cooling-off before recent records can confirm (kills speed, the core value for P1/P2); downgrade to recorded authorization (no effect); show a flag to the hiring side (stigmatises normal behaviour, leaks sourcing timing, becomes a decline pretext); a second factor such as a phone OTP (friction, and the phone is recruiter-entered too).
 - **Risks:** fraud succeeds where no one challenges it. Acceptable: an unchallenged forgery harmed no competing agency, and the candidate can still challenge.
 - **Signal to revisit:** among challenged confirmations with a recent-change note, the share found invalid. If > 10% **[estimate]**, add a second factor for flagged confirmations only. Challenges per 100 deliveries.
@@ -620,14 +620,14 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 
 ## RD-037: "But for" only as the admin's residual test (S-TE-1, TE-18)
 - **Date:** 2026-11-15
-- **Question:** Should Top Echelon's "but for" rule (honour the source that led to your action) apply at MissionHub, and how far?
+- **Question:** Should Top Echelon's "but for" rule (honour the source that led to your action) apply at Workatent, and how far?
 - **Decision:** **Yes, only as a residual test, with hard limits.** Network Rules v1, rule 7.4.
   - **When it applies:** only when no objective rule decides the case. Examples: whether a hire at a client's affiliate or successor is "the same client" (RD-033 scope wording ⚖️); whether a job, client or candidate a member pursued was found through a partner's shared information (rules 2.1–2.2, "sourcing off"); conduct around the client (rules 3.3–3.5).
   - **What it can't do:** override first position (RD-004), extend or ignore the ownership window (RD-003), reverse a claim outcome (RD-017), undo a release (RD-015/019), or create first position for information that was never delivered as a referral.
-  - **Evidence:** MissionHub records and dated evidence only (referral events, messages, access logs, hashed uploads). A member's word alone is not enough.
+  - **Evidence:** Workatent records and dated evidence only (referral events, messages, access logs, hashed uploads). A member's word alone is not enough.
   - **Effect:** in-platform only (PD-053.2): whether a referral counts where a rule is ambiguous, a conduct finding, a sanction on the ladder, and the record. It never sets an amount. The finding is part of the record a member can bring to mediation or arbitration (rule 7.5).
 - **Rationale:** RD-004 rejected "but for" as the main test because it is slow and subjective, and that still holds. But no rulebook covers every case. Without a stated fallback, admins decide gaps arbitrarily or not at all. Recruiters already know and accept "but for" as a principle from Top Echelon and NPA's "procuring cause" **[experience-based]**. Fencing it off from the objective rules keeps those predictable.
-- **Rejected:** "but for" as a rule that overrides others (Top Echelon p. 16: brings back case-by-case fights and lets anyone reopen a clean outcome); no residual test (gaps get decided ad hoc, which looks arbitrary to the losing side); using it to award fees after the window (contradicts RD-003, and it's a money decision MissionHub doesn't make).
+- **Rejected:** "but for" as a rule that overrides others (Top Echelon p. 16: brings back case-by-case fights and lets anyone reopen a clean outcome); no residual test (gaps get decided ad hoc, which looks arbitrary to the losing side); using it to award fees after the window (contradicts RD-003, and it's a money decision Workatent doesn't make).
 - **Risks:** admins stretch "no rule covers this" to reopen settled outcomes. Mitigated by the hard limits and by second-admin review (rule 9.6).
 - **Signal to revisit:** more than 1 in 5 resolved disputes decided on the residual test (it means the objective rules have a gap worth a new rule); reviews (rule 9.6) that overturn residual-test decisions.
 - **Status:** decided
@@ -649,7 +649,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
   - **What stays visible after expiry:** status history, dates, the collaboration agreement, ledger, invoices and payment records, and the referral messages ⚖️ (they can contain personal information, so they need a PIA decision). For **hired** referrals the candidate's name stays as part of the placement and financial record. For the others it is replaced by "Shared profile expired on {date}".
   - **The sourcing side sees no change.** It's their candidate.
   - **Notice:** from closure, the hiring side sees "Shared profile available until {date}" on the referral. No email is needed.
-  - **Member duty:** Network Rules 2.6. When access ends, delete copies made outside MissionHub unless the law requires keeping them.
+  - **Member duty:** Network Rules 2.6. When access ends, delete copies made outside Workatent unless the law requires keeping them.
   - **Option for the PIA (not decided here):** documents (resume files) could expire 30 days after closure even while the profile fields stay until the window ends. That's stronger minimization, but the hiring side loses the resume for "silver medallist" re-engagement. Counsel and the PIA (N7) decide whether retention law requires it ⚖️.
 - **Rationale:**
   - A declined candidate isn't dead within the window. Roles reopen, and clients come back to their runner-up. When the hiring side re-engages through the same referral, both sides benefit, and the sourcing side's position protects that. So access should last as long as the stake does, and no longer.
@@ -665,12 +665,12 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 - **Date:** 2026-11-15
 - **Question:** What do the v1 rules forbid about contact with the hiring recruiter's client, within PD-053.5 (during the process only), and what should come after the competition-law opinion?
 - **Decision (v1):** two separate rules, because they protect different things.
-  1. **Transaction channel (rule 3.3):** the sourcing side never contacts the client about *this* referral: the job, the candidate, interviews, the offer, the fee or payment, including late payment. It lasts as long as the referral and the resulting placement (through the guarantee and the final payout). This isn't a non-solicit. It doesn't stop the sourcing side from competing for the client's business. It only says who speaks to the client about a deal the hiring recruiter holds. Late payment is raised on MissionHub (commissions, placement dispute).
+  1. **Transaction channel (rule 3.3):** the sourcing side never contacts the client about *this* referral: the job, the candidate, interviews, the offer, the fee or payment, including late payment. It lasts as long as the referral and the resulting placement (through the guarantee and the final payout). This isn't a non-solicit. It doesn't stop the sourcing side from competing for the client's business. It only says who speaks to the client about a deal the hiring recruiter holds. Late payment is raised on Workatent (commissions, placement dispute).
   2. **Non-solicitation while in progress (rule 3.4):** from delivery until the referral is hired, declined, rejected, withdrawn, cancelled or released, the sourcing organization (all its members) doesn't offer recruiting services to that client, and doesn't take a direct mandate for the same job without the hiring recruiter's written agreement (RD-043). It applies once the sourcing side knows or learns who the client is (for example, from the candidate on a confidential job).
   - **Exception (rule 3.5):** the sourcing organization worked with that client in the 12 months before delivery (signed terms, an invoice or an active job). It keeps that relationship, but not for this candidate, and without using what it learned from the referral. If it already held the same job directly, RD-043's exception applies. There's no duty to disclose the relationship to the partner. Evidence is needed only if a report challenges it.
   - **Not covered in v1:** the client contacting the sourcing side, on its own initiative, about *other* work. Responding to it isn't solicitation. Forbidding it would be a restriction on the client, which is the riskiest kind under s.45 ⚖️. General marketing (newsletters, public posts) isn't solicitation either.
   - **Enforcement:** conduct report → sanctions ladder. No fee or compensation (consistent with PD-053.1).
-- **Recommendation after the competition-law opinion (`Needs user decision`, ⚖️):** if counsel confirms the ancillary-restraint defence (s.45(4)) for a narrow clause, add a post-hire non-solicit: for **6 months after the start date** of a placement made through MissionHub, the sourcing organization doesn't solicit that client for recruiting work. Keep the same 12-month prior-relationship exception, enforce in-platform only, and add no compensation formula. Don't extend it to referrals that closed without a hire, where the sourcing side gained little client knowledge and the restriction would be hardest to justify. 6 months matches the default ownership window (RD-003) and is the shortest period that covers the post-start "while the fee is still being paid" stretch.
+- **Recommendation after the competition-law opinion (`Needs user decision`, ⚖️):** if counsel confirms the ancillary-restraint defence (s.45(4)) for a narrow clause, add a post-hire non-solicit: for **6 months after the start date** of a placement made through Workatent, the sourcing organization doesn't solicit that client for recruiting work. Keep the same 12-month prior-relationship exception, enforce in-platform only, and add no compensation formula. Don't extend it to referrals that closed without a hire, where the sourcing side gained little client knowledge and the restriction would be hardest to justify. 6 months matches the default ownership window (RD-003) and is the shortest period that covers the post-start "while the fee is still being paid" stretch.
 - **Rationale:** Not going after the job owner's client is the core promise of every split network (Top Echelon p. 24, NPA's "proprietary interest" norm: [NPA best practices](https://members.npaworldwide.com/stories/best-practices-for-network-success)). Without it, hiring recruiters won't open jobs. Splitting the "channel" rule from the "non-solicit" rule protects the deal for its whole life without depending on the competition opinion for the part that restricts competition. Payment visibility on the commissions page removes the main excuse for contacting the client (late payment).
 - **Rejected:** a post-process non-solicit in v1 (PD-053.5); the Top Echelon "split your next two commissions" remedy (off-platform, can't be checked); requiring the sourcing side to disclose its client list ("niche locking", an anti-competitive signal); a channel rule that ends at hire (the sourcing side would contact the client about payment exactly when it matters most).
 - **Risks:** the transaction channel rule after the hire could be read as going beyond PD-053.5's "while a referral is in flight". I read the placement as part of the same transaction, so it applies, but **the founder should confirm this reading** (`Needs user decision`, low stakes). There's also the gap after closure: a sourcing recruiter can approach the client the day after a decline. That's accepted until the opinion arrives.
@@ -686,7 +686,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
   - **No shared ownership** after the placement (Top Echelon's 50/50 suggestion rejected).
   - The longer off-limits on the client's side (the hiring recruiter not recruiting its placed candidate out of its own client) belongs to the hiring recruiter's client contract, not to our rules.
 - **Rationale:**
-  - A split on re-placement at another client is candidate-global ownership by another name. RD-003 rejected that as unenforceable and as a restriction on the candidate. MissionHub also couldn't detect it, because the second placement happens on the hiring side's own desk.
+  - A split on re-placement at another client is candidate-global ownership by another name. RD-003 rejected that as unenforceable and as a restriction on the candidate. Workatent also couldn't detect it, because the second placement happens on the hiring side's own desk.
   - The real abuse is limited by market practice: hiring recruiters usually can't poach their own placed candidate from their client for a period set in the client contract. Six to 12 months is common in permanent recruitment terms, though it varies ([Sprintlaw](https://sprintlaw.co.uk/articles/non-circumvention-recruitment-contracts/), [sample terms of business](https://yourrecruit.com/app/uploads/2024/09/yr-terms-of-business_permanent.pdf)).
   - Off-limits during the guarantee protects the shared fee for both sides (a fall-off refunds everyone pro rata, RD-006), so both sides already have the incentive. The rule makes it explicit.
   - Access expiry (RD-038) and rule 2.2 stop the hiring side from reusing the sourcing side's profile to re-place the candidate.
@@ -724,7 +724,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 
 ## RD-043: Honouring the job when the client contacts the sourcing side directly (S-TE-7, TE-25)
 - **Date:** 2026-11-15
-- **Question:** Top Echelon makes a member who accepted a partner's job decline the same job from any other source, the client included, forever. Does this exist in the Canadian market, and with what scope for MissionHub?
+- **Question:** Top Echelon makes a member who accepted a partner's job decline the same job from any other source, the client included, forever. Does this exist in the Canadian market, and with what scope for Workatent?
 - **Decision:** **Yes, as part of rule 3.4, limited to the same job and to while the referral is in progress.**
   - While the sourcing side has a referral in progress on a job, it doesn't take a direct mandate from the client **for that same job** without the hiring recruiter's written agreement (in the referral messages).
   - If the client contacts the sourcing side about that job or that candidate, the sourcing side sends them back to the hiring recruiter and tells the hiring recruiter in the referral messages within 2 business days.
@@ -785,8 +785,8 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
   - three outcomes (folds "thin but true" into "no breach");
   - no incident notice.
 - **Risks:** reporters infer a hold from vanished jobs (an inference, also caused by the rules gate). The incident notice spreads word of a finding (accepted, since the subject is their candidates' data).
-- **Signal to revisit:** repeat reports on the same issue after "action taken"; 7.1 cases citing "MissionHub did nothing"; counsel C-4.
-- **Status:** decided. ⚖️ Who notifies the CAI or the candidate (sourcing org, hiring org, MissionHub) is for counsel (C-4).
+- **Signal to revisit:** repeat reports on the same issue after "action taken"; 7.1 cases citing "Workatent did nothing"; counsel C-4.
+- **Status:** decided. ⚖️ Who notifies the CAI or the candidate (sourcing org, hiring org, Workatent) is for counsel (C-4).
 
 ## RD-046: Network hold scope and containment of a 2.3 leak (N10 S-N10-3)
 - **Date:** 2026-11-15
@@ -823,7 +823,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 - **Question:** For a terminated org, do partners see "isn't taking new referrals right now" or "is no longer in the network"?
 - **Decision:**
   - **While the terminated org is in settlement mode:** the same neutral BR-14 sentence.
-  - **Once settlement mode ends:** "{Org} is no longer part of the MissionHub network." It's shown on closed history and old links only, never in lists or notifications.
+  - **Once settlement mode ends:** "{Org} is no longer part of the Workatent network." It's shown on closed history and old links only, never in lists or notifications.
   - **The same sentence covers voluntary exits** once settled, so it never reveals a sanction. It goes away if the org is readmitted (rule 9.7).
 - **Rationale:**
   - Announcing earlier would come before the review is decided. Worse, it makes sourcing partners with pending payouts call the client to secure the fee **[experience-based]**, a 3.3 breach (PD-054).
@@ -937,7 +937,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
     - If B refuses to provide the client's written confirmation, that counts against B (7.2).
     - A false contest or a fabricated report is a 4.8 breach (immediate hold possible, 9.4).
   - **Deemed confirmation on silence (RD-030)** applies **only if** the notice was emailed to the job owner and at least one admin or manager of B, without a bounce. Otherwise the report goes to the admin queue.
-    - Only an admin can reopen it, within 10 business days, and only for a failure MissionHub's own logs show.
+    - Only an admin can reopen it, within 10 business days, and only for a failure Workatent's own logs show.
   - **Fee details:** B has **10 business days** after a confirmation, deemed confirmation or upheld report to enter them.
     - Until then the placement shows "fee details pending" and the frozen submission estimate, labelled as an estimate.
     - If they're still missing: an admin notice under 6.4, then the N10 ladder. **This replaces RD-030's "Should: pause B's new partner jobs"**, which predates the notice-based ladder.
@@ -947,7 +947,7 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
   - One rebuttal gives fairness without making the dispute endless.
   - Silence can only cost B something if B was actually told. In-app notices alone don't meet that bar.
   - An automatic pause would be a sanction without notice, against N10 rule 9.4's closed list.
-  - MissionHub never sets the amount (7.5).
+  - Workatent never sets the amount (7.5).
 - **Rejected:**
   - deemed confirmation on in-app notice only;
   - unlimited back-and-forth;
@@ -1002,11 +1002,11 @@ Context for all entries: `market-and-positioning.md`, `product-assessment.md`.
 
 ## RD-056: Platform share on hires surfaced by a sourcing-side report (N3)
 - **Date:** 2026-11-16
-- **Question:** When a hire is established through A's report (a backdoor caught), does MissionHub take its normal share or a surcharge on the hiring side?
+- **Question:** When a hire is established through A's report (a backdoor caught), does Workatent take its normal share or a surcharge on the hiring side?
 - **Recommendation:** **The normal rate, on the fee collected (PD-049), with no surcharge.** Consequences for the hiring side go through the conduct ladder (HA-1 flag, rule 6.4), not money.
 - **Rationale:**
-  - MissionHub stays neutral and doesn't profit from members' breaches (PD-049 spirit, PD-053.2).
-  - A surcharge would make MissionHub look like a party to the dispute, and it raises RD-009 ⚖️ questions.
+  - Workatent stays neutral and doesn't profit from members' breaches (PD-049 spirit, PD-053.2).
+  - A surcharge would make Workatent look like a party to the dispute, and it raises RD-009 ⚖️ questions.
 - **Rejected:**
   - a 2× or flat surcharge on caught backdoors (a revenue incentive to find breaches, and it reads as a penalty clause ⚖️);
   - no platform share on deemed hires (rewards the backdoor).

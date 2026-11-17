@@ -158,7 +158,7 @@ export function OnboardingForm({ firstName, defaultCountry = "", rules = null }:
               </FormField>
               <FormField id="slug" label={t("workspace.url")} error={errors.slug} hint={t("workspace.urlHint")} required>
                 <div className={cn("flex h-10 items-center overflow-hidden rounded-xl border border-input bg-background focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50", errors.slug && "border-danger")}>
-                  <span className="shrink-0 border-r border-input bg-muted px-3 text-sm leading-10 text-muted-foreground">missionhub.app/workspace/</span>
+                  <span className="shrink-0 border-r border-input bg-muted px-3 text-sm leading-10 text-muted-foreground">workatent.app/workspace/</span>
                   <input
                     id="slug"
                     value={data.slug}
@@ -232,7 +232,7 @@ export function OnboardingForm({ firstName, defaultCountry = "", rules = null }:
           <div className="grid gap-3">
             <Summary label={t("review.workspace")} editLabel={t("review.editWorkspace")} onEdit={() => setStep(0)}>
               <span className="block font-medium">{data.name}</span>
-              <span className="block text-muted-foreground">missionhub.app/workspace/{data.slug}</span>
+              <span className="block text-muted-foreground">workatent.app/workspace/{data.slug}</span>
               <span className="block text-muted-foreground">{countries.find((c) => c.value === data.country)?.label ?? data.country} · {data.currency}</span>
             </Summary>
             <Summary label={t("review.profile")} editLabel={t("review.editProfile")} onEdit={() => setStep(1)}>

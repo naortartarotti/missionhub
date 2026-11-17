@@ -1,7 +1,7 @@
 {
   "accept": {
     "title": "Network Rules {label}",
-    "gateIntro": "Before you use MissionHub, read and accept the Network Rules. They set out how members share information, contact candidates and resolve problems.",
+    "gateIntro": "Before you use Workatent, read and accept the Network Rules. They set out how members share information, contact candidates and resolve problems.",
     "reacceptIntro": "The Network Rules are changing. Read what changed, then accept version {label}.",
     "effective": "In effect since {date}",
     "effectiveFuture": "Takes effect on {date}",
@@ -69,7 +69,7 @@
       },
       "terminated": {
         "title": "Your organization was removed from the network on {date}",
-        "body": "You can finish referrals in progress and settle commissions and disputes. When everything is settled, your organization’s members lose access to MissionHub."
+        "body": "You can finish referrals in progress and settle commissions and disputes. When everything is settled, your organization’s members lose access to Workatent."
       }
     },
     "cta": {
@@ -82,7 +82,7 @@
   "versions": {
     "metaTitle": "Network Rules",
     "title": "Network Rules",
-    "description": "The rules every organization and member accepts to use the MissionHub network.",
+    "description": "The rules every organization and member accepts to use the Workatent network.",
     "current": "Current version: {label}",
     "inEffect": "In effect since {date}",
     "upcoming": "Upcoming version: {label}",
@@ -110,7 +110,7 @@
   },
   "partner": {
     "notTakingReferrals": "{org} isn’t taking new referrals right now.",
-    "noLongerMember": "{org} is no longer part of the MissionHub network.",
+    "noLongerMember": "{org} is no longer part of the Workatent network.",
     "back": "Back to opportunities"
   },
   "team": {
@@ -166,7 +166,7 @@
     "when": "When did it happen? (optional)",
     "approximate": "The date is approximate.",
     "files": "Evidence (optional)",
-    "filesHint": "Up to 5 files: PDF, PNG or JPEG, 10 MB each. Only MissionHub platform admins can open them. {org} never sees them.",
+    "filesHint": "Up to 5 files: PDF, PNG or JPEG, 10 MB each. Only Workatent platform admins can open them. {org} never sees them.",
     "identity": "We never show your name to {org}. We name your organization only if they need it to respond fairly. Only two organizations are on a referral, so they may still guess who reported it. Retaliating against a report is a breach (rule 7.1).",
     "identityJob": "We never show your name to {org}. We name your organization only if they need it to respond fairly. They may still be able to tell where the report came from. Retaliating against a report is a breach (rule 7.1).",
     "attest": "I’m reporting this in good faith, and it’s accurate to the best of my knowledge. I understand that a report made in bad faith is a breach.",
@@ -202,7 +202,7 @@
   },
   "reports": {
     "title": "Your reports",
-    "description": "Problems you reported to MissionHub. Only you and your organization’s admins can see them.",
+    "description": "Problems you reported to Workatent. Only you and your organization’s admins can see them.",
     "menu": "Your reports",
     "tabs": {
       "mine": "Sent by you",
@@ -222,7 +222,7 @@
       "received": "Received",
       "receivedBody": "We aim to respond by {when} ET.",
       "input": "Your input needed",
-      "inputBody": "MissionHub has a question for you. Reply below.",
+      "inputBody": "Workatent has a question for you. Reply below.",
       "inputDeadline": "Reply by {when} ET.",
       "inReview": "Looking into it",
       "inReviewBody": "We’ll tell you the outcome when it’s decided."
@@ -235,7 +235,7 @@
       "notEnough": "Not enough evidence to act",
       "notEnoughBody": "We couldn’t confirm a breach with the evidence we have. You can send a new report if you have new evidence.",
       "closed": "Closed without a finding",
-      "closedBody": "MissionHub closed this report without deciding whether a breach happened.",
+      "closedBody": "Workatent closed this report without deciding whether a breach happened.",
       "triageReason": "Reason: {reason}",
       "noChange": "This report doesn’t change your referral, your first position or any amount owed.",
       "openReferral": "Open the referral",
@@ -254,11 +254,11 @@
     "timeline": {
       "title": "Status",
       "sent": "Sent · {when} ET",
-      "question": "Question from MissionHub · {when} ET",
+      "question": "Question from Workatent · {when} ET",
       "replied": "Reply sent · {when} ET",
       "closed": "Closed · {when} ET"
     },
-    "question": "Question from MissionHub",
+    "question": "Question from Workatent",
     "reply": "Your reply",
     "replyHint": "Answer the question. You can send one reply, with files if they help.",
     "replySubmit": "Send reply",
@@ -315,8 +315,8 @@
   "notice": {
     "heading": "Notice under rules 8.3 and 9.3",
     "headingImmediate": "Immediate network hold under rule 9.4",
-    "intro": "MissionHub received information that {org} may have broken the Network Rules. This notice tells you what is alleged and gives you 10 business days to respond. Nothing has been decided yet.",
-    "introImmediate": "Under rule 9.4, MissionHub put {org} on a network hold on {date}, because of a possible breach of rule {rule}. This notice tells you what is alleged. You have 10 business days to respond. No other decision has been made.",
+    "intro": "Workatent received information that {org} may have broken the Network Rules. This notice tells you what is alleged and gives you 10 business days to respond. Nothing has been decided yet.",
+    "introImmediate": "Under rule 9.4, Workatent put {org} on a network hold on {date}, because of a possible breach of rule {rule}. This notice tells you what is alleged. You have 10 business days to respond. No other decision has been made.",
     "holdEffects": "While the hold lasts, your jobs are hidden from partners, and you can’t submit referrals or receive new ones. Referrals in progress continue as usual.",
     "rules": "Rules concerned",
     "ruleItem": "Rule {number}: {title}",
@@ -326,8 +326,8 @@
     "evidence": "Summary of the evidence",
     "reportedBy": "Reported by {org}",
     "deadline": "Respond by {when} ET",
-    "howToRespond": "Any organization admin can send one response from your Network standing page, with files if they help. If you don’t respond by the deadline, MissionHub will decide on the record (rule 7.2).",
-    "possibleOutcomes": "After the response period, MissionHub may decide to take no action, or to give a warning, a network hold, a suspension or termination. If there’s a finding or a sanction, your organization can ask once for a review by a different platform admin.",
+    "howToRespond": "Any organization admin can send one response from your Network standing page, with files if they help. If you don’t respond by the deadline, Workatent will decide on the record (rule 7.2).",
+    "possibleOutcomes": "After the response period, Workatent may decide to take no action, or to give a warning, a network hold, a suspension or termination. If there’s a finding or a sanction, your organization can ask once for a review by a different platform admin.",
     "bilingualNote": "French version above."
   },
   "case": {
@@ -337,13 +337,13 @@
     "sentOn": "Sent on {when} ET",
     "languageNote": "This notice is in {language}.",
     "respond": "Your response",
-    "respondHint": "Explain what happened and attach anything that helps. Only MissionHub platform admins can open your files. Your response isn’t shared with other organizations.",
+    "respondHint": "Explain what happened and attach anything that helps. Only Workatent platform admins can open your files. Your response isn’t shared with other organizations.",
     "respondSubmit": "Send response",
     "respondConfirmTitle": "Send your response?",
     "respondConfirmBody": "Your organization can send one response, and it can’t be changed after sending.",
     "responded": "Response sent on {when} ET by {name}",
-    "respondedToast": "Response sent. MissionHub will read it before deciding.",
-    "windowClosed": "The response window closed on {when} ET. MissionHub will decide on the record (rule 7.2).",
+    "respondedToast": "Response sent. Workatent will read it before deciding.",
+    "windowClosed": "The response window closed on {when} ET. Workatent will decide on the record (rule 7.2).",
     "followup": "Follow-up question",
     "followupDeadline": "Reply by {when} ET",
     "followupNoDeadline": "No deadline. Reply when you can.",
@@ -353,7 +353,7 @@
     "followupReplied": "Reply sent on {when} ET by {name}",
     "followupClosed": "The time to reply ended on {when} ET.",
     "files": "Files",
-    "filesHint": "Up to 5 files: PDF, PNG or JPEG, 10 MB each. Only MissionHub platform admins can open them.",
+    "filesHint": "Up to 5 files: PDF, PNG or JPEG, 10 MB each. Only Workatent platform admins can open them.",
     "reviewDeadline": "Review deadline",
     "requestReview": "Request a review",
     "reviewDialogTitle": "Request a review of this decision?",
@@ -370,7 +370,7 @@
       "lifted": "Review: sanction lifted",
       "overturned": "Review: decision overturned. The sanction is lifted and won’t count in later decisions.",
       "reason": "Reason for the review outcome",
-      "reviewedOn": "Reviewed on {date} by a different MissionHub platform admin"
+      "reviewedOn": "Reviewed on {date} by a different Workatent platform admin"
     },
     "errors": {
       "closed": "The response window has closed. You can’t send a response now.",
@@ -382,10 +382,10 @@
   },
   "decision": {
     "title": "Decision",
-    "decidedOn": "Decided on {date} by a MissionHub platform admin",
+    "decidedOn": "Decided on {date} by a Workatent platform admin",
     "outcome": "Outcome",
-    "noBreachBody": "MissionHub didn’t find a breach of the Network Rules. No sanction applies.",
-    "notEnoughBody": "MissionHub didn’t find enough evidence to decide that a breach happened. No sanction applies.",
+    "noBreachBody": "Workatent didn’t find a breach of the Network Rules. No sanction applies.",
+    "notEnoughBody": "Workatent didn’t find enough evidence to decide that a breach happened. No sanction applies.",
     "finding": "Finding",
     "rules": "Rules breached",
     "residual": "Decided using rule 7.4, because no specific rule covered this case.",
@@ -393,7 +393,7 @@
     "effects": {
       "none": "The finding is recorded on your organization’s file. No sanction applies.",
       "warning": "This warning counts for 12 months, until {date}. It doesn’t limit your work.",
-      "hold": "From {date}, your jobs are hidden from partners, and you can’t submit referrals or receive new ones. Referrals in progress continue. The hold lasts until MissionHub lifts it.",
+      "hold": "From {date}, your jobs are hidden from partners, and you can’t submit referrals or receive new ones. Referrals in progress continue. The hold lasts until Workatent lifts it.",
       "holdLifted": "The network hold is lifted from {date}.",
       "suspension": "From {date}, your organization is suspended and in settlement mode. You can finish referrals in progress, settle commissions and answer disputes. Nothing else is available until the suspension is lifted.",
       "termination": "From {date}, your organization is removed from the network. You can finish referrals in progress and settle commissions and disputes until each one is settled. Your organization can apply again after 12 months (rule 9.7)."
@@ -413,15 +413,15 @@
       "one": "{count} referral concerned",
       "other": "{count} referrals concerned"
     },
-    "intro": "MissionHub found that a partner organization shared information from your referrals outside its organization. Here’s what we know.",
+    "intro": "Workatent found that a partner organization shared information from your referrals outside its organization. Here’s what we know.",
     "referrals": "Referrals concerned",
     "referralUnavailable": "A referral you can no longer open",
     "what": "What information",
     "when": "When",
     "toWhom": "Shared with",
     "toWhomUnknown": "Unknown",
-    "guidance": "If your candidate revokes their authorization, the other organization loses access to the shared profile and documents on MissionHub right away. This doesn’t recall copies they already downloaded. Withdrawing the referral keeps your first position. Releasing the candidate gives it up.",
-    "guidanceHiring": "MissionHub can’t recall information once it has been shared. This notice doesn’t change your jobs or your referrals in progress. If the information is about your client, you may want to tell them."
+    "guidance": "If your candidate revokes their authorization, the other organization loses access to the shared profile and documents on Workatent right away. This doesn’t recall copies they already downloaded. Withdrawing the referral keeps your first position. Releasing the candidate gives it up.",
+    "guidanceHiring": "Workatent can’t recall information once it has been shared. This notice doesn’t change your jobs or your referrals in progress. If the information is about your client, you may want to tell them."
   },
   "settlement": {
     "marker": "Settlement mode",
@@ -471,7 +471,7 @@
       "body": "We aim to respond by {when} ET."
     },
     "conduct_report_info_requested": {
-      "title": "MissionHub has a question about your report",
+      "title": "Workatent has a question about your report",
       "body": "Open your report to reply."
     },
     "conduct_report_closed": {
@@ -485,19 +485,19 @@
       "body": "Open it to see the outcome."
     },
     "conduct_incident_notice": {
-      "title": "MissionHub sent you a data incident notice",
+      "title": "Workatent sent you a data incident notice",
       "body": "It concerns information from your referrals. Open it to read the details."
     },
     "conduct_notice_sent": {
-      "title": "You have a notice from MissionHub",
+      "title": "You have a notice from Workatent",
       "body": "Read it and respond by {when} ET."
     },
     "sanction_immediate_hold": {
-      "title": "You have an urgent notice from MissionHub",
+      "title": "You have an urgent notice from Workatent",
       "body": "Read it now. You can respond until {when} ET."
     },
     "conduct_followup": {
-      "title": "MissionHub has a follow-up question",
+      "title": "Workatent has a follow-up question",
       "body": "Open the notice to reply."
     },
     "conduct_response_received": {
@@ -505,7 +505,7 @@
       "body": "Open the case to read it."
     },
     "conduct_decided": {
-      "title": "MissionHub recorded a decision",
+      "title": "Workatent recorded a decision",
       "body": "Read it on your Network standing page."
     },
     "sanction_lifted": {

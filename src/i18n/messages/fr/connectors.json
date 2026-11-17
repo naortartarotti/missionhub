@@ -1,7 +1,7 @@
 {
   "metaTitle": "Connecteurs",
   "title": "Connecteurs",
-  "description": "Importez les postes et les candidats de votre organisation dans MissionHub depuis les outils que vous utilisez déjà. Connectez une fois : MissionHub les garde synchronisés et ne modifie jamais rien à la source.",
+  "description": "Importez les postes et les candidats de votre organisation dans Workatent depuis les outils que vous utilisez déjà. Connectez une fois : Workatent les garde synchronisés et ne modifie jamais rien à la source.",
   "connected": {
     "title": "Connectés",
     "lastSync": "Synchronisé {when}",
@@ -142,7 +142,7 @@
         }
       }
     },
-    "missionhub_api": {
+    "workatent_api": {
       "tagline": "Envoyez candidats et offres depuis vos systèmes, Zapier ou Make.",
       "description": "Une API REST simple pour vos développeurs ou vos outils sans code. Créez une clé, envoyez du JSON, et les fiches apparaissent dans votre organisation.",
       "does1": "Crée et met à jour candidats et offres ; vos propres identifiants rendent les appels répétés sûrs.",
@@ -232,7 +232,7 @@
       "one": "{count} ligne illisible",
       "other": "{count} lignes illisibles"
     },
-    "previewHint": "Voici à quoi ressembleront les premières fiches dans MissionHub. Compétences, séniorité et années d'expérience sont lues dans chaque description.",
+    "previewHint": "Voici à quoi ressembleront les premières fiches dans Workatent. Compétences, séniorité et années d'expérience sont lues dans chaque description.",
     "test": "Tester",
     "testing": "Test en cours…",
     "connect": "Connecter",
@@ -281,7 +281,7 @@
     "resume": "Reprendre",
     "disconnect": "Déconnecter",
     "disconnectTitle": "Déconnecter cette source ?",
-    "disconnectDescription": "MissionHub cesse de la synchroniser. Les candidats et offres déjà importés restent dans votre organisation et se modifient normalement.",
+    "disconnectDescription": "Workatent cesse de la synchroniser. Les candidats et offres déjà importés restent dans votre organisation et se modifient normalement.",
     "owner": "Les importations appartiennent à {name}",
     "next": "prochaine vérification {when}"
   },
@@ -300,7 +300,7 @@
     "privacyCandidates": "Les candidats importés arrivent en brouillons privés. Ils ne sont ni jumelés ni partagés avec des partenaires tant qu'un recruteur n'a pas confirmé l'avis de confidentialité et consigné l'autorisation du candidat.",
     "privacyJobs": "Les offres importées appartiennent à votre organisation et ne sont jamais montrées aux partenaires tant que vous ne les activez pas et ne les ouvrez pas aux partenaires.",
     "soonTitle": "Bientôt",
-    "soonBody": "Le connecteur {name} est en développement. En attendant, vous pouvez envoyer des fiches depuis {name} avec l'API MissionHub (ou Zapier/Make), ou les exporter vers un tableur.",
+    "soonBody": "Le connecteur {name} est en développement. En attendant, vous pouvez envoyer des fiches depuis {name} avec l'API Workatent (ou Zapier/Make), ou les exporter vers un tableur.",
     "connect": "Connecter",
     "connectAnother": "Connecter une autre source",
     "adminOnly": "Seuls les administrateurs de l'organisation et les gestionnaires de recrutement peuvent connecter des sources.",

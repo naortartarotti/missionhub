@@ -1,5 +1,5 @@
 <!--
-MissionHub Network Rules v1, English (en-CA). Source: docs/strategy/network-rules-v1.md (2026-11-15).
+Workatent Network Rules v1, English (en-CA). Source: docs/strategy/network-rules-v1.md (2026-11-15).
 Rule numbers are identical in en.md, fr-CA.md and pt-BR.md. Comments in this file are for the team and counsel; they don't render.
 
 SHIPS LATER. Text between <!- - ships with X - -> and <!- - /ships with X - -> describes a mechanism that doesn't exist yet.
@@ -15,23 +15,23 @@ FOUNDER. 3.3 duration decided (PD-054): through the guarantee and final payout.
 PLACEHOLDERS. Every open value is written [TODO: ...].
 -->
 
-# MissionHub Network Rules
+# Workatent Network Rules
 
 **Version:** v1 — draft · **Effective date:** [TODO: effective date]
 
-These rules explain how members of the MissionHub network work together, so candidates, clients and fees stay protected.
+These rules explain how members of the Workatent network work together, so candidates, clients and fees stay protected.
 
 ## Introduction
 
-These rules are part of the agreement your organization accepts to join MissionHub.
+These rules are part of the agreement your organization accepts to join Workatent.
 
-MissionHub is software and a record of what happened. We match candidates and jobs, keep dated records, and decide what happens on MissionHub when rules are broken. We aren’t a recruiter. We don’t hold or move money between members, and we don’t decide money disputes. <!-- ⚖️ counsel: positioning must match the Terms of Service -->
+Workatent is software and a record of what happened. We match candidates and jobs, keep dated records, and decide what happens on Workatent when rules are broken. We aren’t a recruiter. We don’t hold or move money between members, and we don’t decide money disputes. <!-- ⚖️ counsel: positioning must match the Terms of Service -->
 
 ## 1. Membership and acceptance
 
 **1.1** Your organization is the one that joins. An organization admin accepts these rules for it, and each member accepts them before using the network. <!-- ⚖️ counsel: acceptance by the organization and by each member -->
 
-**1.2** Your organization is responsible for what its members do on MissionHub. A member’s breach is the organization’s breach. <!-- ⚖️ counsel: organization liability by legal form and province -->
+**1.2** Your organization is responsible for what its members do on Workatent. A member’s breach is the organization’s breach. <!-- ⚖️ counsel: organization liability by legal form and province -->
 
 **1.3** Keep your organization’s profile true and current: legal name, website, and recruiter licences where the law requires them. Tell us within 30 days if ownership or control changes. <!-- ⚖️ counsel: licences (Ontario, Québec) and change-of-control duty -->
 
@@ -53,17 +53,17 @@ MissionHub is software and a record of what happened. We match candidates and jo
 
 **2.4** Don’t advertise or repost a partner’s job anywhere (job boards, social media, your website, newsletters) without the hiring recruiter’s written agreement first.
 
-**2.5** If you receive something by mistake, don’t use it. Tell the partner and MissionHub, and delete any copies.
+**2.5** If you receive something by mistake, don’t use it. Tell the partner and Workatent, and delete any copies.
 
-**2.6** If the candidate revokes their authorization, stop using what you received and delete copies you made outside MissionHub, unless the law requires you to keep them. <!-- ships with access expiry (after N3) -->Access to a shared profile is also time-limited: when it ends, the same applies.<!-- /ships with access expiry (after N3) --> <!-- ⚖️ counsel: retention and deletion (Law 25, PIPEDA) -->
+**2.6** If the candidate revokes their authorization, stop using what you received and delete copies you made outside Workatent, unless the law requires you to keep them. <!-- ships with access expiry (after N3) -->Access to a shared profile is also time-limited: when it ends, the same applies.<!-- /ships with access expiry (after N3) --> <!-- ⚖️ counsel: retention and deletion (Law 25, PIPEDA) -->
 
 ## 3. Contact with candidates and partners’ clients
 
-**3.1** As the hiring recruiter, contact a partner’s candidate only to assess them for that job and run that hiring process. Name the sourcing recruiter to the candidate, and say you’re working together through MissionHub.
+**3.1** As the hiring recruiter, contact a partner’s candidate only to assess them for that job and run that hiring process. Name the sourcing recruiter to the candidate, and say you’re working together through Workatent.
 
 **3.2** Don’t ask a partner’s candidate for a “clean” resume, leads, other candidates or business contacts, and don’t invite them to work with you instead of the partner.
 
-**3.3** As the sourcing recruiter, never contact the hiring recruiter’s client about the job, the candidate, interviews, the offer, the fee or payment. All of it goes through the hiring recruiter. Raise late payment on MissionHub. This lasts as long as the referral and, if there is a hire, until the guarantee ends and the final payout is made. <!-- ⚖️ counsel: Competition Act s.45 -->
+**3.3** As the sourcing recruiter, never contact the hiring recruiter’s client about the job, the candidate, interviews, the offer, the fee or payment. All of it goes through the hiring recruiter. Raise late payment on Workatent. This lasts as long as the referral and, if there is a hire, until the guarantee ends and the final payout is made. <!-- ⚖️ counsel: Competition Act s.45 -->
 
 **3.4** While your referral is in progress, don’t offer your recruiting services to that client, and don’t take the same job directly from the client unless the hiring recruiter agrees in writing. If the client contacts you about that job or candidate, send them to the hiring recruiter and tell the hiring recruiter in the referral messages within 2 business days. <!-- ⚖️ counsel: Competition Act s.45(1)(b), ancillary-restraint defence s.45(4) -->
 
@@ -73,11 +73,11 @@ MissionHub is software and a record of what happened. We match candidates and jo
 
 ## 4. Represent only what is yours
 
-**4.1** Submit only candidates your organization represents, with their authorization for that job and that hiring recruiter, recorded on MissionHub. A resume in your database isn’t authorization.
+**4.1** Submit only candidates your organization represents, with their authorization for that job and that hiring recruiter, recorded on Workatent. A resume in your database isn’t authorization.
 
 **4.2** When you record an authorization yourself, you confirm that you or someone in your organization spoke with the candidate about this job, that they’re interested, and that what you recorded is true.
 
-**4.3** Don’t submit another recruiter’s candidate, or a candidate you got from someone outside your organization. Other recruiters can join MissionHub to take part.
+**4.3** Don’t submit another recruiter’s candidate, or a candidate you got from someone outside your organization. Other recruiters can join Workatent to take part.
 
 **4.4** Open to partners only jobs your organization holds: a real opening, a fee agreement with the end client, and terms that match it. Your ownership window can’t be shorter than the one in your client terms. <!-- ⚖️ counsel: ownership window vs client terms (RD-028) -->
 
@@ -87,7 +87,7 @@ MissionHub is software and a record of what happened. We match candidates and jo
 
 **4.7** Keep your candidates current. Mark a candidate unavailable when they’re placed or stop looking.
 
-**4.8** Everything you state on MissionHub must be true: objections, evidence, hire reports, attestations, authorizations and candidate confirmations. Forged evidence and false candidate confirmations are among the most serious breaches.
+**4.8** Everything you state on Workatent must be true: objections, evidence, hire reports, attestations, authorizations and candidate confirmations. Forged evidence and false candidate confirmations are among the most serious breaches.
 
 ## 5. Fair treatment
 
@@ -95,7 +95,7 @@ MissionHub is software and a record of what happened. We match candidates and jo
 
 **5.2** Job requirements and decline reasons must be about the job. Don’t ask partners to filter candidates by age, sex, origin, family status or any similar ground.
 
-**5.3** You’re responsible for the jobs and candidate information you post. MissionHub doesn’t verify them. <!-- ⚖️ counsel: member content responsibility; no waiver of MissionHub's own duties -->
+**5.3** You’re responsible for the jobs and candidate information you post. Workatent doesn’t verify them. <!-- ⚖️ counsel: member content responsibility; no waiver of Workatent's own duties -->
 
 ## 6. Terms, ownership and payouts
 
@@ -105,7 +105,7 @@ MissionHub is software and a record of what happened. We match candidates and jo
 
 **6.3** The first referral delivered has first position. If the client hires a referred candidate in any role within the ownership window, the split is owed, even if the referral was declined, withdrawn, cancelled or left unanswered. It isn’t owed if the sourcing recruiter released the candidate, or if a prior-presentation objection was upheld or not contested.
 
-**6.4** As the hiring recruiter, record on MissionHub every hire of a referred candidate by the client within the window, and the invoices and payments. As the sourcing recruiter, if you learn your candidate was hired within the window, report it on MissionHub.
+**6.4** As the hiring recruiter, record on Workatent every hire of a referred candidate by the client within the window, and the invoices and payments. As the sourcing recruiter, if you learn your candidate was hired within the window, report it on Workatent.
 
 **6.5** The sourcing recruiter’s share is calculated on the referral’s terms. Retainers and engagement fees are part of the fee. If you invoice the client less, the share still follows the terms, unless the sourcing recruiter agreed in writing before the change.
 
@@ -113,23 +113,23 @@ MissionHub is software and a record of what happened. We match candidates and jo
 
 **6.7** If a placed candidate leaves during the guarantee, the remedy in the terms applies. Refunds are shared pro rata. If a replacement is due, the sourcing recruiter has 10 business days to propose one first.
 
-**6.8** MissionHub’s fee and how it’s invoiced are set out in [TODO: pricing and fee terms].
+**6.8** Workatent’s fee and how it’s invoiced are set out in [TODO: pricing and fee terms].
 
 ## 7. Disputes
 
-**7.1** Raise problems on MissionHub: first in the referral messages, then through an objection, a hire report, a dispute or a conduct report. Don’t accuse a partner in public, and don’t retaliate.
+**7.1** Raise problems on Workatent: first in the referral messages, then through an objection, a hire report, a dispute or a conduct report. Don’t accuse a partner in public, and don’t retaliate.
 
 **7.2** Deadlines matter. File a prior-presentation objection within 5 business days of delivery, with dated evidence. You have 10 business days to contest an objection or to answer a hire report. If you don’t respond in time, we decide on the record. You may involve a lawyer, but that doesn’t stop the clock.
 
-**7.3** Platform admins decide only what happens on MissionHub: whether a referral counts, statuses, access, sanctions and the record. They may ask both sides for documents and may contact the candidate. They contact a client only if the hiring recruiter agrees. <!-- ⚖️ counsel: admin access to personal information; client contact -->
+**7.3** Platform admins decide only what happens on Workatent: whether a referral counts, statuses, access, sanctions and the record. They may ask both sides for documents and may contact the candidate. They contact a client only if the hiring recruiter agrees. <!-- ⚖️ counsel: admin access to personal information; client contact -->
 
-**7.4** When no specific rule covers a case, platform admins look at whose action led to the result, based on MissionHub records and dated evidence. This never overrides first position, the ownership window, the outcome of an objection or a release.
+**7.4** When no specific rule covers a case, platform admins look at whose action led to the result, based on Workatent records and dated evidence. This never overrides first position, the ownership window, the outcome of an objection or a release.
 
-**7.5** MissionHub doesn’t decide or collect money between members. In a money dispute, the two organizations first negotiate in good faith for 30 days, and MissionHub’s records are available as evidence. Next comes mediation, then binding arbitration under [TODO: arbitration institution], seated in [TODO: city], under the laws of [TODO: province], in [TODO: language], with costs allocated [TODO: cost rule]. <!-- ⚖️ counsel: whole dispute clause; Québec adhesion contract (CCQ 2638+), Ontario Arbitration Act, 1991 -->
+**7.5** Workatent doesn’t decide or collect money between members. In a money dispute, the two organizations first negotiate in good faith for 30 days, and Workatent’s records are available as evidence. Next comes mediation, then binding arbitration under [TODO: arbitration institution], seated in [TODO: city], under the laws of [TODO: province], in [TODO: language], with costs allocated [TODO: cost rule]. <!-- ⚖️ counsel: whole dispute clause; Québec adhesion contract (CCQ 2638+), Ontario Arbitration Act, 1991 -->
 
 ## 8. Conduct reports
 
-**8.1** If you think a member broke these rules, report it to MissionHub<!-- ships with P0-3 --> with “Report a problem” on the referral or the job<!-- /ships with P0-3 --><!-- until P0-3 ships --> by email at [TODO: support address]<!-- /until P0-3 ships -->. Say what happened and when, and attach evidence if you have it.
+**8.1** If you think a member broke these rules, report it to Workatent<!-- ships with P0-3 --> with “Report a problem” on the referral or the job<!-- /ships with P0-3 --><!-- until P0-3 ships --> by email at [TODO: support address]<!-- /until P0-3 ships -->. Say what happened and when, and attach evidence if you have it.
 
 **8.2** If it isn’t urgent, you can first try to sort it out with the partner in the referral messages. You can ask us to step in at any time.
 
@@ -145,7 +145,7 @@ MissionHub is software and a record of what happened. We match candidates and jo
 
 1. **Warning:** recorded on your organization’s file.
 2. **Network hold:** you can’t open jobs to partners, submit referrals or accept new ones. Referrals in progress continue. Partners see only that you aren’t taking new referrals.
-3. **Suspension:** your organization’s access to MissionHub is suspended.
+3. **Suspension:** your organization’s access to Workatent is suspended.
 4. **Termination:** your organization is removed from the network.
 
 **9.2** We choose the level based on how serious the breach is, the harm done, intent, past breaches and cooperation. A serious breach can start at a higher level. Warnings count for 12 months.
@@ -162,7 +162,7 @@ MissionHub is software and a record of what happened. We match candidates and jo
 
 ## 10. Changes to these rules
 
-**10.1** The rules are versioned. The current version and a summary of changes are always available on MissionHub.
+**10.1** The rules are versioned. The current version and a summary of changes are always available on Workatent.
 
 **10.2** For material changes, we give 30 days’ notice, and your organization admin and every member must accept the new version.
 

@@ -7,7 +7,7 @@ import { createTranslator } from "@/i18n/translate";
 import { renderEmail, type EmailContent } from "./layout";
 
 /**
- * Every email MissionHub sends, rendered in an explicit locale (emails are often built outside a
+ * Every email Workatent sends, rendered in an explicit locale (emails are often built outside a
  * request from the recipient, e.g. in the Supabase auth hook, so the cookie locale doesn't apply).
  * Copy lives in `src/i18n/messages/<locale>/emails.json`.
  */
